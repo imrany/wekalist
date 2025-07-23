@@ -10,6 +10,7 @@ import { memoServiceClient } from "@/grpcweb";
 import { DEFAULT_LIST_MEMOS_PAGE_SIZE } from "@/helpers/consts";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { extractUserIdFromName } from "@/store/common";
+import { extractUserIdFromName } from "@/store/common";
 import { Memo, MemoRelation_Memo, MemoRelation_Type } from "@/types/proto/api/v1/memo_service";
 import { useTranslate } from "@/utils/i18n";
 import { MemoEditorContext } from "../types";
@@ -25,6 +26,7 @@ const AddMemoRelationPopover = () => {
 
   const filteredMemos = fetchedMemos.filter(
     (memo) => memo.name !== context.memoName && !context.relationList.some((relation) => relation.relatedMemo?.name === memo.name),
+    (memo) => memo.name !== context.memoName && !context.relationList.some((relation) => relation.relatedMemo?.name === memo.name),
   );
 
   useDebounce(
@@ -33,6 +35,7 @@ const AddMemoRelationPopover = () => {
 
       setIsFetching(true);
       try {
+        const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
         const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
         if (searchText) {
           conditions.push(`content.contains("${searchText}")`);
@@ -76,6 +79,20 @@ const AddMemoRelationPopover = () => {
     );
   };
 
+  const addMemoRelations = async (memo: Memo) => {
+    context.setRelationList(
+      uniqBy(
+        [
+          {
+            memo: MemoRelation_Memo.fromPartial({ name: memo.name }),
+            relatedMemo: MemoRelation_Memo.fromPartial({ name: memo.name }),
+            type: MemoRelation_Type.REFERENCE,
+          },
+          ...context.relationList,
+        ].filter((relation) => relation.relatedMemo !== context.memoName),
+        "relatedMemo",
+      ),
+    );
   const addMemoRelations = async (memo: Memo) => {
     context.setRelationList(
       uniqBy(
