@@ -102,7 +102,7 @@ const PagedMemoList = observer((props: Props) => {
     // Always show spinner when filter changes (including clearing filters)
     setIsRefreshing(true);
     refreshList();
-  }, [filterKey]);
+  }, [props.state, props.orderBy, props.filter, props.pageSize, filterKey]);
 
   useEffect(() => {
     if (!isRequesting && sortedMemoList.length > 0) {
