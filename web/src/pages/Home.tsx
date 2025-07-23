@@ -30,8 +30,7 @@ const Home = observer(() => {
   });
 
   const memoFilter = useMemo(() => {
-    const conditions: string[] = [`creator_id == ${extractUserIdFromName(user.name)}`];
-
+    const conditions = [`creator_id == "${extractUserIdFromName(user.name)}"`];
     if (selectedShortcut?.filter) {
       conditions.push(selectedShortcut.filter);
     }

@@ -122,7 +122,7 @@ func (c *CommonSQLConverter) handleComparisonOperator(ctx *ConvertContext, callE
 		return err
 	}
 
-	if !slices.Contains([]string{"creator_id", "created_ts", "updated_ts", "visibility", "content", "pinned", "has_task_list", "has_link", "has_code", "has_incomplete_tasks"}, identifier) {
+	if !slices.Contains([]string{"creator_id", "created_ts", "updated_ts", "visibility", "content", "has_task_list", "has_link", "has_code", "has_incomplete_tasks"}, identifier) {
 		return errors.Errorf("invalid identifier for %s", callExpr.Function)
 	}
 
@@ -235,12 +235,12 @@ func (c *CommonSQLConverter) handleElementInTags(ctx *ConvertContext, elementExp
         return errors.Errorf("first argument must be a constant value for 'element in tags': %v", err)
     }
 
-    // Use dialect-specific JSON contains logic
-    template := c.dialect.GetJSONContains("$.tags", "element")
-    sqlExpr := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
-    if _, err := ctx.Buffer.WriteString(sqlExpr); err != nil {
-        return err
-    }
+	// Use dialect-specific JSON contains logic
+	template := c.dialect.GetJSONContains("$.tags", "element")
+	sqlExpr := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
+	if _, err := ctx.Buffer.WriteString(sqlExpr); err != nil {
+		return err
+	}
 
     // Handle args based on dialect
     switch c.dialect.(type) {

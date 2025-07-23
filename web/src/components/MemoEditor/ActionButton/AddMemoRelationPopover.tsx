@@ -35,8 +35,10 @@ const AddMemoRelationPopover = () => {
 
       setIsFetching(true);
       try {
-        const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
-        const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
+        const conditions = [];
+        // Extract user ID from user name (format: users/{user_id})
+        const userId = user.name.replace("users/", "");
+        conditions.push(`creator_id == ${userId}`);
         if (searchText) {
           conditions.push(`content.contains("${searchText}")`);
         }
