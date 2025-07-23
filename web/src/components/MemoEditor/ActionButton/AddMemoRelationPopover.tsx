@@ -33,10 +33,7 @@ const AddMemoRelationPopover = () => {
 
       setIsFetching(true);
       try {
-        const conditions = [];
-        // Extract user ID from user name (format: users/{user_id})
-        const userId = user.name.replace("users/", "");
-        conditions.push(`creator_id == ${userId}`);
+        const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
         if (searchText) {
           conditions.push(`content.contains("${searchText}")`);
         }
@@ -84,13 +81,13 @@ const AddMemoRelationPopover = () => {
       uniqBy(
         [
           {
-            memo: MemoRelation_Memo.fromPartial({ name: context.memoName }),
+            memo: MemoRelation_Memo.fromPartial({ name: memo.name }),
             relatedMemo: MemoRelation_Memo.fromPartial({ name: memo.name }),
             type: MemoRelation_Type.REFERENCE,
           },
           ...context.relationList,
-        ].filter((relation) => relation.relatedMemo?.name !== memo.name),
-        (relation) => relation.relatedMemo?.name,
+        ].filter((relation) => relation.relatedMemo !== context.memoName),
+        "relatedMemo",
       ),
     );
     setPopoverOpen(false);
