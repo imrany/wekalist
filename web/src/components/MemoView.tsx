@@ -1,4 +1,4 @@
-import { BookmarkIcon, EyeOffIcon, MessageCircleMoreIcon } from "lucide-react";
+import { BookmarkIcon, Bot, BotMessageSquare, Briefcase, EyeOffIcon, MessageCircleMoreIcon, Stars } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { memo, useCallback, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -189,6 +189,14 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
               </Tooltip>
             )}
             {currentUser && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
+            <Tooltip>
+              <TooltipTrigger>
+                <span className="flex justify-center items-center cursor-pointer rounded-md p-1 hover:opacity-80">
+                  <Stars className="w-4 h-auto text-muted-foreground"/>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>{t(`memo.ai.generate-memo-summary` as any)}</TooltipContent>
+            </Tooltip>
           </div>
           {!isInMemoDetailPage && (workspaceMemoRelatedSetting.enableComment || commentAmount > 0) && (
             <Link
@@ -225,6 +233,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
               <EyeOffIcon className="w-4 h-auto text-primary" onClick={() => setShowNSFWContent(false)} />
             </span>
           )}
+          
           <MemoActionMenu memo={memo} readonly={readonly} onEdit={() => setShowEditor(true)} />
         </div>
       </div>
