@@ -240,7 +240,7 @@
     "go-to-home": "Go to Home"
   },
   "search":{
-    "user-placeholder":"Search groups..."
+    "user-placeholder":"Search users..."
   },
   "setting": {
     "access-token-section": {

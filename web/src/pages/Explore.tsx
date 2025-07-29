@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import MemoView from "@/components/MemoView";
-import MobileHeader from "@/components/MobileHeader";
+// import MobileHeader from "@/components/MobileHeader";
 import PagedMemoList from "@/components/PagedMemoList";
 import useResponsiveWidth from "@/hooks/useResponsiveWidth";
 import { viewStore } from "@/store";
@@ -13,9 +13,9 @@ const Explore = observer(() => {
 
   return (
     <section className="@container w-full max-w-5xl min-h-full flex flex-col justify-start items-center sm:pt-3 md:pt-6 pb-8">
-      {!md && <MobileHeader />}
-      <div className="w-full px-4 sm:px-6">
-        <PagedMemoList
+      {/* {!md && <MobileHeader />} */}
+      <div className="w-full px-4 sm:px-6 max-sm:pt-3">
+        <PagedMemoList 
           renderer={(memo: Memo) => <MemoView key={`${memo.name}-${memo.updateTime}`} memo={memo} showCreator showVisibility compact />}
           listSort={(memos: Memo[]) =>
             memos

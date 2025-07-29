@@ -28,14 +28,6 @@ import (
 )
 
 func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) (*v1pb.ListUsersResponse, error) {
-	currentUser, err := s.GetCurrentUser(ctx)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
-	}
-	if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
-		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
-	}
-
 	users, err := s.Store.ListUsers(ctx, &store.FindUser{})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list users: %v", err)
@@ -48,7 +40,11 @@ func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) 
 		TotalSize: int32(len(users)),
 	}
 	for _, user := range users {
-		response.Users = append(response.Users, convertUserFromStore(user))
+		// Only include users with memoVisibility containing "PUBLIC" and role user
+		if strings.Contains(strings.ToUpper(user.Value), "\"MEMOVISIBILITY\":\"PUBLIC\"") &&
+			user.Role == store.RoleUser {
+			response.Users = append(response.Users, convertUserFromStore(user))
+		}
 	}
 	return response, nil
 }

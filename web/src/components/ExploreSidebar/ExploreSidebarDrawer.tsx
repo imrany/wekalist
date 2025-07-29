@@ -4,8 +4,13 @@ import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import ExploreSidebar from "./ExploreSidebar";
+import { User } from "@/types/proto/api/v1/user_service";
 
-const ExploreSidebarDrawer = () => {
+type Props={
+  users: User[]
+}
+const ExploreSidebarDrawer = (props:Props) => {
+  const { users }=props
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
@@ -24,7 +29,7 @@ const ExploreSidebarDrawer = () => {
         <SheetHeader>
           <SheetTitle />
         </SheetHeader>
-        <ExploreSidebar className="px-4" />
+        <ExploreSidebar users={users} className="px-4" />
       </SheetContent>
     </Sheet>
   );

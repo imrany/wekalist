@@ -9,10 +9,30 @@ import useResponsiveWidth from "@/hooks/useResponsiveWidth";
 import { cn } from "@/lib/utils";
 import { Routes } from "@/router";
 import { memoStore, userStore } from "@/store";
+import toast from "react-hot-toast";
+import { useTranslate } from "@/utils/i18n";
+import { useEffect, useState } from "react";
+import { User } from "@/types/proto/api/v1/user_service";
+import useLoading from "@/hooks/useLoading";
 
 const ExploreLayout = observer(() => {
   const { md, lg } = useResponsiveWidth();
   const currentUser = useCurrentUser();
+  const t =useTranslate()
+  const loadingState = useLoading();
+  const [users, setUsers]=useState<User[]>([])
+
+    useEffect(() => {
+      userStore.fetchUsers()
+        .then((users) => {
+            setUsers(users);
+            loadingState.setFinish();
+        })
+        .catch((error) => {
+            console.error(error);
+            toast.error(t("message.user-not-found"));
+        });
+    }, []);
 
   useDebounce(
     async () => {
@@ -35,12 +55,12 @@ const ExploreLayout = observer(() => {
     <section className="@container w-full min-h-full flex flex-col justify-start items-center">
       {!md && (
         <MobileHeader>
-          <ExploreSidebarDrawer />
+          <ExploreSidebarDrawer users={users} />
         </MobileHeader>
       )}
       {md && (
         <div className={cn("fixed top-0 left-16 shrink-0 h-svh transition-all", "border-r border-border", lg ? "w-72" : "w-56")}>
-          <ExploreSidebar className={cn("px-3 py-6")} />
+          <ExploreSidebar users={users} className={cn("px-3 py-6")} />
         </div>
       )}
       <div className={cn("w-full min-h-full", lg ? "pl-72" : md ? "pl-56" : "")}>

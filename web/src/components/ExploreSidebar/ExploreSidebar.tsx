@@ -2,16 +2,16 @@ import { observer } from "mobx-react-lite";
 import SearchBar from "@/components/SearchBar";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { cn } from "@/lib/utils";
-import MemoFilters from "../MemoFilters";
-import StatisticsView from "../StatisticsView";
-import ShortcutsSection from "./ShortcutsSection";
-import TagsSection from "./TagsSection";
+import UsersView from "../UsersView";
+import { User } from "@/types/proto/api/v1/user_service";
 
 interface Props {
   className?: string;
+  users: User[]
 }
 
 const ExploreSidebar = observer((props: Props) => {
+  const { users }=props
   const currentUser = useCurrentUser();
 
   return (
@@ -22,11 +22,8 @@ const ExploreSidebar = observer((props: Props) => {
       )}
     >
       <SearchBar placeholder="search.user-placeholder"/>
-      <MemoFilters />
       <div className="mt-1 px-1 w-full">
-        <StatisticsView />
-        {currentUser && <ShortcutsSection />}
-        <TagsSection />
+        <UsersView users={users} />
       </div>
     </aside>
   );

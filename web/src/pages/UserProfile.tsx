@@ -17,9 +17,11 @@ import { State } from "@/types/proto/api/v1/common";
 import { Memo } from "@/types/proto/api/v1/memo_service";
 import { User } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const UserProfile = observer(() => {
   const t = useTranslate();
+  const currentUser=useCurrentUser()
   const params = useParams();
   const loadingState = useLoading();
   const [user, setUser] = useState<User>();
@@ -78,10 +80,12 @@ const UserProfile = observer(() => {
                   {t("common.share")}
                   <ExternalLinkIcon className="ml-1 w-4 h-auto opacity-60" />
                 </Button>
-                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&(<Button variant="outline" onClick={handleCopyProfileLink}>
-                  {t("common.subscribe")}
-                  <BellPlus className="ml-1 w-4 h-auto opacity-60" />
-                </Button>)}
+                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&currentUser.name!==user.name&&(
+                  <Button variant="outline" onClick={handleCopyProfileLink}>
+                    {t("common.subscribe")}
+                    <BellPlus className="ml-1 w-4 h-auto opacity-60" />
+                  </Button>
+                )}
               </div>
               <div className="w-full flex flex-col justify-start items-start pt-4 pb-8 px-3">
                 <UserAvatar className="w-16! h-16! drop-shadow rounded-3xl" avatarUrl={user?.avatarUrl} />
