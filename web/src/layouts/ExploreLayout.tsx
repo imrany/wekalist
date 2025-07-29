@@ -20,7 +20,7 @@ const ExploreLayout = observer(() => {
   const currentUser = useCurrentUser();
   const t =useTranslate()
   const loadingState = useLoading();
-  const [users, setUsers]=useState<User[]>([])
+  const [users, setUsers]=useState<User[]>()
 
     useEffect(() => {
       userStore.fetchUsers()
@@ -53,21 +53,29 @@ const ExploreLayout = observer(() => {
 
   return (
     <section className="@container w-full min-h-full flex flex-col justify-start items-center">
-      {!md && (
-        <MobileHeader>
-          <ExploreSidebarDrawer users={users} />
-        </MobileHeader>
-      )}
-      {md && (
-        <div className={cn("fixed top-0 left-16 shrink-0 h-svh transition-all", "border-r border-border", lg ? "w-72" : "w-56")}>
-          <ExploreSidebar users={users} className={cn("px-3 py-6")} />
-        </div>
-      )}
-      <div className={cn("w-full min-h-full", lg ? "pl-72" : md ? "pl-56" : "")}>
-        <div className={cn("w-full mx-auto px-4 sm:px-6 md:pt-6 pb-8")}>
-          <Outlet />
-        </div>
-      </div>
+        {loadingState.isSucceed&&(
+            <>
+                {users?(
+                    <>
+                        {!md && (
+                            <MobileHeader>
+                            <ExploreSidebarDrawer users={users} />
+                            </MobileHeader>
+                        )}
+                        {md && (
+                            <div className={cn("fixed top-0 left-16 shrink-0 h-svh transition-all", "border-r border-border", lg ? "w-72" : "w-56")}>
+                            <ExploreSidebar users={users} className={cn("px-3 py-6")} />
+                            </div>
+                        )}
+                        <div className={cn("w-full min-h-full", lg ? "pl-72" : md ? "pl-56" : "")}>
+                            <div className={cn("w-full mx-auto px-4 sm:px-6 md:pt-6 pb-8")}>
+                                <Outlet />
+                            </div>
+                        </div>
+                    </>
+                ):<Outlet/>}
+            </>
+        )}
     </section>
   );
 });

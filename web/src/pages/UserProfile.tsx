@@ -80,7 +80,7 @@ const UserProfile = observer(() => {
                   {t("common.share")}
                   <ExternalLinkIcon className="ml-1 w-4 h-auto opacity-60" />
                 </Button>
-                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&currentUser.name!==user.name&&(
+                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&currentUser&&currentUser.name!==user.name&&(
                   <Button variant="outline" onClick={handleCopyProfileLink}>
                     {t("common.subscribe")}
                     <BellPlus className="ml-1 w-4 h-auto opacity-60" />
@@ -96,7 +96,7 @@ const UserProfile = observer(() => {
                   <p className="w-full text-muted-foreground leading-snug whitespace-pre-wrap truncate line-clamp-6">{user.description}</p>
                 </div>
               </div>
-              <PagedMemoList
+              {loadingState.isSucceed&&<PagedMemoList
                 renderer={(memo: Memo) => (
                   <MemoView key={`${memo.name}-${memo.displayTime}`} memo={memo} showVisibility showPinned compact />
                 )}
@@ -111,7 +111,7 @@ const UserProfile = observer(() => {
                 }
                 orderBy={viewStore.state.orderByTimeAsc ? "display_time asc" : "display_time desc"}
                 filter={memoFilter}
-              />
+              />}
             </>
           ) : (
             <p>Not found</p>

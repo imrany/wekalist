@@ -7,7 +7,7 @@ import ExploreSidebar from "./ExploreSidebar";
 import { User } from "@/types/proto/api/v1/user_service";
 
 type Props={
-  users: User[]
+  users?: User[]
 }
 const ExploreSidebarDrawer = (props:Props) => {
   const { users }=props

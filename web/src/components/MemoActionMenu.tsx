@@ -22,6 +22,8 @@ import { Memo } from "@/types/proto/api/v1/memo_service";
 import { useTranslate } from "@/utils/i18n";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import DeleteMemoDialog from "./Dialogs/DeleteMemoDialog";
+import { useState } from "react";
 
 interface Props {
   memo: Memo;
@@ -52,6 +54,7 @@ const MemoActionMenu = observer((props: Props) => {
   const isInMemoDetailPage = location.pathname.startsWith(`/${memo.name}`);
   const isComment = Boolean(memo.parent);
   const isArchived = memo.state === State.ARCHIVED;
+  const [open, setOpen]=useState(false)
 
   const memoUpdatedCallback = () => {
     // Refresh user stats.
@@ -81,6 +84,10 @@ const MemoActionMenu = observer((props: Props) => {
       // do nth
     }
   };
+
+  const onOpenChange = (state: boolean)=>{
+    setOpen(false)
+  }
 
   const handleEditMemoClick = () => {
     if (props.onEdit) {
@@ -119,15 +126,13 @@ const MemoActionMenu = observer((props: Props) => {
   };
 
   const handleDeleteMemoClick = async () => {
-    const confirmed = window.confirm(t("memo.delete-confirm"));
-    if (confirmed) {
-      await memoStore.deleteMemo(memo.name);
-      toast.success(t("message.deleted-successfully"));
-      if (isInMemoDetailPage) {
-        navigateTo("/");
-      }
-      memoUpdatedCallback();
+    await memoStore.deleteMemo(memo.name);
+    toast.success(t("message.deleted-successfully"));
+    onOpenChange(false)
+    if (isInMemoDetailPage) {
+      navigateTo("/");
     }
+    memoUpdatedCallback();
   };
 
   const handleRemoveCompletedTaskListItemsClick = async () => {
@@ -163,55 +168,59 @@ const MemoActionMenu = observer((props: Props) => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="size-4">
-          <MoreVerticalIcon className="text-muted-foreground" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" sideOffset={2}>
-        {!readonly && !isArchived && (
-          <>
-            {!isComment && (
-              <DropdownMenuItem onClick={handleTogglePinMemoBtnClick}>
-                {memo.pinned ? <BookmarkMinusIcon className="w-4 h-auto" /> : <BookmarkPlusIcon className="w-4 h-auto" />}
-                {memo.pinned ? t("common.unpin") : t("common.pin")}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-4">
+            <MoreVerticalIcon className="text-muted-foreground" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={2}>
+          {!readonly && !isArchived && (
+            <>
+              {!isComment && (
+                <DropdownMenuItem onClick={handleTogglePinMemoBtnClick}>
+                  {memo.pinned ? <BookmarkMinusIcon className="w-4 h-auto" /> : <BookmarkPlusIcon className="w-4 h-auto" />}
+                  {memo.pinned ? t("common.unpin") : t("common.pin")}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={handleEditMemoClick}>
+                <Edit3Icon className="w-4 h-auto" />
+                {t("common.edit")}
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem onClick={handleEditMemoClick}>
-              <Edit3Icon className="w-4 h-auto" />
-              {t("common.edit")}
+            </>
+          )}
+          {!isArchived && (
+            <DropdownMenuItem onClick={handleCopyLink}>
+              <CopyIcon className="w-4 h-auto" />
+              {t("memo.copy-link")}
             </DropdownMenuItem>
-          </>
-        )}
-        {!isArchived && (
-          <DropdownMenuItem onClick={handleCopyLink}>
-            <CopyIcon className="w-4 h-auto" />
-            {t("memo.copy-link")}
-          </DropdownMenuItem>
-        )}
-        {!readonly && (
-          <>
-            {!isArchived && !isComment && hasCompletedTaskList && (
-              <DropdownMenuItem onClick={handleRemoveCompletedTaskListItemsClick}>
-                <SquareCheckIcon className="w-4 h-auto" />
-                {t("memo.remove-completed-task-list-items")}
+          )}
+          {!readonly && (
+            <>
+              {!isArchived && !isComment && hasCompletedTaskList && (
+                <DropdownMenuItem onClick={handleRemoveCompletedTaskListItemsClick}>
+                  <SquareCheckIcon className="w-4 h-auto" />
+                  {t("memo.remove-completed-task-list-items")}
+                </DropdownMenuItem>
+              )}
+              {!isComment && (
+                <DropdownMenuItem onClick={handleToggleMemoStatusClick}>
+                  {isArchived ? <ArchiveRestoreIcon className="w-4 h-auto" /> : <ArchiveIcon className="w-4 h-auto" />}
+                  {isArchived ? t("common.restore") : t("common.archive")}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={()=>setOpen(true)}>
+                <TrashIcon className="w-4 h-auto" />
+                {t("common.delete")}
               </DropdownMenuItem>
-            )}
-            {!isComment && (
-              <DropdownMenuItem onClick={handleToggleMemoStatusClick}>
-                {isArchived ? <ArchiveRestoreIcon className="w-4 h-auto" /> : <ArchiveIcon className="w-4 h-auto" />}
-                {isArchived ? t("common.restore") : t("common.archive")}
-              </DropdownMenuItem>
-            )}
-            <DropdownMenuItem onClick={handleDeleteMemoClick}>
-              <TrashIcon className="w-4 h-auto" />
-              {t("common.delete")}
-            </DropdownMenuItem>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DeleteMemoDialog open={open} handleDeleteMemoClick={handleDeleteMemoClick} onOpenChange={onOpenChange}/>
+    </>
   );
 });
 

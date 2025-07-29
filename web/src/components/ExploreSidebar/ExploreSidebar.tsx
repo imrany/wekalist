@@ -7,7 +7,7 @@ import { User } from "@/types/proto/api/v1/user_service";
 
 interface Props {
   className?: string;
-  users: User[]
+  users?: User[]
 }
 
 const ExploreSidebar = observer((props: Props) => {

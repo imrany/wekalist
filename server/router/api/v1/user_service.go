@@ -32,7 +32,6 @@ func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) 
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list users: %v", err)
 	}
-
 	// TODO: Implement proper filtering, ordering, and pagination
 	// For now, return all users with basic structure
 	response := &v1pb.ListUsersResponse{

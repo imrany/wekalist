@@ -95,15 +95,19 @@ const userStore = (() => {
   };
 
   const fetchUsers = async () => {
-    const { users } = await userServiceClient.listUsers({});
-    const userMap = state.userMapByName;
-    for (const user of users) {
-      userMap[user.name] = user;
+    try{
+      const { users } = await userServiceClient.listUsers({});
+      const userMap = state.userMapByName;
+      for (const user of users) {
+        userMap[user.name] = user;
+      }
+      state.setPartial({
+        userMapByName: userMap,
+      });
+      return users;
+    }catch(error){
+      console.log(error)
     }
-    state.setPartial({
-      userMapByName: userMap,
-    });
-    return users;
   };
 
   const updateUser = async (user: Partial<User>, updateMask: string[]) => {
