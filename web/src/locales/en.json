@@ -135,7 +135,9 @@
   "memo": {
     "archived-at": "Archived at",
     "ai":{
-      "generate-memo-summary":"Generate memo summary"
+      "generate-memo-summary":"Generate memo summary",
+      "generate-memo": "Generate memo"
+
     },
     "click-to-hide-nsfw-content": "Click to hide NSFW content",
     "click-to-show-nsfw-content": "Click to show NSFW content",

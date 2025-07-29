@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import { isEqual } from "lodash-es";
-import { LoaderIcon, SendIcon } from "lucide-react";
+import { LoaderIcon, SendIcon, Stars } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -32,6 +32,7 @@ import Editor, { EditorRefActions } from "./Editor";
 import RelationListView from "./RelationListView";
 import { handleEditorKeydownWithMarkdownShortcuts, hyperlinkHighlightedText } from "./handlers";
 import { MemoEditorContext } from "./types";
+import AIButton from "./ActionButton/AIButton";
 
 export interface Props {
   className?: string;
@@ -506,6 +507,7 @@ const MemoEditor = observer((props: Props) => {
             <MarkdownMenu editorRef={editorRef} />
             <UploadAttachmentButton isUploading={state.isUploadingAttachment} />
             <AddMemoRelationPopover />
+            <AIButton editorRef={editorRef} />
             <LocationSelector
               location={state.location}
               onChange={(location) =>
