@@ -24,6 +24,7 @@ import PreviewImageDialog from "./PreviewImageDialog";
 import ReactionSelector from "./ReactionSelector";
 import UserAvatar from "./UserAvatar";
 import VisibilityIcon from "./VisibilityIcon";
+import MemoSummary from "./Dropdowns/MemoSummary";
 
 interface Props {
   memo: Memo;
@@ -189,14 +190,8 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
               </Tooltip>
             )}
             {currentUser && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
-            <Tooltip>
-              <TooltipTrigger>
-                <span className="flex justify-center items-center cursor-pointer rounded-md p-1 hover:opacity-80">
-                  <Stars className="w-4 h-auto text-muted-foreground"/>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>{t(`memo.ai.generate-memo-summary` as any)}</TooltipContent>
-            </Tooltip>
+            
+            <MemoSummary memo={memo} />
           </div>
           {!isInMemoDetailPage && (workspaceMemoRelatedSetting.enableComment || commentAmount > 0) && (
             <Link
@@ -233,7 +228,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
               <EyeOffIcon className="w-4 h-auto text-primary" onClick={() => setShowNSFWContent(false)} />
             </span>
           )}
-          
+
           <MemoActionMenu memo={memo} readonly={readonly} onEdit={() => setShowEditor(true)} />
         </div>
       </div>
