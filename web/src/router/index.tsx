@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import HomeLayout from "@/layouts/HomeLayout";
+import ExploreLayout from "@/layouts/ExploreLayout";
 import RootLayout from "@/layouts/RootLayout";
 import Home from "@/pages/Home";
 import Loading from "@/pages/Loading";
@@ -103,12 +104,17 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: Routes.EXPLORE,
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Explore />
-              </Suspense>
-            ),
+            element: <ExploreLayout/>,
+            children:[
+              {
+                path: Routes.EXPLORE,
+                element: (
+                  <Suspense fallback={<Loading />}>
+                    <Explore />
+                  </Suspense>
+                ),
+              },
+            ],
           },
           {
             path: Routes.ATTACHMENTS,

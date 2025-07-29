@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-const HomeSidebar = observer((props: Props) => {
+const ExploreSidebar = observer((props: Props) => {
   const currentUser = useCurrentUser();
 
   return (
@@ -21,7 +21,7 @@ const HomeSidebar = observer((props: Props) => {
         props.className,
       )}
     >
-      <SearchBar placeholder="memo.search-placeholder"/>
+      <SearchBar placeholder="search.user-placeholder"/>
       <MemoFilters />
       <div className="mt-1 px-1 w-full">
         <StatisticsView />
@@ -32,4 +32,4 @@ const HomeSidebar = observer((props: Props) => {
   );
 });
 
-export default HomeSidebar;
+export default ExploreSidebar;
