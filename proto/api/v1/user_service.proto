@@ -165,6 +165,9 @@ message User {
   // Output only. The last update timestamp.
   google.protobuf.Timestamp update_time = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
 
+  // Optional. The default visibility of the memo.
+  string memo_visibility = 12 [(google.api.field_behavior) = OPTIONAL];
+
   // User role enumeration.
   enum Role {
     // Unspecified role.

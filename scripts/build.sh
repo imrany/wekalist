@@ -11,15 +11,15 @@ OS=$(uname -s)
 
 # Set output file name based on the OS
 if [[ "$OS" == *"CYGWIN"* || "$OS" == *"MINGW"* || "$OS" == *"MSYS"* ]]; then
-  OUTPUT="./build/memos.exe"
+  OUTPUT="./bin/memos.exe"
 else
-  OUTPUT="./build/memos"
+  OUTPUT="./bin/memos"
 fi
 
 echo "Building for $OS..."
 
 # Build the executable
-go build -o "$OUTPUT" ./bin/memos/main.go
+go build -o "$OUTPUT" main.go
 
 # Output the success message
 echo "Build successful!"

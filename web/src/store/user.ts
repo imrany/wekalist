@@ -71,6 +71,7 @@ const userStore = (() => {
         return userMap[name];
       }
     }
+
     // Use search instead of the deprecated getUserByUsername
     const { users } = await userServiceClient.searchUsers({
       query: username,

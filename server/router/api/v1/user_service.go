@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"regexp"
 	"slices"
@@ -75,13 +76,13 @@ func (s *APIV1Service) GetUser(ctx context.Context, request *v1pb.GetUserRequest
 }
 
 func (s *APIV1Service) SearchUsers(ctx context.Context, request *v1pb.SearchUsersRequest) (*v1pb.SearchUsersResponse, error) {
-	currentUser, err := s.GetCurrentUser(ctx)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
-	}
-	if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
-		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
-	}
+	// currentUser, err := s.GetCurrentUser(ctx)
+	// if err != nil {
+	// 	return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
+	// }
+	// if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
+	// 	return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+	// }
 
 	// Search users by username, email, or display name
 	users, err := s.Store.ListUsers(ctx, &store.FindUser{})
@@ -106,6 +107,7 @@ func (s *APIV1Service) SearchUsers(ctx context.Context, request *v1pb.SearchUser
 	for _, user := range filteredUsers {
 		response.Users = append(response.Users, convertUserFromStore(user))
 	}
+	slog.Info("request: ", "K", response, "users",response.Users)
 	return response, nil
 }
 
@@ -778,6 +780,7 @@ func convertUserFromStore(user *store.User) *v1pb.User {
 		Email:       user.Email,
 		DisplayName: user.Nickname,
 		AvatarUrl:   user.AvatarURL,
+		MemoVisibility: user.Value,
 		Description: user.Description,
 	}
 	// Use the avatar URL instead of raw base64 image data to reduce the response size.

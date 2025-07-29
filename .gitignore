@@ -6,6 +6,7 @@ web/dist
 
 # build folder
 build
+bin
 
 .DS_Store
 

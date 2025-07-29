@@ -163,7 +163,7 @@ cd memos
 go mod download
 
 # Run the backend server
-go run ./bin/memos/main.go --mode dev --port 8081
+go run main.go --mode dev --port 8081
 ```
 
 ### Frontend Development

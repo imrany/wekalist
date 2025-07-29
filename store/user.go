@@ -58,6 +58,8 @@ type User struct {
 	PasswordHash string
 	AvatarURL    string
 	Description  string
+	// The default visibility of the memo.
+	Value string 
 }
 
 type UpdateUser struct {

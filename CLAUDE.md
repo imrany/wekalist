@@ -11,10 +11,10 @@ Memos is a self-hosted note-taking and knowledge management platform with a Go b
 ### Backend (Go)
 ```bash
 # Run in development mode
-go run ./bin/memos/main.go --mode dev --port 8081
+go run main.go --mode dev --port 8081
 
 # Build binary
-go build -o ./build/memos ./bin/memos/main.go
+go build -o ./bin/memos main.go
 # OR use build script
 ./scripts/build.sh
 
@@ -45,7 +45,7 @@ pnpm lint
 ```
 
 ### Full Development Setup
-1. **Backend**: `go run ./bin/memos/main.go --mode dev --port 8081`
+1. **Backend**: `go run main.go --mode dev --port 8081`
 2. **Frontend**: `cd web && pnpm dev`
 3. **Access**: Backend API at `http://localhost:8081`, Frontend at `http://localhost:3001`
 
@@ -131,7 +131,7 @@ go test -cover ./...
 
 ### Production Mode
 ```bash
-go run ./bin/memos/main.go --mode prod --port 5230
+go run main.go --mode prod --port 5230
 ```
 - Uses workspace-generated secret key
 - Serves built frontend from `/server/router/frontend/dist/`
@@ -139,7 +139,7 @@ go run ./bin/memos/main.go --mode prod --port 5230
 
 ### Development Mode  
 ```bash
-go run ./bin/memos/main.go --mode dev --port 8081
+go run main.go --mode dev --port 8081
 ```
 - Fixed secret key "usememos"
 - Enables debugging features
@@ -147,7 +147,7 @@ go run ./bin/memos/main.go --mode dev --port 8081
 
 ### Demo Mode
 ```bash
-go run ./bin/memos/main.go --mode demo
+go run main.go --mode demo
 ```
 - Specialized configuration for demonstration purposes
 

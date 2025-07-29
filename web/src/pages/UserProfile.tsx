@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import dayjs from "dayjs";
-import { ExternalLinkIcon } from "lucide-react";
+import { BellPlus, ExternalLinkIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -78,6 +78,10 @@ const UserProfile = observer(() => {
                   {t("common.share")}
                   <ExternalLinkIcon className="ml-1 w-4 h-auto opacity-60" />
                 </Button>
+                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&(<Button variant="outline" onClick={handleCopyProfileLink}>
+                  {t("common.subscribe")}
+                  <BellPlus className="ml-1 w-4 h-auto opacity-60" />
+                </Button>)}
               </div>
               <div className="w-full flex flex-col justify-start items-start pt-4 pb-8 px-3">
                 <UserAvatar className="w-16! h-16! drop-shadow rounded-3xl" avatarUrl={user?.avatarUrl} />

@@ -41,7 +41,11 @@ export interface User {
     | Date
     | undefined;
   /** Output only. The last update timestamp. */
-  updateTime?: Date | undefined;
+  updateTime?:
+    | Date
+    | undefined;
+  /** Optional. The default visibility of the memo. */
+  memoVisibility: string;
 }
 
 /** User role enumeration. */
@@ -445,6 +449,7 @@ function createBaseUser(): User {
     state: State.STATE_UNSPECIFIED,
     createTime: undefined,
     updateTime: undefined,
+    memoVisibility: "",
   };
 }
 
@@ -482,6 +487,9 @@ export const User: MessageFns<User> = {
     }
     if (message.updateTime !== undefined) {
       Timestamp.encode(toTimestamp(message.updateTime), writer.uint32(90).fork()).join();
+    }
+    if (message.memoVisibility !== "") {
+      writer.uint32(98).string(message.memoVisibility);
     }
     return writer;
   },
@@ -581,6 +589,14 @@ export const User: MessageFns<User> = {
           message.updateTime = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         }
+        case 12: {
+          if (tag !== 98) {
+            break;
+          }
+
+          message.memoVisibility = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -606,6 +622,7 @@ export const User: MessageFns<User> = {
     message.state = object.state ?? State.STATE_UNSPECIFIED;
     message.createTime = object.createTime ?? undefined;
     message.updateTime = object.updateTime ?? undefined;
+    message.memoVisibility = object.memoVisibility ?? "";
     return message;
   },
 };

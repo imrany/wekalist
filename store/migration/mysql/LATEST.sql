@@ -28,9 +28,11 @@ CREATE TABLE `user` (
 
 -- user_setting
 CREATE TABLE `user_setting` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
   `key` VARCHAR(256) NOT NULL,
   `value` LONGTEXT NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
   UNIQUE(`user_id`,`key`)
 );
 

@@ -36,10 +36,8 @@ func (s *APIV1Service) GetCurrentSession(ctx context.Context, _ *v1pb.GetCurrent
 	}
 	if user == nil {
 		// Clear auth cookies
-		if err := s.clearAuthCookies(ctx); err != nil {
-			return nil, status.Errorf(codes.Internal, "failed to clear auth cookies: %v", err)
-		}
-		return nil, status.Errorf(codes.Unauthenticated, "user not found")
+		_ = s.clearAuthCookies(ctx)
+		return &v1pb.GetCurrentSessionResponse{}, nil
 	}
 
 	var lastAccessedAt *timestamppb.Timestamp

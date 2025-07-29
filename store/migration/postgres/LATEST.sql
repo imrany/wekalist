@@ -28,9 +28,11 @@ CREATE TABLE "user" (
 
 -- user_setting
 CREATE TABLE user_setting (
+  id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
   key TEXT NOT NULL,
   value TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES "user"(id), 
   UNIQUE(user_id, key)
 );
 

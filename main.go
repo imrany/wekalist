@@ -105,7 +105,7 @@ func init() {
 	viper.SetDefault("port", 8081)
 
 	rootCmd.PersistentFlags().String("mode", "dev", `mode of server, can be "prod" or "dev" or "demo"`)
-	rootCmd.PersistentFlags().String("addr", "", "address of server")
+	rootCmd.PersistentFlags().String("addr", "0.0.0.0", "address of server")
 	rootCmd.PersistentFlags().Int("port", 8081, "port of server")
 	rootCmd.PersistentFlags().String("unix-sock", "", "path to the unix socket, overrides --addr and --port")
 	rootCmd.PersistentFlags().String("data", "", "data directory")
