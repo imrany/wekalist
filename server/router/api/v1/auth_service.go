@@ -79,7 +79,7 @@ func (s *APIV1Service) CreateSession(ctx context.Context, request *v1pb.CreateSe
 				Email: &email,
 			})
 			if err != nil {
-				return nil, status.Errorf(codes.Internal, "failed to get user by email, error: %v", err)
+				return nil, status.Errorf(codes.Internal, "failed to get user by email, error: %v", err.Error())
 			}
 		}
 		if user == nil {
@@ -129,7 +129,7 @@ func (s *APIV1Service) CreateSession(ctx context.Context, request *v1pb.CreateSe
 		if identifierFilter != "" {
 			identifierFilterRegex, err := regexp.Compile(identifierFilter)
 			if err != nil {
-				return nil, status.Errorf(codes.Internal, "failed to compile identifier filter regex, error: %v", err)
+				return nil, status.Errorf(codes.Internal, "failed to compile identifier filter regex, error: %v", err.Error())
 			}
 			if !identifierFilterRegex.MatchString(userInfo.Identifier) {
 				return nil, status.Errorf(codes.PermissionDenied, "identifier %s is not allowed", userInfo.Identifier)
@@ -140,13 +140,13 @@ func (s *APIV1Service) CreateSession(ctx context.Context, request *v1pb.CreateSe
 			Username: &userInfo.Identifier,
 		})
 		if err != nil {
-			return nil, status.Errorf(codes.Internal, "failed to get user, error: %v", err)
+			return nil, status.Errorf(codes.Internal, "failed to get user, error: %v", err.Error())
 		}
 		if user == nil {
 			// Check if the user is allowed to sign up.
 			workspaceGeneralSetting, err := s.Store.GetWorkspaceGeneralSetting(ctx)
 			if err != nil {
-				return nil, status.Errorf(codes.Internal, "failed to get workspace general setting, error: %v", err)
+				return nil, status.Errorf(codes.Internal, "failed to get workspace general setting, error: %v", err.Error())
 			}
 			if workspaceGeneralSetting.DisallowUserRegistration {
 				return nil, status.Errorf(codes.PermissionDenied, "user registration is not allowed")
@@ -182,7 +182,7 @@ func (s *APIV1Service) CreateSession(ctx context.Context, request *v1pb.CreateSe
 		return nil, status.Errorf(codes.InvalidArgument, "invalid credentials")
 	}
 	if existingUser.RowStatus == store.Archived {
-		return nil, status.Errorf(codes.PermissionDenied, "user has been archived with username %s", existingUser.Username)
+		return nil, status.Errorf(codes.PermissionDenied, "This account has been archived")
 	}
 
 	// Default session expiration time is 100 year
