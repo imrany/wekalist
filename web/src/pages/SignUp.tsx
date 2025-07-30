@@ -25,7 +25,7 @@ const SignUp = observer(() => {
   const [verified, setVerified] = useState(false);
   const [password, setPassword] = useState("");
   const [showOTPInput, setShowOTPInput] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
+  const [showResendOTP, setShowResendOTP ] = useState(false)
   const workspaceGeneralSetting = workspaceStore.state.generalSetting;
 
   // Clean up localStorage on component unmount
@@ -49,13 +49,31 @@ const SignUp = observer(() => {
   const handleOTPInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value as string;
     // Only allow numeric input and limit to 6 characters
-    const numericText = text.replace(/\D/g, '').slice(0, 6);
-    setOtp(numericText);
+    setOtp(text);
     
     // Auto-verify when 6 digits are entered
-    if (numericText.length === 6) {
-      handleVerifyOTP(numericText);
+    if (text.length === 6) {
+      handleVerifyOTP(text);
     }
+  };
+
+  useEffect(() => {
+    let timer:any;
+    if (showOTPInput && !showResendOTP) {
+      timer = setTimeout(() => {
+        setShowResendOTP(true);
+      }, 1000 * 60 * 2);
+    }
+    return () => clearTimeout(timer);
+  }, [showOTPInput, showResendOTP]);
+
+  const validatePassword = (password: string) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    
+    return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers;
   };
 
   const handlePasswordInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +124,6 @@ const SignUp = observer(() => {
       localStorage.setItem("otp", serverOtp);
       localStorage.setItem("verifiedEmail", email.trim());
       
-      setOtpSent(true);
       setShowOTPInput(true);
       toast.success(t("auth.otp-sent"));
     } catch (error: any) {
@@ -131,14 +148,12 @@ const SignUp = observer(() => {
     if (!storedOTP || !verifiedEmail) {
       toast.error(t("auth.verification-expired"));
       setShowOTPInput(false);
-      setOtpSent(false);
       return;
     }
 
     if (verifiedEmail !== email.trim()) {
       toast.error(t("auth.email-mismatch"));
       setShowOTPInput(false);
-      setOtpSent(false);
       return;
     }
 
@@ -159,13 +174,19 @@ const SignUp = observer(() => {
       return;
     }
 
+    if (username.trim().length <= 3) {
+      toast.error(t("auth.username-too-short"));
+      return;
+    }
+
     if (!password.trim()) {
       toast.error(t("auth.password-required"));
       return;
     }
 
-    if (password.length < 6) {
-      toast.error(t("auth.password-too-short"));
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation) {
+      toast.error(t("auth.strong-password-required")); // Show first error
       return;
     }
 
@@ -209,7 +230,7 @@ const SignUp = observer(() => {
   const handleResendOTP = async () => {
     setOtp("");
     setShowOTPInput(false);
-    setOtpSent(false);
+    setShowResendOTP(false)
     await handleSendOTPButtonClick();
   };
 
@@ -250,41 +271,32 @@ const SignUp = observer(() => {
                         <Input
                           className="w-full bg-background h-10"
                           type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
                           readOnly={actionBtnLoadingState.isLoading}
-                          placeholder={t("common.otp")}
+                          placeholder={"******"}
                           value={otp}
-                          minLength={6}
-                          maxLength={6}
                           autoComplete="one-time-code"
                           autoCapitalize="off"
                           spellCheck={false}
                           onChange={handleOTPInputChanged}
                         />
-                        <button
+                        {showResendOTP?(<button
                           type="button"
                           className="mt-2 text-sm text-primary hover:underline"
                           onClick={handleResendOTP}
                           disabled={actionBtnLoadingState.isLoading}
                         >
                           {t("auth.resend-otp")}
-                        </button>
+                        </button>):(
+                          <p className="mt-2 text-xs text-muted-foreground italic">{t("auth.wait-resend-otp")}</p>
+                        )}
                       </div>
                     )}
                   </div>
                   
-                  {!showOTPInput ? (
+                  {!showOTPInput && (
                     <div className="flex flex-row justify-end items-center w-full mt-6">
                       <Button type="submit" className="w-full h-10" disabled={actionBtnLoadingState.isLoading}>
                         {t("common.send-otp")}
-                        {actionBtnLoadingState.isLoading && <LoaderIcon className="w-5 h-auto ml-2 animate-spin opacity-60" />}
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-row justify-end items-center w-full mt-6">
-                      <Button type="submit" className="w-full h-10" disabled={actionBtnLoadingState.isLoading || otp.length !== 6}>
-                        {t("common.verify")}
                         {actionBtnLoadingState.isLoading && <LoaderIcon className="w-5 h-auto ml-2 animate-spin opacity-60" />}
                       </Button>
                     </div>

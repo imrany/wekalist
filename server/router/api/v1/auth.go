@@ -32,6 +32,12 @@ type ClaimsMessage struct {
 	jwt.RegisteredClaims
 }
 
+// GenerateOTP generates One Time Password
+func GenerateOTP()string{
+	otp, _:=util.RandomString(6)
+	return otp
+}
+
 // GenerateAccessToken generates an access token.
 func GenerateAccessToken(username string, userID int32, expirationTime time.Time, secret []byte) (string, error) {
 	return generateToken(username, userID, AccessTokenAudienceName, expirationTime, secret)

@@ -30,7 +30,18 @@ func (s *APIV1Service) VerifyUser(ctx context.Context, request *v1pb.VerifyReque
 	if !base.EMAILMatcher.MatchString(strings.ToLower(request.Email)) {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid email: %s", request.Email)
 	}
-	otp := "666666"
+	email, err := s.Store.ListUsers(ctx, &store.FindUser{
+		Email: &request.Email,
+	})
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to send OTP: %v", err.Error())
+	}
+	
+	if len(email) != 0 {
+		return nil, status.Errorf(codes.AlreadyExists, "failed, account already exist")
+	}
+
+	otp := GenerateOTP()
 	verificationRespond := &v1pb.VerifyResponse{
 		Email: request.Email,
 		Otp: otp,
@@ -163,7 +174,7 @@ func (s *APIV1Service) CreateUser(ctx context.Context, request *v1pb.CreateUserR
 		Role: &hostUserType,
 	})
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to list host users: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to list host users: %v", err.Error())
 	}
 
 	// Determine the role to assign and check permissions

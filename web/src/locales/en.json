@@ -29,7 +29,10 @@
     "signup-success":"Signup success",
     "signup-failed":"Signup failed",
     "resend-otp":"Resend OTP",
-    "signup-disabled":"Signup disabled"
+    "signup-disabled":"Signup disabled",
+    "strong-password-required":"Strong password required",
+    "wait-resend-otp":"Wait for resend OTP button...",
+    "username-too-short":"Username too short"
   },
   "common": {
     "about": "About",
@@ -78,7 +81,7 @@
     "nickname": "Nickname",
     "null": "Null",
     "or": "or",
-    "otp":"One Time Pin",
+    "otp":"One Time Password",
     "password": "Password",
     "pin": "Pin",
     "pinned": "Pinned",
