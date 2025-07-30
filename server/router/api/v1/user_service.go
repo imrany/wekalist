@@ -38,9 +38,8 @@ func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) 
 		TotalSize: int32(len(users)),
 	}
 	for _, user := range users {
-		// Only include users with memoVisibility containing "PUBLIC" and role user
-		if strings.Contains(strings.ToUpper(user.Value), "\"MEMOVISIBILITY\":\"PUBLIC\"") &&
-			user.Role == store.RoleUser {
+		// Only include users with role user
+		if user.Role == store.RoleUser {
 			response.Users = append(response.Users, convertUserFromStore(user))
 		}
 	}
