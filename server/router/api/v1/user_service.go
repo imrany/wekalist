@@ -27,6 +27,14 @@ import (
 )
 
 func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) (*v1pb.ListUsersResponse, error) {
+	currentUser, err := s.GetCurrentUser(ctx)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
+	}
+	if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
+		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+	}
+
 	users, err := s.Store.ListUsers(ctx, &store.FindUser{})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list users: %v", err)
@@ -38,8 +46,8 @@ func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) 
 		TotalSize: int32(len(users)),
 	}
 	for _, user := range users {
-		// Only include users with role user
-		if user.Role == store.RoleUser {
+		// Only include users with role user and admin
+		if user.Role == store.RoleUser || user.Role == store.RoleAdmin {
 			response.Users = append(response.Users, convertUserFromStore(user))
 		}
 	}
@@ -69,13 +77,13 @@ func (s *APIV1Service) GetUser(ctx context.Context, request *v1pb.GetUserRequest
 }
 
 func (s *APIV1Service) SearchUsers(ctx context.Context, request *v1pb.SearchUsersRequest) (*v1pb.SearchUsersResponse, error) {
-	// currentUser, err := s.GetCurrentUser(ctx)
-	// if err != nil {
-	// 	return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
-	// }
-	// if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
-	// 	return nil, status.Errorf(codes.PermissionDenied, "permission denied")
-	// }
+	currentUser, err := s.GetCurrentUser(ctx)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
+	}
+	if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
+		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+	}
 
 	// Search users by username, email, or display name
 	users, err := s.Store.ListUsers(ctx, &store.FindUser{})
