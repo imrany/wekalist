@@ -248,6 +248,8 @@
     "access-token-section": {
       "access-token-copied-to-clipboard": "Access token copied to clipboard",
       "access-token-deletion": "Are you sure to delete access token {{accessToken}}? THIS ACTION IS IRREVERSIBLE.",
+      "access-token-deleted":"Access Token Deleted",
+      "access-token-delete":"Delete Access Token",
       "create-dialog": {
         "create-access-token": "Create Access Token",
         "created-at": "Created At",

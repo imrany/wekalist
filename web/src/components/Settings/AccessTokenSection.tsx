@@ -10,10 +10,15 @@ import { UserAccessToken } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
 import CreateAccessTokenDialog from "../CreateAccessTokenDialog";
 import LearnMore from "../LearnMore";
+import DialogBox, { DialogType } from "../Dialogs/DialogBox";
 
 const listAccessTokens = async (parent: string) => {
   const { accessTokens } = await userServiceClient.listUserAccessTokens({ parent });
   return accessTokens.sort((a, b) => (b.issuedAt?.getTime() ?? 0) - (a.issuedAt?.getTime() ?? 0));
+};
+
+export const getFormatedAccessToken = (accessToken: string) => {
+  return `${accessToken.slice(0, 4)}****${accessToken.slice(-4)}`;
 };
 
 const AccessTokenSection = () => {
@@ -21,6 +26,9 @@ const AccessTokenSection = () => {
   const currentUser = useCurrentUser();
   const [userAccessTokens, setUserAccessTokens] = useState<UserAccessToken[]>([]);
   const createTokenDialog = useDialog();
+  const [open, setOpen]=useState(false)
+  const [selectedUserAccessToken, setSelectedUserAccessToken] = useState<UserAccessToken>();
+
 
   useEffect(() => {
     listAccessTokens(currentUser.name).then((accessTokens) => {
@@ -42,17 +50,30 @@ const AccessTokenSection = () => {
     toast.success(t("setting.access-token-section.access-token-copied-to-clipboard"));
   };
 
-  const handleDeleteAccessToken = async (userAccessToken: UserAccessToken) => {
-    const formatedAccessToken = getFormatedAccessToken(userAccessToken.accessToken);
-    const confirmed = window.confirm(t("setting.access-token-section.access-token-deletion", { accessToken: formatedAccessToken }));
-    if (confirmed) {
-      await userServiceClient.deleteUserAccessToken({ name: userAccessToken.name });
-      setUserAccessTokens(userAccessTokens.filter((token) => token.accessToken !== userAccessToken.accessToken));
+  const onOpenChange = (state: boolean) => {
+    setOpen(state);
+    if (!state) {
+      setSelectedUserAccessToken(undefined);
     }
   };
 
-  const getFormatedAccessToken = (accessToken: string) => {
-    return `${accessToken.slice(0, 4)}****${accessToken.slice(-4)}`;
+  const handleDeleteAccessToken = async (userAccessToken: UserAccessToken) => {
+    if (!userAccessToken) return;
+
+    try{
+      await userServiceClient.deleteUserAccessToken({ name: userAccessToken.name });
+      setUserAccessTokens(userAccessTokens.filter((token) => token.accessToken !== userAccessToken.accessToken));
+      toast.success(t("setting.access-token-section.access-token-deleted"));
+      onOpenChange(false); // Close dialog after success
+    }catch(error){
+      console.error("Failed to delete session:", error);
+      toast.error("Failed to delete session");
+    }
+  };
+
+  const handleOpenDeleteAccessTokenDialog = (userAccessToken: UserAccessToken) => {
+    setSelectedUserAccessToken(userAccessToken);
+    setOpen(true);
   };
 
   return (
@@ -104,7 +125,7 @@ const AccessTokenSection = () => {
                           <ClipboardIcon className="w-4 h-auto text-muted-foreground" />
                         </Button>
                       </td>
-                      <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-foreground">{userAccessToken.description}</td>
+                      <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-foreground truncate">{userAccessToken.description}</td>
                       <td className="whitespace-nowrap px-3 py-2 text-sm text-muted-foreground">
                         {userAccessToken.issuedAt?.toLocaleString()}
                       </td>
@@ -115,7 +136,7 @@ const AccessTokenSection = () => {
                         <Button
                           variant="ghost"
                           onClick={() => {
-                            handleDeleteAccessToken(userAccessToken);
+                            handleOpenDeleteAccessTokenDialog(userAccessToken);
                           }}
                         >
                           <TrashIcon className="text-destructive w-4 h-auto" />
@@ -135,6 +156,14 @@ const AccessTokenSection = () => {
         open={createTokenDialog.isOpen}
         onOpenChange={createTokenDialog.setOpen}
         onSuccess={handleCreateAccessTokenDialogConfirm}
+      />
+      {/* Confirmation Dialog */}
+      <DialogBox
+        dialogType={DialogType.DELETE_ACCESS_TOKEN} 
+        open={open} 
+        selectedUserAccessToken={selectedUserAccessToken}
+        onOpenChange={onOpenChange}
+        actionButtonFunction={handleDeleteAccessToken}
       />
     </div>
   );

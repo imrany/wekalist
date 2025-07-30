@@ -7,14 +7,16 @@ import {
   DialogTitle, 
   DialogContent 
 } from "../ui/dialog";
-import { User, UserSession } from "@/types/proto/api/v1/user_service";
+import { User, UserAccessToken, UserSession } from "@/types/proto/api/v1/user_service";
+import { getFormatedAccessToken } from "../Settings/AccessTokenSection";
 
 export enum DialogType {
   DELETE_MEMO = "Delete",
   REMOVE_COMPLETE_TASK = "Remove",
   ARCHIVE_MEMBER = "Archive Member",
   DELETE_MEMBER = "Delete Member",
-  REVOKE_SESSION = "Revoke Session"
+  REVOKE_SESSION = "Revoke Session",
+  DELETE_ACCESS_TOKEN="Delete Access Token"
 }
 
 type Props = {
@@ -24,6 +26,7 @@ type Props = {
   dialogType: DialogType;
   selectedUser?: User;
   selectedUserSession?: UserSession;
+  selectedUserAccessToken?: UserAccessToken;
 };
 
 type DialogConfig = {
@@ -33,7 +36,7 @@ type DialogConfig = {
 };
 
 export default function DialogBox(props: Props) {
-  const { open, onOpenChange, actionButtonFunction, dialogType, selectedUser, selectedUserSession } = props;
+  const { open, onOpenChange, actionButtonFunction, dialogType, selectedUser, selectedUserSession, selectedUserAccessToken } = props;
   const t = useTranslate();
 
   const getFormattedSessionId = (sessionId: string) => {
@@ -68,6 +71,11 @@ export default function DialogBox(props: Props) {
         sessionId: getFormattedSessionId(selectedUserSession?.sessionId || "") 
       }),
       actionButtonText: t("common.revoke")
+    },
+    [DialogType.DELETE_ACCESS_TOKEN]: {
+      title:t("setting.access-token-section.access-token-delete"),
+      confirmMessage: t("setting.access-token-section.access-token-deletion", { accessToken: getFormatedAccessToken(selectedUserAccessToken?.accessToken || "") }),
+      actionButtonText: t("common.delete")
     }
   };
 
@@ -80,6 +88,8 @@ export default function DialogBox(props: Props) {
         actionButtonFunction(selectedUser);
       } else if (dialogType === DialogType.REVOKE_SESSION) {
         actionButtonFunction(selectedUserSession);
+      } else if (dialogType === DialogType.DELETE_ACCESS_TOKEN) {
+        actionButtonFunction(selectedUserAccessToken);
       } else {
         // For memo-related actions, call without parameters
         actionButtonFunction();
