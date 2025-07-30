@@ -22,8 +22,8 @@ import { Memo } from "@/types/proto/api/v1/memo_service";
 import { useTranslate } from "@/utils/i18n";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import DeleteMemoDialog from "./Dialogs/DeleteMemoDialog";
 import { useState } from "react";
+import MemoDialog, { DialogType } from "./Dialogs/MemoDialog";
 
 interface Props {
   memo: Memo;
@@ -54,7 +54,8 @@ const MemoActionMenu = observer((props: Props) => {
   const isInMemoDetailPage = location.pathname.startsWith(`/${memo.name}`);
   const isComment = Boolean(memo.parent);
   const isArchived = memo.state === State.ARCHIVED;
-  const [open, setOpen]=useState(false)
+  const [open, setOpen] = useState(false);
+  const [dialogType, setDialogType] = useState<DialogType | null>(null);
 
   const memoUpdatedCallback = () => {
     // Refresh user stats.
@@ -85,9 +86,12 @@ const MemoActionMenu = observer((props: Props) => {
     }
   };
 
-  const onOpenChange = (state: boolean)=>{
-    setOpen(false)
-  }
+  const onOpenChange = (state: boolean) => {
+    setOpen(state);
+    if (!state) {
+      setDialogType(null);
+    }
+  };
 
   const handleEditMemoClick = () => {
     if (props.onEdit) {
@@ -126,18 +130,22 @@ const MemoActionMenu = observer((props: Props) => {
   };
 
   const handleDeleteMemoClick = async () => {
-    await memoStore.deleteMemo(memo.name);
-    toast.success(t("message.deleted-successfully"));
-    onOpenChange(false)
-    if (isInMemoDetailPage) {
-      navigateTo("/");
+    try {
+      await memoStore.deleteMemo(memo.name);
+      toast.success(t("message.deleted-successfully"));
+      onOpenChange(false);
+      if (isInMemoDetailPage) {
+        navigateTo("/");
+      }
+      memoUpdatedCallback();
+    } catch (error: any) {
+      toast.error(error.details || "Failed to delete memo");
+      console.error(error);
     }
-    memoUpdatedCallback();
   };
 
   const handleRemoveCompletedTaskListItemsClick = async () => {
-    const confirmed = window.confirm(t("memo.remove-completed-task-list-items-confirm"));
-    if (confirmed) {
+    try {
       const newNodes = JSON.parse(JSON.stringify(memo.nodes));
       for (const node of newNodes) {
         if (node.type === NodeType.LIST && node.listNode?.children?.length > 0) {
@@ -163,8 +171,17 @@ const MemoActionMenu = observer((props: Props) => {
         ["content"],
       );
       toast.success(t("message.remove-completed-task-list-items-successfully"));
+      onOpenChange(false);
       memoUpdatedCallback();
+    } catch (error: any) {
+      toast.error(error.details || "Failed to remove completed tasks");
+      console.error(error);
     }
+  };
+
+  const handleOpenMemoDialog = (type: DialogType) => {
+    setDialogType(type);
+    setOpen(true);
   };
 
   return (
@@ -199,7 +216,7 @@ const MemoActionMenu = observer((props: Props) => {
           {!readonly && (
             <>
               {!isArchived && !isComment && hasCompletedTaskList && (
-                <DropdownMenuItem onClick={handleRemoveCompletedTaskListItemsClick}>
+                <DropdownMenuItem onClick={() => handleOpenMemoDialog(DialogType.REMOVE_COMPLETE_TASK)}>
                   <SquareCheckIcon className="w-4 h-auto" />
                   {t("memo.remove-completed-task-list-items")}
                 </DropdownMenuItem>
@@ -210,7 +227,7 @@ const MemoActionMenu = observer((props: Props) => {
                   {isArchived ? t("common.restore") : t("common.archive")}
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem onClick={()=>setOpen(true)}>
+              <DropdownMenuItem onClick={() => handleOpenMemoDialog(DialogType.DELETE_MEMO)}>
                 <TrashIcon className="w-4 h-auto" />
                 {t("common.delete")}
               </DropdownMenuItem>
@@ -219,7 +236,15 @@ const MemoActionMenu = observer((props: Props) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <DeleteMemoDialog open={open} handleDeleteMemoClick={handleDeleteMemoClick} onOpenChange={onOpenChange}/>
+      {/* Single MemoDialog instance that handles both dialog types */}
+      {dialogType && (
+        <MemoDialog 
+          dialogType={dialogType} 
+          open={open} 
+          onOpenChange={onOpenChange}
+          actionButtonFunction={dialogType === DialogType.DELETE_MEMO ? handleDeleteMemoClick : handleRemoveCompletedTaskListItemsClick}
+        />
+      )}
     </>
   );
 });
