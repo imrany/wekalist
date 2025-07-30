@@ -101,11 +101,6 @@ const router = createBrowserRouter([
                   </Suspense>
                 ),
               },
-            ],
-          },
-          {
-            element: <ExploreLayout/>,
-            children:[
               {
                 path: Routes.EXPLORE,
                 element: (
@@ -116,6 +111,19 @@ const router = createBrowserRouter([
               },
             ],
           },
+          // {
+          //   element: <ExploreLayout/>,
+          //   children:[
+          //     {
+          //       path: Routes.EXPLORE,
+          //       element: (
+          //         <Suspense fallback={<Loading />}>
+          //           <Explore />
+          //         </Suspense>
+          //       ),
+          //     },
+          //   ],
+          // },
           {
             path: Routes.ATTACHMENTS,
             element: (
