@@ -13,6 +13,7 @@ import useResponsiveWidth from "@/hooks/useResponsiveWidth";
 import Renderer from "../MemoContent/Renderer";
 import { Node, NodeType } from "@/types/proto/api/v1/markdown_service";
 import useLoading from "@/hooks/useLoading";
+import { useTranslate } from "@/utils/i18n";
 
 const dummySummary =
   "This memo discusses the quarterly financial results and outlines the next steps for the team.";
@@ -57,6 +58,7 @@ type Props = {
 export default function MemoSummary({ memo }: Props) {
   const { sm } = useResponsiveWidth();
   const loadingState = useLoading();
+  const t =useTranslate()
   
   const [openKey, setOpenKey] = useState("");
   const summaryText = memo?.snippet ?? dummySummary;
@@ -92,7 +94,7 @@ export default function MemoSummary({ memo }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align={sm ? "end" : "center"} sideOffset={sm ? 7 : 6}>
         <DropdownMenuLabel className="w-full text-base text-foreground leading-tight font-medium opacity-80 truncate">
-          Memo summary
+          {t("memo.ai.memo-summary")}
         </DropdownMenuLabel>
         <DropdownMenuItem>
           <p className="block leading-tight text-wrap lg:max-w-4xl md:max-w-2xl sm:max-w-2xs max-sm:max-w-[80vw] hover:opacity-80 rounded-md transition-colors text-muted-foreground">
