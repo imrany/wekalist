@@ -12,15 +12,19 @@ import { User, User_Role } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
 import CreateUserDialog from "../CreateUserDialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import DialogBox, { DialogType } from "../Dialogs/DialogBox";
 
 const MemberSection = observer(() => {
   const t = useTranslate();
   const currentUser = useCurrentUser();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>();
   const createDialog = useDialog();
   const editDialog = useDialog();
   const [editingUser, setEditingUser] = useState<User | undefined>();
   const sortedUsers = sortBy(users, "id");
+  const [open, setOpen] = useState(false);
+  const [dialogType, setDialogType] = useState<DialogType | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User>();
 
   useEffect(() => {
     fetchUsers();
@@ -51,9 +55,10 @@ const MemberSection = observer(() => {
     editDialog.open();
   };
 
-  const handleArchiveUserClick = async (user: User) => {
-    const confirmed = window.confirm(t("setting.member-section.archive-warning", { username: user.displayName }));
-    if (confirmed) {
+  const handleArchiveUserClick = async (user?: User) => {
+    if (!user) return;
+    
+    try {
       await userServiceClient.updateUser({
         user: {
           name: user.name,
@@ -62,25 +67,62 @@ const MemberSection = observer(() => {
         updateMask: ["state"],
       });
       fetchUsers();
+      onOpenChange(false); // Close dialog after success
+    } catch (error) {
+      console.error("Failed to archive user:", error);
     }
   };
 
   const handleRestoreUserClick = async (user: User) => {
-    await userServiceClient.updateUser({
-      user: {
-        name: user.name,
-        state: State.NORMAL,
-      },
-      updateMask: ["state"],
-    });
-    fetchUsers();
+    try {
+      await userServiceClient.updateUser({
+        user: {
+          name: user.name,
+          state: State.NORMAL,
+        },
+        updateMask: ["state"],
+      });
+      fetchUsers();
+    } catch (error) {
+      console.error("Failed to restore user:", error);
+    }
   };
 
-  const handleDeleteUserClick = async (user: User) => {
-    const confirmed = window.confirm(t("setting.member-section.delete-warning", { username: user.displayName }));
-    if (confirmed) {
+  const handleDeleteUserClick = async (user?: User) => {
+    if (!user) return;
+    
+    try {
       await userStore.deleteUser(user.name);
       fetchUsers();
+      onOpenChange(false); // Close dialog after success
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    }
+  };
+
+  const onOpenChange = (state: boolean) => {
+    setOpen(state);
+    if (!state) {
+      setDialogType(null);
+      setSelectedUser(undefined);
+    }
+  };
+
+  const handleOpenConfirmationDialog = (type: DialogType, user: User) => {
+    setSelectedUser(user);
+    setDialogType(type);
+    setOpen(true);
+  };
+
+  // Get the appropriate action function based on dialog type
+  const getActionFunction = () => {
+    switch (dialogType) {
+      case DialogType.DELETE_MEMBER:
+        return handleDeleteUserClick;
+      case DialogType.ARCHIVE_MEMBER:
+        return handleArchiveUserClick;
+      default:
+        return undefined;
     }
   };
 
@@ -139,14 +181,14 @@ const MemberSection = observer(() => {
                         <DropdownMenuContent align="end" sideOffset={2}>
                           <DropdownMenuItem onClick={() => handleEditUser(user)}>{t("common.update")}</DropdownMenuItem>
                           {user.state === State.NORMAL ? (
-                            <DropdownMenuItem onClick={() => handleArchiveUserClick(user)}>
+                            <DropdownMenuItem onClick={() => handleOpenConfirmationDialog(DialogType.ARCHIVE_MEMBER, user)}>
                               {t("setting.member-section.archive-member")}
                             </DropdownMenuItem>
                           ) : (
                             <>
                               <DropdownMenuItem onClick={() => handleRestoreUserClick(user)}>{t("common.restore")}</DropdownMenuItem>
                               <DropdownMenuItem
-                                onClick={() => handleDeleteUserClick(user)}
+                                onClick={() => handleOpenConfirmationDialog(DialogType.DELETE_MEMBER, user)}
                                 className="text-destructive focus:text-destructive"
                               >
                                 {t("setting.member-section.delete-member")}
@@ -169,6 +211,17 @@ const MemberSection = observer(() => {
 
       {/* Edit User Dialog */}
       <CreateUserDialog open={editDialog.isOpen} onOpenChange={editDialog.setOpen} user={editingUser} onSuccess={fetchUsers} />
+
+      {/* Single Confirmation DialogBox instance that handles both dialog types */}
+      {dialogType && (
+        <DialogBox
+          dialogType={dialogType} 
+          open={open} 
+          selectedUser={selectedUser}
+          onOpenChange={onOpenChange}
+          actionButtonFunction={getActionFunction()}
+        />
+      )}
     </div>
   );
 });
