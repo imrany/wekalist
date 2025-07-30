@@ -16,17 +16,19 @@ const PasswordSignInForm = observer(() => {
   const t = useTranslate();
   const navigateTo = useNavigateTo();
   const actionBtnLoadingState = useLoading(false);
-  const [username, setUsername] = useState(workspaceStore.state.profile.mode === "demo" ? "yourselfhosted" : "");
-  const [password, setPassword] = useState(workspaceStore.state.profile.mode === "demo" ? "yourselfhosted" : "");
+  const [usernameOrEmail, setUsernameOrEmail] = useState(
+    workspaceStore.state.profile.mode === "demo" ? "yourselfhosted" : ""
+  );
+  const [password, setPassword] = useState(
+    workspaceStore.state.profile.mode === "demo" ? "yourselfhosted" : ""
+  );
 
-  const handleUsernameInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value as string;
-    setUsername(text);
+  const handleUsernameOrEmailInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsernameOrEmail(e.target.value as string);
   };
 
   const handlePasswordInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value as string;
-    setPassword(text);
+    setPassword(e.target.value as string);
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +37,7 @@ const PasswordSignInForm = observer(() => {
   };
 
   const handleSignInButtonClick = async () => {
-    if (username === "" || password === "") {
+    if (usernameOrEmail === "" || password === "") {
       return;
     }
 
@@ -46,7 +48,7 @@ const PasswordSignInForm = observer(() => {
     try {
       actionBtnLoadingState.setLoading();
       await authServiceClient.createSession({
-        passwordCredentials: { username, password },
+        passwordCredentials: { username: usernameOrEmail, password },
       });
       await initialUserStore();
       navigateTo("/");
@@ -61,17 +63,19 @@ const PasswordSignInForm = observer(() => {
     <form className="w-full mt-2" onSubmit={handleFormSubmit}>
       <div className="flex flex-col justify-start items-start w-full gap-4">
         <div className="w-full flex flex-col justify-start items-start">
-          <span className="leading-8 text-muted-foreground">{t("common.username")}</span>
+          <span className="leading-8 text-muted-foreground">
+            {t("common.username-or-email")}
+          </span>
           <Input
             className="w-full bg-background h-10"
             type="text"
             readOnly={actionBtnLoadingState.isLoading}
-            placeholder={t("common.username")}
-            value={username}
-            autoComplete="username"
+            placeholder={t("common.username-or-email")}
+            value={usernameOrEmail}
+            autoComplete="username email"
             autoCapitalize="off"
             spellCheck={false}
-            onChange={handleUsernameInputChanged}
+            onChange={handleUsernameOrEmailInputChanged}
             required
           />
         </div>
@@ -83,7 +87,7 @@ const PasswordSignInForm = observer(() => {
             readOnly={actionBtnLoadingState.isLoading}
             placeholder={t("common.password")}
             value={password}
-            autoComplete="password"
+            autoComplete="current-password"
             autoCapitalize="off"
             spellCheck={false}
             onChange={handlePasswordInputChanged}
@@ -92,9 +96,16 @@ const PasswordSignInForm = observer(() => {
         </div>
       </div>
       <div className="flex flex-row justify-end items-center w-full mt-6">
-        <Button type="submit" className="w-full h-10" disabled={actionBtnLoadingState.isLoading} onClick={handleSignInButtonClick}>
+        <Button
+          type="submit"
+          className="w-full h-10"
+          disabled={actionBtnLoadingState.isLoading}
+          onClick={handleSignInButtonClick}
+        >
           {t("common.sign-in")}
-          {actionBtnLoadingState.isLoading && <LoaderIcon className="w-5 h-auto ml-2 animate-spin opacity-60" />}
+          {actionBtnLoadingState.isLoading && (
+            <LoaderIcon className="w-5 h-auto ml-2 animate-spin opacity-60" />
+          )}
         </Button>
       </div>
     </form>

@@ -17,6 +17,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/usememos/memos/internal/base"
 	"github.com/usememos/memos/internal/util"
 	"github.com/usememos/memos/plugin/idp"
 	"github.com/usememos/memos/plugin/idp/oauth2"
@@ -60,11 +61,26 @@ func (s *APIV1Service) GetCurrentSession(ctx context.Context, _ *v1pb.GetCurrent
 func (s *APIV1Service) CreateSession(ctx context.Context, request *v1pb.CreateSessionRequest) (*v1pb.CreateSessionResponse, error) {
 	var existingUser *store.User
 	if passwordCredentials := request.GetPasswordCredentials(); passwordCredentials != nil {
+		// Try to find user by username first
 		user, err := s.Store.GetUser(ctx, &store.FindUser{
 			Username: &passwordCredentials.Username,
 		})
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to get user, error: %v", err)
+		}
+		// If not found, try by email
+		if user == nil {
+			// take the username  value as email in cases where users use email instead of username
+			email := passwordCredentials.Username
+			if !base.EMAILMatcher.MatchString(strings.ToLower(email)) {
+				return nil, status.Errorf(codes.InvalidArgument, "invalid email: %s", email)
+			}
+			user, err = s.Store.GetUser(ctx, &store.FindUser{
+				Email: &email,
+			})
+			if err != nil {
+				return nil, status.Errorf(codes.Internal, "failed to get user by email, error: %v", err)
+			}
 		}
 		if user == nil {
 			return nil, status.Errorf(codes.InvalidArgument, unmatchedUsernameAndPasswordError)

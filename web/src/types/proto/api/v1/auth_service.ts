@@ -38,7 +38,7 @@ export interface CreateSessionRequest {
 /** Nested message for password-based authentication credentials. */
 export interface CreateSessionRequest_PasswordCredentials {
   /**
-   * The username to sign in with.
+   * The username or email to sign in with.
    * Required field for password-based authentication.
    */
   username: string;

@@ -2441,7 +2441,7 @@ components:
                 username:
                     type: string
                     description: |-
-                        The username to sign in with.
+                        The username or email to sign in with.
                          Required field for password-based authentication.
                 password:
                     type: string

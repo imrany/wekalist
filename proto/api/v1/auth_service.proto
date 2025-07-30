@@ -46,7 +46,7 @@ message GetCurrentSessionResponse {
 message CreateSessionRequest {
   // Nested message for password-based authentication credentials.
   message PasswordCredentials {
-    // The username to sign in with.
+    // The username or email to sign in with.
     // Required field for password-based authentication.
     string username = 1 [(google.api.field_behavior) = REQUIRED];
 

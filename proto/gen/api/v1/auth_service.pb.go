@@ -295,7 +295,7 @@ func (*DeleteSessionRequest) Descriptor() ([]byte, []int) {
 // Nested message for password-based authentication credentials.
 type CreateSessionRequest_PasswordCredentials struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The username to sign in with.
+	// The username or email to sign in with.
 	// Required field for password-based authentication.
 	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	// The password to sign in with.
