@@ -199,7 +199,7 @@ function UpdateAccountDialog({ open, onOpenChange, onSuccess }: Props) {
               {t("common.email")}
               <span className="text-sm text-muted-foreground ml-1">({t("setting.account-section.email-note")})</span>
             </Label>
-            <Input id="email" type="email" value={state.email} onChange={handleEmailChanged} />
+            <Input id="email" type="email" className={state.email.length!==0?"cursor-not-allowed":""} disabled={state.email.length!==0} value={state.email} onChange={handleEmailChanged} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="description">{t("common.description")}</Label>

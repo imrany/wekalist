@@ -98,6 +98,18 @@ export function user_RoleToNumber(object: User_Role): number {
   }
 }
 
+export interface VerifyRequest {
+  /** The user email */
+  email: string;
+}
+
+export interface VerifyResponse {
+  /** The user email */
+  email: string;
+  /** The One Time Password (OTP) */
+  otp: string;
+}
+
 export interface ListUsersRequest {
   /**
    * Optional. The maximum number of users to return.
@@ -623,6 +635,110 @@ export const User: MessageFns<User> = {
     message.createTime = object.createTime ?? undefined;
     message.updateTime = object.updateTime ?? undefined;
     message.memoVisibility = object.memoVisibility ?? "";
+    return message;
+  },
+};
+
+function createBaseVerifyRequest(): VerifyRequest {
+  return { email: "" };
+}
+
+export const VerifyRequest: MessageFns<VerifyRequest> = {
+  encode(message: VerifyRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.email !== "") {
+      writer.uint32(10).string(message.email);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): VerifyRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVerifyRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.email = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<VerifyRequest>): VerifyRequest {
+    return VerifyRequest.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<VerifyRequest>): VerifyRequest {
+    const message = createBaseVerifyRequest();
+    message.email = object.email ?? "";
+    return message;
+  },
+};
+
+function createBaseVerifyResponse(): VerifyResponse {
+  return { email: "", otp: "" };
+}
+
+export const VerifyResponse: MessageFns<VerifyResponse> = {
+  encode(message: VerifyResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.email !== "") {
+      writer.uint32(10).string(message.email);
+    }
+    if (message.otp !== "") {
+      writer.uint32(18).string(message.otp);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): VerifyResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVerifyResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.email = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.otp = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  create(base?: DeepPartial<VerifyResponse>): VerifyResponse {
+    return VerifyResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<VerifyResponse>): VerifyResponse {
+    const message = createBaseVerifyResponse();
+    message.email = object.email ?? "";
+    message.otp = object.otp ?? "";
     return message;
   },
 };
@@ -2567,6 +2683,46 @@ export const UserServiceDefinition = {
   name: "UserService",
   fullName: "memos.api.v1.UserService",
   methods: {
+    /** VerifyUser, verifies user's email. */
+    verifyUser: {
+      name: "VerifyUser",
+      requestType: VerifyRequest,
+      requestStream: false,
+      responseType: VerifyResponse,
+      responseStream: false,
+      options: {
+        _unknownFields: {
+          578365826: [
+            new Uint8Array([
+              23,
+              58,
+              5,
+              101,
+              109,
+              97,
+              105,
+              108,
+              34,
+              14,
+              47,
+              97,
+              112,
+              105,
+              47,
+              118,
+              49,
+              47,
+              118,
+              101,
+              114,
+              105,
+              102,
+              121,
+            ]),
+          ],
+        },
+      },
+    },
     /** ListUsers returns a list of users. */
     listUsers: {
       name: "ListUsers",

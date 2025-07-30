@@ -26,6 +26,18 @@ import (
 	"github.com/usememos/memos/store"
 )
 
+func (s *APIV1Service) VerifyUser(ctx context.Context, request *v1pb.VerifyRequest) (*v1pb.VerifyResponse, error){
+	if !base.EMAILMatcher.MatchString(strings.ToLower(request.Email)) {
+		return nil, status.Errorf(codes.InvalidArgument, "invalid email: %s", request.Email)
+	}
+	otp := "666666"
+	verificationRespond := &v1pb.VerifyResponse{
+		Email: request.Email,
+		Otp: otp,
+	}
+	return verificationRespond, nil
+}
+
 func (s *APIV1Service) ListUsers(ctx context.Context, _ *v1pb.ListUsersRequest) (*v1pb.ListUsersResponse, error) {
 	currentUser, err := s.GetCurrentUser(ctx)
 	if err != nil {

@@ -2131,6 +2131,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v1/verify:
+        post:
+            tags:
+                - UserService
+            description: VerifyUser, verifies user's email.
+            operationId: UserService_VerifyUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VerifyResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/v1/workspace/profile:
         get:
             tags:
@@ -3680,6 +3705,18 @@ components:
                     type: integer
                     format: int32
             description: Memo type statistics.
+        VerifyResponse:
+            required:
+                - email
+                - otp
+            type: object
+            properties:
+                email:
+                    type: string
+                    description: The user email
+                otp:
+                    type: string
+                    description: The One Time Password (OTP)
         Webhook:
             required:
                 - displayName

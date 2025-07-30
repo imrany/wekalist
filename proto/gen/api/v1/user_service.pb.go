@@ -228,6 +228,105 @@ func (x *User) GetMemoVisibility() string {
 	return ""
 }
 
+type VerifyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The user email
+	Email         string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyRequest) Reset() {
+	*x = VerifyRequest{}
+	mi := &file_api_v1_user_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyRequest) ProtoMessage() {}
+
+func (x *VerifyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1_user_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyRequest.ProtoReflect.Descriptor instead.
+func (*VerifyRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *VerifyRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type VerifyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The user email
+	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	// The One Time Password (OTP)
+	Otp           string `protobuf:"bytes,2,opt,name=otp,proto3" json:"otp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyResponse) Reset() {
+	*x = VerifyResponse{}
+	mi := &file_api_v1_user_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyResponse) ProtoMessage() {}
+
+func (x *VerifyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1_user_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyResponse.ProtoReflect.Descriptor instead.
+func (*VerifyResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *VerifyResponse) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *VerifyResponse) GetOtp() string {
+	if x != nil {
+		return x.Otp
+	}
+	return ""
+}
+
 type ListUsersRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Optional. The maximum number of users to return.
@@ -254,7 +353,7 @@ type ListUsersRequest struct {
 
 func (x *ListUsersRequest) Reset() {
 	*x = ListUsersRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[1]
+	mi := &file_api_v1_user_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -266,7 +365,7 @@ func (x *ListUsersRequest) String() string {
 func (*ListUsersRequest) ProtoMessage() {}
 
 func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[1]
+	mi := &file_api_v1_user_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -279,7 +378,7 @@ func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersRequest.ProtoReflect.Descriptor instead.
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{1}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ListUsersRequest) GetPageSize() int32 {
@@ -332,7 +431,7 @@ type ListUsersResponse struct {
 
 func (x *ListUsersResponse) Reset() {
 	*x = ListUsersResponse{}
-	mi := &file_api_v1_user_service_proto_msgTypes[2]
+	mi := &file_api_v1_user_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -344,7 +443,7 @@ func (x *ListUsersResponse) String() string {
 func (*ListUsersResponse) ProtoMessage() {}
 
 func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[2]
+	mi := &file_api_v1_user_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -357,7 +456,7 @@ func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersResponse.ProtoReflect.Descriptor instead.
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{2}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListUsersResponse) GetUsers() []*User {
@@ -395,7 +494,7 @@ type GetUserRequest struct {
 
 func (x *GetUserRequest) Reset() {
 	*x = GetUserRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[3]
+	mi := &file_api_v1_user_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -407,7 +506,7 @@ func (x *GetUserRequest) String() string {
 func (*GetUserRequest) ProtoMessage() {}
 
 func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[3]
+	mi := &file_api_v1_user_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -420,7 +519,7 @@ func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserRequest.ProtoReflect.Descriptor instead.
 func (*GetUserRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{3}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetUserRequest) GetName() string {
@@ -456,7 +555,7 @@ type CreateUserRequest struct {
 
 func (x *CreateUserRequest) Reset() {
 	*x = CreateUserRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[4]
+	mi := &file_api_v1_user_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -468,7 +567,7 @@ func (x *CreateUserRequest) String() string {
 func (*CreateUserRequest) ProtoMessage() {}
 
 func (x *CreateUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[4]
+	mi := &file_api_v1_user_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -481,7 +580,7 @@ func (x *CreateUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateUserRequest.ProtoReflect.Descriptor instead.
 func (*CreateUserRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{4}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *CreateUserRequest) GetUser() *User {
@@ -526,7 +625,7 @@ type UpdateUserRequest struct {
 
 func (x *UpdateUserRequest) Reset() {
 	*x = UpdateUserRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[5]
+	mi := &file_api_v1_user_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -538,7 +637,7 @@ func (x *UpdateUserRequest) String() string {
 func (*UpdateUserRequest) ProtoMessage() {}
 
 func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[5]
+	mi := &file_api_v1_user_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -551,7 +650,7 @@ func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{5}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdateUserRequest) GetUser() *User {
@@ -588,7 +687,7 @@ type DeleteUserRequest struct {
 
 func (x *DeleteUserRequest) Reset() {
 	*x = DeleteUserRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[6]
+	mi := &file_api_v1_user_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -600,7 +699,7 @@ func (x *DeleteUserRequest) String() string {
 func (*DeleteUserRequest) ProtoMessage() {}
 
 func (x *DeleteUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[6]
+	mi := &file_api_v1_user_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -613,7 +712,7 @@ func (x *DeleteUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteUserRequest.ProtoReflect.Descriptor instead.
 func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{6}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *DeleteUserRequest) GetName() string {
@@ -644,7 +743,7 @@ type SearchUsersRequest struct {
 
 func (x *SearchUsersRequest) Reset() {
 	*x = SearchUsersRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[7]
+	mi := &file_api_v1_user_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -656,7 +755,7 @@ func (x *SearchUsersRequest) String() string {
 func (*SearchUsersRequest) ProtoMessage() {}
 
 func (x *SearchUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[7]
+	mi := &file_api_v1_user_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -669,7 +768,7 @@ func (x *SearchUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchUsersRequest.ProtoReflect.Descriptor instead.
 func (*SearchUsersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{7}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SearchUsersRequest) GetQuery() string {
@@ -707,7 +806,7 @@ type SearchUsersResponse struct {
 
 func (x *SearchUsersResponse) Reset() {
 	*x = SearchUsersResponse{}
-	mi := &file_api_v1_user_service_proto_msgTypes[8]
+	mi := &file_api_v1_user_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -719,7 +818,7 @@ func (x *SearchUsersResponse) String() string {
 func (*SearchUsersResponse) ProtoMessage() {}
 
 func (x *SearchUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[8]
+	mi := &file_api_v1_user_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -732,7 +831,7 @@ func (x *SearchUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchUsersResponse.ProtoReflect.Descriptor instead.
 func (*SearchUsersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{8}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SearchUsersResponse) GetUsers() []*User {
@@ -767,7 +866,7 @@ type GetUserAvatarRequest struct {
 
 func (x *GetUserAvatarRequest) Reset() {
 	*x = GetUserAvatarRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[9]
+	mi := &file_api_v1_user_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -779,7 +878,7 @@ func (x *GetUserAvatarRequest) String() string {
 func (*GetUserAvatarRequest) ProtoMessage() {}
 
 func (x *GetUserAvatarRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[9]
+	mi := &file_api_v1_user_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -792,7 +891,7 @@ func (x *GetUserAvatarRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserAvatarRequest.ProtoReflect.Descriptor instead.
 func (*GetUserAvatarRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{9}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetUserAvatarRequest) GetName() string {
@@ -824,7 +923,7 @@ type UserStats struct {
 
 func (x *UserStats) Reset() {
 	*x = UserStats{}
-	mi := &file_api_v1_user_service_proto_msgTypes[10]
+	mi := &file_api_v1_user_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -836,7 +935,7 @@ func (x *UserStats) String() string {
 func (*UserStats) ProtoMessage() {}
 
 func (x *UserStats) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[10]
+	mi := &file_api_v1_user_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -849,7 +948,7 @@ func (x *UserStats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserStats.ProtoReflect.Descriptor instead.
 func (*UserStats) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{10}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UserStats) GetName() string {
@@ -905,7 +1004,7 @@ type GetUserStatsRequest struct {
 
 func (x *GetUserStatsRequest) Reset() {
 	*x = GetUserStatsRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[11]
+	mi := &file_api_v1_user_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -917,7 +1016,7 @@ func (x *GetUserStatsRequest) String() string {
 func (*GetUserStatsRequest) ProtoMessage() {}
 
 func (x *GetUserStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[11]
+	mi := &file_api_v1_user_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -930,7 +1029,7 @@ func (x *GetUserStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserStatsRequest.ProtoReflect.Descriptor instead.
 func (*GetUserStatsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{11}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetUserStatsRequest) GetName() string {
@@ -962,7 +1061,7 @@ type UserSetting struct {
 
 func (x *UserSetting) Reset() {
 	*x = UserSetting{}
-	mi := &file_api_v1_user_service_proto_msgTypes[12]
+	mi := &file_api_v1_user_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -974,7 +1073,7 @@ func (x *UserSetting) String() string {
 func (*UserSetting) ProtoMessage() {}
 
 func (x *UserSetting) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[12]
+	mi := &file_api_v1_user_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -987,7 +1086,7 @@ func (x *UserSetting) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserSetting.ProtoReflect.Descriptor instead.
 func (*UserSetting) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{12}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UserSetting) GetName() string {
@@ -1036,7 +1135,7 @@ type GetUserSettingRequest struct {
 
 func (x *GetUserSettingRequest) Reset() {
 	*x = GetUserSettingRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[13]
+	mi := &file_api_v1_user_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1048,7 +1147,7 @@ func (x *GetUserSettingRequest) String() string {
 func (*GetUserSettingRequest) ProtoMessage() {}
 
 func (x *GetUserSettingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[13]
+	mi := &file_api_v1_user_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1061,7 +1160,7 @@ func (x *GetUserSettingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserSettingRequest.ProtoReflect.Descriptor instead.
 func (*GetUserSettingRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{13}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetUserSettingRequest) GetName() string {
@@ -1083,7 +1182,7 @@ type UpdateUserSettingRequest struct {
 
 func (x *UpdateUserSettingRequest) Reset() {
 	*x = UpdateUserSettingRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[14]
+	mi := &file_api_v1_user_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1095,7 +1194,7 @@ func (x *UpdateUserSettingRequest) String() string {
 func (*UpdateUserSettingRequest) ProtoMessage() {}
 
 func (x *UpdateUserSettingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[14]
+	mi := &file_api_v1_user_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1108,7 +1207,7 @@ func (x *UpdateUserSettingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserSettingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserSettingRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{14}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *UpdateUserSettingRequest) GetSetting() *UserSetting {
@@ -1145,7 +1244,7 @@ type UserAccessToken struct {
 
 func (x *UserAccessToken) Reset() {
 	*x = UserAccessToken{}
-	mi := &file_api_v1_user_service_proto_msgTypes[15]
+	mi := &file_api_v1_user_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1157,7 +1256,7 @@ func (x *UserAccessToken) String() string {
 func (*UserAccessToken) ProtoMessage() {}
 
 func (x *UserAccessToken) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[15]
+	mi := &file_api_v1_user_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1170,7 +1269,7 @@ func (x *UserAccessToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserAccessToken.ProtoReflect.Descriptor instead.
 func (*UserAccessToken) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{15}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UserAccessToken) GetName() string {
@@ -1223,7 +1322,7 @@ type ListUserAccessTokensRequest struct {
 
 func (x *ListUserAccessTokensRequest) Reset() {
 	*x = ListUserAccessTokensRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[16]
+	mi := &file_api_v1_user_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1235,7 +1334,7 @@ func (x *ListUserAccessTokensRequest) String() string {
 func (*ListUserAccessTokensRequest) ProtoMessage() {}
 
 func (x *ListUserAccessTokensRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[16]
+	mi := &file_api_v1_user_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1248,7 +1347,7 @@ func (x *ListUserAccessTokensRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUserAccessTokensRequest.ProtoReflect.Descriptor instead.
 func (*ListUserAccessTokensRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{16}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ListUserAccessTokensRequest) GetParent() string {
@@ -1286,7 +1385,7 @@ type ListUserAccessTokensResponse struct {
 
 func (x *ListUserAccessTokensResponse) Reset() {
 	*x = ListUserAccessTokensResponse{}
-	mi := &file_api_v1_user_service_proto_msgTypes[17]
+	mi := &file_api_v1_user_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1298,7 +1397,7 @@ func (x *ListUserAccessTokensResponse) String() string {
 func (*ListUserAccessTokensResponse) ProtoMessage() {}
 
 func (x *ListUserAccessTokensResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[17]
+	mi := &file_api_v1_user_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1311,7 +1410,7 @@ func (x *ListUserAccessTokensResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUserAccessTokensResponse.ProtoReflect.Descriptor instead.
 func (*ListUserAccessTokensResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{17}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ListUserAccessTokensResponse) GetAccessTokens() []*UserAccessToken {
@@ -1350,7 +1449,7 @@ type CreateUserAccessTokenRequest struct {
 
 func (x *CreateUserAccessTokenRequest) Reset() {
 	*x = CreateUserAccessTokenRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[18]
+	mi := &file_api_v1_user_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1362,7 +1461,7 @@ func (x *CreateUserAccessTokenRequest) String() string {
 func (*CreateUserAccessTokenRequest) ProtoMessage() {}
 
 func (x *CreateUserAccessTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[18]
+	mi := &file_api_v1_user_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1375,7 +1474,7 @@ func (x *CreateUserAccessTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateUserAccessTokenRequest.ProtoReflect.Descriptor instead.
 func (*CreateUserAccessTokenRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{18}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *CreateUserAccessTokenRequest) GetParent() string {
@@ -1410,7 +1509,7 @@ type DeleteUserAccessTokenRequest struct {
 
 func (x *DeleteUserAccessTokenRequest) Reset() {
 	*x = DeleteUserAccessTokenRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[19]
+	mi := &file_api_v1_user_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1422,7 +1521,7 @@ func (x *DeleteUserAccessTokenRequest) String() string {
 func (*DeleteUserAccessTokenRequest) ProtoMessage() {}
 
 func (x *DeleteUserAccessTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[19]
+	mi := &file_api_v1_user_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1435,7 +1534,7 @@ func (x *DeleteUserAccessTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteUserAccessTokenRequest.ProtoReflect.Descriptor instead.
 func (*DeleteUserAccessTokenRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{19}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *DeleteUserAccessTokenRequest) GetName() string {
@@ -1465,7 +1564,7 @@ type UserSession struct {
 
 func (x *UserSession) Reset() {
 	*x = UserSession{}
-	mi := &file_api_v1_user_service_proto_msgTypes[20]
+	mi := &file_api_v1_user_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1477,7 +1576,7 @@ func (x *UserSession) String() string {
 func (*UserSession) ProtoMessage() {}
 
 func (x *UserSession) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[20]
+	mi := &file_api_v1_user_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1490,7 +1589,7 @@ func (x *UserSession) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserSession.ProtoReflect.Descriptor instead.
 func (*UserSession) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{20}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *UserSession) GetName() string {
@@ -1539,7 +1638,7 @@ type ListUserSessionsRequest struct {
 
 func (x *ListUserSessionsRequest) Reset() {
 	*x = ListUserSessionsRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[21]
+	mi := &file_api_v1_user_service_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1551,7 +1650,7 @@ func (x *ListUserSessionsRequest) String() string {
 func (*ListUserSessionsRequest) ProtoMessage() {}
 
 func (x *ListUserSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[21]
+	mi := &file_api_v1_user_service_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1564,7 +1663,7 @@ func (x *ListUserSessionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUserSessionsRequest.ProtoReflect.Descriptor instead.
 func (*ListUserSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{21}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListUserSessionsRequest) GetParent() string {
@@ -1584,7 +1683,7 @@ type ListUserSessionsResponse struct {
 
 func (x *ListUserSessionsResponse) Reset() {
 	*x = ListUserSessionsResponse{}
-	mi := &file_api_v1_user_service_proto_msgTypes[22]
+	mi := &file_api_v1_user_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1596,7 +1695,7 @@ func (x *ListUserSessionsResponse) String() string {
 func (*ListUserSessionsResponse) ProtoMessage() {}
 
 func (x *ListUserSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[22]
+	mi := &file_api_v1_user_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1609,7 +1708,7 @@ func (x *ListUserSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUserSessionsResponse.ProtoReflect.Descriptor instead.
 func (*ListUserSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{22}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListUserSessionsResponse) GetSessions() []*UserSession {
@@ -1630,7 +1729,7 @@ type RevokeUserSessionRequest struct {
 
 func (x *RevokeUserSessionRequest) Reset() {
 	*x = RevokeUserSessionRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[23]
+	mi := &file_api_v1_user_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1642,7 +1741,7 @@ func (x *RevokeUserSessionRequest) String() string {
 func (*RevokeUserSessionRequest) ProtoMessage() {}
 
 func (x *RevokeUserSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[23]
+	mi := &file_api_v1_user_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1655,7 +1754,7 @@ func (x *RevokeUserSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeUserSessionRequest.ProtoReflect.Descriptor instead.
 func (*RevokeUserSessionRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{23}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *RevokeUserSessionRequest) GetName() string {
@@ -1677,7 +1776,7 @@ type ListAllUserStatsRequest struct {
 
 func (x *ListAllUserStatsRequest) Reset() {
 	*x = ListAllUserStatsRequest{}
-	mi := &file_api_v1_user_service_proto_msgTypes[24]
+	mi := &file_api_v1_user_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1689,7 +1788,7 @@ func (x *ListAllUserStatsRequest) String() string {
 func (*ListAllUserStatsRequest) ProtoMessage() {}
 
 func (x *ListAllUserStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[24]
+	mi := &file_api_v1_user_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1702,7 +1801,7 @@ func (x *ListAllUserStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAllUserStatsRequest.ProtoReflect.Descriptor instead.
 func (*ListAllUserStatsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{24}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ListAllUserStatsRequest) GetPageSize() int32 {
@@ -1733,7 +1832,7 @@ type ListAllUserStatsResponse struct {
 
 func (x *ListAllUserStatsResponse) Reset() {
 	*x = ListAllUserStatsResponse{}
-	mi := &file_api_v1_user_service_proto_msgTypes[25]
+	mi := &file_api_v1_user_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1745,7 +1844,7 @@ func (x *ListAllUserStatsResponse) String() string {
 func (*ListAllUserStatsResponse) ProtoMessage() {}
 
 func (x *ListAllUserStatsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[25]
+	mi := &file_api_v1_user_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1758,7 +1857,7 @@ func (x *ListAllUserStatsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAllUserStatsResponse.ProtoReflect.Descriptor instead.
 func (*ListAllUserStatsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{25}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ListAllUserStatsResponse) GetUserStats() []*UserStats {
@@ -1795,7 +1894,7 @@ type UserStats_MemoTypeStats struct {
 
 func (x *UserStats_MemoTypeStats) Reset() {
 	*x = UserStats_MemoTypeStats{}
-	mi := &file_api_v1_user_service_proto_msgTypes[27]
+	mi := &file_api_v1_user_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1807,7 +1906,7 @@ func (x *UserStats_MemoTypeStats) String() string {
 func (*UserStats_MemoTypeStats) ProtoMessage() {}
 
 func (x *UserStats_MemoTypeStats) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[27]
+	mi := &file_api_v1_user_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1820,7 +1919,7 @@ func (x *UserStats_MemoTypeStats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserStats_MemoTypeStats.ProtoReflect.Descriptor instead.
 func (*UserStats_MemoTypeStats) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{10, 1}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{12, 1}
 }
 
 func (x *UserStats_MemoTypeStats) GetLinkCount() int32 {
@@ -1869,7 +1968,7 @@ type UserSession_ClientInfo struct {
 
 func (x *UserSession_ClientInfo) Reset() {
 	*x = UserSession_ClientInfo{}
-	mi := &file_api_v1_user_service_proto_msgTypes[28]
+	mi := &file_api_v1_user_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1881,7 +1980,7 @@ func (x *UserSession_ClientInfo) String() string {
 func (*UserSession_ClientInfo) ProtoMessage() {}
 
 func (x *UserSession_ClientInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1_user_service_proto_msgTypes[28]
+	mi := &file_api_v1_user_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1894,7 +1993,7 @@ func (x *UserSession_ClientInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserSession_ClientInfo.ProtoReflect.Descriptor instead.
 func (*UserSession_ClientInfo) Descriptor() ([]byte, []int) {
-	return file_api_v1_user_service_proto_rawDescGZIP(), []int{20, 0}
+	return file_api_v1_user_service_proto_rawDescGZIP(), []int{22, 0}
 }
 
 func (x *UserSession_ClientInfo) GetUserAgent() string {
@@ -1959,7 +2058,12 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\x04HOST\x10\x01\x12\t\n" +
 	"\x05ADMIN\x10\x02\x12\b\n" +
 	"\x04USER\x10\x03:7\xeaA4\n" +
-	"\x11memos.api.v1/User\x12\fusers/{user}\x1a\x04name*\x05users2\x04user\"\xbd\x01\n" +
+	"\x11memos.api.v1/User\x12\fusers/{user}\x1a\x04name*\x05users2\x04user\"*\n" +
+	"\rVerifyRequest\x12\x19\n" +
+	"\x05email\x18\x01 \x01(\tB\x03\xe0A\x02R\x05email\"B\n" +
+	"\x0eVerifyResponse\x12\x19\n" +
+	"\x05email\x18\x01 \x01(\tB\x03\xe0A\x02R\x05email\x12\x15\n" +
+	"\x03otp\x18\x02 \x01(\tB\x03\xe0A\x02R\x03otp\"\xbd\x01\n" +
 	"\x10ListUsersRequest\x12 \n" +
 	"\tpage_size\x18\x01 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
@@ -2107,8 +2211,10 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"user_stats\x18\x01 \x03(\v2\x17.memos.api.v1.UserStatsR\tuserStats\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize2\xe2\x10\n" +
-	"\vUserService\x12c\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize2\xca\x11\n" +
+	"\vUserService\x12f\n" +
+	"\n" +
+	"VerifyUser\x12\x1b.memos.api.v1.VerifyRequest\x1a\x1c.memos.api.v1.VerifyResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x05email\"\x0e/api/v1/verify\x12c\n" +
 	"\tListUsers\x12\x1e.memos.api.v1.ListUsersRequest\x1a\x1f.memos.api.v1.ListUsersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users\x12b\n" +
 	"\aGetUser\x12\x1c.memos.api.v1.GetUserRequest\x1a\x12.memos.api.v1.User\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{name=users/*}\x12e\n" +
 	"\n" +
@@ -2143,103 +2249,107 @@ func file_api_v1_user_service_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1_user_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_api_v1_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_api_v1_user_service_proto_goTypes = []any{
 	(User_Role)(0),                       // 0: memos.api.v1.User.Role
 	(*User)(nil),                         // 1: memos.api.v1.User
-	(*ListUsersRequest)(nil),             // 2: memos.api.v1.ListUsersRequest
-	(*ListUsersResponse)(nil),            // 3: memos.api.v1.ListUsersResponse
-	(*GetUserRequest)(nil),               // 4: memos.api.v1.GetUserRequest
-	(*CreateUserRequest)(nil),            // 5: memos.api.v1.CreateUserRequest
-	(*UpdateUserRequest)(nil),            // 6: memos.api.v1.UpdateUserRequest
-	(*DeleteUserRequest)(nil),            // 7: memos.api.v1.DeleteUserRequest
-	(*SearchUsersRequest)(nil),           // 8: memos.api.v1.SearchUsersRequest
-	(*SearchUsersResponse)(nil),          // 9: memos.api.v1.SearchUsersResponse
-	(*GetUserAvatarRequest)(nil),         // 10: memos.api.v1.GetUserAvatarRequest
-	(*UserStats)(nil),                    // 11: memos.api.v1.UserStats
-	(*GetUserStatsRequest)(nil),          // 12: memos.api.v1.GetUserStatsRequest
-	(*UserSetting)(nil),                  // 13: memos.api.v1.UserSetting
-	(*GetUserSettingRequest)(nil),        // 14: memos.api.v1.GetUserSettingRequest
-	(*UpdateUserSettingRequest)(nil),     // 15: memos.api.v1.UpdateUserSettingRequest
-	(*UserAccessToken)(nil),              // 16: memos.api.v1.UserAccessToken
-	(*ListUserAccessTokensRequest)(nil),  // 17: memos.api.v1.ListUserAccessTokensRequest
-	(*ListUserAccessTokensResponse)(nil), // 18: memos.api.v1.ListUserAccessTokensResponse
-	(*CreateUserAccessTokenRequest)(nil), // 19: memos.api.v1.CreateUserAccessTokenRequest
-	(*DeleteUserAccessTokenRequest)(nil), // 20: memos.api.v1.DeleteUserAccessTokenRequest
-	(*UserSession)(nil),                  // 21: memos.api.v1.UserSession
-	(*ListUserSessionsRequest)(nil),      // 22: memos.api.v1.ListUserSessionsRequest
-	(*ListUserSessionsResponse)(nil),     // 23: memos.api.v1.ListUserSessionsResponse
-	(*RevokeUserSessionRequest)(nil),     // 24: memos.api.v1.RevokeUserSessionRequest
-	(*ListAllUserStatsRequest)(nil),      // 25: memos.api.v1.ListAllUserStatsRequest
-	(*ListAllUserStatsResponse)(nil),     // 26: memos.api.v1.ListAllUserStatsResponse
-	nil,                                  // 27: memos.api.v1.UserStats.TagCountEntry
-	(*UserStats_MemoTypeStats)(nil),      // 28: memos.api.v1.UserStats.MemoTypeStats
-	(*UserSession_ClientInfo)(nil),       // 29: memos.api.v1.UserSession.ClientInfo
-	(State)(0),                           // 30: memos.api.v1.State
-	(*timestamppb.Timestamp)(nil),        // 31: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil),        // 32: google.protobuf.FieldMask
-	(*emptypb.Empty)(nil),                // 33: google.protobuf.Empty
-	(*httpbody.HttpBody)(nil),            // 34: google.api.HttpBody
+	(*VerifyRequest)(nil),                // 2: memos.api.v1.VerifyRequest
+	(*VerifyResponse)(nil),               // 3: memos.api.v1.VerifyResponse
+	(*ListUsersRequest)(nil),             // 4: memos.api.v1.ListUsersRequest
+	(*ListUsersResponse)(nil),            // 5: memos.api.v1.ListUsersResponse
+	(*GetUserRequest)(nil),               // 6: memos.api.v1.GetUserRequest
+	(*CreateUserRequest)(nil),            // 7: memos.api.v1.CreateUserRequest
+	(*UpdateUserRequest)(nil),            // 8: memos.api.v1.UpdateUserRequest
+	(*DeleteUserRequest)(nil),            // 9: memos.api.v1.DeleteUserRequest
+	(*SearchUsersRequest)(nil),           // 10: memos.api.v1.SearchUsersRequest
+	(*SearchUsersResponse)(nil),          // 11: memos.api.v1.SearchUsersResponse
+	(*GetUserAvatarRequest)(nil),         // 12: memos.api.v1.GetUserAvatarRequest
+	(*UserStats)(nil),                    // 13: memos.api.v1.UserStats
+	(*GetUserStatsRequest)(nil),          // 14: memos.api.v1.GetUserStatsRequest
+	(*UserSetting)(nil),                  // 15: memos.api.v1.UserSetting
+	(*GetUserSettingRequest)(nil),        // 16: memos.api.v1.GetUserSettingRequest
+	(*UpdateUserSettingRequest)(nil),     // 17: memos.api.v1.UpdateUserSettingRequest
+	(*UserAccessToken)(nil),              // 18: memos.api.v1.UserAccessToken
+	(*ListUserAccessTokensRequest)(nil),  // 19: memos.api.v1.ListUserAccessTokensRequest
+	(*ListUserAccessTokensResponse)(nil), // 20: memos.api.v1.ListUserAccessTokensResponse
+	(*CreateUserAccessTokenRequest)(nil), // 21: memos.api.v1.CreateUserAccessTokenRequest
+	(*DeleteUserAccessTokenRequest)(nil), // 22: memos.api.v1.DeleteUserAccessTokenRequest
+	(*UserSession)(nil),                  // 23: memos.api.v1.UserSession
+	(*ListUserSessionsRequest)(nil),      // 24: memos.api.v1.ListUserSessionsRequest
+	(*ListUserSessionsResponse)(nil),     // 25: memos.api.v1.ListUserSessionsResponse
+	(*RevokeUserSessionRequest)(nil),     // 26: memos.api.v1.RevokeUserSessionRequest
+	(*ListAllUserStatsRequest)(nil),      // 27: memos.api.v1.ListAllUserStatsRequest
+	(*ListAllUserStatsResponse)(nil),     // 28: memos.api.v1.ListAllUserStatsResponse
+	nil,                                  // 29: memos.api.v1.UserStats.TagCountEntry
+	(*UserStats_MemoTypeStats)(nil),      // 30: memos.api.v1.UserStats.MemoTypeStats
+	(*UserSession_ClientInfo)(nil),       // 31: memos.api.v1.UserSession.ClientInfo
+	(State)(0),                           // 32: memos.api.v1.State
+	(*timestamppb.Timestamp)(nil),        // 33: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),        // 34: google.protobuf.FieldMask
+	(*emptypb.Empty)(nil),                // 35: google.protobuf.Empty
+	(*httpbody.HttpBody)(nil),            // 36: google.api.HttpBody
 }
 var file_api_v1_user_service_proto_depIdxs = []int32{
 	0,  // 0: memos.api.v1.User.role:type_name -> memos.api.v1.User.Role
-	30, // 1: memos.api.v1.User.state:type_name -> memos.api.v1.State
-	31, // 2: memos.api.v1.User.create_time:type_name -> google.protobuf.Timestamp
-	31, // 3: memos.api.v1.User.update_time:type_name -> google.protobuf.Timestamp
+	32, // 1: memos.api.v1.User.state:type_name -> memos.api.v1.State
+	33, // 2: memos.api.v1.User.create_time:type_name -> google.protobuf.Timestamp
+	33, // 3: memos.api.v1.User.update_time:type_name -> google.protobuf.Timestamp
 	1,  // 4: memos.api.v1.ListUsersResponse.users:type_name -> memos.api.v1.User
-	32, // 5: memos.api.v1.GetUserRequest.read_mask:type_name -> google.protobuf.FieldMask
+	34, // 5: memos.api.v1.GetUserRequest.read_mask:type_name -> google.protobuf.FieldMask
 	1,  // 6: memos.api.v1.CreateUserRequest.user:type_name -> memos.api.v1.User
 	1,  // 7: memos.api.v1.UpdateUserRequest.user:type_name -> memos.api.v1.User
-	32, // 8: memos.api.v1.UpdateUserRequest.update_mask:type_name -> google.protobuf.FieldMask
+	34, // 8: memos.api.v1.UpdateUserRequest.update_mask:type_name -> google.protobuf.FieldMask
 	1,  // 9: memos.api.v1.SearchUsersResponse.users:type_name -> memos.api.v1.User
-	31, // 10: memos.api.v1.UserStats.memo_display_timestamps:type_name -> google.protobuf.Timestamp
-	28, // 11: memos.api.v1.UserStats.memo_type_stats:type_name -> memos.api.v1.UserStats.MemoTypeStats
-	27, // 12: memos.api.v1.UserStats.tag_count:type_name -> memos.api.v1.UserStats.TagCountEntry
-	13, // 13: memos.api.v1.UpdateUserSettingRequest.setting:type_name -> memos.api.v1.UserSetting
-	32, // 14: memos.api.v1.UpdateUserSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
-	31, // 15: memos.api.v1.UserAccessToken.issued_at:type_name -> google.protobuf.Timestamp
-	31, // 16: memos.api.v1.UserAccessToken.expires_at:type_name -> google.protobuf.Timestamp
-	16, // 17: memos.api.v1.ListUserAccessTokensResponse.access_tokens:type_name -> memos.api.v1.UserAccessToken
-	16, // 18: memos.api.v1.CreateUserAccessTokenRequest.access_token:type_name -> memos.api.v1.UserAccessToken
-	31, // 19: memos.api.v1.UserSession.create_time:type_name -> google.protobuf.Timestamp
-	31, // 20: memos.api.v1.UserSession.last_accessed_time:type_name -> google.protobuf.Timestamp
-	29, // 21: memos.api.v1.UserSession.client_info:type_name -> memos.api.v1.UserSession.ClientInfo
-	21, // 22: memos.api.v1.ListUserSessionsResponse.sessions:type_name -> memos.api.v1.UserSession
-	11, // 23: memos.api.v1.ListAllUserStatsResponse.user_stats:type_name -> memos.api.v1.UserStats
-	2,  // 24: memos.api.v1.UserService.ListUsers:input_type -> memos.api.v1.ListUsersRequest
-	4,  // 25: memos.api.v1.UserService.GetUser:input_type -> memos.api.v1.GetUserRequest
-	5,  // 26: memos.api.v1.UserService.CreateUser:input_type -> memos.api.v1.CreateUserRequest
-	6,  // 27: memos.api.v1.UserService.UpdateUser:input_type -> memos.api.v1.UpdateUserRequest
-	7,  // 28: memos.api.v1.UserService.DeleteUser:input_type -> memos.api.v1.DeleteUserRequest
-	8,  // 29: memos.api.v1.UserService.SearchUsers:input_type -> memos.api.v1.SearchUsersRequest
-	10, // 30: memos.api.v1.UserService.GetUserAvatar:input_type -> memos.api.v1.GetUserAvatarRequest
-	25, // 31: memos.api.v1.UserService.ListAllUserStats:input_type -> memos.api.v1.ListAllUserStatsRequest
-	12, // 32: memos.api.v1.UserService.GetUserStats:input_type -> memos.api.v1.GetUserStatsRequest
-	14, // 33: memos.api.v1.UserService.GetUserSetting:input_type -> memos.api.v1.GetUserSettingRequest
-	15, // 34: memos.api.v1.UserService.UpdateUserSetting:input_type -> memos.api.v1.UpdateUserSettingRequest
-	17, // 35: memos.api.v1.UserService.ListUserAccessTokens:input_type -> memos.api.v1.ListUserAccessTokensRequest
-	19, // 36: memos.api.v1.UserService.CreateUserAccessToken:input_type -> memos.api.v1.CreateUserAccessTokenRequest
-	20, // 37: memos.api.v1.UserService.DeleteUserAccessToken:input_type -> memos.api.v1.DeleteUserAccessTokenRequest
-	22, // 38: memos.api.v1.UserService.ListUserSessions:input_type -> memos.api.v1.ListUserSessionsRequest
-	24, // 39: memos.api.v1.UserService.RevokeUserSession:input_type -> memos.api.v1.RevokeUserSessionRequest
-	3,  // 40: memos.api.v1.UserService.ListUsers:output_type -> memos.api.v1.ListUsersResponse
-	1,  // 41: memos.api.v1.UserService.GetUser:output_type -> memos.api.v1.User
-	1,  // 42: memos.api.v1.UserService.CreateUser:output_type -> memos.api.v1.User
-	1,  // 43: memos.api.v1.UserService.UpdateUser:output_type -> memos.api.v1.User
-	33, // 44: memos.api.v1.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	9,  // 45: memos.api.v1.UserService.SearchUsers:output_type -> memos.api.v1.SearchUsersResponse
-	34, // 46: memos.api.v1.UserService.GetUserAvatar:output_type -> google.api.HttpBody
-	26, // 47: memos.api.v1.UserService.ListAllUserStats:output_type -> memos.api.v1.ListAllUserStatsResponse
-	11, // 48: memos.api.v1.UserService.GetUserStats:output_type -> memos.api.v1.UserStats
-	13, // 49: memos.api.v1.UserService.GetUserSetting:output_type -> memos.api.v1.UserSetting
-	13, // 50: memos.api.v1.UserService.UpdateUserSetting:output_type -> memos.api.v1.UserSetting
-	18, // 51: memos.api.v1.UserService.ListUserAccessTokens:output_type -> memos.api.v1.ListUserAccessTokensResponse
-	16, // 52: memos.api.v1.UserService.CreateUserAccessToken:output_type -> memos.api.v1.UserAccessToken
-	33, // 53: memos.api.v1.UserService.DeleteUserAccessToken:output_type -> google.protobuf.Empty
-	23, // 54: memos.api.v1.UserService.ListUserSessions:output_type -> memos.api.v1.ListUserSessionsResponse
-	33, // 55: memos.api.v1.UserService.RevokeUserSession:output_type -> google.protobuf.Empty
-	40, // [40:56] is the sub-list for method output_type
-	24, // [24:40] is the sub-list for method input_type
+	33, // 10: memos.api.v1.UserStats.memo_display_timestamps:type_name -> google.protobuf.Timestamp
+	30, // 11: memos.api.v1.UserStats.memo_type_stats:type_name -> memos.api.v1.UserStats.MemoTypeStats
+	29, // 12: memos.api.v1.UserStats.tag_count:type_name -> memos.api.v1.UserStats.TagCountEntry
+	15, // 13: memos.api.v1.UpdateUserSettingRequest.setting:type_name -> memos.api.v1.UserSetting
+	34, // 14: memos.api.v1.UpdateUserSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
+	33, // 15: memos.api.v1.UserAccessToken.issued_at:type_name -> google.protobuf.Timestamp
+	33, // 16: memos.api.v1.UserAccessToken.expires_at:type_name -> google.protobuf.Timestamp
+	18, // 17: memos.api.v1.ListUserAccessTokensResponse.access_tokens:type_name -> memos.api.v1.UserAccessToken
+	18, // 18: memos.api.v1.CreateUserAccessTokenRequest.access_token:type_name -> memos.api.v1.UserAccessToken
+	33, // 19: memos.api.v1.UserSession.create_time:type_name -> google.protobuf.Timestamp
+	33, // 20: memos.api.v1.UserSession.last_accessed_time:type_name -> google.protobuf.Timestamp
+	31, // 21: memos.api.v1.UserSession.client_info:type_name -> memos.api.v1.UserSession.ClientInfo
+	23, // 22: memos.api.v1.ListUserSessionsResponse.sessions:type_name -> memos.api.v1.UserSession
+	13, // 23: memos.api.v1.ListAllUserStatsResponse.user_stats:type_name -> memos.api.v1.UserStats
+	2,  // 24: memos.api.v1.UserService.VerifyUser:input_type -> memos.api.v1.VerifyRequest
+	4,  // 25: memos.api.v1.UserService.ListUsers:input_type -> memos.api.v1.ListUsersRequest
+	6,  // 26: memos.api.v1.UserService.GetUser:input_type -> memos.api.v1.GetUserRequest
+	7,  // 27: memos.api.v1.UserService.CreateUser:input_type -> memos.api.v1.CreateUserRequest
+	8,  // 28: memos.api.v1.UserService.UpdateUser:input_type -> memos.api.v1.UpdateUserRequest
+	9,  // 29: memos.api.v1.UserService.DeleteUser:input_type -> memos.api.v1.DeleteUserRequest
+	10, // 30: memos.api.v1.UserService.SearchUsers:input_type -> memos.api.v1.SearchUsersRequest
+	12, // 31: memos.api.v1.UserService.GetUserAvatar:input_type -> memos.api.v1.GetUserAvatarRequest
+	27, // 32: memos.api.v1.UserService.ListAllUserStats:input_type -> memos.api.v1.ListAllUserStatsRequest
+	14, // 33: memos.api.v1.UserService.GetUserStats:input_type -> memos.api.v1.GetUserStatsRequest
+	16, // 34: memos.api.v1.UserService.GetUserSetting:input_type -> memos.api.v1.GetUserSettingRequest
+	17, // 35: memos.api.v1.UserService.UpdateUserSetting:input_type -> memos.api.v1.UpdateUserSettingRequest
+	19, // 36: memos.api.v1.UserService.ListUserAccessTokens:input_type -> memos.api.v1.ListUserAccessTokensRequest
+	21, // 37: memos.api.v1.UserService.CreateUserAccessToken:input_type -> memos.api.v1.CreateUserAccessTokenRequest
+	22, // 38: memos.api.v1.UserService.DeleteUserAccessToken:input_type -> memos.api.v1.DeleteUserAccessTokenRequest
+	24, // 39: memos.api.v1.UserService.ListUserSessions:input_type -> memos.api.v1.ListUserSessionsRequest
+	26, // 40: memos.api.v1.UserService.RevokeUserSession:input_type -> memos.api.v1.RevokeUserSessionRequest
+	3,  // 41: memos.api.v1.UserService.VerifyUser:output_type -> memos.api.v1.VerifyResponse
+	5,  // 42: memos.api.v1.UserService.ListUsers:output_type -> memos.api.v1.ListUsersResponse
+	1,  // 43: memos.api.v1.UserService.GetUser:output_type -> memos.api.v1.User
+	1,  // 44: memos.api.v1.UserService.CreateUser:output_type -> memos.api.v1.User
+	1,  // 45: memos.api.v1.UserService.UpdateUser:output_type -> memos.api.v1.User
+	35, // 46: memos.api.v1.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	11, // 47: memos.api.v1.UserService.SearchUsers:output_type -> memos.api.v1.SearchUsersResponse
+	36, // 48: memos.api.v1.UserService.GetUserAvatar:output_type -> google.api.HttpBody
+	28, // 49: memos.api.v1.UserService.ListAllUserStats:output_type -> memos.api.v1.ListAllUserStatsResponse
+	13, // 50: memos.api.v1.UserService.GetUserStats:output_type -> memos.api.v1.UserStats
+	15, // 51: memos.api.v1.UserService.GetUserSetting:output_type -> memos.api.v1.UserSetting
+	15, // 52: memos.api.v1.UserService.UpdateUserSetting:output_type -> memos.api.v1.UserSetting
+	20, // 53: memos.api.v1.UserService.ListUserAccessTokens:output_type -> memos.api.v1.ListUserAccessTokensResponse
+	18, // 54: memos.api.v1.UserService.CreateUserAccessToken:output_type -> memos.api.v1.UserAccessToken
+	35, // 55: memos.api.v1.UserService.DeleteUserAccessToken:output_type -> google.protobuf.Empty
+	25, // 56: memos.api.v1.UserService.ListUserSessions:output_type -> memos.api.v1.ListUserSessionsResponse
+	35, // 57: memos.api.v1.UserService.RevokeUserSession:output_type -> google.protobuf.Empty
+	41, // [41:58] is the sub-list for method output_type
+	24, // [24:41] is the sub-list for method input_type
 	24, // [24:24] is the sub-list for extension type_name
 	24, // [24:24] is the sub-list for extension extendee
 	0,  // [0:24] is the sub-list for field type_name
@@ -2257,7 +2367,7 @@ func file_api_v1_user_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1_user_service_proto_rawDesc), len(file_api_v1_user_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   29,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
