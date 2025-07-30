@@ -23,7 +23,7 @@ import { useTranslate } from "@/utils/i18n";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { useState } from "react";
-import MemoDialog, { DialogType } from "./Dialogs/MemoDialog";
+import DialogBox, { DialogType } from "./Dialogs/DialogBox";
 
 interface Props {
   memo: Memo;
@@ -238,7 +238,7 @@ const MemoActionMenu = observer((props: Props) => {
 
       {/* Single MemoDialog instance that handles both dialog types */}
       {dialogType && (
-        <MemoDialog 
+        <DialogBox
           dialogType={dialogType} 
           open={open} 
           onOpenChange={onOpenChange}
