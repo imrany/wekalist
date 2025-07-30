@@ -178,7 +178,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
           )}
         </div>
         <div className="flex flex-row justify-end items-center select-none shrink-0 gap-2">
-          <div className="w-auto lg:invisible group-hover:visible flex flex-row justify-between items-center gap-2">
+          <div className="w-auto md:invisible group-hover:visible flex flex-row justify-between items-center gap-2">
             {props.showVisibility && memo.visibility !== Visibility.PRIVATE && (
               <Tooltip>
                 <TooltipTrigger>

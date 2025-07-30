@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"log/slog"
 	"net/http"
 	"regexp"
 	"slices"
@@ -102,7 +101,6 @@ func (s *APIV1Service) SearchUsers(ctx context.Context, request *v1pb.SearchUser
 	for _, user := range filteredUsers {
 		response.Users = append(response.Users, convertUserFromStore(user))
 	}
-	slog.Info("request: ", "K", response, "users",response.Users)
 	return response, nil
 }
 

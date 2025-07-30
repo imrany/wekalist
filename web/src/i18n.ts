@@ -29,6 +29,7 @@ export const locales = orderBy([
   "ru",
   "sl",
   "sv",
+  "sw",
   "th",
   "tr",
   "uk",
