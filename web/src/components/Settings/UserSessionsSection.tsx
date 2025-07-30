@@ -7,35 +7,56 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { UserSession } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
 import LearnMore from "../LearnMore";
+import DialogBox, { DialogType } from "../Dialogs/DialogBox";
 
 const listUserSessions = async (parent: string) => {
   const { sessions } = await userServiceClient.listUserSessions({ parent });
   return sessions.sort((a, b) => (b.lastAccessedTime?.getTime() ?? 0) - (a.lastAccessedTime?.getTime() ?? 0));
 };
 
+export const getFormattedSessionId = (sessionId: string) => {
+  return `${sessionId.slice(0, 8)}...${sessionId.slice(-8)}`;
+};
+
 const UserSessionsSection = () => {
   const t = useTranslate();
+  const [open, setOpen] = useState(false);
   const currentUser = useCurrentUser();
   const [userSessions, setUserSessions] = useState<UserSession[]>([]);
+  const [selectedUserSession, setSelectedUserSession] = useState<UserSession>();
 
   useEffect(() => {
-    listUserSessions(currentUser.name).then((sessions) => {
-      setUserSessions(sessions);
-    });
-  }, []);
+    if (currentUser?.name) {
+      listUserSessions(currentUser.name).then((sessions) => {
+        setUserSessions(sessions);
+      });
+    }
+  }, [currentUser?.name]);
 
-  const handleRevokeSession = async (userSession: UserSession) => {
-    const formattedSessionId = getFormattedSessionId(userSession.sessionId);
-    const confirmed = window.confirm(t("setting.user-sessions-section.session-revocation", { sessionId: formattedSessionId }));
-    if (confirmed) {
-      await userServiceClient.revokeUserSession({ name: userSession.name });
-      setUserSessions(userSessions.filter((session) => session.sessionId !== userSession.sessionId));
-      toast.success(t("setting.user-sessions-section.session-revoked"));
+  const onOpenChange = (state: boolean) => {
+    setOpen(state);
+    if (!state) {
+      setSelectedUserSession(undefined);
     }
   };
 
-  const getFormattedSessionId = (sessionId: string) => {
-    return `${sessionId.slice(0, 8)}...${sessionId.slice(-8)}`;
+  const handleRevokeSession = async (userSession?: UserSession) => {
+    if (!userSession) return;
+    
+    try {
+      await userServiceClient.revokeUserSession({ name: userSession.name });
+      setUserSessions(userSessions.filter((session) => session.sessionId !== userSession.sessionId));
+      toast.success(t("setting.user-sessions-section.session-revoked"));
+      onOpenChange(false); // Close dialog after success
+    } catch (error) {
+      console.error("Failed to revoke session:", error);
+      toast.error("Failed to revoke session");
+    }
+  };
+
+  const handleOpenRevokeDialog = (userSession: UserSession) => {
+    setSelectedUserSession(userSession);
+    setOpen(true);
   };
 
   const getDeviceIcon = (deviceType: string) => {
@@ -127,7 +148,9 @@ const UserSessionsSection = () => {
                           variant="ghost"
                           disabled={isCurrentSession(userSession)}
                           onClick={() => {
-                            handleRevokeSession(userSession);
+                            if (!isCurrentSession(userSession)) {
+                              handleOpenRevokeDialog(userSession);
+                            }
                           }}
                           title={
                             isCurrentSession(userSession)
@@ -151,6 +174,15 @@ const UserSessionsSection = () => {
           </div>
         </div>
       </div>
+      
+      {/* Confirmation Dialog */}
+      <DialogBox
+        dialogType={DialogType.REVOKE_SESSION} 
+        open={open} 
+        selectedUserSession={selectedUserSession}
+        onOpenChange={onOpenChange}
+        actionButtonFunction={handleRevokeSession}
+      />
     </div>
   );
 };
