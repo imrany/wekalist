@@ -52,7 +52,7 @@ pnpm lint
 ## Architecture Overview
 
 ### Backend Structure
-- **`/bin/memos/main.go`** - Application entrypoint with CLI and server initialization
+- **`/main.go`** - Application entrypoint with CLI and server initialization
 - **`/server/`** - HTTP/gRPC server with Echo framework and cmux for protocol multiplexing
 - **`/server/router/api/v1/`** - gRPC services with REST gateway via grpc-gateway
 - **`/store/`** - Data access layer with multi-database support (SQLite/PostgreSQL/MySQL)
