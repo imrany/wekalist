@@ -14,42 +14,10 @@ import Renderer from "../MemoContent/Renderer";
 import { Node, NodeType } from "@/types/proto/api/v1/markdown_service";
 import useLoading from "@/hooks/useLoading";
 import { useTranslate } from "@/utils/i18n";
+import useSelfWritingText from "@/hooks/useSelfWritingText";
 
 const dummySummary =
   "This memo discusses the quarterly financial results and outlines the next steps for the team.";
-
-function useSelfWritingText(text: string, resetKey: string, delay = 40) {
-  const [displayed, setDisplayed] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-  
-  useEffect(() => {
-    setDisplayed("");
-    setIsComplete(false);
-    
-    let i = -1;
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        setDisplayed((prev) => {
-          const newText = text[i] ? prev + text[i] : prev;
-          return newText;
-        });
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          setIsComplete(true);
-        }
-      }, delay);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeout);
-      setDisplayed("");
-      setIsComplete(false);
-    };
-  }, [text, resetKey, delay]);
-
-  return { displayed, isComplete };
-}
 
 type Props = {
   memo?: Memo;

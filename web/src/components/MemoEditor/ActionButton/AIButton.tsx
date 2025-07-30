@@ -3,16 +3,49 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useTranslate } from "@/utils/i18n";
 import { BotMessageSquare, Stars } from "lucide-react"
 import { EditorRefActions } from "../Editor";
+import { ReactNode, RefObject, useEffect, useState } from "react";
+import useSelfWritingText from "@/hooks/useSelfWritingText";
+import useLoading from "@/hooks/useLoading";
 
 interface Props {
-  editorRef: React.RefObject<EditorRefActions>;
+  editorRef: RefObject<EditorRefActions>;
+  editorConfig: {
+    className: string;
+    initialContent: string;
+    placeholder: string;
+    tools?: ReactNode;
+    onContentChange: (content: string) => void;
+    onPaste: (event: React.ClipboardEvent) => void;
+  }
 }
+
+const dummyContent = "#### Here is an example of my todo list\n - [ ] My first task\n - [x] My completed task \n#todo"
+
 const AIButton =(props: Props) => {
-    const { editorRef } = props;
+    const { editorRef, editorConfig } = props;
     const t = useTranslate();
+    const [openKey, setOpenKey] = useState("");
+    const loadingState= useLoading();
+    // const generatedContent = editorRef.current?.getContent() ?? dummyContent;
+    const generatedContent = dummyContent;
+    const { displayed: content, isComplete } = useSelfWritingText(generatedContent, openKey);
+
+    //Set loading state based on typing animation completion
+    useEffect(() => {
+        if (openKey) { // Only manage loading state when dropdown is opened
+            if (!isComplete) {
+                loadingState.setLoading();
+            } else {
+                loadingState.setFinish();
+            }
+        }
+    }, [isComplete, openKey, loadingState]);
 
     function handleGenerateMemo(){
-        console.log(editorRef.current?.getContent())
+        setOpenKey(Math.random().toString()); // Force re-animation
+        console.log(content, editorRef, editorConfig)
+        editorRef.current?.setContent("")
+        editorRef.current?.insertText(content)
     }
     return(
         <>{editorRef.current?.getContent()&&editorRef.current?.getContent().length>4&&(
