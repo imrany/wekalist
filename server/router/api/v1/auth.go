@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"crypto/rand"
 	"fmt"
+	"math/big"
 	"strings"
 	"time"
 
@@ -35,6 +37,36 @@ type ClaimsMessage struct {
 // GenerateOTP generates One Time Password
 func GenerateOTP()string{
 	otp, _:=util.RandomString(6)
+	return otp
+}
+
+
+// GenerateOTPWithLength generates OTP with custom length
+func GenerateOTPWithLength(length int) string {
+	if length <= 0 {
+		length = 6
+	}
+	
+	otp := ""
+	for i := 0; i < length; i++ {
+		num, _ := rand.Int(rand.Reader, big.NewInt(10))
+		otp += num.String()
+	}
+	return otp
+}
+
+// GenerateAlphanumericOTP generates alphanumeric OTP
+func GenerateAlphanumericOTP(length int) string {
+	if length <= 0 {
+		length = 6
+	}
+	
+	const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	otp := ""
+	for i := 0; i < length; i++ {
+		num, _ := rand.Int(rand.Reader, big.NewInt(int64(len(chars))))
+		otp += string(chars[num.Int64()])
+	}
 	return otp
 }
 

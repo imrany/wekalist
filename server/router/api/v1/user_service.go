@@ -42,6 +42,11 @@ func (s *APIV1Service) VerifyUser(ctx context.Context, request *v1pb.VerifyReque
 	}
 
 	otp := GenerateOTP()
+	_, err =SendOTP(request.Email, OtpPurposeVerification ,otp)
+	if err !=nil{
+		return nil, status.Errorf(codes.Internal, "%v", err.Error())
+	}
+
 	verificationRespond := &v1pb.VerifyResponse{
 		Email: request.Email,
 		Otp: otp,

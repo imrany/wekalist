@@ -1,187 +1,177 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"log/slog"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
+    "context"
+    "fmt"
+    "log/slog"
+    "net/http"
+    "os"
+    "os/signal"
+    "syscall"
 
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+    "github.com/joho/godotenv"
+    "github.com/spf13/cobra"
+    "github.com/spf13/viper"
 
-	"github.com/usememos/memos/internal/profile"
-	"github.com/usememos/memos/internal/version"
-	"github.com/usememos/memos/server"
-	"github.com/usememos/memos/store"
-	"github.com/usememos/memos/store/db"
+    "github.com/usememos/memos/internal/profile"
+    "github.com/usememos/memos/internal/version"
+    "github.com/usememos/memos/server"
+    "github.com/usememos/memos/store"
+    "github.com/usememos/memos/store/db"
 )
 
-const (
-	greetingBanner = `
+const greetingBanner = `
 ███╗   ███╗███████╗███╗   ███╗ ██████╗ ███████╗
 ████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔════╝
 ██╔████╔██║█████╗  ██╔████╔██║██║   ██║███████╗
 ██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║╚════██║
 ██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝███████║
-╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+╚═╝     ╚═╝╚══════╝╚═╝     ╚╝ ╚═════╝ ╚══════╝
 `
-)
 
-var (
-	rootCmd = &cobra.Command{
-		Use:   "memos",
-		Short: `An open source, lightweight note-taking service. Easily capture and share your great thoughts.`,
-		Run: func(_ *cobra.Command, _ []string) {
-			instanceProfile := &profile.Profile{
-				Mode:        viper.GetString("mode"),
-				Addr:        viper.GetString("addr"),
-				Port:        viper.GetInt("port"),
-				UNIXSock:    viper.GetString("unix-sock"),
-				Data:        viper.GetString("data"),
-				Driver:      viper.GetString("driver"),
-				DSN:         viper.GetString("dsn"),
-				InstanceURL: viper.GetString("instance-url"),
-				Version:     version.GetCurrentVersion(viper.GetString("mode")),
-			}
-			if err := instanceProfile.Validate(); err != nil {
-				panic(err)
-			}
-
-			ctx, cancel := context.WithCancel(context.Background())
-			dbDriver, err := db.NewDBDriver(instanceProfile)
-			if err != nil {
-				cancel()
-				slog.Error("failed to create db driver", "error", err)
-				return
-			}
-
-			storeInstance := store.New(dbDriver, instanceProfile)
-			if err := storeInstance.Migrate(ctx); err != nil {
-				cancel()
-				slog.Error("failed to migrate", "error", err)
-				return
-			}
-
-			s, err := server.NewServer(ctx, instanceProfile, storeInstance)
-			if err != nil {
-				cancel()
-				slog.Error("failed to create server", "error", err)
-				return
-			}
-
-			c := make(chan os.Signal, 1)
-			// Trigger graceful shutdown on SIGINT or SIGTERM.
-			// The default signal sent by the `kill` command is SIGTERM,
-			// which is taken as the graceful shutdown signal for many systems, eg., Kubernetes, Gunicorn.
-			signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-
-			if err := s.Start(ctx); err != nil {
-				if err != http.ErrServerClosed {
-					slog.Error("failed to start server", "error", err)
-					cancel()
-				}
-			}
-
-			printGreetings(instanceProfile)
-
-			go func() {
-				<-c
-				s.Shutdown(ctx)
-				cancel()
-			}()
-
-			// Wait for CTRL-C.
-			<-ctx.Done()
-		},
-	}
-)
-
-func init() {
-	viper.SetDefault("mode", "dev")
-	viper.SetDefault("driver", "sqlite")
-	viper.SetDefault("port", 8081)
-
-	rootCmd.PersistentFlags().String("mode", "dev", `mode of server, can be "prod" or "dev" or "demo"`)
-	rootCmd.PersistentFlags().String("addr", "0.0.0.0", "address of server")
-	rootCmd.PersistentFlags().Int("port", 8081, "port of server")
-	rootCmd.PersistentFlags().String("unix-sock", "", "path to the unix socket, overrides --addr and --port")
-	rootCmd.PersistentFlags().String("data", "", "data directory")
-	rootCmd.PersistentFlags().String("driver", "sqlite", "database driver")
-	rootCmd.PersistentFlags().String("dsn", "", "database source name(aka. DSN)")
-	rootCmd.PersistentFlags().String("instance-url", "", "the url of your memos instance")
-
-	if err := viper.BindPFlag("mode", rootCmd.PersistentFlags().Lookup("mode")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("addr", rootCmd.PersistentFlags().Lookup("addr")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("unix-sock", rootCmd.PersistentFlags().Lookup("unix-sock")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("data", rootCmd.PersistentFlags().Lookup("data")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("driver", rootCmd.PersistentFlags().Lookup("driver")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("dsn", rootCmd.PersistentFlags().Lookup("dsn")); err != nil {
-		panic(err)
-	}
-	if err := viper.BindPFlag("instance-url", rootCmd.PersistentFlags().Lookup("instance-url")); err != nil {
-		panic(err)
-	}
-
-	viper.SetEnvPrefix("memos")
-	viper.AutomaticEnv()
-	if err := viper.BindEnv("instance-url", "MEMOS_INSTANCE_URL"); err != nil {
-		panic(err)
-	}
+var rootCmd = &cobra.Command{
+    Use:   "memos",
+    Short: "An open source, lightweight note-taking service",
+    Run:   runServer,
 }
 
-func printGreetings(profile *profile.Profile) {
-	if profile.IsDev() {
-		println("Development mode is enabled")
-		println("DSN: ", profile.DSN)
-	}
-	fmt.Printf(`---
-Server profile
-version: %s
-data: %s
-addr: %s
-port: %d
-unix-sock: %s
-mode: %s
-driver: %s
----
-`, profile.Version, profile.Data, profile.Addr, profile.Port, profile.UNIXSock, profile.Mode, profile.Driver)
+func runServer(_ *cobra.Command, _ []string) {
+    profile := &profile.Profile{
+        Mode:                 viper.GetString("mode"),
+        Addr:                 viper.GetString("addr"),
+        Port:                 viper.GetInt("port"),
+        UNIXSock:             viper.GetString("unix-sock"),
+        Data:                 viper.GetString("data"),
+        Driver:               viper.GetString("driver"),
+        DSN:                  viper.GetString("dsn"),
+        InstanceURL:          viper.GetString("instance-url"),
+        Version:              version.GetCurrentVersion(viper.GetString("mode")),
+        SMTPHost:             viper.GetString("smtp-host"),
+        SMTPPort:             viper.GetInt("smtp-port"),
+        SMTPAccountUsername:  viper.GetString("smtp-account-username"),
+        SMTPAccountPassword:  viper.GetString("smtp-account-password"),
+        SMTPAccountEmail:     viper.GetString("smtp-account-email"),
+    }
 
-	print(greetingBanner)
-	if len(profile.UNIXSock) == 0 {
-		if len(profile.Addr) == 0 {
-			fmt.Printf("Version %s has been started on port %d\n", profile.Version, profile.Port)
-		} else {
-			fmt.Printf("Version %s has been started on address '%s' and port %d\n", profile.Version, profile.Addr, profile.Port)
-		}
-	} else {
-		fmt.Printf("Version %s has been started on unix socket %s\n", profile.Version, profile.UNIXSock)
-	}
-	fmt.Printf(`---
-See more in:
-👉Website: %s
-👉GitHub: %s
----
-`, "https://usememos.com", "https://github.com/usememos/memos")
+    if err := profile.Validate(); err != nil {
+        slog.Error("invalid configuration", "error", err)
+        os.Exit(1)
+    }
+
+    ctx, cancel := context.WithCancel(context.Background())
+    defer cancel()
+
+    dbDriver, err := db.NewDBDriver(profile)
+    if err != nil {
+        slog.Error("failed to initialize database", "error", err)
+        return
+    }
+
+    storeInstance := store.New(dbDriver, profile)
+    if err := storeInstance.Migrate(ctx); err != nil {
+        slog.Error("failed to migrate store", "error", err)
+        return
+    }
+
+    serverInstance, err := server.NewServer(ctx, profile, storeInstance)
+    if err != nil {
+        slog.Error("failed to create server", "error", err)
+        return
+    }
+
+    printGreetings(profile)
+
+    stop := make(chan os.Signal, 1)
+    signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
+    go func() {
+        <-stop
+        slog.Info("shutting down...")
+        serverInstance.Shutdown(ctx)
+        cancel()
+    }()
+
+    if err := serverInstance.Start(ctx); err != nil && err != http.ErrServerClosed {
+        slog.Error("server error", "error", err)
+    }
+    <-ctx.Done()
+}
+
+func printGreetings(p *profile.Profile) {
+    fmt.Print(greetingBanner)
+    fmt.Printf("🚀 Starting Memos v%s\n", p.Version)
+    fmt.Println("---")
+
+    if p.UNIXSock != "" {
+        fmt.Printf("🔌 Unix socket: %s\n", p.UNIXSock)
+    } else {
+        fmt.Printf("🌐 Listening on: %s:%d\n", p.Addr, p.Port)
+    }
+
+    fmt.Printf("🗂️  Data Directory: %s\n", p.Data)
+    fmt.Printf("🛠️  DB Driver: %s\n", p.Driver)
+    fmt.Printf("🔗 Instance URL: %s\n", p.InstanceURL)
+    fmt.Printf("📧 SMTP: %s:%d (username: %s, email: %s)\n", p.SMTPHost, p.SMTPPort, p.SMTPAccountUsername, p.SMTPAccountEmail)
+    fmt.Println("---")
+    fmt.Println("📚 Documentation: https://usememos.com/docs")
+    fmt.Println("🔗 GitHub:        https://github.com/usememos/memos")
+    fmt.Println("---")
+}
+
+func init() {
+    // Load .env file first
+    if err := godotenv.Load(); err != nil {
+        slog.Warn("No .env file found or failed to load", "error", err)
+    }
+
+    viper.AutomaticEnv()
+
+    envBindings := map[string]string{
+        "mode": "MODE",
+        "addr": "ADDR",
+        "port": "PORT",
+        "unix-sock": "UNIX_SOCK",
+        "data": "DATA",
+        "driver": "DRIVER",
+        "dsn": "DSN",
+        "instance-url": "INSTANCE_URL",
+        "smtp-port": "SMTP_PORT",
+        "smtp-host": "SMTP_HOST",
+        "smtp-account-username": "SMTP_ACCOUNT_USERNAME",
+        "smtp-account-email": "SMTP_ACCOUNT_EMAIL",
+        "smtp-account-password": "SMTP_ACCOUNT_PASSWORD",
+    }
+
+    for key, env := range envBindings {
+        if err := viper.BindEnv(key, env); err != nil {
+            panic(fmt.Errorf("failed to bind env var '%s': %w", key, err))
+        }
+    }
+
+    rootCmd.PersistentFlags().String("mode", "dev", "Server mode")
+    rootCmd.PersistentFlags().String("addr", "0.0.0.0", "Bind address")
+    rootCmd.PersistentFlags().Int("port", 8081, "Port")
+    rootCmd.PersistentFlags().String("unix-sock", "", "Unix socket")
+    rootCmd.PersistentFlags().String("data", "", "Data directory")
+    rootCmd.PersistentFlags().String("driver", "sqlite", "Database driver")
+    rootCmd.PersistentFlags().String("dsn", "", "Data source name")
+    rootCmd.PersistentFlags().String("instance-url", "", "Instance URL")
+    rootCmd.PersistentFlags().Int("smtp-port", 587, "SMTP port")
+    rootCmd.PersistentFlags().String("smtp-host", "smtp.gmail.com", "SMTP host")
+    rootCmd.PersistentFlags().String("smtp-account-username", "Memos Service", "SMTP username")
+    rootCmd.PersistentFlags().String("smtp-account-email", "", "SMTP email")
+    rootCmd.PersistentFlags().String("smtp-account-password", "", "SMTP password")
+
+    for key := range envBindings {
+        if err := viper.BindPFlag(key, rootCmd.PersistentFlags().Lookup(key)); err != nil {
+            panic(fmt.Errorf("failed to bind flag '%s': %w", key, err))
+        }
+    }
 }
 
 func main() {
-	if err := rootCmd.Execute(); err != nil {
-		panic(err)
-	}
+    if err := rootCmd.Execute(); err != nil {
+        slog.Error("failed to run command", "error", err)
+        os.Exit(1)
+    }
 }
