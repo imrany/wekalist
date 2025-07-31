@@ -57,6 +57,16 @@ message WorkspaceGeneralSetting {
   bool disallow_change_nickname = 9;
   // enable_email_verification enables verifying user email
   bool enable_email_verification = 10;
+  // smtp_host is the host's smtp host
+  string smtp_host = 11;
+  // smtp_port is the host's smtp host
+  int32 smtp_port = 12;
+  // smtp_account_username is the host's smtp username
+  string smtp_account_username = 13;
+  // smtp_account_email is the host's sender email address
+  string smtp_account_email = 14;
+  // smtp_account_password is the host's sender email address password
+  string smtp_account_password = 15;
 }
 
 message WorkspaceCustomProfile {

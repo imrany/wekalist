@@ -126,6 +126,16 @@ export interface WorkspaceGeneralSetting {
   disallowChangeNickname: boolean;
   /** enable_email_verification enables verifying user email */
   enableEmailVerification: boolean;
+  /** smtp_host is the host's smtp host */
+  smtpHost: string;
+  /** smtp_port is the host's smtp host */
+  smtpPort: number;
+  /** smtp_account_username is the host's smtp username */
+  smtpAccountUsername: string;
+  /** smtp_account_email is the host's sender email address */
+  smtpAccountEmail: string;
+  /** smtp_account_password is the host's sender email address password */
+  smtpAccountPassword: string;
 }
 
 export interface WorkspaceCustomProfile {
@@ -225,7 +235,7 @@ export interface WorkspaceMemoRelatedSetting {
   reactions: string[];
   /** disable_markdown_shortcuts disallow the registration of markdown shortcuts. */
   disableMarkdownShortcuts: boolean;
-  /** enable_blur_nsfw_conteupsertWorkspaceSettingnt enables blurring of content marked as not safe for work (NSFW). */
+  /** enable_blur_nsfw_content enables blurring of content marked as not safe for work (NSFW). */
   enableBlurNsfwContent: boolean;
   /** nsfw_tags is the list of tags that mark content as NSFW for blurring. */
   nsfwTags: string[];
@@ -466,6 +476,11 @@ function createBaseWorkspaceGeneralSetting(): WorkspaceGeneralSetting {
     disallowChangeUsername: false,
     disallowChangeNickname: false,
     enableEmailVerification: false,
+    smtpHost: "",
+    smtpPort: 0,
+    smtpAccountUsername: "",
+    smtpAccountEmail: "",
+    smtpAccountPassword: "",
   };
 }
 
@@ -500,6 +515,21 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
     }
     if (message.enableEmailVerification !== false) {
       writer.uint32(80).bool(message.enableEmailVerification);
+    }
+    if (message.smtpHost !== "") {
+      writer.uint32(90).string(message.smtpHost);
+    }
+    if (message.smtpPort !== 0) {
+      writer.uint32(96).int32(message.smtpPort);
+    }
+    if (message.smtpAccountUsername !== "") {
+      writer.uint32(106).string(message.smtpAccountUsername);
+    }
+    if (message.smtpAccountEmail !== "") {
+      writer.uint32(114).string(message.smtpAccountEmail);
+    }
+    if (message.smtpAccountPassword !== "") {
+      writer.uint32(122).string(message.smtpAccountPassword);
     }
     return writer;
   },
@@ -591,6 +621,46 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
           message.enableEmailVerification = reader.bool();
           continue;
         }
+        case 11: {
+          if (tag !== 90) {
+            break;
+          }
+
+          message.smtpHost = reader.string();
+          continue;
+        }
+        case 12: {
+          if (tag !== 96) {
+            break;
+          }
+
+          message.smtpPort = reader.int32();
+          continue;
+        }
+        case 13: {
+          if (tag !== 106) {
+            break;
+          }
+
+          message.smtpAccountUsername = reader.string();
+          continue;
+        }
+        case 14: {
+          if (tag !== 114) {
+            break;
+          }
+
+          message.smtpAccountEmail = reader.string();
+          continue;
+        }
+        case 15: {
+          if (tag !== 122) {
+            break;
+          }
+
+          message.smtpAccountPassword = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -617,6 +687,11 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
     message.disallowChangeUsername = object.disallowChangeUsername ?? false;
     message.disallowChangeNickname = object.disallowChangeNickname ?? false;
     message.enableEmailVerification = object.enableEmailVerification ?? false;
+    message.smtpHost = object.smtpHost ?? "";
+    message.smtpPort = object.smtpPort ?? 0;
+    message.smtpAccountUsername = object.smtpAccountUsername ?? "";
+    message.smtpAccountEmail = object.smtpAccountEmail ?? "";
+    message.smtpAccountPassword = object.smtpAccountPassword ?? "";
     return message;
   },
 };

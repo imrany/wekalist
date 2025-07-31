@@ -165,6 +165,11 @@ func convertWorkspaceGeneralSettingFromStore(setting *storepb.WorkspaceGeneralSe
 		DisallowChangeUsername:   setting.DisallowChangeUsername,
 		DisallowChangeNickname:   setting.DisallowChangeNickname,
 		EnableEmailVerification: setting.EnableEmailVerification,
+		SmtpHost: setting.SmtpHost,
+		SmtpPort: setting.SmtpPort,
+		SmtpAccountUsername: setting.SmtpAccountUsername,
+		SmtpAccountEmail: setting.SmtpAccountEmail,
+		SmtpAccountPassword: setting.SmtpAccountPassword,
 	}
 	if setting.CustomProfile != nil {
 		generalSetting.CustomProfile = &v1pb.WorkspaceCustomProfile{
@@ -192,6 +197,11 @@ func convertWorkspaceGeneralSettingToStore(setting *v1pb.WorkspaceGeneralSetting
 		DisallowChangeUsername:   setting.DisallowChangeUsername,
 		DisallowChangeNickname:   setting.DisallowChangeNickname,
 		EnableEmailVerification:  setting.EnableEmailVerification,
+		SmtpHost: setting.SmtpHost,
+		SmtpPort: setting.SmtpPort,
+		SmtpAccountUsername: setting.SmtpAccountUsername,
+		SmtpAccountEmail: setting.SmtpAccountEmail,
+		SmtpAccountPassword: setting.SmtpAccountPassword,
 	}
 	if setting.CustomProfile != nil {
 		generalSetting.CustomProfile = &storepb.WorkspaceCustomProfile{

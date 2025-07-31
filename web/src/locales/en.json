@@ -425,6 +425,15 @@
         "locale": "Server Locale",
         "title": "Customize Server"
       },
+      "customize-smtp":{
+        "title": "Customize SMTP",
+        "description":"Customize your smtp settings.",
+        "smtp-host":"SMTP Host Name",
+        "smtp-port":"SMTP Port",
+        "smtp-username":"Preferred Sender Username",
+        "smtp-account-email":"Sender Email Address",
+        "smtp-account-password":"Email Password"
+      },
       "disable-markdown-shortcuts-in-editor": "Disable Markdown shortcuts in editor",
       "disable-password-login": "Disable password login",
       "disable-password-login-final-warning": "Please type \"CONFIRM\" if you know what you are doing.",

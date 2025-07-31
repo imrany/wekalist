@@ -3787,6 +3787,22 @@ components:
                 enableEmailVerification:
                     type: boolean
                     description: enable_email_verification enables verifying user email
+                smtpHost:
+                    type: string
+                    description: smtp_host is the host's smtp host
+                smtpPort:
+                    type: integer
+                    description: smtp_port is the host's smtp host
+                    format: int32
+                smtpAccountUsername:
+                    type: string
+                    description: smtp_account_username is the host's smtp username
+                smtpAccountEmail:
+                    type: string
+                    description: smtp_account_email is the host's sender email address
+                smtpAccountPassword:
+                    type: string
+                    description: smtp_account_password is the host's sender email address password
         WorkspaceMemoRelatedSetting:
             type: object
             properties:

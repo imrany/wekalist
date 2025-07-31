@@ -336,8 +336,18 @@ type WorkspaceGeneralSetting struct {
 	DisallowChangeNickname bool `protobuf:"varint,9,opt,name=disallow_change_nickname,json=disallowChangeNickname,proto3" json:"disallow_change_nickname,omitempty"`
 	// enable_email_verification enables verifying user email
 	EnableEmailVerification bool `protobuf:"varint,10,opt,name=enable_email_verification,json=enableEmailVerification,proto3" json:"enable_email_verification,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// smtp_host is the host's smtp host
+	SmtpHost string `protobuf:"bytes,11,opt,name=smtp_host,json=smtpHost,proto3" json:"smtp_host,omitempty"`
+	// smtp_port is the host's smtp host
+	SmtpPort int32 `protobuf:"varint,12,opt,name=smtp_port,json=smtpPort,proto3" json:"smtp_port,omitempty"`
+	// smtp_account_username is the host's smtp username
+	SmtpAccountUsername string `protobuf:"bytes,13,opt,name=smtp_account_username,json=smtpAccountUsername,proto3" json:"smtp_account_username,omitempty"`
+	// smtp_account_email is the host's sender email address
+	SmtpAccountEmail string `protobuf:"bytes,14,opt,name=smtp_account_email,json=smtpAccountEmail,proto3" json:"smtp_account_email,omitempty"`
+	// smtp_account_password is the host's sender email address password
+	SmtpAccountPassword string `protobuf:"bytes,15,opt,name=smtp_account_password,json=smtpAccountPassword,proto3" json:"smtp_account_password,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *WorkspaceGeneralSetting) Reset() {
@@ -438,6 +448,41 @@ func (x *WorkspaceGeneralSetting) GetEnableEmailVerification() bool {
 		return x.EnableEmailVerification
 	}
 	return false
+}
+
+func (x *WorkspaceGeneralSetting) GetSmtpHost() string {
+	if x != nil {
+		return x.SmtpHost
+	}
+	return ""
+}
+
+func (x *WorkspaceGeneralSetting) GetSmtpPort() int32 {
+	if x != nil {
+		return x.SmtpPort
+	}
+	return 0
+}
+
+func (x *WorkspaceGeneralSetting) GetSmtpAccountUsername() string {
+	if x != nil {
+		return x.SmtpAccountUsername
+	}
+	return ""
+}
+
+func (x *WorkspaceGeneralSetting) GetSmtpAccountEmail() string {
+	if x != nil {
+		return x.SmtpAccountEmail
+	}
+	return ""
+}
+
+func (x *WorkspaceGeneralSetting) GetSmtpAccountPassword() string {
+	if x != nil {
+		return x.SmtpAccountPassword
+	}
+	return ""
 }
 
 type WorkspaceCustomProfile struct {
@@ -815,7 +860,7 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x15WorkspaceBasicSetting\x12\x1d\n" +
 	"\n" +
 	"secret_key\x18\x01 \x01(\tR\tsecretKey\x12%\n" +
-	"\x0eschema_version\x18\x02 \x01(\tR\rschemaVersion\"\xaa\x04\n" +
+	"\x0eschema_version\x18\x02 \x01(\tR\rschemaVersion\"\xfa\x05\n" +
 	"\x17WorkspaceGeneralSetting\x12\x14\n" +
 	"\x05theme\x18\x01 \x01(\tR\x05theme\x12<\n" +
 	"\x1adisallow_user_registration\x18\x02 \x01(\bR\x18disallowUserRegistration\x124\n" +
@@ -827,7 +872,12 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x18disallow_change_username\x18\b \x01(\bR\x16disallowChangeUsername\x128\n" +
 	"\x18disallow_change_nickname\x18\t \x01(\bR\x16disallowChangeNickname\x12:\n" +
 	"\x19enable_email_verification\x18\n" +
-	" \x01(\bR\x17enableEmailVerification\"\xa3\x01\n" +
+	" \x01(\bR\x17enableEmailVerification\x12\x1b\n" +
+	"\tsmtp_host\x18\v \x01(\tR\bsmtpHost\x12\x1b\n" +
+	"\tsmtp_port\x18\f \x01(\x05R\bsmtpPort\x122\n" +
+	"\x15smtp_account_username\x18\r \x01(\tR\x13smtpAccountUsername\x12,\n" +
+	"\x12smtp_account_email\x18\x0e \x01(\tR\x10smtpAccountEmail\x122\n" +
+	"\x15smtp_account_password\x18\x0f \x01(\tR\x13smtpAccountPassword\"\xa3\x01\n" +
 	"\x16WorkspaceCustomProfile\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +

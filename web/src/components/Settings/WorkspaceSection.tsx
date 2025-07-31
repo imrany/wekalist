@@ -18,10 +18,12 @@ import { WorkspaceGeneralSetting, WorkspaceSetting_Key } from "@/types/proto/api
 import { useTranslate } from "@/utils/i18n";
 import ThemeSelector from "../ThemeSelector";
 import UpdateCustomizedProfileDialog from "../UpdateCustomizedProfileDialog";
+import CustomizedSMTPDialog from "../CustomizedSMTPDialog";
 
 const WorkspaceSection = observer(() => {
   const t = useTranslate();
   const customizeDialog = useDialog();
+  const customizeSMTPDialog = useDialog();
   const originalSetting = WorkspaceGeneralSetting.fromPartial(
     workspaceStore.getWorkspaceSettingByKey(WorkspaceSetting_Key.GENERAL)?.generalSetting || {},
   );
@@ -60,7 +62,6 @@ const WorkspaceSection = observer(() => {
   };
 
   useEffect(() => {
-    console.log(originalSetting)
     fetchIdentityProviderList();
   }, []);
 
@@ -123,11 +124,17 @@ const WorkspaceSection = observer(() => {
       </div>
       <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.workspace-section.enable-email-verification")}</span>
-        <Switch
-          disabled={workspaceStore.state.profile.mode === "demo"}
-          checked={workspaceGeneralSetting.enableEmailVerification}
-          onCheckedChange={(checked) => updatePartialSetting({ enableEmailVerification: checked })}
-        />
+        {workspaceGeneralSetting.enableEmailVerification ? (
+          <Button variant="outline" size="sm" onClick={() => customizeSMTPDialog.open()}>
+            View SMTP Details
+          </Button>
+        ) : (
+          <Switch
+            disabled={workspaceStore.state.profile.mode === "demo"}
+            checked={false}
+            onCheckedChange={() => customizeSMTPDialog.open()}
+          />
+        )}
       </div>
       <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.workspace-section.disallow-user-registration")}</span>
@@ -190,8 +197,26 @@ const WorkspaceSection = observer(() => {
         open={customizeDialog.isOpen}
         onOpenChange={customizeDialog.setOpen}
         onSuccess={() => {
-          // Refresh workspace settings if needed
           toast.success("Profile updated successfully!");
+        }}
+      />
+      <CustomizedSMTPDialog
+        open={customizeSMTPDialog.isOpen}
+        onOpenChange={customizeSMTPDialog.setOpen}
+        isViewMode={workspaceGeneralSetting.enableEmailVerification}
+        onSuccess={() => {
+          updatePartialSetting({ enableEmailVerification: true });
+        }}
+        onDisable={() => {
+          updatePartialSetting({ 
+            enableEmailVerification: false,
+            smtpHost: "",
+            smtpPort: 0,
+            smtpAccountUsername: "",
+            smtpAccountEmail: "",
+            smtpAccountPassword: ""
+          });
+          toast.success("Email verification disabled!");
         }}
       />
     </div>
