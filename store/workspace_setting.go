@@ -29,16 +29,17 @@ func (s *Store) UpsertWorkspaceSetting(ctx context.Context, upsert *storepb.Work
 	}
 	var valueBytes []byte
 	var err error
-	if upsert.Key == storepb.WorkspaceSettingKey_BASIC {
-		valueBytes, err = protojson.Marshal(upsert.GetBasicSetting())
-	} else if upsert.Key == storepb.WorkspaceSettingKey_GENERAL {
-		valueBytes, err = protojson.Marshal(upsert.GetGeneralSetting())
-	} else if upsert.Key == storepb.WorkspaceSettingKey_STORAGE {
-		valueBytes, err = protojson.Marshal(upsert.GetStorageSetting())
-	} else if upsert.Key == storepb.WorkspaceSettingKey_MEMO_RELATED {
-		valueBytes, err = protojson.Marshal(upsert.GetMemoRelatedSetting())
-	} else {
-		return nil, errors.Errorf("unsupported workspace setting key: %v", upsert.Key)
+	switch upsert.Key {
+		case storepb.WorkspaceSettingKey_BASIC:
+			valueBytes, err = protojson.Marshal(upsert.GetBasicSetting())
+		case storepb.WorkspaceSettingKey_GENERAL:
+			valueBytes, err = protojson.Marshal(upsert.GetGeneralSetting())
+		case storepb.WorkspaceSettingKey_STORAGE:
+			valueBytes, err = protojson.Marshal(upsert.GetStorageSetting())
+		case storepb.WorkspaceSettingKey_MEMO_RELATED:
+			valueBytes, err = protojson.Marshal(upsert.GetMemoRelatedSetting())
+		default:
+			return nil, errors.Errorf("unsupported workspace setting key: %v", upsert.Key)
 	}
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to marshal workspace setting value")

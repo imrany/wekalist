@@ -124,6 +124,8 @@ export interface WorkspaceGeneralSetting {
   disallowChangeUsername: boolean;
   /** disallow_change_nickname disallows changing nickname. */
   disallowChangeNickname: boolean;
+  /** enable_email_verification enables verifying user email */
+  enableEmailVerification: boolean;
 }
 
 export interface WorkspaceCustomProfile {
@@ -223,7 +225,7 @@ export interface WorkspaceMemoRelatedSetting {
   reactions: string[];
   /** disable_markdown_shortcuts disallow the registration of markdown shortcuts. */
   disableMarkdownShortcuts: boolean;
-  /** enable_blur_nsfw_content enables blurring of content marked as not safe for work (NSFW). */
+  /** enable_blur_nsfw_conteupsertWorkspaceSettingnt enables blurring of content marked as not safe for work (NSFW). */
   enableBlurNsfwContent: boolean;
   /** nsfw_tags is the list of tags that mark content as NSFW for blurring. */
   nsfwTags: string[];
@@ -463,6 +465,7 @@ function createBaseWorkspaceGeneralSetting(): WorkspaceGeneralSetting {
     weekStartDayOffset: 0,
     disallowChangeUsername: false,
     disallowChangeNickname: false,
+    enableEmailVerification: false,
   };
 }
 
@@ -494,6 +497,9 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
     }
     if (message.disallowChangeNickname !== false) {
       writer.uint32(72).bool(message.disallowChangeNickname);
+    }
+    if (message.enableEmailVerification !== false) {
+      writer.uint32(80).bool(message.enableEmailVerification);
     }
     return writer;
   },
@@ -577,6 +583,14 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
           message.disallowChangeNickname = reader.bool();
           continue;
         }
+        case 10: {
+          if (tag !== 80) {
+            break;
+          }
+
+          message.enableEmailVerification = reader.bool();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -602,6 +616,7 @@ export const WorkspaceGeneralSetting: MessageFns<WorkspaceGeneralSetting> = {
     message.weekStartDayOffset = object.weekStartDayOffset ?? 0;
     message.disallowChangeUsername = object.disallowChangeUsername ?? false;
     message.disallowChangeNickname = object.disallowChangeNickname ?? false;
+    message.enableEmailVerification = object.enableEmailVerification ?? false;
     return message;
   },
 };

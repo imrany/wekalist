@@ -60,6 +60,7 @@ const WorkspaceSection = observer(() => {
   };
 
   useEffect(() => {
+    console.log(originalSetting)
     fetchIdentityProviderList();
   }, []);
 
@@ -119,6 +120,14 @@ const WorkspaceSection = observer(() => {
           {t("common.learn-more")}
           <ExternalLinkIcon className="inline w-4 h-auto ml-1" />
         </Link>
+      </div>
+      <div className="w-full flex flex-row justify-between items-center">
+        <span>{t("setting.workspace-section.enable-email-verification")}</span>
+        <Switch
+          disabled={workspaceStore.state.profile.mode === "demo"}
+          checked={workspaceGeneralSetting.enableEmailVerification}
+          onCheckedChange={(checked) => updatePartialSetting({ enableEmailVerification: checked })}
+        />
       </div>
       <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.workspace-section.disallow-user-registration")}</span>

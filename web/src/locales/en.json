@@ -460,6 +460,7 @@
       "disallow-change-username": "Disallow changing username",
       "disallow-password-auth": "Disallow password auth",
       "disallow-user-registration": "Disallow user registration",
+      "enable-email-verification":"Enable email verification",
       "monday": "Monday",
       "saturday": "Saturday",
       "sunday": "Sunday",

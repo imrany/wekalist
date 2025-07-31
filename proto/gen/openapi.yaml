@@ -3784,6 +3784,9 @@ components:
                 disallowChangeNickname:
                     type: boolean
                     description: disallow_change_nickname disallows changing nickname.
+                enableEmailVerification:
+                    type: boolean
+                    description: enable_email_verification enables verifying user email
         WorkspaceMemoRelatedSetting:
             type: object
             properties:

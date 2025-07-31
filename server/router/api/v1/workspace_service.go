@@ -39,16 +39,16 @@ func (s *APIV1Service) GetWorkspaceSetting(ctx context.Context, request *v1pb.Ge
 	workspaceSettingKey := storepb.WorkspaceSettingKey(storepb.WorkspaceSettingKey_value[workspaceSettingKeyString])
 	// Get workspace setting from store with default value.
 	switch workspaceSettingKey {
-	case storepb.WorkspaceSettingKey_BASIC:
-		_, err = s.Store.GetWorkspaceBasicSetting(ctx)
-	case storepb.WorkspaceSettingKey_GENERAL:
-		_, err = s.Store.GetWorkspaceGeneralSetting(ctx)
-	case storepb.WorkspaceSettingKey_MEMO_RELATED:
-		_, err = s.Store.GetWorkspaceMemoRelatedSetting(ctx)
-	case storepb.WorkspaceSettingKey_STORAGE:
-		_, err = s.Store.GetWorkspaceStorageSetting(ctx)
-	default:
-		return nil, status.Errorf(codes.InvalidArgument, "unsupported workspace setting key: %v", workspaceSettingKey)
+		case storepb.WorkspaceSettingKey_BASIC:
+			_, err = s.Store.GetWorkspaceBasicSetting(ctx)
+		case storepb.WorkspaceSettingKey_GENERAL:
+			_, err = s.Store.GetWorkspaceGeneralSetting(ctx)
+		case storepb.WorkspaceSettingKey_MEMO_RELATED:
+			_, err = s.Store.GetWorkspaceMemoRelatedSetting(ctx)
+		case storepb.WorkspaceSettingKey_STORAGE:
+			_, err = s.Store.GetWorkspaceStorageSetting(ctx)
+		default:
+			return nil, status.Errorf(codes.InvalidArgument, "unsupported workspace setting key: %v", workspaceSettingKey)
 	}
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get workspace setting: %v", err)
@@ -164,6 +164,7 @@ func convertWorkspaceGeneralSettingFromStore(setting *storepb.WorkspaceGeneralSe
 		WeekStartDayOffset:       setting.WeekStartDayOffset,
 		DisallowChangeUsername:   setting.DisallowChangeUsername,
 		DisallowChangeNickname:   setting.DisallowChangeNickname,
+		EnableEmailVerification: setting.EnableEmailVerification,
 	}
 	if setting.CustomProfile != nil {
 		generalSetting.CustomProfile = &v1pb.WorkspaceCustomProfile{
@@ -190,6 +191,7 @@ func convertWorkspaceGeneralSettingToStore(setting *v1pb.WorkspaceGeneralSetting
 		WeekStartDayOffset:       setting.WeekStartDayOffset,
 		DisallowChangeUsername:   setting.DisallowChangeUsername,
 		DisallowChangeNickname:   setting.DisallowChangeNickname,
+		EnableEmailVerification:  setting.EnableEmailVerification,
 	}
 	if setting.CustomProfile != nil {
 		generalSetting.CustomProfile = &storepb.WorkspaceCustomProfile{

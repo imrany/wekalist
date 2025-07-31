@@ -106,6 +106,8 @@ message WorkspaceGeneralSetting {
   bool disallow_change_username = 8;
   // disallow_change_nickname disallows changing nickname.
   bool disallow_change_nickname = 9;
+  // enable_email_verification enables verifying user email
+  bool enable_email_verification = 10;
 }
 
 message WorkspaceCustomProfile {

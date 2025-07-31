@@ -380,8 +380,10 @@ type WorkspaceGeneralSetting struct {
 	DisallowChangeUsername bool `protobuf:"varint,8,opt,name=disallow_change_username,json=disallowChangeUsername,proto3" json:"disallow_change_username,omitempty"`
 	// disallow_change_nickname disallows changing nickname.
 	DisallowChangeNickname bool `protobuf:"varint,9,opt,name=disallow_change_nickname,json=disallowChangeNickname,proto3" json:"disallow_change_nickname,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	// enable_email_verification enables verifying user email
+	EnableEmailVerification bool `protobuf:"varint,10,opt,name=enable_email_verification,json=enableEmailVerification,proto3" json:"enable_email_verification,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *WorkspaceGeneralSetting) Reset() {
@@ -473,6 +475,13 @@ func (x *WorkspaceGeneralSetting) GetDisallowChangeUsername() bool {
 func (x *WorkspaceGeneralSetting) GetDisallowChangeNickname() bool {
 	if x != nil {
 		return x.DisallowChangeNickname
+	}
+	return false
+}
+
+func (x *WorkspaceGeneralSetting) GetEnableEmailVerification() bool {
+	if x != nil {
+		return x.EnableEmailVerification
 	}
 	return false
 }
@@ -962,7 +971,7 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\aSTORAGE\x10\x03\x12\x10\n" +
 	"\fMEMO_RELATED\x10\x04:f\xeaAc\n" +
 	"\x1eapi.memos.dev/WorkspaceSetting\x12\x1cworkspace/settings/{setting}*\x11workspaceSettings2\x10workspaceSettingB\a\n" +
-	"\x05value\"\xef\x03\n" +
+	"\x05value\"\xab\x04\n" +
 	"\x17WorkspaceGeneralSetting\x12\x14\n" +
 	"\x05theme\x18\x01 \x01(\tR\x05theme\x12<\n" +
 	"\x1adisallow_user_registration\x18\x02 \x01(\bR\x18disallowUserRegistration\x124\n" +
@@ -972,7 +981,9 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\x0ecustom_profile\x18\x06 \x01(\v2$.memos.api.v1.WorkspaceCustomProfileR\rcustomProfile\x121\n" +
 	"\x15week_start_day_offset\x18\a \x01(\x05R\x12weekStartDayOffset\x128\n" +
 	"\x18disallow_change_username\x18\b \x01(\bR\x16disallowChangeUsername\x128\n" +
-	"\x18disallow_change_nickname\x18\t \x01(\bR\x16disallowChangeNickname\"\xa3\x01\n" +
+	"\x18disallow_change_nickname\x18\t \x01(\bR\x16disallowChangeNickname\x12:\n" +
+	"\x19enable_email_verification\x18\n" +
+	" \x01(\bR\x17enableEmailVerification\"\xa3\x01\n" +
 	"\x16WorkspaceCustomProfile\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
