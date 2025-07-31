@@ -46,11 +46,6 @@ func runServer(_ *cobra.Command, _ []string) {
         DSN:                  viper.GetString("dsn"),
         InstanceURL:          viper.GetString("instance-url"),
         Version:              version.GetCurrentVersion(viper.GetString("mode")),
-        SMTPHost:             viper.GetString("smtp-host"),
-        SMTPPort:             viper.GetInt("smtp-port"),
-        SMTPAccountUsername:  viper.GetString("smtp-account-username"),
-        SMTPAccountPassword:  viper.GetString("smtp-account-password"),
-        SMTPAccountEmail:     viper.GetString("smtp-account-email"),
     }
 
     if err := profile.Validate(); err != nil {
@@ -111,7 +106,6 @@ func printGreetings(p *profile.Profile) {
     fmt.Printf("🗂️  Data Directory: %s\n", p.Data)
     fmt.Printf("🛠️  DB Driver: %s\n", p.Driver)
     fmt.Printf("🔗 Instance URL: %s\n", p.InstanceURL)
-    fmt.Printf("📧 SMTP: %s:%d (username: %s, email: %s)\n", p.SMTPHost, p.SMTPPort, p.SMTPAccountUsername, p.SMTPAccountEmail)
     fmt.Println("---")
     fmt.Println("📚 Documentation: https://usememos.com/docs")
     fmt.Println("🔗 GitHub:        https://github.com/usememos/memos")
@@ -135,11 +129,6 @@ func init() {
         "driver": "DRIVER",
         "dsn": "DSN",
         "instance-url": "INSTANCE_URL",
-        "smtp-port": "SMTP_PORT",
-        "smtp-host": "SMTP_HOST",
-        "smtp-account-username": "SMTP_ACCOUNT_USERNAME",
-        "smtp-account-email": "SMTP_ACCOUNT_EMAIL",
-        "smtp-account-password": "SMTP_ACCOUNT_PASSWORD",
     }
 
     for key, env := range envBindings {
@@ -156,11 +145,6 @@ func init() {
     rootCmd.PersistentFlags().String("driver", "sqlite", "Database driver")
     rootCmd.PersistentFlags().String("dsn", "", "Data source name")
     rootCmd.PersistentFlags().String("instance-url", "", "Instance URL")
-    rootCmd.PersistentFlags().Int("smtp-port", 587, "SMTP port")
-    rootCmd.PersistentFlags().String("smtp-host", "smtp.gmail.com", "SMTP host")
-    rootCmd.PersistentFlags().String("smtp-account-username", "Memos Service", "SMTP username")
-    rootCmd.PersistentFlags().String("smtp-account-email", "", "SMTP email")
-    rootCmd.PersistentFlags().String("smtp-account-password", "", "SMTP password")
 
     for key := range envBindings {
         if err := viper.BindPFlag(key, rootCmd.PersistentFlags().Lookup(key)); err != nil {

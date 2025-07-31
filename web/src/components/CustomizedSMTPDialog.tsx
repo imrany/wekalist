@@ -8,6 +8,7 @@ import { workspaceStore } from "@/store";
 import { workspaceSettingNamePrefix } from "@/store/common";
 import { WorkspaceGeneralSetting, WorkspaceSetting_Key } from "@/types/proto/api/v1/workspace_service";
 import { useTranslate } from "@/utils/i18n";
+import { ExternalLinkIcon } from "lucide-react";
 
 interface Props {
   open: boolean;
@@ -175,7 +176,7 @@ function CustomizedSMTPDialog({ open, onOpenChange, onSuccess, isViewMode = fals
               type="text" 
               value={customSMTP.smtpAccountUsername || ""} 
               onChange={handleSMTPAccountUsernameChanged} 
-              placeholder="e.g Company-name Support Team"
+              placeholder="Sender username or email e.g sender@gmail.com"
               readOnly={isViewMode}
             />
           </div>
@@ -221,6 +222,24 @@ function CustomizedSMTPDialog({ open, onOpenChange, onSuccess, isViewMode = fals
             )}
           </div>
         </DialogFooter>
+        <div className="w-full mt-4 flex gap-8">
+          <a
+            className="text-muted-foreground text-sm flex flex-row justify-start items-center hover:underline hover:text-primary"
+            href="https://usememos.com/docs/advanced-settings/custom-style-and-script"
+            target="_blank"
+          >
+            {t("common.learn-more")}
+            <ExternalLinkIcon className="inline w-4 h-auto ml-1" />
+          </a>
+          <a
+            className="text-muted-foreground text-sm flex flex-row justify-start items-center hover:underline hover:text-primary"
+            href="https://usememos.com/docs/advanced-settings/custom-style-and-script"
+            target="_blank"
+          >
+            {t("common.get-help")}
+            <ExternalLinkIcon className="inline w-4 h-auto ml-1" />
+          </a>
+        </div>
       </DialogContent>
     </Dialog>
   );

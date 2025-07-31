@@ -7,8 +7,6 @@ import (
 	"net/smtp"
 	"strings"
 	"time"
-
-	"github.com/spf13/viper"
 )
 
 // OtpPurpose represents the purpose of an OTP
@@ -45,31 +43,9 @@ type OTPData struct {
 	Purpose   OtpPurpose
 }
 
-func config() SMTPConfig {
-    bindings := map[string]string{
-        "smtp-host": "SMTP_HOST",
-        "smtp-port": "SMTP_PORT",
-        "smtp-account-username": "SMTP_ACCOUNT_USERNAME",
-        "smtp-account-password": "SMTP_ACCOUNT_PASSWORD",
-        "smtp-account-email": "SMTP_ACCOUNT_EMAIL",
-    }
-    for key, env := range bindings {
-        viper.BindEnv(key, env)
-    }
-
-    return SMTPConfig{
-        Host:     viper.GetString("smtp-host"),
-        Port:     viper.GetInt("smtp-port"),
-        Username: viper.GetString("smtp-account-username"),
-        Password: viper.GetString("smtp-account-password"),
-        Email:    viper.GetString("smtp-account-email"),
-    }
-}
-
 
 // ValidateConfig checks if the SMTP configuration is valid
-func ValidateConfig() error {
-	config := config()
+func ValidateConfig(config SMTPConfig) error {
 	if config.Host == "" {
 		return fmt.Errorf("SMTP host is required")
 	}
@@ -89,9 +65,8 @@ func ValidateConfig() error {
 }
 
 // SendEmail sends a generic email
-func SendEmail(emailData EmailData) error {
-	config := config()
-	if err := ValidateConfig(); err != nil {
+func SendEmail(emailData EmailData, config SMTPConfig) error {
+	if err := ValidateConfig(config); err != nil {
 		return fmt.Errorf("SMTP configuration error: %w", err)
 	}
 
@@ -110,17 +85,17 @@ func SendEmail(emailData EmailData) error {
 	auth := smtp.PlainAuth("", config.Username, config.Password, config.Host)
 
 	// Build message
-	message := buildMessage(emailData)
+	message := buildMessage(emailData, config)
 
 	// SMTP server address
 	addr := fmt.Sprintf("%s:%d", config.Host, config.Port)
 
 	// Send email with TLS
-	return sendWithTLS(addr, auth, config.Email, emailData.To, []byte(message))
+	return sendWithTLS(addr, auth, config.Email, emailData.To, []byte(message), config)
 }
 
 // SendOTP generates and sends an OTP via email
-func SendOTP(email string, purpose OtpPurpose, otp string) (string, error) {
+func SendOTP(email string, purpose OtpPurpose, otp string, config SMTPConfig) (string, error) {
 	if email == "" {
 		return "", fmt.Errorf("email address is required")
 	}
@@ -137,7 +112,7 @@ func SendOTP(email string, purpose OtpPurpose, otp string) (string, error) {
 	}
 
 	// Send email
-	err := SendEmail(emailData)
+	err := SendEmail(emailData, config)
 	if err != nil {
 		return "", fmt.Errorf("%w", err)
 	}
@@ -147,7 +122,7 @@ func SendOTP(email string, purpose OtpPurpose, otp string) (string, error) {
 }
 
 // SendOTPWithCustomTemplate sends OTP with custom email template
-func SendOTPWithCustomTemplate(email string, purpose OtpPurpose, otp string, subject, htmlTemplate, textTemplate string) (string, error) {
+func SendOTPWithCustomTemplate(email string, purpose OtpPurpose, otp string, subject, htmlTemplate, textTemplate string, config SMTPConfig) (string, error) {
 	if email == "" {
 		return "", fmt.Errorf("email address is required")
 	}
@@ -169,7 +144,7 @@ func SendOTPWithCustomTemplate(email string, purpose OtpPurpose, otp string, sub
 		IsHTML:  true,
 	}
 
-	err := SendEmail(emailData)
+	err := SendEmail(emailData, config)
 	if err != nil {
 		return "", fmt.Errorf("failed to send OTP email: %w", err)
 	}
@@ -179,7 +154,7 @@ func SendOTPWithCustomTemplate(email string, purpose OtpPurpose, otp string, sub
 }
 
 // SendOTPWithExistingCode sends an existing OTP via email (for resend functionality)
-func SendOTPWithExistingCode(email string, purpose OtpPurpose, otp string) error {
+func SendOTPWithExistingCode(email string, purpose OtpPurpose, otp string, config SMTPConfig) error {
 	if email == "" {
 		return fmt.Errorf("email address is required")
 	}
@@ -199,7 +174,7 @@ func SendOTPWithExistingCode(email string, purpose OtpPurpose, otp string) error
 	}
 
 	// Send email
-	err := SendEmail(emailData)
+	err := SendEmail(emailData, config)
 	if err != nil {
 		return fmt.Errorf("failed to resend OTP email: %w", err)
 	}
@@ -209,9 +184,8 @@ func SendOTPWithExistingCode(email string, purpose OtpPurpose, otp string) error
 }
 
 // Helper functions
-func buildMessage(emailData EmailData) string {
+func buildMessage(emailData EmailData, config SMTPConfig) string {
 	var message strings.Builder
-	config := config()
 
 	// Headers
 	message.WriteString(fmt.Sprintf("From: %s\r\n", config.Email))
@@ -258,8 +232,7 @@ func buildMultipartMessage(htmlBody, textBody string) string {
 	return message.String()
 }
 
-func sendWithTLS(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
-	config := config()
+func sendWithTLS(addr string, auth smtp.Auth, from string, to []string, msg []byte, config SMTPConfig) error {
 	// Connect to server
 	client, err := smtp.Dial(addr)
 	if err != nil {

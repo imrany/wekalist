@@ -63,6 +63,7 @@
     "explore": "Explore",
     "file": "File",
     "filter": "Filter",
+    "get-help":"Get help",
     "home": "Home",
     "image": "Image",
     "in": "In",
@@ -430,7 +431,7 @@
         "description":"Customize your smtp settings.",
         "smtp-host":"SMTP Host Name",
         "smtp-port":"SMTP Port",
-        "smtp-username":"Preferred Sender Username",
+        "smtp-username":"Sender Username",
         "smtp-account-email":"Sender Email Address",
         "smtp-account-password":"Email Password"
       },

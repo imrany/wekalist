@@ -41,8 +41,20 @@ func (s *APIV1Service) VerifyUser(ctx context.Context, request *v1pb.VerifyReque
 		return nil, status.Errorf(codes.AlreadyExists, "failed, account already exist")
 	}
 
+	generalSettings, err := s.Store.GetWorkspaceGeneralSetting(ctx)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get smtp configurations %v", err.Error())
+	}
+	smtpConfig:=SMTPConfig{
+		Host: generalSettings.SmtpHost,
+		Port: int(generalSettings.SmtpPort),
+		Username: generalSettings.SmtpAccountUsername,
+		Email: generalSettings.SmtpAccountEmail,
+		Password: generalSettings.SmtpAccountPassword,
+	}
+
 	otp := GenerateOTP()
-	_, err =SendOTP(request.Email, OtpPurposeVerification ,otp)
+	_, err =SendOTP(request.Email, OtpPurposeVerification ,otp, smtpConfig)
 	if err !=nil{
 		return nil, status.Errorf(codes.Internal, "%v", err.Error())
 	}
