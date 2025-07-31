@@ -34,6 +34,15 @@ function ChangeMemberPasswordDialog({ open, onOpenChange, user, onSuccess }: Pro
     setNewPasswordAgain(text);
   };
 
+  const validatePassword = (password: string) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    
+    return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers;
+  };
+
   const handleSaveBtnClick = async () => {
     if (!user) return;
 
@@ -48,6 +57,12 @@ function ChangeMemberPasswordDialog({ open, onOpenChange, user, onSuccess }: Pro
       return;
     }
 
+    const passwordValidation = validatePassword(newPassword);
+    const passwordValidationAgain = validatePassword(newPasswordAgain);
+    if (!passwordValidation || !passwordValidationAgain) {
+      toast.error(t("auth.strong-password-required")); // Show first error
+      return;
+    }
     try {
       await userStore.updateUser(
         {
@@ -72,7 +87,7 @@ function ChangeMemberPasswordDialog({ open, onOpenChange, user, onSuccess }: Pro
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {t("setting.account-section.change-password")} ({user.displayName})
+            {t("setting.account-section.change-password")}
           </DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
