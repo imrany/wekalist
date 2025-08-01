@@ -121,14 +121,14 @@ func init() {
     viper.AutomaticEnv()
 
     envBindings := map[string]string{
-        "mode": "MODE",
-        "addr": "ADDR",
-        "port": "PORT",
-        "unix-sock": "UNIX_SOCK",
-        "data": "DATA",
-        "driver": "DRIVER",
-        "dsn": "DSN",
-        "instance-url": "INSTANCE_URL",
+            "mode": "MODE",
+            "addr": "ADDR",
+            "port": "PORT",
+            "unix-sock": "UNIX_SOCK",
+            "data": "DATA",
+            "driver": "DRIVER",
+            "dsn": "DSN",
+            "instance-url": "INSTANCE_URL",
     }
 
     for key, env := range envBindings {
