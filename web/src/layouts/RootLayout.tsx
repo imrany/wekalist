@@ -10,6 +10,7 @@ import Loading from "@/pages/Loading";
 import { Routes } from "@/router";
 import { workspaceStore } from "@/store";
 import memoFilterStore from "@/store/memoFilter";
+import FeedbackFloat from "@/components/FeedbackFloat";
 
 const RootLayout = observer(() => {
   const location = useLocation();
@@ -63,6 +64,7 @@ const RootLayout = observer(() => {
           <Outlet />
         </Suspense>
       </main>
+      <FeedbackFloat/>
     </div>
   );
 });
