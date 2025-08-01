@@ -32,16 +32,6 @@ type Profile struct {
 	Version string
 	// InstanceURL is the url of your memos instance.
 	InstanceURL string
-	// SMTP_HOST is the domain name of the email server e.g smtp.gmail.com, smtp.example.com
-	SMTPHost string
-	// SMTP_PORT is the email server port e.g 587
-	SMTPPort int 
-	// SMTP_ACCOUNT_USERNAME is the username of the email account used to send email
-	SMTPAccountUsername string
-	// SMTP_ACCOUNT_PASSWORD is the password of the email account used to send email
-	SMTPAccountPassword string
-	// SMTP_ACCOUNT_EMAIL is the email address of the account used to send email
-	SMTPAccountEmail string
 }
 
 func (p *Profile) IsDev() bool {
