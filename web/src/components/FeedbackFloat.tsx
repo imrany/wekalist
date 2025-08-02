@@ -11,7 +11,7 @@ import { User_Role } from "@/types/proto/api/v1/user_service";
 
 export default function FeedbackFloat() {
     const user = useCurrentUser();
-    const showFeedbackFloat = (user.role===User_Role.HOST || user.role===User_Role.ADMIN);
+    const showFeedbackFloat = (user?.role===User_Role.HOST || user?.role===User_Role.ADMIN);
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [feedbackType, setFeedbackType] = useState<string>("");
     const [email, setEmail] = useState<string>("");
