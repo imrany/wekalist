@@ -18,6 +18,7 @@ import { Memo } from "@/types/proto/api/v1/memo_service";
 import { User } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useShare from "@/hooks/useShare";
 
 const UserProfile = observer(() => {
   const t = useTranslate();
@@ -65,8 +66,12 @@ const UserProfile = observer(() => {
       return;
     }
 
-    copy(`${window.location.origin}/u/${encodeURIComponent(user.username)}`);
-    toast.success(t("message.copied"));
+    const url=`${window.location.origin}/u/${encodeURIComponent(user.username)}`
+    const share=useShare(`Checkout ${user.username}`, `Checkout ${user.username},\n${user.description}`, url)
+    if(share.type==='error'){
+      copy(url);
+      toast.success(t("message.copied"));
+    }
   };
 
   return (
