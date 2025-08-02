@@ -197,7 +197,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
             <Link
               className={cn(
                 "flex flex-row justify-start items-center rounded-md p-1 hover:opacity-80",
-                commentAmount === 0 && "invisible group-hover:visible",
+                commentAmount === 0 && "md:invisible group-hover:visible",
               )}
               to={`/${memo.name}#comments`}
               viewTransition
