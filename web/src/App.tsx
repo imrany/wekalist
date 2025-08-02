@@ -111,6 +111,105 @@ const App = observer(() => {
     }
   }, [userSetting?.theme]);
 
+  const unsubscribeServiceWorker = async () => {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+          try {
+              const registration = await navigator.serviceWorker.getRegistration();
+              if (registration) {
+                  const subscription = await registration.pushManager.getSubscription();
+                  if (subscription) {
+                      await subscription.unsubscribe();
+                      console.log('Successfully unsubscribed from push notifications');
+
+                      // Inform your server about the unsubscription
+                      await fetch(`/api/unsubscribe`, {
+                          method: 'POST',
+                          body: JSON.stringify({ endpoint: subscription.endpoint }),
+                          headers: {
+                              'Content-Type': 'application/json'
+                          }
+                      });
+
+                      console.log('Successfully informed the server about the unsubscription');
+                  } else {
+                      console.log('No subscription found');
+                  }
+              } else {
+                  console.log('No service worker registration found');
+              }
+          } catch (error: any) {
+              console.error('Error during unsubscription:', error);
+          }
+      }
+  };
+
+  const registerServiceWorker = async (role: string, email: string) => {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+            console.log('Push notifications not supported in this browser');
+            return null;
+        }
+
+        try {
+            // Check if service worker is already registered
+            let registration = await navigator.serviceWorker.getRegistration();
+            
+            if (!registration) {
+                registration = await navigator.serviceWorker.register('/serviceworker.js');
+                console.log('Service Worker registered with scope:', registration.scope);
+            }
+
+            // Check if we already have a subscription
+            let subscription = await registration.pushManager.getSubscription();
+            
+            // If no subscription exists, create one
+            if (!subscription) {
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: 'BNwfzk8HNHxtTLrF6Lphh7_vWnOLsWgQ5SobRT37EmCY6BNWarrB_AZ6rFr7FfHktxgULgBxw7A0ibwf8Svq-Sc'
+                });
+            }
+
+            // Extract keys from the subscription
+            const keys = subscription.toJSON().keys;
+
+            if (!keys || !keys.p256dh || !keys.auth) {
+                throw new Error('Subscription keys are missing or malformed.');
+            }
+
+            // Add role to the subscription object
+            const subscriptionWithRole = {
+                endpoint: subscription.endpoint,
+                keys: keys,
+                role: role,
+                email: email,
+            };
+
+            // Send subscription to the server
+            const response = await fetch(`/api/subscribe`, {
+                method: 'POST',
+                body: JSON.stringify(subscriptionWithRole),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to subscribe.');
+            } else {
+                const parseRes = await response.json();
+                if (parseRes.error) {
+                    console.log(parseRes.error);
+                } else {
+                    console.log(parseRes.message);
+                }
+            }
+
+        } catch (error) {
+            console.error('Service Worker registration or subscription failed:', error);
+        }
+        return null;
+  };
+
   return <Outlet />;
 });
 

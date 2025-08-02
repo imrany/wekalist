@@ -1,7 +1,7 @@
 import { InboxIcon, LoaderIcon, MessageCircleIcon, TrashIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { activityServiceClient } from "@/grpcweb";
 import useAsyncEffect from "@/hooks/useAsyncEffect";

@@ -1,7 +1,7 @@
 import copy from "copy-to-clipboard";
 import { ClipboardIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
 import { userServiceClient } from "@/grpcweb";
 import useCurrentUser from "@/hooks/useCurrentUser";

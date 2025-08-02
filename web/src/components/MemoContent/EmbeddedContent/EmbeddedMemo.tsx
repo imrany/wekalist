@@ -2,7 +2,7 @@ import copy from "copy-to-clipboard";
 import { ArrowUpRightIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { Link } from "react-router-dom";
 import MemoAttachmentListView from "@/components/MemoAttachmentListView";
 import useLoading from "@/hooks/useLoading";
@@ -63,7 +63,7 @@ const EmbeddedMemo = observer(({ resourceId: uid, params: paramsStr }: Props) =>
 
   const copyMemoUid = (uid: string) => {
     copy(uid);
-    toast.success("Copied memo UID to clipboard");
+    toast("Copied memo UID to clipboard");
   };
 
   return (

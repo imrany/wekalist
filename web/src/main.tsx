@@ -1,7 +1,7 @@
 import "@github/relative-time-element";
 import { observer } from "mobx-react-lite";
 import { createRoot } from "react-dom/client";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/sonner"
 import { RouterProvider } from "react-router-dom";
 import "./i18n";
 import "./index.css";

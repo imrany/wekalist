@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { BellPlus, ExternalLinkIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useEffect, useMemo, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner"
 import { useParams } from "react-router-dom";
 import MemoView from "@/components/MemoView";
 import PagedMemoList from "@/components/PagedMemoList";

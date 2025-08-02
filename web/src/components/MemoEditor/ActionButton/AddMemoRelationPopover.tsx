@@ -1,7 +1,7 @@
 import { uniqBy } from "lodash-es";
 import { LinkIcon } from "lucide-react";
 import { useContext, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import useDebounce from "react-use/lib/useDebounce";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

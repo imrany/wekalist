@@ -11,7 +11,7 @@ import {
   SquareCheckIcon,
 } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { useLocation } from "react-router-dom";
 import { markdownServiceClient } from "@/grpcweb";
 import useNavigateTo from "@/hooks/useNavigateTo";

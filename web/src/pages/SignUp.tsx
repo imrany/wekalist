@@ -2,7 +2,7 @@ import { LoaderIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { ClientError } from "nice-grpc-web";
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner"
 import { Link } from "react-router-dom";
 import AuthFooter from "@/components/AuthFooter";
 import { Button } from "@/components/ui/button";

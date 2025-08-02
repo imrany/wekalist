@@ -1,7 +1,7 @@
 import { LoaderIcon, PaperclipIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
 import { attachmentStore } from "@/store";
 import { Attachment } from "@/types/proto/api/v1/attachment_service";

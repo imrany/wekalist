@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { cn } from "@/lib/utils";
 
 // must be compatible with JS Date.parse(), we use ISO 8601 (almost)

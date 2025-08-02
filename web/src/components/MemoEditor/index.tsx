@@ -3,7 +3,7 @@ import { isEqual } from "lodash-es";
 import { LoaderIcon, SendIcon, Stars } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import useLocalStorage from "react-use/lib/useLocalStorage";
 import { Button } from "@/components/ui/button";

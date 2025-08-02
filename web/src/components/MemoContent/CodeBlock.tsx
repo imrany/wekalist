@@ -2,7 +2,7 @@ import copy from "copy-to-clipboard";
 import hljs from "highlight.js";
 import { CopyIcon } from "lucide-react";
 import { useEffect, useMemo } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import { cn } from "@/lib/utils";
 import MermaidBlock from "./MermaidBlock";
 import { BaseProps } from "./types";

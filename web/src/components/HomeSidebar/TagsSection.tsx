@@ -1,7 +1,7 @@
 import { Edit3Icon, HashIcon, MoreVerticalIcon, TagsIcon, TrashIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import useLocalStorage from "react-use/lib/useLocalStorage";
 import { Switch } from "@/components/ui/switch";
 import { memoServiceClient } from "@/grpcweb";
