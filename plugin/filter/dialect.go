@@ -235,7 +235,8 @@ func (d *PostgreSQLDialect) GetBooleanCheck(path string) string {
 
 func (d *PostgreSQLDialect) GetTimestampComparison(field string) string {
 	// return fmt.Sprintf("EXTRACT(EPOCH FROM %s.%s)::BIGINT", d.GetTablePrefix(), field)
-	return fmt.Sprintf("%s.%s", d.GetTablePrefix(), field)
+	// return fmt.Sprintf("%s.%s", d.GetTablePrefix(), field)
+	return fmt.Sprintf("EXTRACT(EPOCH FROM TO_TIMESTAMP(%s.%s))", d.GetTablePrefix(), field)
 }
 
 func (*PostgreSQLDialect) GetCurrentTimestamp() string {
