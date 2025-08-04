@@ -40,12 +40,12 @@ func (s *APIV1Service) GenAi(ctx context.Context, request *v1pb.GenAiRequest) (*
 	}
 
 	// Check usage limits
-	if existingGeneralSetting != nil && existingGeneralSetting.GetGeneral() != nil {
-		general := existingGeneralSetting.GetGeneral()
-		if general.WrapperUsageCounter >= general.WrapperMaxUsage {
-			return nil, status.Error(codes.ResourceExhausted, "maximum usage limit reached, please renew your API key")
-		}
-	}
+	// if existingGeneralSetting != nil && existingGeneralSetting.GetGeneral() != nil {
+	// 	general := existingGeneralSetting.GetGeneral()
+	// 	if general.WrapperUsageCounter >= general.WrapperMaxUsage {
+	// 		return nil, status.Error(codes.ResourceExhausted, "maximum usage limit reached, please renew your API key")
+	// 	}
+	// }
 
 	// Establish gRPC connection with proper credentials
 	serverAddr := "localhost:8080" // Consider making this configurable
