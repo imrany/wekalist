@@ -11,6 +11,9 @@ import LocaleSelect from "../LocaleSelect";
 import ThemeSelector from "../ThemeSelector";
 import VisibilityIcon from "../VisibilityIcon";
 import WebhookSection from "./WebhookSection";
+import { Switch } from "../ui/switch";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const PreferencesSection = observer(() => {
   const t = useTranslate();
@@ -24,6 +27,10 @@ const PreferencesSection = observer(() => {
     await userStore.updateUserSetting({ appearance }, ["appearance"]);
   };
 
+  const handleEnableNotificationsChange = async (enableNotifications: boolean) => {
+    await userStore.updateUserSetting({ enableNotifications }, ["enable_notifications"]);
+  };
+
   const handleDefaultMemoVisibilityChanged = async (value: string) => {
     await userStore.updateUserSetting({ memoVisibility: value }, ["memo_visibility"]);
   };
@@ -32,6 +39,106 @@ const PreferencesSection = observer(() => {
     await userStore.updateUserSetting({ theme }, ["theme"]);
   };
 
+  const unsubscribeServiceWorker = async () => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (registration) {
+          const subscription = await registration.pushManager.getSubscription();
+          if (subscription) {
+            await subscription.unsubscribe();
+            console.log('Successfully unsubscribed from push notifications');
+
+            // Inform your server about the unsubscription
+            await fetch(`/api/unsubscribe`, {
+              method: 'POST',
+              body: JSON.stringify({ endpoint: subscription.endpoint }),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            toast.success('Successfully unsubscribed from push notifications');
+          } else {
+            console.log('No subscription found');
+          }
+        } else {
+          console.log('No service worker registration found');
+        }
+      } catch (error: any) {
+        console.error('Error during unsubscription:', error);
+      }
+    }
+  };
+
+  const handleSubcribe = async () => {
+    // Check if service worker is already registered
+    const registration = await navigator.serviceWorker.getRegistration();
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      toast.error('Push notifications not supported in this browser');
+      return null;
+    }
+
+    try {
+
+      // Check if we already have a subscription
+      let subscription = await registration?.pushManager.getSubscription();
+
+      // If no subscription exists, create one
+      if (!subscription) {
+        subscription = await registration?.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: 'BNwfzk8HNHxtTLrF6Lphh7_vWnOLsWgQ5SobRT37EmCY6BNWarrB_AZ6rFr7FfHktxgULgBxw7A0ibwf8Svq-Sc'
+        });
+      }
+
+      // Extract keys from the subscription
+      const keys = subscription?.toJSON().keys;
+
+      if (!keys || !keys.p256dh || !keys.auth) {
+        throw new Error('Subscription keys are missing or malformed.');
+      }
+
+      // Add role to the subscription object
+      const subscriptionWithRole = {
+        endpoint: subscription?.endpoint,
+        keys: keys
+      };
+
+      // Send subscription to the server
+      const response = await fetch(`/api/subscribe`, {
+        method: 'POST',
+        body: JSON.stringify(subscriptionWithRole),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        toast.error('Failed to subscribe.');
+      } else {
+        const parseRes = await response.json();
+        if (parseRes.error) {
+          console.log(parseRes.error);
+        } else {
+          console.log(parseRes.message);
+          toast.success("Subscribed")
+        }
+      }
+    } catch (error) {
+      console.error('Service Worker registration or subscription failed:', error);
+      toast.error('Service Worker registration or subscription failed')
+    }
+  }
+
+  useEffect(() => {
+    // Check if the user has enabled notifications
+    if (setting.enableNotifications) {
+      handleSubcribe();
+    } else {
+      unsubscribeServiceWorker();
+    }
+  }, [setting.enableNotifications]);
   return (
     <div className="w-full flex flex-col gap-2 pt-2 pb-4">
       <p className="font-medium text-muted-foreground">{t("common.basic")}</p>
@@ -49,6 +156,14 @@ const PreferencesSection = observer(() => {
       <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.preference-section.theme")}</span>
         <ThemeSelector value={setting.theme} onValueChange={handleThemeChange} />
+      </div>
+
+      <div className="w-full flex flex-row justify-between items-center">
+        <span>{t("setting.preference-section.enable-notifications")}</span>
+        <Switch
+          checked={setting.enableNotifications}
+          onCheckedChange={(checked) => handleEnableNotificationsChange(checked)}
+        />
       </div>
 
       <p className="font-medium text-muted-foreground">{t("setting.preference")}</p>

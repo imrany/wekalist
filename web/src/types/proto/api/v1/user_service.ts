@@ -46,6 +46,14 @@ export interface User {
     | undefined;
   /** Optional. The default visibility of the memo. */
   memoVisibility: string;
+  /** Optional. enable_notifications allows user to receive push notifications if allowed */
+  enableNotifications: boolean;
+  /** This is the wrapper api key */
+  wrapperApiKey: string;
+  /** This is the wrapper usage counter */
+  wrapperUsageCounter: number;
+  /** This is the maximum wrapper usage */
+  wrapperMaxUsage: number;
 }
 
 /** User role enumeration. */
@@ -294,6 +302,14 @@ export interface UserSetting {
    * If not set, the default theme will be used.
    */
   theme: string;
+  /** Allows user to receive push notifications if allowed */
+  enableNotifications: boolean;
+  /** This is the wrapper api key */
+  wrapperApiKey: string;
+  /** This is the wrapper usage counter */
+  wrapperUsageCounter: number;
+  /** This is the maximum wrapper usage */
+  wrapperMaxUsage: number;
 }
 
 export interface GetUserSettingRequest {
@@ -462,6 +478,10 @@ function createBaseUser(): User {
     createTime: undefined,
     updateTime: undefined,
     memoVisibility: "",
+    enableNotifications: false,
+    wrapperApiKey: "",
+    wrapperUsageCounter: 0,
+    wrapperMaxUsage: 0,
   };
 }
 
@@ -502,6 +522,18 @@ export const User: MessageFns<User> = {
     }
     if (message.memoVisibility !== "") {
       writer.uint32(98).string(message.memoVisibility);
+    }
+    if (message.enableNotifications !== false) {
+      writer.uint32(104).bool(message.enableNotifications);
+    }
+    if (message.wrapperApiKey !== "") {
+      writer.uint32(114).string(message.wrapperApiKey);
+    }
+    if (message.wrapperUsageCounter !== 0) {
+      writer.uint32(120).int32(message.wrapperUsageCounter);
+    }
+    if (message.wrapperMaxUsage !== 0) {
+      writer.uint32(128).int32(message.wrapperMaxUsage);
     }
     return writer;
   },
@@ -609,6 +641,38 @@ export const User: MessageFns<User> = {
           message.memoVisibility = reader.string();
           continue;
         }
+        case 13: {
+          if (tag !== 104) {
+            break;
+          }
+
+          message.enableNotifications = reader.bool();
+          continue;
+        }
+        case 14: {
+          if (tag !== 114) {
+            break;
+          }
+
+          message.wrapperApiKey = reader.string();
+          continue;
+        }
+        case 15: {
+          if (tag !== 120) {
+            break;
+          }
+
+          message.wrapperUsageCounter = reader.int32();
+          continue;
+        }
+        case 16: {
+          if (tag !== 128) {
+            break;
+          }
+
+          message.wrapperMaxUsage = reader.int32();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -635,6 +699,10 @@ export const User: MessageFns<User> = {
     message.createTime = object.createTime ?? undefined;
     message.updateTime = object.updateTime ?? undefined;
     message.memoVisibility = object.memoVisibility ?? "";
+    message.enableNotifications = object.enableNotifications ?? false;
+    message.wrapperApiKey = object.wrapperApiKey ?? "";
+    message.wrapperUsageCounter = object.wrapperUsageCounter ?? 0;
+    message.wrapperMaxUsage = object.wrapperMaxUsage ?? 0;
     return message;
   },
 };
@@ -1671,7 +1739,17 @@ export const GetUserStatsRequest: MessageFns<GetUserStatsRequest> = {
 };
 
 function createBaseUserSetting(): UserSetting {
-  return { name: "", locale: "", appearance: "", memoVisibility: "", theme: "" };
+  return {
+    name: "",
+    locale: "",
+    appearance: "",
+    memoVisibility: "",
+    theme: "",
+    enableNotifications: false,
+    wrapperApiKey: "",
+    wrapperUsageCounter: 0,
+    wrapperMaxUsage: 0,
+  };
 }
 
 export const UserSetting: MessageFns<UserSetting> = {
@@ -1690,6 +1768,18 @@ export const UserSetting: MessageFns<UserSetting> = {
     }
     if (message.theme !== "") {
       writer.uint32(42).string(message.theme);
+    }
+    if (message.enableNotifications !== false) {
+      writer.uint32(48).bool(message.enableNotifications);
+    }
+    if (message.wrapperApiKey !== "") {
+      writer.uint32(58).string(message.wrapperApiKey);
+    }
+    if (message.wrapperUsageCounter !== 0) {
+      writer.uint32(64).int32(message.wrapperUsageCounter);
+    }
+    if (message.wrapperMaxUsage !== 0) {
+      writer.uint32(72).int32(message.wrapperMaxUsage);
     }
     return writer;
   },
@@ -1741,6 +1831,38 @@ export const UserSetting: MessageFns<UserSetting> = {
           message.theme = reader.string();
           continue;
         }
+        case 6: {
+          if (tag !== 48) {
+            break;
+          }
+
+          message.enableNotifications = reader.bool();
+          continue;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
+          message.wrapperApiKey = reader.string();
+          continue;
+        }
+        case 8: {
+          if (tag !== 64) {
+            break;
+          }
+
+          message.wrapperUsageCounter = reader.int32();
+          continue;
+        }
+        case 9: {
+          if (tag !== 72) {
+            break;
+          }
+
+          message.wrapperMaxUsage = reader.int32();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1760,6 +1882,10 @@ export const UserSetting: MessageFns<UserSetting> = {
     message.appearance = object.appearance ?? "";
     message.memoVisibility = object.memoVisibility ?? "";
     message.theme = object.theme ?? "";
+    message.enableNotifications = object.enableNotifications ?? false;
+    message.wrapperApiKey = object.wrapperApiKey ?? "";
+    message.wrapperUsageCounter = object.wrapperUsageCounter ?? 0;
+    message.wrapperMaxUsage = object.wrapperMaxUsage ?? 0;
     return message;
   },
 };

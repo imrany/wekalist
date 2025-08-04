@@ -2273,6 +2273,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /v1/genai:
+        post:
+            tags:
+                - AiService
+            operationId: AiService_GenAi
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GenAiResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
     schemas:
         Activity:
@@ -2511,6 +2535,22 @@ components:
                     type: string
                 avatarUrl:
                     type: string
+        GenAiResponse:
+            required:
+                - prompt
+                - response
+            type: object
+            properties:
+                prompt:
+                    type: string
+                    description: Original user prompt
+                response:
+                    type: string
+                    description: AI generated response
+                status:
+                    allOf:
+                        - $ref: '#/components/schemas/Status'
+                    description: 'Optional: structured error info'
         GetCurrentSessionResponse:
             type: object
             properties:
@@ -3559,6 +3599,20 @@ components:
                 memoVisibility:
                     type: string
                     description: Optional. The default visibility of the memo.
+                enableNotifications:
+                    type: boolean
+                    description: Optional. enable_notifications allows user to receive push notifications if allowed
+                wrapperApiKey:
+                    type: string
+                    description: This is the wrapper api key
+                wrapperUsageCounter:
+                    type: integer
+                    description: This is the wrapper usage counter
+                    format: int32
+                wrapperMaxUsage:
+                    type: integer
+                    description: This is the maximum wrapper usage
+                    format: int32
         UserAccessToken:
             type: object
             properties:
@@ -3654,6 +3708,20 @@ components:
                         The preferred theme of the user.
                          This references a CSS file in the web/public/themes/ directory.
                          If not set, the default theme will be used.
+                enableNotifications:
+                    type: boolean
+                    description: Allows user to receive push notifications if allowed
+                wrapperApiKey:
+                    type: string
+                    description: This is the wrapper api key
+                wrapperUsageCounter:
+                    type: integer
+                    description: This is the wrapper usage counter
+                    format: int32
+                wrapperMaxUsage:
+                    type: integer
+                    description: This is the maximum wrapper usage
+                    format: int32
             description: User settings message
         UserStats:
             type: object
@@ -3916,6 +3984,7 @@ components:
             description: 'Reference: https://developers.cloudflare.com/r2/examples/aws/aws-sdk-go/'
 tags:
     - name: ActivityService
+    - name: AiService
     - name: AttachmentService
     - name: AuthService
     - name: IdentityProviderService

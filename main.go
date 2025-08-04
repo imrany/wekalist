@@ -131,12 +131,6 @@ func init() {
             "instance-url": "INSTANCE_URL",
     }
 
-    for key, env := range envBindings {
-        if err := viper.BindEnv(key, env); err != nil {
-            panic(fmt.Errorf("failed to bind env var '%s': %w", key, err))
-        }
-    }
-
     rootCmd.PersistentFlags().String("mode", "dev", "Server mode")
     rootCmd.PersistentFlags().String("addr", "0.0.0.0", "Bind address")
     rootCmd.PersistentFlags().Int("port", 8081, "Port")

@@ -241,9 +241,17 @@ type GeneralUserSetting struct {
 	MemoVisibility string `protobuf:"bytes,3,opt,name=memo_visibility,json=memoVisibility,proto3" json:"memo_visibility,omitempty"`
 	// The user's theme preference.
 	// This references a CSS file in the web/public/themes/ directory.
-	Theme         string `protobuf:"bytes,4,opt,name=theme,proto3" json:"theme,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Theme string `protobuf:"bytes,4,opt,name=theme,proto3" json:"theme,omitempty"`
+	// Allows user to receive push notifications if allowed
+	EnableNotifications bool `protobuf:"varint,5,opt,name=enable_notifications,json=enableNotifications,proto3" json:"enable_notifications,omitempty"`
+	// This is the wrapper api key
+	WrapperApiKey string `protobuf:"bytes,6,opt,name=wrapper_api_key,json=wrapperApiKey,proto3" json:"wrapper_api_key,omitempty"`
+	// This is the wrapper usage counter
+	WrapperUsageCounter int32 `protobuf:"varint,7,opt,name=wrapper_usage_counter,json=wrapperUsageCounter,proto3" json:"wrapper_usage_counter,omitempty"`
+	// This is the maximum wrapper usage
+	WrapperMaxUsage int32 `protobuf:"varint,8,opt,name=wrapper_max_usage,json=wrapperMaxUsage,proto3" json:"wrapper_max_usage,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *GeneralUserSetting) Reset() {
@@ -302,6 +310,34 @@ func (x *GeneralUserSetting) GetTheme() string {
 		return x.Theme
 	}
 	return ""
+}
+
+func (x *GeneralUserSetting) GetEnableNotifications() bool {
+	if x != nil {
+		return x.EnableNotifications
+	}
+	return false
+}
+
+func (x *GeneralUserSetting) GetWrapperApiKey() string {
+	if x != nil {
+		return x.WrapperApiKey
+	}
+	return ""
+}
+
+func (x *GeneralUserSetting) GetWrapperUsageCounter() int32 {
+	if x != nil {
+		return x.WrapperUsageCounter
+	}
+	return 0
+}
+
+func (x *GeneralUserSetting) GetWrapperMaxUsage() int32 {
+	if x != nil {
+		return x.WrapperMaxUsage
+	}
+	return 0
 }
 
 type SessionsUserSetting struct {
@@ -832,14 +868,18 @@ const file_store_user_setting_proto_rawDesc = "" +
 	"\rACCESS_TOKENS\x10\x03\x12\r\n" +
 	"\tSHORTCUTS\x10\x04\x12\f\n" +
 	"\bWEBHOOKS\x10\x05B\a\n" +
-	"\x05value\"\x8b\x01\n" +
+	"\x05value\"\xc6\x02\n" +
 	"\x12GeneralUserSetting\x12\x16\n" +
 	"\x06locale\x18\x01 \x01(\tR\x06locale\x12\x1e\n" +
 	"\n" +
 	"appearance\x18\x02 \x01(\tR\n" +
 	"appearance\x12'\n" +
 	"\x0fmemo_visibility\x18\x03 \x01(\tR\x0ememoVisibility\x12\x14\n" +
-	"\x05theme\x18\x04 \x01(\tR\x05theme\"\xf3\x03\n" +
+	"\x05theme\x18\x04 \x01(\tR\x05theme\x121\n" +
+	"\x14enable_notifications\x18\x05 \x01(\bR\x13enableNotifications\x12&\n" +
+	"\x0fwrapper_api_key\x18\x06 \x01(\tR\rwrapperApiKey\x122\n" +
+	"\x15wrapper_usage_counter\x18\a \x01(\x05R\x13wrapperUsageCounter\x12*\n" +
+	"\x11wrapper_max_usage\x18\b \x01(\x05R\x0fwrapperMaxUsage\"\xf3\x03\n" +
 	"\x13SessionsUserSetting\x12D\n" +
 	"\bsessions\x18\x01 \x03(\v2(.memos.store.SessionsUserSetting.SessionR\bsessions\x1a\xfd\x01\n" +
 	"\aSession\x12\x1d\n" +

@@ -350,7 +350,8 @@
       "default-memo-sort-option": "Memo display time",
       "default-memo-visibility": "Default memo visibility",
       "apperance": "Appearance",
-      "theme": "Theme"
+      "theme": "Theme",
+      "enable-notifications":"Enable Notifications"
     },
     "sso": "SSO",
     "sso-section": {

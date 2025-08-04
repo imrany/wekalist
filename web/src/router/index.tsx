@@ -5,6 +5,8 @@ import HomeLayout from "@/layouts/HomeLayout";
 import RootLayout from "@/layouts/RootLayout";
 import Home from "@/pages/Home";
 import Loading from "@/pages/Loading";
+import Upgrade from "@/pages/Upgrade";
+import Checkout from "@/pages/Checkout";
 
 const AdminSignIn = lazy(() => import("@/pages/AdminSignIn"));
 const Archived = lazy(() => import("@/pages/Archived"));
@@ -29,6 +31,8 @@ export enum Routes {
   SETTING = "/setting",
   EXPLORE = "/explore",
   AUTH = "/auth",
+  UPGRADE = "/upgrade",
+  CHECKOUT = "/checkout"
 }
 
 const router = createBrowserRouter([
@@ -107,6 +111,22 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<Loading />}>
                 <Attachments />
+              </Suspense>
+            ),
+          },
+          {
+            path: Routes.UPGRADE,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Upgrade />
+              </Suspense>
+            ),
+          },
+          {
+            path: `${Routes.CHECKOUT}/:selectedPlan`,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Checkout />
               </Suspense>
             ),
           },

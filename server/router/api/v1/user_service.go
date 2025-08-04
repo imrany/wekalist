@@ -378,6 +378,10 @@ func getDefaultUserSetting() *v1pb.UserSetting {
 		Appearance:     "system",
 		MemoVisibility: "PRIVATE",
 		Theme:          "",
+		EnableNotifications: false,
+		WrapperApiKey: "",
+		WrapperUsageCounter: 0,
+		WrapperMaxUsage: 0,
 	}
 }
 
@@ -415,6 +419,10 @@ func (s *APIV1Service) GetUserSetting(ctx context.Context, request *v1pb.GetUser
 				userSettingMessage.Appearance = general.Appearance
 				userSettingMessage.MemoVisibility = general.MemoVisibility
 				userSettingMessage.Theme = general.Theme
+				userSettingMessage.EnableNotifications = general.EnableNotifications
+				userSettingMessage.WrapperApiKey = general.WrapperApiKey
+				userSettingMessage.WrapperMaxUsage = general.WrapperMaxUsage
+				userSettingMessage.WrapperUsageCounter = general.WrapperUsageCounter
 			}
 		}
 	}
@@ -471,6 +479,10 @@ func (s *APIV1Service) UpdateUserSetting(ctx context.Context, request *v1pb.Upda
 		Appearance:     "system",
 		MemoVisibility: "PRIVATE",
 		Theme:          "",
+		EnableNotifications: false,
+		WrapperApiKey: "",
+		WrapperUsageCounter: 0,
+		WrapperMaxUsage: 0,
 	}
 
 	// If there's an existing setting, use its values as defaults
@@ -480,6 +492,10 @@ func (s *APIV1Service) UpdateUserSetting(ctx context.Context, request *v1pb.Upda
 		generalSetting.Appearance = existing.Appearance
 		generalSetting.MemoVisibility = existing.MemoVisibility
 		generalSetting.Theme = existing.Theme
+		generalSetting.EnableNotifications = existing.EnableNotifications
+		generalSetting.WrapperApiKey = existing.WrapperApiKey
+		generalSetting.WrapperMaxUsage = existing.WrapperMaxUsage
+		generalSetting.WrapperUsageCounter = existing.WrapperUsageCounter
 	}
 
 	// Apply updates based on the update mask
@@ -493,6 +509,14 @@ func (s *APIV1Service) UpdateUserSetting(ctx context.Context, request *v1pb.Upda
 			generalSetting.MemoVisibility = request.Setting.MemoVisibility
 		case "theme":
 			generalSetting.Theme = request.Setting.Theme
+		case "enable_notifications":
+			generalSetting.EnableNotifications = request.Setting.EnableNotifications
+		case "wrapper_api_key":
+			generalSetting.WrapperApiKey = request.Setting.WrapperApiKey
+		case "wrapper_max_usage":
+			generalSetting.WrapperMaxUsage = request.Setting.WrapperMaxUsage
+		case "wrapper_usage_counter":
+			generalSetting.WrapperUsageCounter = request.Setting.WrapperUsageCounter
 		default:
 			return nil, status.Errorf(codes.InvalidArgument, "invalid update path: %s", field)
 		}

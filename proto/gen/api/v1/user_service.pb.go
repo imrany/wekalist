@@ -110,8 +110,16 @@ type User struct {
 	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// Optional. The default visibility of the memo.
 	MemoVisibility string `protobuf:"bytes,12,opt,name=memo_visibility,json=memoVisibility,proto3" json:"memo_visibility,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Optional. enable_notifications allows user to receive push notifications if allowed
+	EnableNotifications bool `protobuf:"varint,13,opt,name=enable_notifications,json=enableNotifications,proto3" json:"enable_notifications,omitempty"`
+	// This is the wrapper api key
+	WrapperApiKey string `protobuf:"bytes,14,opt,name=wrapper_api_key,json=wrapperApiKey,proto3" json:"wrapper_api_key,omitempty"`
+	// This is the wrapper usage counter
+	WrapperUsageCounter int32 `protobuf:"varint,15,opt,name=wrapper_usage_counter,json=wrapperUsageCounter,proto3" json:"wrapper_usage_counter,omitempty"`
+	// This is the maximum wrapper usage
+	WrapperMaxUsage int32 `protobuf:"varint,16,opt,name=wrapper_max_usage,json=wrapperMaxUsage,proto3" json:"wrapper_max_usage,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *User) Reset() {
@@ -226,6 +234,34 @@ func (x *User) GetMemoVisibility() string {
 		return x.MemoVisibility
 	}
 	return ""
+}
+
+func (x *User) GetEnableNotifications() bool {
+	if x != nil {
+		return x.EnableNotifications
+	}
+	return false
+}
+
+func (x *User) GetWrapperApiKey() string {
+	if x != nil {
+		return x.WrapperApiKey
+	}
+	return ""
+}
+
+func (x *User) GetWrapperUsageCounter() int32 {
+	if x != nil {
+		return x.WrapperUsageCounter
+	}
+	return 0
+}
+
+func (x *User) GetWrapperMaxUsage() int32 {
+	if x != nil {
+		return x.WrapperMaxUsage
+	}
+	return 0
 }
 
 type VerifyRequest struct {
@@ -1054,9 +1090,17 @@ type UserSetting struct {
 	// The preferred theme of the user.
 	// This references a CSS file in the web/public/themes/ directory.
 	// If not set, the default theme will be used.
-	Theme         string `protobuf:"bytes,5,opt,name=theme,proto3" json:"theme,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Theme string `protobuf:"bytes,5,opt,name=theme,proto3" json:"theme,omitempty"`
+	// Allows user to receive push notifications if allowed
+	EnableNotifications bool `protobuf:"varint,6,opt,name=enable_notifications,json=enableNotifications,proto3" json:"enable_notifications,omitempty"`
+	// This is the wrapper api key
+	WrapperApiKey string `protobuf:"bytes,7,opt,name=wrapper_api_key,json=wrapperApiKey,proto3" json:"wrapper_api_key,omitempty"`
+	// This is the wrapper usage counter
+	WrapperUsageCounter int32 `protobuf:"varint,8,opt,name=wrapper_usage_counter,json=wrapperUsageCounter,proto3" json:"wrapper_usage_counter,omitempty"`
+	// This is the maximum wrapper usage
+	WrapperMaxUsage int32 `protobuf:"varint,9,opt,name=wrapper_max_usage,json=wrapperMaxUsage,proto3" json:"wrapper_max_usage,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *UserSetting) Reset() {
@@ -1122,6 +1166,34 @@ func (x *UserSetting) GetTheme() string {
 		return x.Theme
 	}
 	return ""
+}
+
+func (x *UserSetting) GetEnableNotifications() bool {
+	if x != nil {
+		return x.EnableNotifications
+	}
+	return false
+}
+
+func (x *UserSetting) GetWrapperApiKey() string {
+	if x != nil {
+		return x.WrapperApiKey
+	}
+	return ""
+}
+
+func (x *UserSetting) GetWrapperUsageCounter() int32 {
+	if x != nil {
+		return x.WrapperUsageCounter
+	}
+	return 0
+}
+
+func (x *UserSetting) GetWrapperMaxUsage() int32 {
+	if x != nil {
+		return x.WrapperMaxUsage
+	}
+	return 0
 }
 
 type GetUserSettingRequest struct {
@@ -2035,7 +2107,7 @@ var File_api_v1_user_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_user_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/v1/user_service.proto\x12\fmemos.api.v1\x1a\x13api/v1/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf9\x04\n" +
+	"\x19api/v1/user_service.proto\x12\fmemos.api.v1\x1a\x13api/v1/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc8\x06\n" +
 	"\x04User\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x120\n" +
 	"\x04role\x18\x02 \x01(\x0e2\x17.memos.api.v1.User.RoleB\x03\xe0A\x02R\x04role\x12\x1f\n" +
@@ -2052,7 +2124,11 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"createTime\x12@\n" +
 	"\vupdate_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
 	"updateTime\x12,\n" +
-	"\x0fmemo_visibility\x18\f \x01(\tB\x03\xe0A\x01R\x0ememoVisibility\";\n" +
+	"\x0fmemo_visibility\x18\f \x01(\tB\x03\xe0A\x01R\x0ememoVisibility\x126\n" +
+	"\x14enable_notifications\x18\r \x01(\bB\x03\xe0A\x01R\x13enableNotifications\x12+\n" +
+	"\x0fwrapper_api_key\x18\x0e \x01(\tB\x03\xe0A\x01R\rwrapperApiKey\x127\n" +
+	"\x15wrapper_usage_counter\x18\x0f \x01(\x05B\x03\xe0A\x01R\x13wrapperUsageCounter\x12/\n" +
+	"\x11wrapper_max_usage\x18\x10 \x01(\x05B\x03\xe0A\x01R\x0fwrapperMaxUsage\";\n" +
 	"\x04Role\x12\x14\n" +
 	"\x10ROLE_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04HOST\x10\x01\x12\t\n" +
@@ -2130,7 +2206,7 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\x16memos.api.v1/UserStats\x12\fusers/{user}*\tuserStats2\tuserStats\"D\n" +
 	"\x13GetUserStatsRequest\x12-\n" +
 	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\"\xf9\x01\n" +
+	"\x11memos.api.v1/UserR\x04name\"\xc8\x03\n" +
 	"\vUserSetting\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x1b\n" +
 	"\x06locale\x18\x02 \x01(\tB\x03\xe0A\x01R\x06locale\x12#\n" +
@@ -2138,7 +2214,11 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"appearance\x18\x03 \x01(\tB\x03\xe0A\x01R\n" +
 	"appearance\x12,\n" +
 	"\x0fmemo_visibility\x18\x04 \x01(\tB\x03\xe0A\x01R\x0ememoVisibility\x12\x19\n" +
-	"\x05theme\x18\x05 \x01(\tB\x03\xe0A\x01R\x05theme:F\xeaAC\n" +
+	"\x05theme\x18\x05 \x01(\tB\x03\xe0A\x01R\x05theme\x126\n" +
+	"\x14enable_notifications\x18\x06 \x01(\bB\x03\xe0A\x01R\x13enableNotifications\x12+\n" +
+	"\x0fwrapper_api_key\x18\a \x01(\tB\x03\xe0A\x01R\rwrapperApiKey\x127\n" +
+	"\x15wrapper_usage_counter\x18\b \x01(\x05B\x03\xe0A\x01R\x13wrapperUsageCounter\x12/\n" +
+	"\x11wrapper_max_usage\x18\t \x01(\x05B\x03\xe0A\x01R\x0fwrapperMaxUsage:F\xeaAC\n" +
 	"\x18memos.api.v1/UserSetting\x12\fusers/{user}*\fuserSettings2\vuserSetting\"F\n" +
 	"\x15GetUserSettingRequest\x12-\n" +
 	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +

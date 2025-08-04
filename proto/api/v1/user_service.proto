@@ -176,6 +176,19 @@ message User {
   // Optional. The default visibility of the memo.
   string memo_visibility = 12 [(google.api.field_behavior) = OPTIONAL];
 
+  // Optional. enable_notifications allows user to receive push notifications if allowed 
+  bool enable_notifications = 13 [(google.api.field_behavior) = OPTIONAL];
+
+  // This is the wrapper api key
+  string wrapper_api_key = 14 [(google.api.field_behavior) = OPTIONAL];
+
+  // This is the wrapper usage counter
+  int32 wrapper_usage_counter = 15 [(google.api.field_behavior) = OPTIONAL];
+
+  // This is the maximum wrapper usage
+  int32 wrapper_max_usage = 16 [(google.api.field_behavior) = OPTIONAL];
+
+
   // User role enumeration.
   enum Role {
     // Unspecified role.
@@ -398,6 +411,14 @@ message UserSetting {
   // This references a CSS file in the web/public/themes/ directory.
   // If not set, the default theme will be used.
   string theme = 5 [(google.api.field_behavior) = OPTIONAL];
+  // Allows user to receive push notifications if allowed 
+  bool enable_notifications = 6 [(google.api.field_behavior) = OPTIONAL];
+  // This is the wrapper api key
+  string wrapper_api_key = 7 [(google.api.field_behavior) = OPTIONAL];
+  // This is the wrapper usage counter
+  int32 wrapper_usage_counter = 8 [(google.api.field_behavior) = OPTIONAL];
+  // This is the maximum wrapper usage
+  int32 wrapper_max_usage = 9 [(google.api.field_behavior) = OPTIONAL];
 }
 
 message GetUserSettingRequest {

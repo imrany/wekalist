@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import dayjs from "dayjs";
-import { BellPlus, ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner"
@@ -17,12 +17,10 @@ import { State } from "@/types/proto/api/v1/common";
 import { Memo } from "@/types/proto/api/v1/memo_service";
 import { User } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import useShare from "@/hooks/useShare";
 
 const UserProfile = observer(() => {
   const t = useTranslate();
-  const currentUser=useCurrentUser()
   const params = useParams();
   const loadingState = useLoading();
   const [user, setUser] = useState<User>();
@@ -66,9 +64,9 @@ const UserProfile = observer(() => {
       return;
     }
 
-    const url=`${window.location.origin}/u/${encodeURIComponent(user.username)}`
-    const share=useShare(`Checkout ${user.username}`, `Checkout ${user.username},\n${user.description}`, url)
-    if(share.type==='error'){
+    const url = `${window.location.origin}/u/${encodeURIComponent(user.username)}`
+    const share = useShare(`Checkout ${user.username}`, `Checkout ${user.username},\n${user.description}`, url)
+    if (share.type === 'error') {
       copy(url);
       toast.success(t("message.copied"));
     }
@@ -85,12 +83,6 @@ const UserProfile = observer(() => {
                   {t("common.share")}
                   <ExternalLinkIcon className="ml-1 w-4 h-auto opacity-60" />
                 </Button>
-                {user.memoVisibility.length!==0&&JSON.parse(user.memoVisibility).memoVisibility==="PUBLIC"&&currentUser&&currentUser.name!==user.name&&(
-                  <Button variant="outline" onClick={handleCopyProfileLink}>
-                    {t("common.subscribe")}
-                    <BellPlus className="ml-1 w-4 h-auto opacity-60" />
-                  </Button>
-                )}
               </div>
               <div className="w-full flex flex-col justify-start items-start pt-4 pb-8 px-3">
                 <UserAvatar className="w-16! h-16! drop-shadow rounded-3xl" avatarUrl={user?.avatarUrl} />
@@ -101,7 +93,7 @@ const UserProfile = observer(() => {
                   <p className="w-full text-muted-foreground leading-snug whitespace-pre-wrap truncate line-clamp-6">{user.description}</p>
                 </div>
               </div>
-              {loadingState.isSucceed&&<PagedMemoList
+              {loadingState.isSucceed && <PagedMemoList
                 renderer={(memo: Memo) => (
                   <MemoView key={`${memo.name}-${memo.displayTime}`} memo={memo} showVisibility showPinned compact />
                 )}

@@ -43,6 +43,14 @@ message GeneralUserSetting {
   // The user's theme preference.
   // This references a CSS file in the web/public/themes/ directory.
   string theme = 4;
+  // Allows user to receive push notifications if allowed 
+  bool enable_notifications = 5;
+  // This is the wrapper api key
+  string wrapper_api_key = 6;
+  // This is the wrapper usage counter
+  int32 wrapper_usage_counter = 7;
+  // This is the maximum wrapper usage
+  int32 wrapper_max_usage = 8;
 }
 
 message SessionsUserSetting {
