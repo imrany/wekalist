@@ -71,7 +71,7 @@ const AIButton = (props: Props) => {
 
             const locale = workspaceStore.state.locale;
             const { response } = await AiServiceClient.genAi({
-                prompt: `${currentContent}\n\nPlease expand this content into a well-structured memo ${locale ? `in ${locale}` : ''}.`
+                prompt: `${currentContent}\n\nPlease expand this content into a well-structured less than 8000 characters${locale ? `in ${locale}` : ''}.`
             });
 
             if (response) {
