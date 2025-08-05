@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "release": "vite build --mode release --outDir=../server/router/frontend/dist --emptyOutDir",
+    "release": "vite build --mode release --outDir='../server/router/frontend/dist' --emptyOutDir",
     "lint": "tsc --noEmit --skipLibCheck && eslint --ext .js,.ts,.tsx, src"
   },
   "dependencies": {
