@@ -3,7 +3,6 @@ all: build run
 delete: 
 	rm -rf bin
 	rm -rf dist
-	rm -rf ./memos
 
 build:
 	$(MAKE) delete
@@ -12,7 +11,7 @@ build:
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o bin/memos-darwin main.go   
 
 run:
-	./memos
+	./bin/memos
 
 publish:
 	$(MAKE) delete
