@@ -98,6 +98,8 @@ export default function DialogBox(props: Props) {
         actionButtonFunction(selectedUserSession);
       } else if (dialogType === DialogType.DELETE_ACCESS_TOKEN) {
         actionButtonFunction(selectedUserAccessToken);
+      } else if (dialogType === DialogType.DELETE_WEB_HOOK) {
+        actionButtonFunction(selectedWebHook);
       } else {
         // For memo-related actions, call without parameters
         actionButtonFunction();
