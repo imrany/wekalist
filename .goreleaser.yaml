@@ -3,8 +3,9 @@ version: 1
 before:
   hooks:
     - go mod tidy
-    - pnpm install --prefix web
-    - pnpm run release --prefix web
+    - go mod verify
+    - pnpm --filter ./web install
+    - pnpm --filter ./web run release
 
 builds:
   - main: ./main.go
@@ -26,7 +27,7 @@ archives:
     files:
       - LICENSE
       - README.md
-      - server/router/frontend/dist/**
+      - web/dist/**
 
 changelog:
   sort: asc
