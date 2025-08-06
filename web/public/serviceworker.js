@@ -1,5 +1,5 @@
-const staticCacheName = 'site-static-v0.26.0'; // also Versioning static cache
-const dynamicCache = 'site-dynamic-v0.26.0'; // Versioning dynamic cache
+const staticCacheName = 'site-static-v0.26.1'; // also Versioning static cache
+const dynamicCache = 'site-dynamic-v0.26.1'; // Versioning dynamic cache
 
 const assets = [
     // '/',
