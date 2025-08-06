@@ -6,6 +6,8 @@ import { getSystemColorScheme } from "./helpers/utils";
 import useNavigateTo from "./hooks/useNavigateTo";
 import { userStore, workspaceStore } from "./store";
 import { loadTheme } from "./utils/theme";
+import { WorkspaceGeneralSetting } from "./types/proto/store/workspace_setting";
+import { WorkspaceSetting_Key } from "./types/proto/api/v1/workspace_service";
 
 const App = observer(() => {
   const { i18n } = useTranslation();
@@ -13,7 +15,12 @@ const App = observer(() => {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const workspaceProfile = workspaceStore.state.profile;
   const userSetting = userStore.state.userSetting;
-  const workspaceGeneralSetting = workspaceStore.state.generalSetting;
+  const workspaceGeneralSetting = WorkspaceGeneralSetting.fromPartial(
+    workspaceStore.getWorkspaceSettingByKey(WorkspaceSetting_Key.GENERAL)?.generalSetting || {},
+  );
+  let currentAppearance = workspaceGeneralSetting.customProfile?.appearance !=="system"?
+    workspaceGeneralSetting.customProfile?.appearance as Appearance 
+    : userSetting?.appearance as Appearance;
 
   // Redirect to sign up page if no instance owner.
   useEffect(() => {
@@ -22,6 +29,7 @@ const App = observer(() => {
     }
   }, [workspaceProfile.owner]);
 
+  // Apply system theme listener
   useEffect(() => {
     const darkMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleColorSchemeChange = (e: MediaQueryListEvent) => {
@@ -36,6 +44,7 @@ const App = observer(() => {
     }
   }, []);
 
+  // Additional styles and scripts
   useEffect(() => {
     if (workspaceGeneralSetting.additionalStyle) {
       const styleEl = document.createElement("style");
@@ -64,6 +73,7 @@ const App = observer(() => {
     link.href = workspaceGeneralSetting.customProfile.logoUrl || "/logo.webp";
   }, [workspaceGeneralSetting.customProfile]);
 
+  // Localization
   useEffect(() => {
     const currentLocale = workspaceStore.state.locale;
     // This will trigger re-rendering of the whole app.
@@ -75,14 +85,14 @@ const App = observer(() => {
       document.documentElement.setAttribute("dir", "ltr");
     }
   }, [workspaceStore.state.locale]);
-
+  
+  // Appearance logic
   useEffect(() => {
-    let currentAppearance = workspaceStore.state.appearance as Appearance;
     if (currentAppearance === "system") {
       currentAppearance = getSystemColorScheme();
     }
     setMode(currentAppearance);
-  }, [workspaceStore.state.appearance]);
+  }, [workspaceStore.state.appearance, currentAppearance]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -93,6 +103,7 @@ const App = observer(() => {
     }
   }, [mode]);
 
+  // Sync locale and appearance to workspace store
   useEffect(() => {
     if (!userSetting) {
       return;
@@ -100,9 +111,9 @@ const App = observer(() => {
 
     workspaceStore.state.setPartial({
       locale: userSetting.locale || workspaceStore.state.locale,
-      appearance: userSetting.appearance || workspaceStore.state.appearance,
+      appearance:  currentAppearance,
     });
-  }, [userSetting?.locale, userSetting?.appearance]);
+  }, [userSetting?.locale, currentAppearance]);
 
   // Load theme when user setting changes (user theme is already backfilled with workspace theme)
   useEffect(() => {

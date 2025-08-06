@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { userStore } from "@/store";
+import { userStore, workspaceStore } from "@/store";
 import { Visibility } from "@/types/proto/api/v1/memo_service";
 import { UserSetting } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
@@ -13,11 +13,23 @@ import VisibilityIcon from "../VisibilityIcon";
 import WebhookSection from "./WebhookSection";
 import { Switch } from "../ui/switch";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { WorkspaceSetting_Key } from "@/types/proto/api/v1/workspace_service";
+import { WorkspaceGeneralSetting } from "@/types/proto/store/workspace_setting";
 
 const PreferencesSection = observer(() => {
   const t = useTranslate();
   const setting = userStore.state.userSetting as UserSetting;
+  const serverSetting = WorkspaceGeneralSetting.fromPartial(
+    workspaceStore.getWorkspaceSettingByKey(WorkspaceSetting_Key.GENERAL)?.generalSetting || {},
+  );
+  
+  const serverAppearance:any = serverSetting.customProfile?.appearance;
+  const isServerAppearanceEnforced = serverAppearance && serverAppearance !== "system";
+  const appearance = isServerAppearanceEnforced ? serverAppearance as Appearance : setting.appearance as Appearance;
+  
+  // Use ref to track if we've already synced the appearance to prevent loops
+  const hasInitializedAppearance = useRef(false);
 
   const handleLocaleSelectChange = async (locale: Locale) => {
     await userStore.updateUserSetting({ locale }, ["locale"]);
@@ -26,6 +38,15 @@ const PreferencesSection = observer(() => {
   const handleAppearanceSelectChange = async (appearance: Appearance) => {
     await userStore.updateUserSetting({ appearance }, ["appearance"]);
   };
+
+  // Only sync appearance on initial load or when server appearance changes
+  useEffect(() => {
+    if (!hasInitializedAppearance.current || 
+        (isServerAppearanceEnforced && appearance !== setting.appearance)) {
+      handleAppearanceSelectChange(appearance);
+      hasInitializedAppearance.current = true;
+    }
+  }, [serverAppearance]); // Only depend on serverAppearance to avoid loops
 
   const handleEnableNotificationsChange = async (enableNotifications: boolean) => {
     await userStore.updateUserSetting({ enableNotifications }, ["enable_notifications"]);
@@ -80,7 +101,6 @@ const PreferencesSection = observer(() => {
     }
 
     try {
-
       // Check if we already have a subscription
       let subscription = await registration?.pushManager.getSubscription();
 
@@ -139,6 +159,7 @@ const PreferencesSection = observer(() => {
       unsubscribeServiceWorker();
     }
   }, [setting.enableNotifications]);
+
   return (
     <div className="w-full flex flex-col gap-2 pt-2 pb-4">
       <p className="font-medium text-muted-foreground">{t("common.basic")}</p>
@@ -148,10 +169,24 @@ const PreferencesSection = observer(() => {
         <LocaleSelect value={setting.locale} onChange={handleLocaleSelectChange} />
       </div>
 
-      <div className="w-full flex flex-row justify-between items-center">
-        <span>{t("setting.preference-section.apperance")}</span>
-        <AppearanceSelect value={setting.appearance as Appearance} onChange={handleAppearanceSelectChange} />
-      </div>
+      {/* Show appearance selector only when server doesn't enforce it */}
+      {(serverAppearance === "system" || !serverAppearance) && (
+        <div className="w-full flex flex-row justify-between items-center">
+          <span>{t("setting.preference-section.apperance")}</span>
+          <AppearanceSelect value={appearance} onChange={handleAppearanceSelectChange} />
+        </div>
+      )}
+
+      {/* Show enforced appearance info */}
+      {isServerAppearanceEnforced && (
+        <div className="w-full flex flex-row justify-between items-center">
+          <span>{t("setting.preference-section.apperance")}</span>
+          <AppearanceSelect disabled={true} value={serverAppearance} onChange={handleAppearanceSelectChange} />
+          {/* <span className="text-sm text-muted-foreground capitalize">
+            {serverAppearance} (Server Enforced)
+          </span> */}
+        </div>
+      )}
 
       <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.preference-section.theme")}</span>

@@ -6,12 +6,13 @@ import { useTranslate } from "@/utils/i18n";
 interface Props {
   value: Appearance;
   onChange: (appearance: Appearance) => void;
+  disabled?:boolean
 }
 
 const appearanceList = ["system", "light", "dark"] as const;
 
 const AppearanceSelect: FC<Props> = (props: Props) => {
-  const { onChange, value } = props;
+  const { onChange, value, disabled } = props;
   const t = useTranslate();
 
   const getPrefixIcon = (appearance: Appearance) => {
@@ -30,7 +31,7 @@ const AppearanceSelect: FC<Props> = (props: Props) => {
   };
 
   return (
-    <Select value={value} onValueChange={handleSelectChange}>
+    <Select disabled={disabled?disabled:false} value={value} onValueChange={handleSelectChange}>
       <SelectTrigger>
         <SelectValue placeholder="Select appearance" />
       </SelectTrigger>
