@@ -109,8 +109,8 @@ services:
     volumes:
       - ./data:/var/opt/memos
     environment:
-      - MEMOS_MODE=prod
-      - MEMOS_PORT=5230
+      - MODE=prod
+      - PORT=5230
 ```
 
 Deploy with:
