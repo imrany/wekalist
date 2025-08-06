@@ -20,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WebhookService_ListWebhooks_FullMethodName  = "/memos.api.v1.WebhookService/ListWebhooks"
-	WebhookService_GetWebhook_FullMethodName    = "/memos.api.v1.WebhookService/GetWebhook"
-	WebhookService_CreateWebhook_FullMethodName = "/memos.api.v1.WebhookService/CreateWebhook"
-	WebhookService_UpdateWebhook_FullMethodName = "/memos.api.v1.WebhookService/UpdateWebhook"
-	WebhookService_DeleteWebhook_FullMethodName = "/memos.api.v1.WebhookService/DeleteWebhook"
+	WebhookService_ListWebhooks_FullMethodName  = "/wekalist.api.v1.WebhookService/ListWebhooks"
+	WebhookService_GetWebhook_FullMethodName    = "/wekalist.api.v1.WebhookService/GetWebhook"
+	WebhookService_CreateWebhook_FullMethodName = "/wekalist.api.v1.WebhookService/CreateWebhook"
+	WebhookService_UpdateWebhook_FullMethodName = "/wekalist.api.v1.WebhookService/UpdateWebhook"
+	WebhookService_DeleteWebhook_FullMethodName = "/wekalist.api.v1.WebhookService/DeleteWebhook"
 )
 
 // WebhookServiceClient is the client API for WebhookService service.
@@ -255,7 +255,7 @@ func _WebhookService_DeleteWebhook_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WebhookService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.WebhookService",
+	ServiceName: "wekalist.api.v1.WebhookService",
 	HandlerType: (*WebhookServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

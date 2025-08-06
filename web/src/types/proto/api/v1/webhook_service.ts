@@ -9,7 +9,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Empty } from "../../google/protobuf/empty";
 import { FieldMask } from "../../google/protobuf/field_mask";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface Webhook {
   /**
@@ -464,7 +464,7 @@ export const DeleteWebhookRequest: MessageFns<DeleteWebhookRequest> = {
 export type WebhookServiceDefinition = typeof WebhookServiceDefinition;
 export const WebhookServiceDefinition = {
   name: "WebhookService",
-  fullName: "memos.api.v1.WebhookService",
+  fullName: "wekalist.api.v1.WebhookService",
   methods: {
     /** ListWebhooks returns a list of webhooks for a user. */
     listWebhooks: {

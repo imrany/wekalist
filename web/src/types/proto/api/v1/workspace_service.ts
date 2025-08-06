@@ -8,7 +8,7 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { FieldMask } from "../../google/protobuf/field_mask";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 /** Workspace profile message containing basic workspace information. */
 export interface WorkspaceProfile {
@@ -1259,7 +1259,7 @@ export const UpdateWorkspaceSettingRequest: MessageFns<UpdateWorkspaceSettingReq
 export type WorkspaceServiceDefinition = typeof WorkspaceServiceDefinition;
 export const WorkspaceServiceDefinition = {
   name: "WorkspaceService",
-  fullName: "memos.api.v1.WorkspaceService",
+  fullName: "wekalist.api.v1.WorkspaceService",
   methods: {
     /** Gets the workspace profile. */
     getWorkspaceProfile: {

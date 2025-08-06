@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package memos.api.v1;
+package wekalist.api.v1;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
@@ -35,7 +35,7 @@ service InboxService {
 
 message Inbox {
   option (google.api.resource) = {
-    type: "memos.api.v1/Inbox"
+    type: "wekalist.api.v1/Inbox"
     pattern: "inboxes/{inbox}"
     name_field: "name"
     singular: "inbox"
@@ -92,7 +92,7 @@ message ListInboxesRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 
   // Optional. The maximum number of inboxes to return.
@@ -144,6 +144,6 @@ message DeleteInboxRequest {
   // Format: inboxes/{inbox}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/Inbox"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/Inbox"}
   ];
 }

@@ -20,9 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_GetCurrentSession_FullMethodName = "/memos.api.v1.AuthService/GetCurrentSession"
-	AuthService_CreateSession_FullMethodName     = "/memos.api.v1.AuthService/CreateSession"
-	AuthService_DeleteSession_FullMethodName     = "/memos.api.v1.AuthService/DeleteSession"
+	AuthService_GetCurrentSession_FullMethodName = "/wekalist.api.v1.AuthService/GetCurrentSession"
+	AuthService_CreateSession_FullMethodName     = "/wekalist.api.v1.AuthService/CreateSession"
+	AuthService_DeleteSession_FullMethodName     = "/wekalist.api.v1.AuthService/DeleteSession"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -189,7 +189,7 @@ func _AuthService_DeleteSession_Handler(srv interface{}, ctx context.Context, de
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.AuthService",
+	ServiceName: "wekalist.api.v1.AuthService",
 	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

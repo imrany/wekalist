@@ -3,11 +3,11 @@ package db
 import (
 	"github.com/pkg/errors"
 
-	"github.com/usememos/memos/internal/profile"
-	"github.com/usememos/memos/store"
-	"github.com/usememos/memos/store/db/mysql"
-	"github.com/usememos/memos/store/db/postgres"
-	"github.com/usememos/memos/store/db/sqlite"
+	"github.com/imrany/wekalist/internal/profile"
+	"github.com/imrany/wekalist/store"
+	"github.com/imrany/wekalist/store/db/mysql"
+	"github.com/imrany/wekalist/store/db/postgres"
+	"github.com/imrany/wekalist/store/db/sqlite"
 )
 
 // NewDBDriver creates new db driver based on profile.

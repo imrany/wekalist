@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WorkspaceService_GetWorkspaceProfile_FullMethodName    = "/memos.api.v1.WorkspaceService/GetWorkspaceProfile"
-	WorkspaceService_GetWorkspaceSetting_FullMethodName    = "/memos.api.v1.WorkspaceService/GetWorkspaceSetting"
-	WorkspaceService_UpdateWorkspaceSetting_FullMethodName = "/memos.api.v1.WorkspaceService/UpdateWorkspaceSetting"
+	WorkspaceService_GetWorkspaceProfile_FullMethodName    = "/wekalist.api.v1.WorkspaceService/GetWorkspaceProfile"
+	WorkspaceService_GetWorkspaceSetting_FullMethodName    = "/wekalist.api.v1.WorkspaceService/GetWorkspaceSetting"
+	WorkspaceService_UpdateWorkspaceSetting_FullMethodName = "/wekalist.api.v1.WorkspaceService/UpdateWorkspaceSetting"
 )
 
 // WorkspaceServiceClient is the client API for WorkspaceService service.
@@ -182,7 +182,7 @@ func _WorkspaceService_UpdateWorkspaceSetting_Handler(srv interface{}, ctx conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WorkspaceService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.WorkspaceService",
+	ServiceName: "wekalist.api.v1.WorkspaceService",
 	HandlerType: (*WorkspaceServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

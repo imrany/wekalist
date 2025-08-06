@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package memos.api.v1;
+package wekalist.api.v1;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
@@ -50,7 +50,7 @@ service IdentityProviderService {
 
 message IdentityProvider {
   option (google.api.resource) = {
-    type: "memos.api.v1/IdentityProvider"
+    type: "wekalist.api.v1/IdentityProvider"
     pattern: "identityProviders/{idp}"
     name_field: "name"
     singular: "identityProvider"
@@ -115,7 +115,7 @@ message GetIdentityProviderRequest {
   // Format: identityProviders/{idp}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/IdentityProvider"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/IdentityProvider"}
   ];
 }
 
@@ -142,6 +142,6 @@ message DeleteIdentityProviderRequest {
   // Format: identityProviders/{idp}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/IdentityProvider"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/IdentityProvider"}
   ];
 }

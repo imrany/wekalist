@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/store"
 )
 
 func (d *DB) CreateUser(ctx context.Context, create *store.User) (*store.User, error) {

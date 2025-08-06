@@ -142,9 +142,9 @@ type Activity struct {
 	// Format: users/{user}
 	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
 	// The type of the activity.
-	Type Activity_Type `protobuf:"varint,3,opt,name=type,proto3,enum=memos.api.v1.Activity_Type" json:"type,omitempty"`
+	Type Activity_Type `protobuf:"varint,3,opt,name=type,proto3,enum=wekalist.api.v1.Activity_Type" json:"type,omitempty"`
 	// The level of the activity.
-	Level Activity_Level `protobuf:"varint,4,opt,name=level,proto3,enum=memos.api.v1.Activity_Level" json:"level,omitempty"`
+	Level Activity_Level `protobuf:"varint,4,opt,name=level,proto3,enum=wekalist.api.v1.Activity_Level" json:"level,omitempty"`
 	// The create time of the activity.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The payload of the activity.
@@ -296,10 +296,10 @@ func (*ActivityPayload_MemoComment) isActivityPayload_Payload() {}
 type ActivityMemoCommentPayload struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The memo name of comment.
-	// Format: memos/{memo}
+	// Format: wekalist/{memo}
 	Memo string `protobuf:"bytes,1,opt,name=memo,proto3" json:"memo,omitempty"`
 	// The name of related memo.
-	// Format: memos/{memo}
+	// Format: wekalist/{memo}
 	RelatedMemo   string `protobuf:"bytes,2,opt,name=related_memo,json=relatedMemo,proto3" json:"related_memo,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -513,15 +513,15 @@ var File_api_v1_activity_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_activity_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1dapi/v1/activity_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x86\x04\n" +
+	"\x1dapi/v1/activity_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x92\x04\n" +
 	"\bActivity\x12\x1a\n" +
 	"\x04name\x18\x01 \x01(\tB\x06\xe0A\x03\xe0A\bR\x04name\x12\x1d\n" +
-	"\acreator\x18\x02 \x01(\tB\x03\xe0A\x03R\acreator\x124\n" +
-	"\x04type\x18\x03 \x01(\x0e2\x1b.memos.api.v1.Activity.TypeB\x03\xe0A\x03R\x04type\x127\n" +
-	"\x05level\x18\x04 \x01(\x0e2\x1c.memos.api.v1.Activity.LevelB\x03\xe0A\x03R\x05level\x12@\n" +
+	"\acreator\x18\x02 \x01(\tB\x03\xe0A\x03R\acreator\x127\n" +
+	"\x04type\x18\x03 \x01(\x0e2\x1e.wekalist.api.v1.Activity.TypeB\x03\xe0A\x03R\x04type\x12:\n" +
+	"\x05level\x18\x04 \x01(\x0e2\x1f.wekalist.api.v1.Activity.LevelB\x03\xe0A\x03R\x05level\x12@\n" +
 	"\vcreate_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
-	"createTime\x12<\n" +
-	"\apayload\x18\x06 \x01(\v2\x1d.memos.api.v1.ActivityPayloadB\x03\xe0A\x03R\apayload\"B\n" +
+	"createTime\x12?\n" +
+	"\apayload\x18\x06 \x01(\v2 .wekalist.api.v1.ActivityPayloadB\x03\xe0A\x03R\apayload\"B\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fMEMO_COMMENT\x10\x01\x12\x12\n" +
@@ -530,11 +530,11 @@ const file_api_v1_activity_service_proto_rawDesc = "" +
 	"\x11LEVEL_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04INFO\x10\x01\x12\b\n" +
 	"\x04WARN\x10\x02\x12\t\n" +
-	"\x05ERROR\x10\x03:M\xeaAJ\n" +
-	"\x15memos.api.v1/Activity\x12\x15activities/{activity}\x1a\x04name*\n" +
-	"activities2\bactivity\"k\n" +
-	"\x0fActivityPayload\x12M\n" +
-	"\fmemo_comment\x18\x01 \x01(\v2(.memos.api.v1.ActivityMemoCommentPayloadH\x00R\vmemoCommentB\t\n" +
+	"\x05ERROR\x10\x03:P\xeaAM\n" +
+	"\x18wekalist.api.v1/Activity\x12\x15activities/{activity}\x1a\x04name*\n" +
+	"activities2\bactivity\"n\n" +
+	"\x0fActivityPayload\x12P\n" +
+	"\fmemo_comment\x18\x01 \x01(\v2+.wekalist.api.v1.ActivityMemoCommentPayloadH\x00R\vmemoCommentB\t\n" +
 	"\apayload\"S\n" +
 	"\x1aActivityMemoCommentPayload\x12\x12\n" +
 	"\x04memo\x18\x01 \x01(\tR\x04memo\x12!\n" +
@@ -542,19 +542,19 @@ const file_api_v1_activity_service_proto_rawDesc = "" +
 	"\x15ListActivitiesRequest\x12\x1b\n" +
 	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x02 \x01(\tR\tpageToken\"x\n" +
-	"\x16ListActivitiesResponse\x126\n" +
+	"page_token\x18\x02 \x01(\tR\tpageToken\"{\n" +
+	"\x16ListActivitiesResponse\x129\n" +
 	"\n" +
-	"activities\x18\x01 \x03(\v2\x16.memos.api.v1.ActivityR\n" +
+	"activities\x18\x01 \x03(\v2\x19.wekalist.api.v1.ActivityR\n" +
 	"activities\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"G\n" +
-	"\x12GetActivityRequest\x121\n" +
-	"\x04name\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\n" +
-	"\x15memos.api.v1/ActivityR\x04name2\xff\x01\n" +
-	"\x0fActivityService\x12w\n" +
-	"\x0eListActivities\x12#.memos.api.v1.ListActivitiesRequest\x1a$.memos.api.v1.ListActivitiesResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/api/v1/activities\x12s\n" +
-	"\vGetActivity\x12 .memos.api.v1.GetActivityRequest\x1a\x16.memos.api.v1.Activity\"*\xdaA\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{name=activities/*}B\xac\x01\n" +
-	"\x10com.memos.api.v1B\x14ActivityServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"J\n" +
+	"\x12GetActivityRequest\x124\n" +
+	"\x04name\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\n" +
+	"\x18wekalist.api.v1/ActivityR\x04name2\x8b\x02\n" +
+	"\x0fActivityService\x12}\n" +
+	"\x0eListActivities\x12&.wekalist.api.v1.ListActivitiesRequest\x1a'.wekalist.api.v1.ListActivitiesResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/api/v1/activities\x12y\n" +
+	"\vGetActivity\x12#.wekalist.api.v1.GetActivityRequest\x1a\x19.wekalist.api.v1.Activity\"*\xdaA\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{name=activities/*}B\xbb\x01\n" +
+	"\x13com.wekalist.api.v1B\x14ActivityServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_activity_service_proto_rawDescOnce sync.Once
@@ -571,27 +571,27 @@ func file_api_v1_activity_service_proto_rawDescGZIP() []byte {
 var file_api_v1_activity_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1_activity_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_v1_activity_service_proto_goTypes = []any{
-	(Activity_Type)(0),                 // 0: memos.api.v1.Activity.Type
-	(Activity_Level)(0),                // 1: memos.api.v1.Activity.Level
-	(*Activity)(nil),                   // 2: memos.api.v1.Activity
-	(*ActivityPayload)(nil),            // 3: memos.api.v1.ActivityPayload
-	(*ActivityMemoCommentPayload)(nil), // 4: memos.api.v1.ActivityMemoCommentPayload
-	(*ListActivitiesRequest)(nil),      // 5: memos.api.v1.ListActivitiesRequest
-	(*ListActivitiesResponse)(nil),     // 6: memos.api.v1.ListActivitiesResponse
-	(*GetActivityRequest)(nil),         // 7: memos.api.v1.GetActivityRequest
+	(Activity_Type)(0),                 // 0: wekalist.api.v1.Activity.Type
+	(Activity_Level)(0),                // 1: wekalist.api.v1.Activity.Level
+	(*Activity)(nil),                   // 2: wekalist.api.v1.Activity
+	(*ActivityPayload)(nil),            // 3: wekalist.api.v1.ActivityPayload
+	(*ActivityMemoCommentPayload)(nil), // 4: wekalist.api.v1.ActivityMemoCommentPayload
+	(*ListActivitiesRequest)(nil),      // 5: wekalist.api.v1.ListActivitiesRequest
+	(*ListActivitiesResponse)(nil),     // 6: wekalist.api.v1.ListActivitiesResponse
+	(*GetActivityRequest)(nil),         // 7: wekalist.api.v1.GetActivityRequest
 	(*timestamppb.Timestamp)(nil),      // 8: google.protobuf.Timestamp
 }
 var file_api_v1_activity_service_proto_depIdxs = []int32{
-	0, // 0: memos.api.v1.Activity.type:type_name -> memos.api.v1.Activity.Type
-	1, // 1: memos.api.v1.Activity.level:type_name -> memos.api.v1.Activity.Level
-	8, // 2: memos.api.v1.Activity.create_time:type_name -> google.protobuf.Timestamp
-	3, // 3: memos.api.v1.Activity.payload:type_name -> memos.api.v1.ActivityPayload
-	4, // 4: memos.api.v1.ActivityPayload.memo_comment:type_name -> memos.api.v1.ActivityMemoCommentPayload
-	2, // 5: memos.api.v1.ListActivitiesResponse.activities:type_name -> memos.api.v1.Activity
-	5, // 6: memos.api.v1.ActivityService.ListActivities:input_type -> memos.api.v1.ListActivitiesRequest
-	7, // 7: memos.api.v1.ActivityService.GetActivity:input_type -> memos.api.v1.GetActivityRequest
-	6, // 8: memos.api.v1.ActivityService.ListActivities:output_type -> memos.api.v1.ListActivitiesResponse
-	2, // 9: memos.api.v1.ActivityService.GetActivity:output_type -> memos.api.v1.Activity
+	0, // 0: wekalist.api.v1.Activity.type:type_name -> wekalist.api.v1.Activity.Type
+	1, // 1: wekalist.api.v1.Activity.level:type_name -> wekalist.api.v1.Activity.Level
+	8, // 2: wekalist.api.v1.Activity.create_time:type_name -> google.protobuf.Timestamp
+	3, // 3: wekalist.api.v1.Activity.payload:type_name -> wekalist.api.v1.ActivityPayload
+	4, // 4: wekalist.api.v1.ActivityPayload.memo_comment:type_name -> wekalist.api.v1.ActivityMemoCommentPayload
+	2, // 5: wekalist.api.v1.ListActivitiesResponse.activities:type_name -> wekalist.api.v1.Activity
+	5, // 6: wekalist.api.v1.ActivityService.ListActivities:input_type -> wekalist.api.v1.ListActivitiesRequest
+	7, // 7: wekalist.api.v1.ActivityService.GetActivity:input_type -> wekalist.api.v1.GetActivityRequest
+	6, // 8: wekalist.api.v1.ActivityService.ListActivities:output_type -> wekalist.api.v1.ListActivitiesResponse
+	2, // 9: wekalist.api.v1.ActivityService.GetActivity:output_type -> wekalist.api.v1.Activity
 	8, // [8:10] is the sub-list for method output_type
 	6, // [6:8] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name

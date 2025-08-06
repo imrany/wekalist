@@ -393,38 +393,38 @@ var File_api_v1_webhook_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_webhook_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1capi/v1/webhook_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xb0\x01\n" +
+	"\x1capi/v1/webhook_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xb3\x01\n" +
 	"\aWebhook\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12&\n" +
 	"\fdisplay_name\x18\x02 \x01(\tB\x03\xe0A\x02R\vdisplayName\x12\x15\n" +
-	"\x03url\x18\x03 \x01(\tB\x03\xe0A\x02R\x03url:M\xeaAJ\n" +
-	"\x14memos.api.v1/Webhook\x12\x1fusers/{user}/webhooks/{webhook}*\bwebhooks2\awebhook\"K\n" +
-	"\x13ListWebhooksRequest\x124\n" +
-	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\x12\x14memos.api.v1/WebhookR\x06parent\"I\n" +
-	"\x14ListWebhooksResponse\x121\n" +
-	"\bwebhooks\x18\x01 \x03(\v2\x15.memos.api.v1.WebhookR\bwebhooks\"E\n" +
-	"\x11GetWebhookRequest\x120\n" +
-	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
-	"\x14memos.api.v1/WebhookR\x04name\"\xac\x01\n" +
-	"\x14CreateWebhookRequest\x124\n" +
-	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\x12\x14memos.api.v1/WebhookR\x06parent\x124\n" +
-	"\awebhook\x18\x02 \x01(\v2\x15.memos.api.v1.WebhookB\x03\xe0A\x02R\awebhook\x12(\n" +
-	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\"\x8e\x01\n" +
-	"\x14UpdateWebhookRequest\x124\n" +
-	"\awebhook\x18\x01 \x01(\v2\x15.memos.api.v1.WebhookB\x03\xe0A\x02R\awebhook\x12@\n" +
+	"\x03url\x18\x03 \x01(\tB\x03\xe0A\x02R\x03url:P\xeaAM\n" +
+	"\x17wekalist.api.v1/Webhook\x12\x1fusers/{user}/webhooks/{webhook}*\bwebhooks2\awebhook\"N\n" +
+	"\x13ListWebhooksRequest\x127\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\x12\x17wekalist.api.v1/WebhookR\x06parent\"L\n" +
+	"\x14ListWebhooksResponse\x124\n" +
+	"\bwebhooks\x18\x01 \x03(\v2\x18.wekalist.api.v1.WebhookR\bwebhooks\"H\n" +
+	"\x11GetWebhookRequest\x123\n" +
+	"\x04name\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\n" +
+	"\x17wekalist.api.v1/WebhookR\x04name\"\xb2\x01\n" +
+	"\x14CreateWebhookRequest\x127\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\x12\x17wekalist.api.v1/WebhookR\x06parent\x127\n" +
+	"\awebhook\x18\x02 \x01(\v2\x18.wekalist.api.v1.WebhookB\x03\xe0A\x02R\awebhook\x12(\n" +
+	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\"\x91\x01\n" +
+	"\x14UpdateWebhookRequest\x127\n" +
+	"\awebhook\x18\x01 \x01(\v2\x18.wekalist.api.v1.WebhookB\x03\xe0A\x02R\awebhook\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\n" +
-	"updateMask\"H\n" +
-	"\x14DeleteWebhookRequest\x120\n" +
-	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
-	"\x14memos.api.v1/WebhookR\x04name2\xc4\x05\n" +
-	"\x0eWebhookService\x12\x89\x01\n" +
-	"\fListWebhooks\x12!.memos.api.v1.ListWebhooksRequest\x1a\".memos.api.v1.ListWebhooksResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/api/v1/{parent=users/*}/webhooks\x12v\n" +
+	"updateMask\"K\n" +
+	"\x14DeleteWebhookRequest\x123\n" +
+	"\x04name\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\n" +
+	"\x17wekalist.api.v1/WebhookR\x04name2\xe0\x05\n" +
+	"\x0eWebhookService\x12\x8f\x01\n" +
+	"\fListWebhooks\x12$.wekalist.api.v1.ListWebhooksRequest\x1a%.wekalist.api.v1.ListWebhooksResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/api/v1/{parent=users/*}/webhooks\x12|\n" +
 	"\n" +
-	"GetWebhook\x12\x1f.memos.api.v1.GetWebhookRequest\x1a\x15.memos.api.v1.Webhook\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/api/v1/{name=users/*/webhooks/*}\x12\x8f\x01\n" +
-	"\rCreateWebhook\x12\".memos.api.v1.CreateWebhookRequest\x1a\x15.memos.api.v1.Webhook\"C\xdaA\x0eparent,webhook\x82\xd3\xe4\x93\x02,:\awebhook\"!/api/v1/{parent=users/*}/webhooks\x12\x9c\x01\n" +
-	"\rUpdateWebhook\x12\".memos.api.v1.UpdateWebhookRequest\x1a\x15.memos.api.v1.Webhook\"P\xdaA\x13webhook,update_mask\x82\xd3\xe4\x93\x024:\awebhook2)/api/v1/{webhook.name=users/*/webhooks/*}\x12}\n" +
-	"\rDeleteWebhook\x12\".memos.api.v1.DeleteWebhookRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/webhooks/*}B\xab\x01\n" +
-	"\x10com.memos.api.v1B\x13WebhookServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"GetWebhook\x12\".wekalist.api.v1.GetWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/api/v1/{name=users/*/webhooks/*}\x12\x95\x01\n" +
+	"\rCreateWebhook\x12%.wekalist.api.v1.CreateWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"C\xdaA\x0eparent,webhook\x82\xd3\xe4\x93\x02,:\awebhook\"!/api/v1/{parent=users/*}/webhooks\x12\xa2\x01\n" +
+	"\rUpdateWebhook\x12%.wekalist.api.v1.UpdateWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"P\xdaA\x13webhook,update_mask\x82\xd3\xe4\x93\x024:\awebhook2)/api/v1/{webhook.name=users/*/webhooks/*}\x12\x80\x01\n" +
+	"\rDeleteWebhook\x12%.wekalist.api.v1.DeleteWebhookRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/webhooks/*}B\xba\x01\n" +
+	"\x13com.wekalist.api.v1B\x13WebhookServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_webhook_service_proto_rawDescOnce sync.Once
@@ -440,31 +440,31 @@ func file_api_v1_webhook_service_proto_rawDescGZIP() []byte {
 
 var file_api_v1_webhook_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_v1_webhook_service_proto_goTypes = []any{
-	(*Webhook)(nil),               // 0: memos.api.v1.Webhook
-	(*ListWebhooksRequest)(nil),   // 1: memos.api.v1.ListWebhooksRequest
-	(*ListWebhooksResponse)(nil),  // 2: memos.api.v1.ListWebhooksResponse
-	(*GetWebhookRequest)(nil),     // 3: memos.api.v1.GetWebhookRequest
-	(*CreateWebhookRequest)(nil),  // 4: memos.api.v1.CreateWebhookRequest
-	(*UpdateWebhookRequest)(nil),  // 5: memos.api.v1.UpdateWebhookRequest
-	(*DeleteWebhookRequest)(nil),  // 6: memos.api.v1.DeleteWebhookRequest
+	(*Webhook)(nil),               // 0: wekalist.api.v1.Webhook
+	(*ListWebhooksRequest)(nil),   // 1: wekalist.api.v1.ListWebhooksRequest
+	(*ListWebhooksResponse)(nil),  // 2: wekalist.api.v1.ListWebhooksResponse
+	(*GetWebhookRequest)(nil),     // 3: wekalist.api.v1.GetWebhookRequest
+	(*CreateWebhookRequest)(nil),  // 4: wekalist.api.v1.CreateWebhookRequest
+	(*UpdateWebhookRequest)(nil),  // 5: wekalist.api.v1.UpdateWebhookRequest
+	(*DeleteWebhookRequest)(nil),  // 6: wekalist.api.v1.DeleteWebhookRequest
 	(*fieldmaskpb.FieldMask)(nil), // 7: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),         // 8: google.protobuf.Empty
 }
 var file_api_v1_webhook_service_proto_depIdxs = []int32{
-	0, // 0: memos.api.v1.ListWebhooksResponse.webhooks:type_name -> memos.api.v1.Webhook
-	0, // 1: memos.api.v1.CreateWebhookRequest.webhook:type_name -> memos.api.v1.Webhook
-	0, // 2: memos.api.v1.UpdateWebhookRequest.webhook:type_name -> memos.api.v1.Webhook
-	7, // 3: memos.api.v1.UpdateWebhookRequest.update_mask:type_name -> google.protobuf.FieldMask
-	1, // 4: memos.api.v1.WebhookService.ListWebhooks:input_type -> memos.api.v1.ListWebhooksRequest
-	3, // 5: memos.api.v1.WebhookService.GetWebhook:input_type -> memos.api.v1.GetWebhookRequest
-	4, // 6: memos.api.v1.WebhookService.CreateWebhook:input_type -> memos.api.v1.CreateWebhookRequest
-	5, // 7: memos.api.v1.WebhookService.UpdateWebhook:input_type -> memos.api.v1.UpdateWebhookRequest
-	6, // 8: memos.api.v1.WebhookService.DeleteWebhook:input_type -> memos.api.v1.DeleteWebhookRequest
-	2, // 9: memos.api.v1.WebhookService.ListWebhooks:output_type -> memos.api.v1.ListWebhooksResponse
-	0, // 10: memos.api.v1.WebhookService.GetWebhook:output_type -> memos.api.v1.Webhook
-	0, // 11: memos.api.v1.WebhookService.CreateWebhook:output_type -> memos.api.v1.Webhook
-	0, // 12: memos.api.v1.WebhookService.UpdateWebhook:output_type -> memos.api.v1.Webhook
-	8, // 13: memos.api.v1.WebhookService.DeleteWebhook:output_type -> google.protobuf.Empty
+	0, // 0: wekalist.api.v1.ListWebhooksResponse.webhooks:type_name -> wekalist.api.v1.Webhook
+	0, // 1: wekalist.api.v1.CreateWebhookRequest.webhook:type_name -> wekalist.api.v1.Webhook
+	0, // 2: wekalist.api.v1.UpdateWebhookRequest.webhook:type_name -> wekalist.api.v1.Webhook
+	7, // 3: wekalist.api.v1.UpdateWebhookRequest.update_mask:type_name -> google.protobuf.FieldMask
+	1, // 4: wekalist.api.v1.WebhookService.ListWebhooks:input_type -> wekalist.api.v1.ListWebhooksRequest
+	3, // 5: wekalist.api.v1.WebhookService.GetWebhook:input_type -> wekalist.api.v1.GetWebhookRequest
+	4, // 6: wekalist.api.v1.WebhookService.CreateWebhook:input_type -> wekalist.api.v1.CreateWebhookRequest
+	5, // 7: wekalist.api.v1.WebhookService.UpdateWebhook:input_type -> wekalist.api.v1.UpdateWebhookRequest
+	6, // 8: wekalist.api.v1.WebhookService.DeleteWebhook:input_type -> wekalist.api.v1.DeleteWebhookRequest
+	2, // 9: wekalist.api.v1.WebhookService.ListWebhooks:output_type -> wekalist.api.v1.ListWebhooksResponse
+	0, // 10: wekalist.api.v1.WebhookService.GetWebhook:output_type -> wekalist.api.v1.Webhook
+	0, // 11: wekalist.api.v1.WebhookService.CreateWebhook:output_type -> wekalist.api.v1.Webhook
+	0, // 12: wekalist.api.v1.WebhookService.UpdateWebhook:output_type -> wekalist.api.v1.Webhook
+	8, // 13: wekalist.api.v1.WebhookService.DeleteWebhook:output_type -> google.protobuf.Empty
 	9, // [9:14] is the sub-list for method output_type
 	4, // [4:9] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

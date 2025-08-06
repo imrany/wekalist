@@ -23,14 +23,14 @@ type Profile struct {
 	UNIXSock string
 	// Data is the data directory
 	Data string
-	// DSN points to where memos stores its own data
+	// DSN points to where wekalist stores its own data
 	DSN string
 	// Driver is the database driver
 	// sqlite, mysql
 	Driver string
 	// Version is the current version of server
 	Version string
-	// InstanceURL is the url of your memos instance.
+	// InstanceURL is the url of your wekalist instance.
 	InstanceURL string
 }
 
@@ -64,7 +64,7 @@ func (p *Profile) Validate() error {
 
 	if p.Mode == "prod" && p.Data == "" {
 		if runtime.GOOS == "windows" {
-			p.Data = filepath.Join(os.Getenv("ProgramData"), "memos")
+			p.Data = filepath.Join(os.Getenv("ProgramData"), "wekalist")
 			if _, err := os.Stat(p.Data); os.IsNotExist(err) {
 				if err := os.MkdirAll(p.Data, 0770); err != nil {
 					slog.Error("failed to create data directory", slog.String("data", p.Data), slog.String("error", err.Error()))
@@ -72,7 +72,7 @@ func (p *Profile) Validate() error {
 				}
 			}
 		} else {
-			p.Data = "/var/opt/memos"
+			p.Data = "/var/opt/wekalist"
 		}
 	}
 
@@ -84,7 +84,7 @@ func (p *Profile) Validate() error {
 
 	p.Data = dataDir
 	if p.Driver == "sqlite" && p.DSN == "" {
-		dbFile := fmt.Sprintf("memos_%s.db", p.Mode)
+		dbFile := fmt.Sprintf("wekalist_%s.db", p.Mode)
 		p.DSN = filepath.Join(dataDir, dbFile)
 	}
 

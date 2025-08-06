@@ -9,9 +9,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	"github.com/usememos/memos/internal/profile"
-	"github.com/usememos/memos/internal/util"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/profile"
+	"github.com/imrany/wekalist/internal/util"
+	"github.com/imrany/wekalist/store"
 )
 
 //go:embed dist/*
@@ -32,7 +32,7 @@ func NewFrontendService(profile *profile.Profile, store *store.Store) *FrontendS
 func (*FrontendService) Serve(_ context.Context, e *echo.Echo) {
 	skipper := func(c echo.Context) bool {
 		// Skip API routes.
-		if util.HasPrefixes(c.Path(), "/api", "/memos.api.v1") {
+		if util.HasPrefixes(c.Path(), "/api", "/wekalist.api.v1") {
 			return true
 		}
 		// Skip setting cache headers for index.html

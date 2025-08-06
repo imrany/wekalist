@@ -176,7 +176,7 @@ var File_api_v1_common_proto protoreflect.FileDescriptor
 
 const file_api_v1_common_proto_rawDesc = "" +
 	"\n" +
-	"\x13api/v1/common.proto\x12\fmemos.api.v1\"9\n" +
+	"\x13api/v1/common.proto\x12\x0fwekalist.api.v1\"9\n" +
 	"\tPageToken\x12\x14\n" +
 	"\x05limit\x18\x01 \x01(\x05R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x02 \x01(\x05R\x06offset*8\n" +
@@ -188,8 +188,8 @@ const file_api_v1_common_proto_rawDesc = "" +
 	"\tDirection\x12\x19\n" +
 	"\x15DIRECTION_UNSPECIFIED\x10\x00\x12\a\n" +
 	"\x03ASC\x10\x01\x12\b\n" +
-	"\x04DESC\x10\x02B\xa3\x01\n" +
-	"\x10com.memos.api.v1B\vCommonProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"\x04DESC\x10\x02B\xb2\x01\n" +
+	"\x13com.wekalist.api.v1B\vCommonProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_common_proto_rawDescOnce sync.Once
@@ -206,9 +206,9 @@ func file_api_v1_common_proto_rawDescGZIP() []byte {
 var file_api_v1_common_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_api_v1_common_proto_goTypes = []any{
-	(State)(0),        // 0: memos.api.v1.State
-	(Direction)(0),    // 1: memos.api.v1.Direction
-	(*PageToken)(nil), // 2: memos.api.v1.PageToken
+	(State)(0),        // 0: wekalist.api.v1.State
+	(Direction)(0),    // 1: wekalist.api.v1.Direction
+	(*PageToken)(nil), // 2: wekalist.api.v1.PageToken
 }
 var file_api_v1_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

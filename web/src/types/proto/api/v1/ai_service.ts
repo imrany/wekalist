@@ -8,7 +8,7 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Status } from "../../google/rpc/status";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface GenAiRequest {
   /** User prompt for AI generation */
@@ -145,7 +145,7 @@ export const GenAiResponse: MessageFns<GenAiResponse> = {
 export type AiServiceDefinition = typeof AiServiceDefinition;
 export const AiServiceDefinition = {
   name: "AiService",
-  fullName: "memos.api.v1.AiService",
+  fullName: "wekalist.api.v1.AiService",
   methods: {
     genAi: {
       name: "GenAi",

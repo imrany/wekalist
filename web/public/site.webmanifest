@@ -1,10 +1,11 @@
 {
-  "name": "Memos",
-  "short_name": "Memos",
+  "name": "Wekalist",
+  "short_name": "Wekalist",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ],
   "display": "standalone",
-  "start_url": "/"
+  "start_url": "/",
+  "description":"A modern, open-source, AI-driven self-hosted knowledge management and note-taking platform designed for privacy-conscious users and organizations"
 }

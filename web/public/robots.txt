@@ -2,4 +2,4 @@ User-Agent: *
 Allow: /
 Disallow: /private/
 
-Sitemap: https://demo.usememos.com/sitemap.xml
+Sitemap: https://wekalist.villebiz.com/sitemap.xml

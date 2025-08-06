@@ -14,9 +14,9 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/usememos/memos/internal/util"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/util"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 // ContextKey is the key type of context value.

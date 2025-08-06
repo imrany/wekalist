@@ -121,7 +121,7 @@ func RegisterActivityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.ActivityService/ListActivities", runtime.WithHTTPPathPattern("/api/v1/activities"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.ActivityService/ListActivities", runtime.WithHTTPPathPattern("/api/v1/activities"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -141,7 +141,7 @@ func RegisterActivityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.ActivityService/GetActivity", runtime.WithHTTPPathPattern("/api/v1/{name=activities/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.ActivityService/GetActivity", runtime.WithHTTPPathPattern("/api/v1/{name=activities/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -199,7 +199,7 @@ func RegisterActivityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.ActivityService/ListActivities", runtime.WithHTTPPathPattern("/api/v1/activities"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.ActivityService/ListActivities", runtime.WithHTTPPathPattern("/api/v1/activities"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -216,7 +216,7 @@ func RegisterActivityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.ActivityService/GetActivity", runtime.WithHTTPPathPattern("/api/v1/{name=activities/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.ActivityService/GetActivity", runtime.WithHTTPPathPattern("/api/v1/{name=activities/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

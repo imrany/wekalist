@@ -6,7 +6,7 @@
 2. Run the following command with two environment variables set:
 
 ```go
-DRIVER=mysql DSN=root@/memos_test go test -v ./test/store/...
+DRIVER=mysql DSN=root@/wekalist_test go test -v ./test/store/...
 ```
 
 - `DRIVER` should be set to `mysql`.

@@ -137,7 +137,7 @@ func (WorkspaceStorageSetting_StorageType) EnumDescriptor() ([]byte, []int) {
 
 type WorkspaceSetting struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	Key   WorkspaceSettingKey    `protobuf:"varint,1,opt,name=key,proto3,enum=memos.store.WorkspaceSettingKey" json:"key,omitempty"`
+	Key   WorkspaceSettingKey    `protobuf:"varint,1,opt,name=key,proto3,enum=wekalist.store.WorkspaceSettingKey" json:"key,omitempty"`
 	// Types that are valid to be assigned to Value:
 	//
 	//	*WorkspaceSetting_BasicSetting
@@ -564,7 +564,7 @@ func (x *WorkspaceCustomProfile) GetAppearance() string {
 type WorkspaceStorageSetting struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// storage_type is the storage type.
-	StorageType WorkspaceStorageSetting_StorageType `protobuf:"varint,1,opt,name=storage_type,json=storageType,proto3,enum=memos.store.WorkspaceStorageSetting_StorageType" json:"storage_type,omitempty"`
+	StorageType WorkspaceStorageSetting_StorageType `protobuf:"varint,1,opt,name=storage_type,json=storageType,proto3,enum=wekalist.store.WorkspaceStorageSetting_StorageType" json:"storage_type,omitempty"`
 	// The template of file path.
 	// e.g. assets/{timestamp}_{filename}
 	FilepathTemplate string `protobuf:"bytes,2,opt,name=filepath_template,json=filepathTemplate,proto3" json:"filepath_template,omitempty"`
@@ -849,25 +849,25 @@ var File_store_workspace_setting_proto protoreflect.FileDescriptor
 
 const file_store_workspace_setting_proto_rawDesc = "" +
 	"\n" +
-	"\x1dstore/workspace_setting.proto\x12\vmemos.store\"\x9a\x03\n" +
-	"\x10WorkspaceSetting\x122\n" +
-	"\x03key\x18\x01 \x01(\x0e2 .memos.store.WorkspaceSettingKeyR\x03key\x12I\n" +
-	"\rbasic_setting\x18\x02 \x01(\v2\".memos.store.WorkspaceBasicSettingH\x00R\fbasicSetting\x12O\n" +
-	"\x0fgeneral_setting\x18\x03 \x01(\v2$.memos.store.WorkspaceGeneralSettingH\x00R\x0egeneralSetting\x12O\n" +
-	"\x0fstorage_setting\x18\x04 \x01(\v2$.memos.store.WorkspaceStorageSettingH\x00R\x0estorageSetting\x12\\\n" +
-	"\x14memo_related_setting\x18\x05 \x01(\v2(.memos.store.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSettingB\a\n" +
+	"\x1dstore/workspace_setting.proto\x12\x0ewekalist.store\"\xa9\x03\n" +
+	"\x10WorkspaceSetting\x125\n" +
+	"\x03key\x18\x01 \x01(\x0e2#.wekalist.store.WorkspaceSettingKeyR\x03key\x12L\n" +
+	"\rbasic_setting\x18\x02 \x01(\v2%.wekalist.store.WorkspaceBasicSettingH\x00R\fbasicSetting\x12R\n" +
+	"\x0fgeneral_setting\x18\x03 \x01(\v2'.wekalist.store.WorkspaceGeneralSettingH\x00R\x0egeneralSetting\x12R\n" +
+	"\x0fstorage_setting\x18\x04 \x01(\v2'.wekalist.store.WorkspaceStorageSettingH\x00R\x0estorageSetting\x12_\n" +
+	"\x14memo_related_setting\x18\x05 \x01(\v2+.wekalist.store.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSettingB\a\n" +
 	"\x05value\"]\n" +
 	"\x15WorkspaceBasicSetting\x12\x1d\n" +
 	"\n" +
 	"secret_key\x18\x01 \x01(\tR\tsecretKey\x12%\n" +
-	"\x0eschema_version\x18\x02 \x01(\tR\rschemaVersion\"\xfa\x05\n" +
+	"\x0eschema_version\x18\x02 \x01(\tR\rschemaVersion\"\xfd\x05\n" +
 	"\x17WorkspaceGeneralSetting\x12\x14\n" +
 	"\x05theme\x18\x01 \x01(\tR\x05theme\x12<\n" +
 	"\x1adisallow_user_registration\x18\x02 \x01(\bR\x18disallowUserRegistration\x124\n" +
 	"\x16disallow_password_auth\x18\x03 \x01(\bR\x14disallowPasswordAuth\x12+\n" +
 	"\x11additional_script\x18\x04 \x01(\tR\x10additionalScript\x12)\n" +
-	"\x10additional_style\x18\x05 \x01(\tR\x0fadditionalStyle\x12J\n" +
-	"\x0ecustom_profile\x18\x06 \x01(\v2#.memos.store.WorkspaceCustomProfileR\rcustomProfile\x121\n" +
+	"\x10additional_style\x18\x05 \x01(\tR\x0fadditionalStyle\x12M\n" +
+	"\x0ecustom_profile\x18\x06 \x01(\v2&.wekalist.store.WorkspaceCustomProfileR\rcustomProfile\x121\n" +
 	"\x15week_start_day_offset\x18\a \x01(\x05R\x12weekStartDayOffset\x128\n" +
 	"\x18disallow_change_username\x18\b \x01(\bR\x16disallowChangeUsername\x128\n" +
 	"\x18disallow_change_nickname\x18\t \x01(\bR\x16disallowChangeNickname\x12:\n" +
@@ -885,12 +885,12 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x06locale\x18\x04 \x01(\tR\x06locale\x12\x1e\n" +
 	"\n" +
 	"appearance\x18\x05 \x01(\tR\n" +
-	"appearance\"\xd5\x02\n" +
-	"\x17WorkspaceStorageSetting\x12S\n" +
-	"\fstorage_type\x18\x01 \x01(\x0e20.memos.store.WorkspaceStorageSetting.StorageTypeR\vstorageType\x12+\n" +
+	"appearance\"\xdb\x02\n" +
+	"\x17WorkspaceStorageSetting\x12V\n" +
+	"\fstorage_type\x18\x01 \x01(\x0e23.wekalist.store.WorkspaceStorageSetting.StorageTypeR\vstorageType\x12+\n" +
 	"\x11filepath_template\x18\x02 \x01(\tR\x10filepathTemplate\x12/\n" +
-	"\x14upload_size_limit_mb\x18\x03 \x01(\x03R\x11uploadSizeLimitMb\x129\n" +
-	"\ts3_config\x18\x04 \x01(\v2\x1c.memos.store.StorageS3ConfigR\bs3Config\"L\n" +
+	"\x14upload_size_limit_mb\x18\x03 \x01(\x03R\x11uploadSizeLimitMb\x12<\n" +
+	"\ts3_config\x18\x04 \x01(\v2\x1f.wekalist.store.StorageS3ConfigR\bs3Config\"L\n" +
 	"\vStorageType\x12\x1c\n" +
 	"\x18STORAGE_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bDATABASE\x10\x01\x12\t\n" +
@@ -920,8 +920,8 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x05BASIC\x10\x01\x12\v\n" +
 	"\aGENERAL\x10\x02\x12\v\n" +
 	"\aSTORAGE\x10\x03\x12\x10\n" +
-	"\fMEMO_RELATED\x10\x04B\xa0\x01\n" +
-	"\x0fcom.memos.storeB\x15WorkspaceSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\fMEMO_RELATED\x10\x04B\xaf\x01\n" +
+	"\x12com.wekalist.storeB\x15WorkspaceSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_workspace_setting_proto_rawDescOnce sync.Once
@@ -938,25 +938,25 @@ func file_store_workspace_setting_proto_rawDescGZIP() []byte {
 var file_store_workspace_setting_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_store_workspace_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_store_workspace_setting_proto_goTypes = []any{
-	(WorkspaceSettingKey)(0),                 // 0: memos.store.WorkspaceSettingKey
-	(WorkspaceStorageSetting_StorageType)(0), // 1: memos.store.WorkspaceStorageSetting.StorageType
-	(*WorkspaceSetting)(nil),                 // 2: memos.store.WorkspaceSetting
-	(*WorkspaceBasicSetting)(nil),            // 3: memos.store.WorkspaceBasicSetting
-	(*WorkspaceGeneralSetting)(nil),          // 4: memos.store.WorkspaceGeneralSetting
-	(*WorkspaceCustomProfile)(nil),           // 5: memos.store.WorkspaceCustomProfile
-	(*WorkspaceStorageSetting)(nil),          // 6: memos.store.WorkspaceStorageSetting
-	(*StorageS3Config)(nil),                  // 7: memos.store.StorageS3Config
-	(*WorkspaceMemoRelatedSetting)(nil),      // 8: memos.store.WorkspaceMemoRelatedSetting
+	(WorkspaceSettingKey)(0),                 // 0: wekalist.store.WorkspaceSettingKey
+	(WorkspaceStorageSetting_StorageType)(0), // 1: wekalist.store.WorkspaceStorageSetting.StorageType
+	(*WorkspaceSetting)(nil),                 // 2: wekalist.store.WorkspaceSetting
+	(*WorkspaceBasicSetting)(nil),            // 3: wekalist.store.WorkspaceBasicSetting
+	(*WorkspaceGeneralSetting)(nil),          // 4: wekalist.store.WorkspaceGeneralSetting
+	(*WorkspaceCustomProfile)(nil),           // 5: wekalist.store.WorkspaceCustomProfile
+	(*WorkspaceStorageSetting)(nil),          // 6: wekalist.store.WorkspaceStorageSetting
+	(*StorageS3Config)(nil),                  // 7: wekalist.store.StorageS3Config
+	(*WorkspaceMemoRelatedSetting)(nil),      // 8: wekalist.store.WorkspaceMemoRelatedSetting
 }
 var file_store_workspace_setting_proto_depIdxs = []int32{
-	0, // 0: memos.store.WorkspaceSetting.key:type_name -> memos.store.WorkspaceSettingKey
-	3, // 1: memos.store.WorkspaceSetting.basic_setting:type_name -> memos.store.WorkspaceBasicSetting
-	4, // 2: memos.store.WorkspaceSetting.general_setting:type_name -> memos.store.WorkspaceGeneralSetting
-	6, // 3: memos.store.WorkspaceSetting.storage_setting:type_name -> memos.store.WorkspaceStorageSetting
-	8, // 4: memos.store.WorkspaceSetting.memo_related_setting:type_name -> memos.store.WorkspaceMemoRelatedSetting
-	5, // 5: memos.store.WorkspaceGeneralSetting.custom_profile:type_name -> memos.store.WorkspaceCustomProfile
-	1, // 6: memos.store.WorkspaceStorageSetting.storage_type:type_name -> memos.store.WorkspaceStorageSetting.StorageType
-	7, // 7: memos.store.WorkspaceStorageSetting.s3_config:type_name -> memos.store.StorageS3Config
+	0, // 0: wekalist.store.WorkspaceSetting.key:type_name -> wekalist.store.WorkspaceSettingKey
+	3, // 1: wekalist.store.WorkspaceSetting.basic_setting:type_name -> wekalist.store.WorkspaceBasicSetting
+	4, // 2: wekalist.store.WorkspaceSetting.general_setting:type_name -> wekalist.store.WorkspaceGeneralSetting
+	6, // 3: wekalist.store.WorkspaceSetting.storage_setting:type_name -> wekalist.store.WorkspaceStorageSetting
+	8, // 4: wekalist.store.WorkspaceSetting.memo_related_setting:type_name -> wekalist.store.WorkspaceMemoRelatedSetting
+	5, // 5: wekalist.store.WorkspaceGeneralSetting.custom_profile:type_name -> wekalist.store.WorkspaceCustomProfile
+	1, // 6: wekalist.store.WorkspaceStorageSetting.storage_type:type_name -> wekalist.store.WorkspaceStorageSetting.StorageType
+	7, // 7: wekalist.store.WorkspaceStorageSetting.s3_config:type_name -> wekalist.store.StorageS3Config
 	8, // [8:8] is the sub-list for method output_type
 	8, // [8:8] is the sub-list for method input_type
 	8, // [8:8] is the sub-list for extension type_name

@@ -20,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ShortcutService_ListShortcuts_FullMethodName  = "/memos.api.v1.ShortcutService/ListShortcuts"
-	ShortcutService_GetShortcut_FullMethodName    = "/memos.api.v1.ShortcutService/GetShortcut"
-	ShortcutService_CreateShortcut_FullMethodName = "/memos.api.v1.ShortcutService/CreateShortcut"
-	ShortcutService_UpdateShortcut_FullMethodName = "/memos.api.v1.ShortcutService/UpdateShortcut"
-	ShortcutService_DeleteShortcut_FullMethodName = "/memos.api.v1.ShortcutService/DeleteShortcut"
+	ShortcutService_ListShortcuts_FullMethodName  = "/wekalist.api.v1.ShortcutService/ListShortcuts"
+	ShortcutService_GetShortcut_FullMethodName    = "/wekalist.api.v1.ShortcutService/GetShortcut"
+	ShortcutService_CreateShortcut_FullMethodName = "/wekalist.api.v1.ShortcutService/CreateShortcut"
+	ShortcutService_UpdateShortcut_FullMethodName = "/wekalist.api.v1.ShortcutService/UpdateShortcut"
+	ShortcutService_DeleteShortcut_FullMethodName = "/wekalist.api.v1.ShortcutService/DeleteShortcut"
 )
 
 // ShortcutServiceClient is the client API for ShortcutService service.
@@ -255,7 +255,7 @@ func _ShortcutService_DeleteShortcut_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ShortcutService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.ShortcutService",
+	ServiceName: "wekalist.api.v1.ShortcutService",
 	HandlerType: (*ShortcutServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

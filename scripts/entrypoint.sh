@@ -22,6 +22,6 @@ file_env() {
    unset "$fileVar"
 }
 
-file_env "MEMOS_DSN"
+file_env "DSN"
 
 exec "$@"

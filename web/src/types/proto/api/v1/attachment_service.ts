@@ -11,7 +11,7 @@ import { Empty } from "../../google/protobuf/empty";
 import { FieldMask } from "../../google/protobuf/field_mask";
 import { Timestamp } from "../../google/protobuf/timestamp";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface Attachment {
   /**
@@ -35,7 +35,7 @@ export interface Attachment {
   size: number;
   /**
    * Optional. The related memo. Refer to `Memo.name`.
-   * Format: memos/{memo}
+   * Format: wekalist/{memo}
    */
   memo?: string | undefined;
 }
@@ -704,7 +704,7 @@ export const DeleteAttachmentRequest: MessageFns<DeleteAttachmentRequest> = {
 export type AttachmentServiceDefinition = typeof AttachmentServiceDefinition;
 export const AttachmentServiceDefinition = {
   name: "AttachmentService",
-  fullName: "memos.api.v1.AttachmentService",
+  fullName: "wekalist.api.v1.AttachmentService",
   methods: {
     /** CreateAttachment creates a new attachment. */
     createAttachment: {

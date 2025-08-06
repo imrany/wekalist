@@ -121,13 +121,13 @@ var File_store_activity_proto protoreflect.FileDescriptor
 
 const file_store_activity_proto_rawDesc = "" +
 	"\n" +
-	"\x14store/activity.proto\x12\vmemos.store\"]\n" +
+	"\x14store/activity.proto\x12\x0ewekalist.store\"]\n" +
 	"\x1aActivityMemoCommentPayload\x12\x17\n" +
 	"\amemo_id\x18\x01 \x01(\x05R\x06memoId\x12&\n" +
-	"\x0frelated_memo_id\x18\x02 \x01(\x05R\rrelatedMemoId\"]\n" +
-	"\x0fActivityPayload\x12J\n" +
-	"\fmemo_comment\x18\x01 \x01(\v2'.memos.store.ActivityMemoCommentPayloadR\vmemoCommentB\x98\x01\n" +
-	"\x0fcom.memos.storeB\rActivityProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\x0frelated_memo_id\x18\x02 \x01(\x05R\rrelatedMemoId\"`\n" +
+	"\x0fActivityPayload\x12M\n" +
+	"\fmemo_comment\x18\x01 \x01(\v2*.wekalist.store.ActivityMemoCommentPayloadR\vmemoCommentB\xa7\x01\n" +
+	"\x12com.wekalist.storeB\rActivityProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_activity_proto_rawDescOnce sync.Once
@@ -143,11 +143,11 @@ func file_store_activity_proto_rawDescGZIP() []byte {
 
 var file_store_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_store_activity_proto_goTypes = []any{
-	(*ActivityMemoCommentPayload)(nil), // 0: memos.store.ActivityMemoCommentPayload
-	(*ActivityPayload)(nil),            // 1: memos.store.ActivityPayload
+	(*ActivityMemoCommentPayload)(nil), // 0: wekalist.store.ActivityMemoCommentPayload
+	(*ActivityPayload)(nil),            // 1: wekalist.store.ActivityPayload
 }
 var file_store_activity_proto_depIdxs = []int32{
-	0, // 0: memos.store.ActivityPayload.memo_comment:type_name -> memos.store.ActivityMemoCommentPayload
+	0, // 0: wekalist.store.ActivityPayload.memo_comment:type_name -> wekalist.store.ActivityMemoCommentPayload
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package memos.api.v1;
+package wekalist.api.v1;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
@@ -51,7 +51,7 @@ service WebhookService {
 
 message Webhook {
   option (google.api.resource) = {
-    type: "memos.api.v1/Webhook"
+    type: "wekalist.api.v1/Webhook"
     pattern: "users/{user}/webhooks/{webhook}"
     singular: "webhook"
     plural: "webhooks"
@@ -73,7 +73,7 @@ message ListWebhooksRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {child_type: "memos.api.v1/Webhook"}
+    (google.api.resource_reference) = {child_type: "wekalist.api.v1/Webhook"}
   ];
 }
 
@@ -87,7 +87,7 @@ message GetWebhookRequest {
   // Format: users/{user}/webhooks/{webhook}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/Webhook"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/Webhook"}
   ];
 }
 
@@ -96,7 +96,7 @@ message CreateWebhookRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {child_type: "memos.api.v1/Webhook"}
+    (google.api.resource_reference) = {child_type: "wekalist.api.v1/Webhook"}
   ];
 
   // Required. The webhook to create.
@@ -119,6 +119,6 @@ message DeleteWebhookRequest {
   // Format: users/{user}/webhooks/{webhook}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/Webhook"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/Webhook"}
   ];
 }

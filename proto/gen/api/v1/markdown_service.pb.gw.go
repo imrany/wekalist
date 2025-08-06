@@ -163,7 +163,7 @@ func RegisterMarkdownServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MarkdownService/ParseMarkdown", runtime.WithHTTPPathPattern("/api/v1/markdown:parse"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/ParseMarkdown", runtime.WithHTTPPathPattern("/api/v1/markdown:parse"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -183,7 +183,7 @@ func RegisterMarkdownServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MarkdownService/RestoreMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:restore"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/RestoreMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:restore"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -203,7 +203,7 @@ func RegisterMarkdownServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MarkdownService/StringifyMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:stringify"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/StringifyMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:stringify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -223,7 +223,7 @@ func RegisterMarkdownServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MarkdownService/GetLinkMetadata", runtime.WithHTTPPathPattern("/api/v1/markdown/links:getMetadata"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/GetLinkMetadata", runtime.WithHTTPPathPattern("/api/v1/markdown/links:getMetadata"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -281,7 +281,7 @@ func RegisterMarkdownServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MarkdownService/ParseMarkdown", runtime.WithHTTPPathPattern("/api/v1/markdown:parse"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/ParseMarkdown", runtime.WithHTTPPathPattern("/api/v1/markdown:parse"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -298,7 +298,7 @@ func RegisterMarkdownServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MarkdownService/RestoreMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:restore"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/RestoreMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:restore"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -315,7 +315,7 @@ func RegisterMarkdownServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MarkdownService/StringifyMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:stringify"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/StringifyMarkdownNodes", runtime.WithHTTPPathPattern("/api/v1/markdown:stringify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -332,7 +332,7 @@ func RegisterMarkdownServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MarkdownService/GetLinkMetadata", runtime.WithHTTPPathPattern("/api/v1/markdown/links:getMetadata"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MarkdownService/GetLinkMetadata", runtime.WithHTTPPathPattern("/api/v1/markdown/links:getMetadata"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

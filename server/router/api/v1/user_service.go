@@ -20,10 +20,10 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/usememos/memos/internal/base"
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/base"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 func (s *APIV1Service) VerifyUser(ctx context.Context, request *v1pb.VerifyRequest) (*v1pb.VerifyResponse, error){

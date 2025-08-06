@@ -116,7 +116,7 @@ func RegisterAuthServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.AuthService/GetCurrentSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.AuthService/GetCurrentSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -136,7 +136,7 @@ func RegisterAuthServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.AuthService/CreateSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.AuthService/CreateSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -156,7 +156,7 @@ func RegisterAuthServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.AuthService/DeleteSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.AuthService/DeleteSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -214,7 +214,7 @@ func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.AuthService/GetCurrentSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.AuthService/GetCurrentSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -231,7 +231,7 @@ func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.AuthService/CreateSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.AuthService/CreateSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -248,7 +248,7 @@ func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.AuthService/DeleteSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.AuthService/DeleteSession", runtime.WithHTTPPathPattern("/api/v1/auth/sessions/current"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

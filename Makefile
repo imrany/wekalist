@@ -6,12 +6,12 @@ delete:
 
 build:
 	$(MAKE) delete
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/memos-linux main.go
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o bin/memos-windows.exe main.go
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o bin/memos-darwin main.go   
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/wekalist-linux main.go
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o bin/wekalist-windows.exe main.go
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o bin/wekalist-darwin main.go   
 
 run:
-	./bin/memos
+	./bin/wekalist --port 5230 --mode dev
 
 publish:
 	$(MAKE) delete
@@ -35,7 +35,7 @@ client:
 	cd web && pnpm dev
 
 serve:
-	CompileDaemon -build="go build -o ./bin/memos main.go" -command="./bin/memos --mode dev --port 8081"
+	CompileDaemon -build="go build -o ./bin/wekalist main.go" -command="./bin/wekalist --mode dev --port 8081"
 
 dev:
 	$(MAKE) client

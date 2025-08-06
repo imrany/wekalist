@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/usememos/memos/plugin/filter"
+	"github.com/imrany/wekalist/plugin/filter"
 )
 
 func TestConvertExprToSQL(t *testing.T) {

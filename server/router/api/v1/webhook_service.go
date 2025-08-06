@@ -11,9 +11,9 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/usememos/memos/internal/util"
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
+	"github.com/imrany/wekalist/internal/util"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
 )
 
 func (s *APIV1Service) CreateWebhook(ctx context.Context, request *v1pb.CreateWebhookRequest) (*v1pb.Webhook, error) {

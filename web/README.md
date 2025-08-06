@@ -1,1 +1,1 @@
-# The frontend of Memos
+# The frontend of Wekalist

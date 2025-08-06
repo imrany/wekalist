@@ -143,11 +143,11 @@ type Inbox struct {
 	// Format: users/{user}
 	Receiver string `protobuf:"bytes,3,opt,name=receiver,proto3" json:"receiver,omitempty"`
 	// The status of the inbox notification.
-	Status Inbox_Status `protobuf:"varint,4,opt,name=status,proto3,enum=memos.api.v1.Inbox_Status" json:"status,omitempty"`
+	Status Inbox_Status `protobuf:"varint,4,opt,name=status,proto3,enum=wekalist.api.v1.Inbox_Status" json:"status,omitempty"`
 	// Output only. The creation timestamp.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The type of the inbox notification.
-	Type Inbox_Type `protobuf:"varint,6,opt,name=type,proto3,enum=memos.api.v1.Inbox_Type" json:"type,omitempty"`
+	Type Inbox_Type `protobuf:"varint,6,opt,name=type,proto3,enum=wekalist.api.v1.Inbox_Type" json:"type,omitempty"`
 	// Optional. The activity ID associated with this inbox notification.
 	ActivityId    *int32 `protobuf:"varint,7,opt,name=activity_id,json=activityId,proto3,oneof" json:"activity_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -500,15 +500,15 @@ var File_api_v1_inbox_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_inbox_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1aapi/v1/inbox_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x87\x04\n" +
+	"\x1aapi/v1/inbox_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x90\x04\n" +
 	"\x05Inbox\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x1b\n" +
 	"\x06sender\x18\x02 \x01(\tB\x03\xe0A\x03R\x06sender\x12\x1f\n" +
-	"\breceiver\x18\x03 \x01(\tB\x03\xe0A\x03R\breceiver\x127\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x1a.memos.api.v1.Inbox.StatusB\x03\xe0A\x01R\x06status\x12@\n" +
+	"\breceiver\x18\x03 \x01(\tB\x03\xe0A\x03R\breceiver\x12:\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x1d.wekalist.api.v1.Inbox.StatusB\x03\xe0A\x01R\x06status\x12@\n" +
 	"\vcreate_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
-	"createTime\x121\n" +
-	"\x04type\x18\x06 \x01(\x0e2\x18.memos.api.v1.Inbox.TypeB\x03\xe0A\x03R\x04type\x12)\n" +
+	"createTime\x124\n" +
+	"\x04type\x18\x06 \x01(\x0e2\x1b.wekalist.api.v1.Inbox.TypeB\x03\xe0A\x03R\x04type\x12)\n" +
 	"\vactivity_id\x18\a \x01(\x05B\x03\xe0A\x01H\x00R\n" +
 	"activityId\x88\x01\x01\":\n" +
 	"\x06Status\x12\x16\n" +
@@ -519,35 +519,35 @@ const file_api_v1_inbox_service_proto_rawDesc = "" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fMEMO_COMMENT\x10\x01\x12\x12\n" +
-	"\x0eVERSION_UPDATE\x10\x02:>\xeaA;\n" +
-	"\x12memos.api.v1/Inbox\x12\x0finboxes/{inbox}\x1a\x04name*\ainboxes2\x05inboxB\x0e\n" +
-	"\f_activity_id\"\xca\x01\n" +
-	"\x12ListInboxesRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x06parent\x12 \n" +
+	"\x0eVERSION_UPDATE\x10\x02:A\xeaA>\n" +
+	"\x15wekalist.api.v1/Inbox\x12\x0finboxes/{inbox}\x1a\x04name*\ainboxes2\x05inboxB\x0e\n" +
+	"\f_activity_id\"\xcd\x01\n" +
+	"\x12ListInboxesRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x06parent\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
 	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\x12\x1b\n" +
 	"\x06filter\x18\x04 \x01(\tB\x03\xe0A\x01R\x06filter\x12\x1e\n" +
-	"\border_by\x18\x05 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x8b\x01\n" +
-	"\x13ListInboxesResponse\x12-\n" +
-	"\ainboxes\x18\x01 \x03(\v2\x13.memos.api.v1.InboxR\ainboxes\x12&\n" +
+	"\border_by\x18\x05 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x8e\x01\n" +
+	"\x13ListInboxesResponse\x120\n" +
+	"\ainboxes\x18\x01 \x03(\v2\x16.wekalist.api.v1.InboxR\ainboxes\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xb0\x01\n" +
-	"\x12UpdateInboxRequest\x12.\n" +
-	"\x05inbox\x18\x01 \x01(\v2\x13.memos.api.v1.InboxB\x03\xe0A\x02R\x05inbox\x12@\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xb3\x01\n" +
+	"\x12UpdateInboxRequest\x121\n" +
+	"\x05inbox\x18\x01 \x01(\v2\x16.wekalist.api.v1.InboxB\x03\xe0A\x02R\x05inbox\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
 	"updateMask\x12(\n" +
-	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"D\n" +
-	"\x12DeleteInboxRequest\x12.\n" +
-	"\x04name\x18\x01 \x01(\tB\x1a\xe0A\x02\xfaA\x14\n" +
-	"\x12memos.api.v1/InboxR\x04name2\x92\x03\n" +
-	"\fInboxService\x12\x85\x01\n" +
-	"\vListInboxes\x12 .memos.api.v1.ListInboxesRequest\x1a!.memos.api.v1.ListInboxesResponse\"1\xdaA\x06parent\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{parent=users/*}/inboxes\x12\x87\x01\n" +
-	"\vUpdateInbox\x12 .memos.api.v1.UpdateInboxRequest\x1a\x13.memos.api.v1.Inbox\"A\xdaA\x11inbox,update_mask\x82\xd3\xe4\x93\x02':\x05inbox2\x1e/api/v1/{inbox.name=inboxes/*}\x12p\n" +
-	"\vDeleteInbox\x12 .memos.api.v1.DeleteInboxRequest\x1a\x16.google.protobuf.Empty\"'\xdaA\x04name\x82\xd3\xe4\x93\x02\x1a*\x18/api/v1/{name=inboxes/*}B\xa9\x01\n" +
-	"\x10com.memos.api.v1B\x11InboxServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"G\n" +
+	"\x12DeleteInboxRequest\x121\n" +
+	"\x04name\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\n" +
+	"\x15wekalist.api.v1/InboxR\x04name2\xa1\x03\n" +
+	"\fInboxService\x12\x8b\x01\n" +
+	"\vListInboxes\x12#.wekalist.api.v1.ListInboxesRequest\x1a$.wekalist.api.v1.ListInboxesResponse\"1\xdaA\x06parent\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{parent=users/*}/inboxes\x12\x8d\x01\n" +
+	"\vUpdateInbox\x12#.wekalist.api.v1.UpdateInboxRequest\x1a\x16.wekalist.api.v1.Inbox\"A\xdaA\x11inbox,update_mask\x82\xd3\xe4\x93\x02':\x05inbox2\x1e/api/v1/{inbox.name=inboxes/*}\x12s\n" +
+	"\vDeleteInbox\x12#.wekalist.api.v1.DeleteInboxRequest\x1a\x16.google.protobuf.Empty\"'\xdaA\x04name\x82\xd3\xe4\x93\x02\x1a*\x18/api/v1/{name=inboxes/*}B\xb8\x01\n" +
+	"\x13com.wekalist.api.v1B\x11InboxServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_inbox_service_proto_rawDescOnce sync.Once
@@ -564,30 +564,30 @@ func file_api_v1_inbox_service_proto_rawDescGZIP() []byte {
 var file_api_v1_inbox_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1_inbox_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_api_v1_inbox_service_proto_goTypes = []any{
-	(Inbox_Status)(0),             // 0: memos.api.v1.Inbox.Status
-	(Inbox_Type)(0),               // 1: memos.api.v1.Inbox.Type
-	(*Inbox)(nil),                 // 2: memos.api.v1.Inbox
-	(*ListInboxesRequest)(nil),    // 3: memos.api.v1.ListInboxesRequest
-	(*ListInboxesResponse)(nil),   // 4: memos.api.v1.ListInboxesResponse
-	(*UpdateInboxRequest)(nil),    // 5: memos.api.v1.UpdateInboxRequest
-	(*DeleteInboxRequest)(nil),    // 6: memos.api.v1.DeleteInboxRequest
+	(Inbox_Status)(0),             // 0: wekalist.api.v1.Inbox.Status
+	(Inbox_Type)(0),               // 1: wekalist.api.v1.Inbox.Type
+	(*Inbox)(nil),                 // 2: wekalist.api.v1.Inbox
+	(*ListInboxesRequest)(nil),    // 3: wekalist.api.v1.ListInboxesRequest
+	(*ListInboxesResponse)(nil),   // 4: wekalist.api.v1.ListInboxesResponse
+	(*UpdateInboxRequest)(nil),    // 5: wekalist.api.v1.UpdateInboxRequest
+	(*DeleteInboxRequest)(nil),    // 6: wekalist.api.v1.DeleteInboxRequest
 	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
 	(*fieldmaskpb.FieldMask)(nil), // 8: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
 var file_api_v1_inbox_service_proto_depIdxs = []int32{
-	0, // 0: memos.api.v1.Inbox.status:type_name -> memos.api.v1.Inbox.Status
-	7, // 1: memos.api.v1.Inbox.create_time:type_name -> google.protobuf.Timestamp
-	1, // 2: memos.api.v1.Inbox.type:type_name -> memos.api.v1.Inbox.Type
-	2, // 3: memos.api.v1.ListInboxesResponse.inboxes:type_name -> memos.api.v1.Inbox
-	2, // 4: memos.api.v1.UpdateInboxRequest.inbox:type_name -> memos.api.v1.Inbox
-	8, // 5: memos.api.v1.UpdateInboxRequest.update_mask:type_name -> google.protobuf.FieldMask
-	3, // 6: memos.api.v1.InboxService.ListInboxes:input_type -> memos.api.v1.ListInboxesRequest
-	5, // 7: memos.api.v1.InboxService.UpdateInbox:input_type -> memos.api.v1.UpdateInboxRequest
-	6, // 8: memos.api.v1.InboxService.DeleteInbox:input_type -> memos.api.v1.DeleteInboxRequest
-	4, // 9: memos.api.v1.InboxService.ListInboxes:output_type -> memos.api.v1.ListInboxesResponse
-	2, // 10: memos.api.v1.InboxService.UpdateInbox:output_type -> memos.api.v1.Inbox
-	9, // 11: memos.api.v1.InboxService.DeleteInbox:output_type -> google.protobuf.Empty
+	0, // 0: wekalist.api.v1.Inbox.status:type_name -> wekalist.api.v1.Inbox.Status
+	7, // 1: wekalist.api.v1.Inbox.create_time:type_name -> google.protobuf.Timestamp
+	1, // 2: wekalist.api.v1.Inbox.type:type_name -> wekalist.api.v1.Inbox.Type
+	2, // 3: wekalist.api.v1.ListInboxesResponse.inboxes:type_name -> wekalist.api.v1.Inbox
+	2, // 4: wekalist.api.v1.UpdateInboxRequest.inbox:type_name -> wekalist.api.v1.Inbox
+	8, // 5: wekalist.api.v1.UpdateInboxRequest.update_mask:type_name -> google.protobuf.FieldMask
+	3, // 6: wekalist.api.v1.InboxService.ListInboxes:input_type -> wekalist.api.v1.ListInboxesRequest
+	5, // 7: wekalist.api.v1.InboxService.UpdateInbox:input_type -> wekalist.api.v1.UpdateInboxRequest
+	6, // 8: wekalist.api.v1.InboxService.DeleteInbox:input_type -> wekalist.api.v1.DeleteInboxRequest
+	4, // 9: wekalist.api.v1.InboxService.ListInboxes:output_type -> wekalist.api.v1.ListInboxesResponse
+	2, // 10: wekalist.api.v1.InboxService.UpdateInbox:output_type -> wekalist.api.v1.Inbox
+	9, // 11: wekalist.api.v1.InboxService.DeleteInbox:output_type -> google.protobuf.Empty
 	9, // [9:12] is the sub-list for method output_type
 	6, // [6:9] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name

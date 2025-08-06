@@ -220,7 +220,7 @@ func RegisterInboxServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.InboxService/ListInboxes", runtime.WithHTTPPathPattern("/api/v1/{parent=users/*}/inboxes"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.InboxService/ListInboxes", runtime.WithHTTPPathPattern("/api/v1/{parent=users/*}/inboxes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -240,7 +240,7 @@ func RegisterInboxServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.InboxService/UpdateInbox", runtime.WithHTTPPathPattern("/api/v1/{inbox.name=inboxes/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.InboxService/UpdateInbox", runtime.WithHTTPPathPattern("/api/v1/{inbox.name=inboxes/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -260,7 +260,7 @@ func RegisterInboxServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.InboxService/DeleteInbox", runtime.WithHTTPPathPattern("/api/v1/{name=inboxes/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.InboxService/DeleteInbox", runtime.WithHTTPPathPattern("/api/v1/{name=inboxes/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -318,7 +318,7 @@ func RegisterInboxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.InboxService/ListInboxes", runtime.WithHTTPPathPattern("/api/v1/{parent=users/*}/inboxes"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.InboxService/ListInboxes", runtime.WithHTTPPathPattern("/api/v1/{parent=users/*}/inboxes"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -335,7 +335,7 @@ func RegisterInboxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.InboxService/UpdateInbox", runtime.WithHTTPPathPattern("/api/v1/{inbox.name=inboxes/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.InboxService/UpdateInbox", runtime.WithHTTPPathPattern("/api/v1/{inbox.name=inboxes/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -352,7 +352,7 @@ func RegisterInboxServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.InboxService/DeleteInbox", runtime.WithHTTPPathPattern("/api/v1/{name=inboxes/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.InboxService/DeleteInbox", runtime.WithHTTPPathPattern("/api/v1/{name=inboxes/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/usememos/memos/plugin/filter"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/plugin/filter"
+	"github.com/imrany/wekalist/store"
 )
 
 func (d *DB) UpsertMemoRelation(ctx context.Context, create *store.MemoRelation) (*store.MemoRelation, error) {

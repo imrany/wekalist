@@ -40,8 +40,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            neosmemo/memos
-            ghcr.io/usememos/memos
+            ghcr.io/imrany/wekalist
           flavor: |
             latest=false
           tags: |

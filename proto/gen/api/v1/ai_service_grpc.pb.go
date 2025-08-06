@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AiService_GenAi_FullMethodName = "/memos.api.v1.AiService/GenAi"
+	AiService_GenAi_FullMethodName = "/wekalist.api.v1.AiService/GenAi"
 )
 
 // AiServiceClient is the client API for AiService service.
@@ -108,7 +108,7 @@ func _AiService_GenAi_Handler(srv interface{}, ctx context.Context, dec func(int
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AiService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.AiService",
+	ServiceName: "wekalist.api.v1.AiService",
 	HandlerType: (*AiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

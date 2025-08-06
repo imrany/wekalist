@@ -13,11 +13,11 @@ import (
     "github.com/spf13/cobra"
     "github.com/spf13/viper"
 
-    "github.com/usememos/memos/internal/profile"
-    "github.com/usememos/memos/internal/version"
-    "github.com/usememos/memos/server"
-    "github.com/usememos/memos/store"
-    "github.com/usememos/memos/store/db"
+    "github.com/imrany/wekalist/internal/profile"
+    "github.com/imrany/wekalist/internal/version"
+    "github.com/imrany/wekalist/server"
+    "github.com/imrany/wekalist/store"
+    "github.com/imrany/wekalist/store/db"
 )
 
 const greetingBanner = `
@@ -30,8 +30,8 @@ const greetingBanner = `
 `
 
 var rootCmd = &cobra.Command{
-    Use:   "memos",
-    Short: "An open source, lightweight note-taking service",
+    Use:   "wekalist",
+    Short: "An open source, lightweight AI-driven note-taking service",
     Run:   runServer,
 }
 
@@ -94,7 +94,7 @@ func runServer(_ *cobra.Command, _ []string) {
 
 func printGreetings(p *profile.Profile) {
     fmt.Print(greetingBanner)
-    fmt.Printf("🚀 Starting Memos v%s\n", p.Version)
+    fmt.Printf("🚀 Starting Wekalist v%s\n", p.Version)
     fmt.Println("---")
 
     if p.UNIXSock != "" {
@@ -107,8 +107,8 @@ func printGreetings(p *profile.Profile) {
     fmt.Printf("🛠️  DB Driver: %s\n", p.Driver)
     fmt.Printf("🔗 Instance URL: %s\n", p.InstanceURL)
     fmt.Println("---")
-    fmt.Println("📚 Documentation: https://usememos.com/docs")
-    fmt.Println("🔗 GitHub:        https://github.com/usememos/memos")
+    fmt.Println("📚 Documentation: https://github.com/imrany/wekalist")
+    fmt.Println("🔗 GitHub:        https://github.com/imrany/wekalist")
     fmt.Println("---")
 }
 

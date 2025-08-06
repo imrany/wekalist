@@ -10,7 +10,7 @@ import { Empty } from "../../google/protobuf/empty";
 import { FieldMask } from "../../google/protobuf/field_mask";
 import { Timestamp } from "../../google/protobuf/timestamp";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface Inbox {
   /**
@@ -600,7 +600,7 @@ export const DeleteInboxRequest: MessageFns<DeleteInboxRequest> = {
 export type InboxServiceDefinition = typeof InboxServiceDefinition;
 export const InboxServiceDefinition = {
   name: "InboxService",
-  fullName: "memos.api.v1.InboxService",
+  fullName: "wekalist.api.v1.InboxService",
   methods: {
     /** ListInboxes lists inboxes for a user. */
     listInboxes: {

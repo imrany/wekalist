@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/usememos/memos/internal/base"
+	"github.com/imrany/wekalist/internal/base"
 
-	storepb "github.com/usememos/memos/proto/gen/store"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
 )
 
 // Visibility is the type of a visibility.

@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 // Generate AI response based on user prompt

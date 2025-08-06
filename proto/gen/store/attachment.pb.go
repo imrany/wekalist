@@ -210,11 +210,11 @@ var File_store_attachment_proto protoreflect.FileDescriptor
 
 const file_store_attachment_proto_rawDesc = "" +
 	"\n" +
-	"\x16store/attachment.proto\x12\vmemos.store\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dstore/workspace_setting.proto\"\x8c\x02\n" +
-	"\x11AttachmentPayload\x12F\n" +
-	"\ts3_object\x18\x01 \x01(\v2'.memos.store.AttachmentPayload.S3ObjectH\x00R\bs3Object\x1a\xa3\x01\n" +
-	"\bS3Object\x129\n" +
-	"\ts3_config\x18\x01 \x01(\v2\x1c.memos.store.StorageS3ConfigR\bs3Config\x12\x10\n" +
+	"\x16store/attachment.proto\x12\x0ewekalist.store\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dstore/workspace_setting.proto\"\x92\x02\n" +
+	"\x11AttachmentPayload\x12I\n" +
+	"\ts3_object\x18\x01 \x01(\v2*.wekalist.store.AttachmentPayload.S3ObjectH\x00R\bs3Object\x1a\xa6\x01\n" +
+	"\bS3Object\x12<\n" +
+	"\ts3_config\x18\x01 \x01(\v2\x1f.wekalist.store.StorageS3ConfigR\bs3Config\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12J\n" +
 	"\x13last_presigned_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x11lastPresignedTimeB\t\n" +
 	"\apayload*a\n" +
@@ -222,8 +222,8 @@ const file_store_attachment_proto_rawDesc = "" +
 	"#ATTACHMENT_STORAGE_TYPE_UNSPECIFIED\x10\x00\x12\t\n" +
 	"\x05LOCAL\x10\x01\x12\x06\n" +
 	"\x02S3\x10\x02\x12\f\n" +
-	"\bEXTERNAL\x10\x03B\x9a\x01\n" +
-	"\x0fcom.memos.storeB\x0fAttachmentProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\bEXTERNAL\x10\x03B\xa9\x01\n" +
+	"\x12com.wekalist.storeB\x0fAttachmentProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_attachment_proto_rawDescOnce sync.Once
@@ -240,16 +240,16 @@ func file_store_attachment_proto_rawDescGZIP() []byte {
 var file_store_attachment_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_store_attachment_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_store_attachment_proto_goTypes = []any{
-	(AttachmentStorageType)(0),         // 0: memos.store.AttachmentStorageType
-	(*AttachmentPayload)(nil),          // 1: memos.store.AttachmentPayload
-	(*AttachmentPayload_S3Object)(nil), // 2: memos.store.AttachmentPayload.S3Object
-	(*StorageS3Config)(nil),            // 3: memos.store.StorageS3Config
+	(AttachmentStorageType)(0),         // 0: wekalist.store.AttachmentStorageType
+	(*AttachmentPayload)(nil),          // 1: wekalist.store.AttachmentPayload
+	(*AttachmentPayload_S3Object)(nil), // 2: wekalist.store.AttachmentPayload.S3Object
+	(*StorageS3Config)(nil),            // 3: wekalist.store.StorageS3Config
 	(*timestamppb.Timestamp)(nil),      // 4: google.protobuf.Timestamp
 }
 var file_store_attachment_proto_depIdxs = []int32{
-	2, // 0: memos.store.AttachmentPayload.s3_object:type_name -> memos.store.AttachmentPayload.S3Object
-	3, // 1: memos.store.AttachmentPayload.S3Object.s3_config:type_name -> memos.store.StorageS3Config
-	4, // 2: memos.store.AttachmentPayload.S3Object.last_presigned_time:type_name -> google.protobuf.Timestamp
+	2, // 0: wekalist.store.AttachmentPayload.s3_object:type_name -> wekalist.store.AttachmentPayload.S3Object
+	3, // 1: wekalist.store.AttachmentPayload.S3Object.s3_config:type_name -> wekalist.store.StorageS3Config
+	4, // 2: wekalist.store.AttachmentPayload.S3Object.last_presigned_time:type_name -> google.protobuf.Timestamp
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

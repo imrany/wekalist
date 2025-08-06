@@ -21,12 +21,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AttachmentService_CreateAttachment_FullMethodName    = "/memos.api.v1.AttachmentService/CreateAttachment"
-	AttachmentService_ListAttachments_FullMethodName     = "/memos.api.v1.AttachmentService/ListAttachments"
-	AttachmentService_GetAttachment_FullMethodName       = "/memos.api.v1.AttachmentService/GetAttachment"
-	AttachmentService_GetAttachmentBinary_FullMethodName = "/memos.api.v1.AttachmentService/GetAttachmentBinary"
-	AttachmentService_UpdateAttachment_FullMethodName    = "/memos.api.v1.AttachmentService/UpdateAttachment"
-	AttachmentService_DeleteAttachment_FullMethodName    = "/memos.api.v1.AttachmentService/DeleteAttachment"
+	AttachmentService_CreateAttachment_FullMethodName    = "/wekalist.api.v1.AttachmentService/CreateAttachment"
+	AttachmentService_ListAttachments_FullMethodName     = "/wekalist.api.v1.AttachmentService/ListAttachments"
+	AttachmentService_GetAttachment_FullMethodName       = "/wekalist.api.v1.AttachmentService/GetAttachment"
+	AttachmentService_GetAttachmentBinary_FullMethodName = "/wekalist.api.v1.AttachmentService/GetAttachmentBinary"
+	AttachmentService_UpdateAttachment_FullMethodName    = "/wekalist.api.v1.AttachmentService/UpdateAttachment"
+	AttachmentService_DeleteAttachment_FullMethodName    = "/wekalist.api.v1.AttachmentService/DeleteAttachment"
 )
 
 // AttachmentServiceClient is the client API for AttachmentService service.
@@ -292,7 +292,7 @@ func _AttachmentService_DeleteAttachment_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AttachmentService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.AttachmentService",
+	ServiceName: "wekalist.api.v1.AttachmentService",
 	HandlerType: (*AttachmentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -88,7 +88,7 @@ func (UserSetting_Key) EnumDescriptor() ([]byte, []int) {
 type UserSetting struct {
 	state  protoimpl.MessageState `protogen:"open.v1"`
 	UserId int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Key    UserSetting_Key        `protobuf:"varint,2,opt,name=key,proto3,enum=memos.store.UserSetting_Key" json:"key,omitempty"`
+	Key    UserSetting_Key        `protobuf:"varint,2,opt,name=key,proto3,enum=wekalist.store.UserSetting_Key" json:"key,omitempty"`
 	// Types that are valid to be assigned to Value:
 	//
 	//	*UserSetting_General
@@ -852,15 +852,15 @@ var File_store_user_setting_proto protoreflect.FileDescriptor
 
 const file_store_user_setting_proto_rawDesc = "" +
 	"\n" +
-	"\x18store/user_setting.proto\x12\vmemos.store\x1a\x1fgoogle/protobuf/timestamp.proto\"\x93\x04\n" +
+	"\x18store/user_setting.proto\x12\x0ewekalist.store\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa5\x04\n" +
 	"\vUserSetting\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12.\n" +
-	"\x03key\x18\x02 \x01(\x0e2\x1c.memos.store.UserSetting.KeyR\x03key\x12;\n" +
-	"\ageneral\x18\x03 \x01(\v2\x1f.memos.store.GeneralUserSettingH\x00R\ageneral\x12>\n" +
-	"\bsessions\x18\x04 \x01(\v2 .memos.store.SessionsUserSettingH\x00R\bsessions\x12K\n" +
-	"\raccess_tokens\x18\x05 \x01(\v2$.memos.store.AccessTokensUserSettingH\x00R\faccessTokens\x12A\n" +
-	"\tshortcuts\x18\x06 \x01(\v2!.memos.store.ShortcutsUserSettingH\x00R\tshortcuts\x12>\n" +
-	"\bwebhooks\x18\a \x01(\v2 .memos.store.WebhooksUserSettingH\x00R\bwebhooks\"e\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x121\n" +
+	"\x03key\x18\x02 \x01(\x0e2\x1f.wekalist.store.UserSetting.KeyR\x03key\x12>\n" +
+	"\ageneral\x18\x03 \x01(\v2\".wekalist.store.GeneralUserSettingH\x00R\ageneral\x12A\n" +
+	"\bsessions\x18\x04 \x01(\v2#.wekalist.store.SessionsUserSettingH\x00R\bsessions\x12N\n" +
+	"\raccess_tokens\x18\x05 \x01(\v2'.wekalist.store.AccessTokensUserSettingH\x00R\faccessTokens\x12D\n" +
+	"\tshortcuts\x18\x06 \x01(\v2$.wekalist.store.ShortcutsUserSettingH\x00R\tshortcuts\x12A\n" +
+	"\bwebhooks\x18\a \x01(\v2#.wekalist.store.WebhooksUserSettingH\x00R\bwebhooks\"e\n" +
 	"\x03Key\x12\x13\n" +
 	"\x0fKEY_UNSPECIFIED\x10\x00\x12\v\n" +
 	"\aGENERAL\x10\x01\x12\f\n" +
@@ -879,16 +879,16 @@ const file_store_user_setting_proto_rawDesc = "" +
 	"\x14enable_notifications\x18\x05 \x01(\bR\x13enableNotifications\x12&\n" +
 	"\x0fwrapper_api_key\x18\x06 \x01(\tR\rwrapperApiKey\x122\n" +
 	"\x15wrapper_usage_counter\x18\a \x01(\x05R\x13wrapperUsageCounter\x12*\n" +
-	"\x11wrapper_max_usage\x18\b \x01(\x05R\x0fwrapperMaxUsage\"\xf3\x03\n" +
-	"\x13SessionsUserSetting\x12D\n" +
-	"\bsessions\x18\x01 \x03(\v2(.memos.store.SessionsUserSetting.SessionR\bsessions\x1a\xfd\x01\n" +
+	"\x11wrapper_max_usage\x18\b \x01(\x05R\x0fwrapperMaxUsage\"\xf9\x03\n" +
+	"\x13SessionsUserSetting\x12G\n" +
+	"\bsessions\x18\x01 \x03(\v2+.wekalist.store.SessionsUserSetting.SessionR\bsessions\x1a\x80\x02\n" +
 	"\aSession\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x12;\n" +
 	"\vcreate_time\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12H\n" +
-	"\x12last_accessed_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastAccessedTime\x12L\n" +
-	"\vclient_info\x18\x04 \x01(\v2+.memos.store.SessionsUserSetting.ClientInfoR\n" +
+	"\x12last_accessed_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastAccessedTime\x12O\n" +
+	"\vclient_info\x18\x04 \x01(\v2..wekalist.store.SessionsUserSetting.ClientInfoR\n" +
 	"clientInfo\x1a\x95\x01\n" +
 	"\n" +
 	"ClientInfo\x12\x1d\n" +
@@ -899,25 +899,25 @@ const file_store_user_setting_proto_rawDesc = "" +
 	"\vdevice_type\x18\x03 \x01(\tR\n" +
 	"deviceType\x12\x0e\n" +
 	"\x02os\x18\x04 \x01(\tR\x02os\x12\x18\n" +
-	"\abrowser\x18\x05 \x01(\tR\abrowser\"\xc4\x01\n" +
-	"\x17AccessTokensUserSetting\x12U\n" +
-	"\raccess_tokens\x18\x01 \x03(\v20.memos.store.AccessTokensUserSetting.AccessTokenR\faccessTokens\x1aR\n" +
+	"\abrowser\x18\x05 \x01(\tR\abrowser\"\xc7\x01\n" +
+	"\x17AccessTokensUserSetting\x12X\n" +
+	"\raccess_tokens\x18\x01 \x03(\v23.wekalist.store.AccessTokensUserSetting.AccessTokenR\faccessTokens\x1aR\n" +
 	"\vAccessToken\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\"\xaa\x01\n" +
-	"\x14ShortcutsUserSetting\x12H\n" +
-	"\tshortcuts\x18\x01 \x03(\v2*.memos.store.ShortcutsUserSetting.ShortcutR\tshortcuts\x1aH\n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\"\xad\x01\n" +
+	"\x14ShortcutsUserSetting\x12K\n" +
+	"\tshortcuts\x18\x01 \x03(\v2-.wekalist.store.ShortcutsUserSetting.ShortcutR\tshortcuts\x1aH\n" +
 	"\bShortcut\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
-	"\x06filter\x18\x03 \x01(\tR\x06filter\"\x9e\x01\n" +
-	"\x13WebhooksUserSetting\x12D\n" +
-	"\bwebhooks\x18\x01 \x03(\v2(.memos.store.WebhooksUserSetting.WebhookR\bwebhooks\x1aA\n" +
+	"\x06filter\x18\x03 \x01(\tR\x06filter\"\xa1\x01\n" +
+	"\x13WebhooksUserSetting\x12G\n" +
+	"\bwebhooks\x18\x01 \x03(\v2+.wekalist.store.WebhooksUserSetting.WebhookR\bwebhooks\x1aA\n" +
 	"\aWebhook\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x10\n" +
-	"\x03url\x18\x03 \x01(\tR\x03urlB\x9b\x01\n" +
-	"\x0fcom.memos.storeB\x10UserSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\x03url\x18\x03 \x01(\tR\x03urlB\xaa\x01\n" +
+	"\x12com.wekalist.storeB\x10UserSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_user_setting_proto_rawDescOnce sync.Once
@@ -934,34 +934,34 @@ func file_store_user_setting_proto_rawDescGZIP() []byte {
 var file_store_user_setting_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_store_user_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_store_user_setting_proto_goTypes = []any{
-	(UserSetting_Key)(0),                        // 0: memos.store.UserSetting.Key
-	(*UserSetting)(nil),                         // 1: memos.store.UserSetting
-	(*GeneralUserSetting)(nil),                  // 2: memos.store.GeneralUserSetting
-	(*SessionsUserSetting)(nil),                 // 3: memos.store.SessionsUserSetting
-	(*AccessTokensUserSetting)(nil),             // 4: memos.store.AccessTokensUserSetting
-	(*ShortcutsUserSetting)(nil),                // 5: memos.store.ShortcutsUserSetting
-	(*WebhooksUserSetting)(nil),                 // 6: memos.store.WebhooksUserSetting
-	(*SessionsUserSetting_Session)(nil),         // 7: memos.store.SessionsUserSetting.Session
-	(*SessionsUserSetting_ClientInfo)(nil),      // 8: memos.store.SessionsUserSetting.ClientInfo
-	(*AccessTokensUserSetting_AccessToken)(nil), // 9: memos.store.AccessTokensUserSetting.AccessToken
-	(*ShortcutsUserSetting_Shortcut)(nil),       // 10: memos.store.ShortcutsUserSetting.Shortcut
-	(*WebhooksUserSetting_Webhook)(nil),         // 11: memos.store.WebhooksUserSetting.Webhook
+	(UserSetting_Key)(0),                        // 0: wekalist.store.UserSetting.Key
+	(*UserSetting)(nil),                         // 1: wekalist.store.UserSetting
+	(*GeneralUserSetting)(nil),                  // 2: wekalist.store.GeneralUserSetting
+	(*SessionsUserSetting)(nil),                 // 3: wekalist.store.SessionsUserSetting
+	(*AccessTokensUserSetting)(nil),             // 4: wekalist.store.AccessTokensUserSetting
+	(*ShortcutsUserSetting)(nil),                // 5: wekalist.store.ShortcutsUserSetting
+	(*WebhooksUserSetting)(nil),                 // 6: wekalist.store.WebhooksUserSetting
+	(*SessionsUserSetting_Session)(nil),         // 7: wekalist.store.SessionsUserSetting.Session
+	(*SessionsUserSetting_ClientInfo)(nil),      // 8: wekalist.store.SessionsUserSetting.ClientInfo
+	(*AccessTokensUserSetting_AccessToken)(nil), // 9: wekalist.store.AccessTokensUserSetting.AccessToken
+	(*ShortcutsUserSetting_Shortcut)(nil),       // 10: wekalist.store.ShortcutsUserSetting.Shortcut
+	(*WebhooksUserSetting_Webhook)(nil),         // 11: wekalist.store.WebhooksUserSetting.Webhook
 	(*timestamppb.Timestamp)(nil),               // 12: google.protobuf.Timestamp
 }
 var file_store_user_setting_proto_depIdxs = []int32{
-	0,  // 0: memos.store.UserSetting.key:type_name -> memos.store.UserSetting.Key
-	2,  // 1: memos.store.UserSetting.general:type_name -> memos.store.GeneralUserSetting
-	3,  // 2: memos.store.UserSetting.sessions:type_name -> memos.store.SessionsUserSetting
-	4,  // 3: memos.store.UserSetting.access_tokens:type_name -> memos.store.AccessTokensUserSetting
-	5,  // 4: memos.store.UserSetting.shortcuts:type_name -> memos.store.ShortcutsUserSetting
-	6,  // 5: memos.store.UserSetting.webhooks:type_name -> memos.store.WebhooksUserSetting
-	7,  // 6: memos.store.SessionsUserSetting.sessions:type_name -> memos.store.SessionsUserSetting.Session
-	9,  // 7: memos.store.AccessTokensUserSetting.access_tokens:type_name -> memos.store.AccessTokensUserSetting.AccessToken
-	10, // 8: memos.store.ShortcutsUserSetting.shortcuts:type_name -> memos.store.ShortcutsUserSetting.Shortcut
-	11, // 9: memos.store.WebhooksUserSetting.webhooks:type_name -> memos.store.WebhooksUserSetting.Webhook
-	12, // 10: memos.store.SessionsUserSetting.Session.create_time:type_name -> google.protobuf.Timestamp
-	12, // 11: memos.store.SessionsUserSetting.Session.last_accessed_time:type_name -> google.protobuf.Timestamp
-	8,  // 12: memos.store.SessionsUserSetting.Session.client_info:type_name -> memos.store.SessionsUserSetting.ClientInfo
+	0,  // 0: wekalist.store.UserSetting.key:type_name -> wekalist.store.UserSetting.Key
+	2,  // 1: wekalist.store.UserSetting.general:type_name -> wekalist.store.GeneralUserSetting
+	3,  // 2: wekalist.store.UserSetting.sessions:type_name -> wekalist.store.SessionsUserSetting
+	4,  // 3: wekalist.store.UserSetting.access_tokens:type_name -> wekalist.store.AccessTokensUserSetting
+	5,  // 4: wekalist.store.UserSetting.shortcuts:type_name -> wekalist.store.ShortcutsUserSetting
+	6,  // 5: wekalist.store.UserSetting.webhooks:type_name -> wekalist.store.WebhooksUserSetting
+	7,  // 6: wekalist.store.SessionsUserSetting.sessions:type_name -> wekalist.store.SessionsUserSetting.Session
+	9,  // 7: wekalist.store.AccessTokensUserSetting.access_tokens:type_name -> wekalist.store.AccessTokensUserSetting.AccessToken
+	10, // 8: wekalist.store.ShortcutsUserSetting.shortcuts:type_name -> wekalist.store.ShortcutsUserSetting.Shortcut
+	11, // 9: wekalist.store.WebhooksUserSetting.webhooks:type_name -> wekalist.store.WebhooksUserSetting.Webhook
+	12, // 10: wekalist.store.SessionsUserSetting.Session.create_time:type_name -> google.protobuf.Timestamp
+	12, // 11: wekalist.store.SessionsUserSetting.Session.last_accessed_time:type_name -> google.protobuf.Timestamp
+	8,  // 12: wekalist.store.SessionsUserSetting.Session.client_info:type_name -> wekalist.store.SessionsUserSetting.ClientInfo
 	13, // [13:13] is the sub-list for method output_type
 	13, // [13:13] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name

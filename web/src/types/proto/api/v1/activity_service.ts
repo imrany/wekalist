@@ -8,7 +8,7 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Timestamp } from "../../google/protobuf/timestamp";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface Activity {
   /**
@@ -135,12 +135,12 @@ export interface ActivityPayload {
 export interface ActivityMemoCommentPayload {
   /**
    * The memo name of comment.
-   * Format: memos/{memo}
+   * Format: wekalist/{memo}
    */
   memo: string;
   /**
    * The name of related memo.
-   * Format: memos/{memo}
+   * Format: wekalist/{memo}
    */
   relatedMemo: string;
 }
@@ -565,7 +565,7 @@ export const GetActivityRequest: MessageFns<GetActivityRequest> = {
 export type ActivityServiceDefinition = typeof ActivityServiceDefinition;
 export const ActivityServiceDefinition = {
   name: "ActivityService",
-  fullName: "memos.api.v1.ActivityService",
+  fullName: "wekalist.api.v1.ActivityService",
   methods: {
     /** ListActivities returns a list of activities. */
     listActivities: {

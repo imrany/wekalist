@@ -223,10 +223,10 @@ var File_store_memo_proto protoreflect.FileDescriptor
 
 const file_store_memo_proto_rawDesc = "" +
 	"\n" +
-	"\x10store/memo.proto\x12\vmemos.store\"\xc0\x03\n" +
-	"\vMemoPayload\x12=\n" +
-	"\bproperty\x18\x01 \x01(\v2!.memos.store.MemoPayload.PropertyR\bproperty\x12=\n" +
-	"\blocation\x18\x02 \x01(\v2!.memos.store.MemoPayload.LocationR\blocation\x12\x12\n" +
+	"\x10store/memo.proto\x12\x0ewekalist.store\"\xc6\x03\n" +
+	"\vMemoPayload\x12@\n" +
+	"\bproperty\x18\x01 \x01(\v2$.wekalist.store.MemoPayload.PropertyR\bproperty\x12@\n" +
+	"\blocation\x18\x02 \x01(\v2$.wekalist.store.MemoPayload.LocationR\blocation\x12\x12\n" +
 	"\x04tags\x18\x03 \x03(\tR\x04tags\x1a\xb6\x01\n" +
 	"\bProperty\x12\x19\n" +
 	"\bhas_link\x18\x01 \x01(\bR\ahasLink\x12\"\n" +
@@ -239,8 +239,8 @@ const file_store_memo_proto_rawDesc = "" +
 	"\bLocation\x12 \n" +
 	"\vplaceholder\x18\x01 \x01(\tR\vplaceholder\x12\x1a\n" +
 	"\blatitude\x18\x02 \x01(\x01R\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\x01R\tlongitudeB\x94\x01\n" +
-	"\x0fcom.memos.storeB\tMemoProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\tlongitude\x18\x03 \x01(\x01R\tlongitudeB\xa3\x01\n" +
+	"\x12com.wekalist.storeB\tMemoProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_memo_proto_rawDescOnce sync.Once
@@ -256,13 +256,13 @@ func file_store_memo_proto_rawDescGZIP() []byte {
 
 var file_store_memo_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_store_memo_proto_goTypes = []any{
-	(*MemoPayload)(nil),          // 0: memos.store.MemoPayload
-	(*MemoPayload_Property)(nil), // 1: memos.store.MemoPayload.Property
-	(*MemoPayload_Location)(nil), // 2: memos.store.MemoPayload.Location
+	(*MemoPayload)(nil),          // 0: wekalist.store.MemoPayload
+	(*MemoPayload_Property)(nil), // 1: wekalist.store.MemoPayload.Property
+	(*MemoPayload_Location)(nil), // 2: wekalist.store.MemoPayload.Location
 }
 var file_store_memo_proto_depIdxs = []int32{
-	1, // 0: memos.store.MemoPayload.property:type_name -> memos.store.MemoPayload.Property
-	2, // 1: memos.store.MemoPayload.location:type_name -> memos.store.MemoPayload.Location
+	1, // 0: wekalist.store.MemoPayload.property:type_name -> wekalist.store.MemoPayload.Property
+	2, // 1: wekalist.store.MemoPayload.location:type_name -> wekalist.store.MemoPayload.Location
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

@@ -869,7 +869,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/CreateMemo", runtime.WithHTTPPathPattern("/api/v1/memos"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/CreateMemo", runtime.WithHTTPPathPattern("/api/v1/memos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -889,7 +889,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemos", runtime.WithHTTPPathPattern("/api/v1/memos"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemos", runtime.WithHTTPPathPattern("/api/v1/memos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -909,7 +909,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/GetMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/GetMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -929,7 +929,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/UpdateMemo", runtime.WithHTTPPathPattern("/api/v1/{memo.name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/UpdateMemo", runtime.WithHTTPPathPattern("/api/v1/{memo.name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -949,7 +949,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -969,7 +969,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/RenameMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags:rename"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/RenameMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags:rename"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -989,7 +989,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags/{tag}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags/{tag}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1009,7 +1009,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/SetMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/SetMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1029,7 +1029,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1049,7 +1049,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/SetMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/SetMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1069,7 +1069,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1089,7 +1089,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/CreateMemoComment", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/CreateMemoComment", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1109,7 +1109,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoComments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoComments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1129,7 +1129,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoReactions", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoReactions", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1149,7 +1149,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/UpsertMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/UpsertMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1169,7 +1169,7 @@ func RegisterMemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=reactions/*}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=reactions/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1227,7 +1227,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/CreateMemo", runtime.WithHTTPPathPattern("/api/v1/memos"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/CreateMemo", runtime.WithHTTPPathPattern("/api/v1/memos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1244,7 +1244,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemos", runtime.WithHTTPPathPattern("/api/v1/memos"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemos", runtime.WithHTTPPathPattern("/api/v1/memos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1261,7 +1261,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/GetMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/GetMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1278,7 +1278,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/UpdateMemo", runtime.WithHTTPPathPattern("/api/v1/{memo.name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/UpdateMemo", runtime.WithHTTPPathPattern("/api/v1/{memo.name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1295,7 +1295,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemo", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1312,7 +1312,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/RenameMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags:rename"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/RenameMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags:rename"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1329,7 +1329,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags/{tag}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemoTag", runtime.WithHTTPPathPattern("/api/v1/{parent=memos/*}/tags/{tag}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1346,7 +1346,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/SetMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/SetMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1363,7 +1363,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoAttachments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/attachments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1380,7 +1380,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/SetMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/SetMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1397,7 +1397,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoRelations", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/relations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1414,7 +1414,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/CreateMemoComment", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/CreateMemoComment", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1431,7 +1431,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoComments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoComments", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/comments"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1448,7 +1448,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/ListMemoReactions", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/ListMemoReactions", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1465,7 +1465,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/UpsertMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/UpsertMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=memos/*}/reactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1482,7 +1482,7 @@ func RegisterMemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memos.api.v1.MemoService/DeleteMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=reactions/*}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/wekalist.api.v1.MemoService/DeleteMemoReaction", runtime.WithHTTPPathPattern("/api/v1/{name=reactions/*}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

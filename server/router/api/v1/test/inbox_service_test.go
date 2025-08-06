@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 func TestListInboxes(t *testing.T) {

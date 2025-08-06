@@ -1,31 +1,85 @@
-FROM golang:1.24-alpine AS backend
-WORKDIR /backend-build
+# Multi-stage Dockerfile for wekalist
+# Stage 1: Build the web frontend
+FROM node:20-alpine AS web-builder
+
+# Set up the full project structure so the relative path works correctly
+WORKDIR /build
+
+# Copy the entire project first to establish the directory structure
+COPY . .
+
+# Change to web directory and install dependencies
+WORKDIR /build/web
+
+# Install pnpm globally and install dependencies
+RUN npm install -g pnpm@latest && \
+    pnpm install --frozen-lockfile
+
+# Build the frontend for release mode
+# This outputs to ../server/router/frontend/dist relative to web directory
+# which maps to /build/server/router/frontend/dist in our container
+RUN pnpm run release
+
+# Stage 2: Build the Go application
+FROM golang:1.23-alpine AS go-builder
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apk add --no-cache git ca-certificates tzdata
+
+# Copy go mod files first (for better caching)
 COPY go.mod go.sum ./
 RUN go mod download
+
+# Copy all Go source code
 COPY . .
-# Please build frontend first, so that the static files are available.
-# Refer to `pnpm release` in package.json for the build command.
-RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-    go build -ldflags="-s -w" -o memos ./bin/memos/main.go
 
-# Make workspace with above generated files.
-FROM alpine:latest AS monolithic
-WORKDIR /usr/local/memos
+# Copy the built frontend from the previous stage
+COPY --from=web-builder /build/server/router/frontend/dist ./server/router/frontend/dist
 
-RUN apk add --no-cache tzdata
-ENV TZ="UTC"
+# Build the Go application
+# CGO_ENABLED=0 for a static binary
+# -ldflags="-w -s" to reduce binary size
+RUN CGO_ENABLED=0 GOOS=linux go build \
+    -ldflags="-w -s -X github.com/imrany/wekalist/internal/version.version=$(git describe --tags --always --dirty)" \
+    -o wekalist \
+    ./main.go
 
-COPY --from=backend /backend-build/memos /usr/local/memos/
-COPY ./scripts/entrypoint.sh /usr/local/memos/
+# Stage 3: Final runtime image
+FROM alpine:3.19
 
+# Install runtime dependencies
+RUN apk --no-cache add ca-certificates tzdata && \
+    addgroup -S wekalist && \
+    adduser -S wekalist -G wekalist
+
+WORKDIR /opt/wekalist
+
+# Copy the binary from builder stage
+COPY --from=go-builder /app/wekalist .
+
+# Copy any additional static files if needed
+# COPY --from=go-builder /app/scripts/entrypoint.sh .
+
+# Create data directory
+RUN mkdir -p /opt/wekalist/data && \
+    chown -R wekalist:wekalist /opt/wekalist
+
+# Switch to non-root user
+USER wekalist
+
+# Expose the port (adjust if different)
 EXPOSE 5230
 
-# Directory to store the data, which can be referenced as the mounting point.
-RUN mkdir -p /var/opt/memos
-VOLUME /var/opt/memos
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:5230/healthz || exit 1
 
-ENV MEMOS_MODE="prod"
-ENV MEMOS_PORT="5230"
+# Set environment variables
+ENV MODE=prod
+ENV PORT=5230
+ENV DATA=/opt/wekalist/data
 
-ENTRYPOINT ["./entrypoint.sh", "./memos"]
+# Start the application
+CMD ["./wekalist"]

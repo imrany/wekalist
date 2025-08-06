@@ -420,14 +420,14 @@ var File_api_v1_auth_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_auth_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/v1/auth_service.proto\x12\fmemos.api.v1\x1a\x19api/v1/user_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x1a\n" +
-	"\x18GetCurrentSessionRequest\"\x89\x01\n" +
-	"\x19GetCurrentSessionResponse\x12&\n" +
-	"\x04user\x18\x01 \x01(\v2\x12.memos.api.v1.UserR\x04user\x12D\n" +
-	"\x10last_accessed_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastAccessedAt\"\xb8\x03\n" +
-	"\x14CreateSessionRequest\x12k\n" +
-	"\x14password_credentials\x18\x01 \x01(\v26.memos.api.v1.CreateSessionRequest.PasswordCredentialsH\x00R\x13passwordCredentials\x12\\\n" +
-	"\x0fsso_credentials\x18\x02 \x01(\v21.memos.api.v1.CreateSessionRequest.SSOCredentialsH\x00R\x0essoCredentials\x1aW\n" +
+	"\x19api/v1/auth_service.proto\x12\x0fwekalist.api.v1\x1a\x19api/v1/user_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x1a\n" +
+	"\x18GetCurrentSessionRequest\"\x8c\x01\n" +
+	"\x19GetCurrentSessionResponse\x12)\n" +
+	"\x04user\x18\x01 \x01(\v2\x15.wekalist.api.v1.UserR\x04user\x12D\n" +
+	"\x10last_accessed_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastAccessedAt\"\xbe\x03\n" +
+	"\x14CreateSessionRequest\x12n\n" +
+	"\x14password_credentials\x18\x01 \x01(\v29.wekalist.api.v1.CreateSessionRequest.PasswordCredentialsH\x00R\x13passwordCredentials\x12_\n" +
+	"\x0fsso_credentials\x18\x02 \x01(\v24.wekalist.api.v1.CreateSessionRequest.SSOCredentialsH\x00R\x0essoCredentials\x1aW\n" +
 	"\x13PasswordCredentials\x12\x1f\n" +
 	"\busername\x18\x01 \x01(\tB\x03\xe0A\x02R\busername\x12\x1f\n" +
 	"\bpassword\x18\x02 \x01(\tB\x03\xe0A\x02R\bpassword\x1am\n" +
@@ -435,16 +435,16 @@ const file_api_v1_auth_service_proto_rawDesc = "" +
 	"\x06idp_id\x18\x01 \x01(\x05B\x03\xe0A\x02R\x05idpId\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tB\x03\xe0A\x02R\x04code\x12&\n" +
 	"\fredirect_uri\x18\x03 \x01(\tB\x03\xe0A\x02R\vredirectUriB\r\n" +
-	"\vcredentials\"\x85\x01\n" +
-	"\x15CreateSessionResponse\x12&\n" +
-	"\x04user\x18\x01 \x01(\v2\x12.memos.api.v1.UserR\x04user\x12D\n" +
+	"\vcredentials\"\x88\x01\n" +
+	"\x15CreateSessionResponse\x12)\n" +
+	"\x04user\x18\x01 \x01(\v2\x15.wekalist.api.v1.UserR\x04user\x12D\n" +
 	"\x10last_accessed_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastAccessedAt\"\x16\n" +
-	"\x14DeleteSessionRequest2\x8b\x03\n" +
-	"\vAuthService\x12\x8b\x01\n" +
-	"\x11GetCurrentSession\x12&.memos.api.v1.GetCurrentSessionRequest\x1a'.memos.api.v1.GetCurrentSessionResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/auth/sessions/current\x12z\n" +
-	"\rCreateSession\x12\".memos.api.v1.CreateSessionRequest\x1a#.memos.api.v1.CreateSessionResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/sessions\x12r\n" +
-	"\rDeleteSession\x12\".memos.api.v1.DeleteSessionRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/auth/sessions/currentB\xa8\x01\n" +
-	"\x10com.memos.api.v1B\x10AuthServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"\x14DeleteSessionRequest2\x9b\x03\n" +
+	"\vAuthService\x12\x91\x01\n" +
+	"\x11GetCurrentSession\x12).wekalist.api.v1.GetCurrentSessionRequest\x1a*.wekalist.api.v1.GetCurrentSessionResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/auth/sessions/current\x12\x80\x01\n" +
+	"\rCreateSession\x12%.wekalist.api.v1.CreateSessionRequest\x1a&.wekalist.api.v1.CreateSessionResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/sessions\x12u\n" +
+	"\rDeleteSession\x12%.wekalist.api.v1.DeleteSessionRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/auth/sessions/currentB\xb7\x01\n" +
+	"\x13com.wekalist.api.v1B\x10AuthServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_auth_service_proto_rawDescOnce sync.Once
@@ -460,30 +460,30 @@ func file_api_v1_auth_service_proto_rawDescGZIP() []byte {
 
 var file_api_v1_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_v1_auth_service_proto_goTypes = []any{
-	(*GetCurrentSessionRequest)(nil),                 // 0: memos.api.v1.GetCurrentSessionRequest
-	(*GetCurrentSessionResponse)(nil),                // 1: memos.api.v1.GetCurrentSessionResponse
-	(*CreateSessionRequest)(nil),                     // 2: memos.api.v1.CreateSessionRequest
-	(*CreateSessionResponse)(nil),                    // 3: memos.api.v1.CreateSessionResponse
-	(*DeleteSessionRequest)(nil),                     // 4: memos.api.v1.DeleteSessionRequest
-	(*CreateSessionRequest_PasswordCredentials)(nil), // 5: memos.api.v1.CreateSessionRequest.PasswordCredentials
-	(*CreateSessionRequest_SSOCredentials)(nil),      // 6: memos.api.v1.CreateSessionRequest.SSOCredentials
-	(*User)(nil),                  // 7: memos.api.v1.User
+	(*GetCurrentSessionRequest)(nil),                 // 0: wekalist.api.v1.GetCurrentSessionRequest
+	(*GetCurrentSessionResponse)(nil),                // 1: wekalist.api.v1.GetCurrentSessionResponse
+	(*CreateSessionRequest)(nil),                     // 2: wekalist.api.v1.CreateSessionRequest
+	(*CreateSessionResponse)(nil),                    // 3: wekalist.api.v1.CreateSessionResponse
+	(*DeleteSessionRequest)(nil),                     // 4: wekalist.api.v1.DeleteSessionRequest
+	(*CreateSessionRequest_PasswordCredentials)(nil), // 5: wekalist.api.v1.CreateSessionRequest.PasswordCredentials
+	(*CreateSessionRequest_SSOCredentials)(nil),      // 6: wekalist.api.v1.CreateSessionRequest.SSOCredentials
+	(*User)(nil),                  // 7: wekalist.api.v1.User
 	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
 	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
 var file_api_v1_auth_service_proto_depIdxs = []int32{
-	7, // 0: memos.api.v1.GetCurrentSessionResponse.user:type_name -> memos.api.v1.User
-	8, // 1: memos.api.v1.GetCurrentSessionResponse.last_accessed_at:type_name -> google.protobuf.Timestamp
-	5, // 2: memos.api.v1.CreateSessionRequest.password_credentials:type_name -> memos.api.v1.CreateSessionRequest.PasswordCredentials
-	6, // 3: memos.api.v1.CreateSessionRequest.sso_credentials:type_name -> memos.api.v1.CreateSessionRequest.SSOCredentials
-	7, // 4: memos.api.v1.CreateSessionResponse.user:type_name -> memos.api.v1.User
-	8, // 5: memos.api.v1.CreateSessionResponse.last_accessed_at:type_name -> google.protobuf.Timestamp
-	0, // 6: memos.api.v1.AuthService.GetCurrentSession:input_type -> memos.api.v1.GetCurrentSessionRequest
-	2, // 7: memos.api.v1.AuthService.CreateSession:input_type -> memos.api.v1.CreateSessionRequest
-	4, // 8: memos.api.v1.AuthService.DeleteSession:input_type -> memos.api.v1.DeleteSessionRequest
-	1, // 9: memos.api.v1.AuthService.GetCurrentSession:output_type -> memos.api.v1.GetCurrentSessionResponse
-	3, // 10: memos.api.v1.AuthService.CreateSession:output_type -> memos.api.v1.CreateSessionResponse
-	9, // 11: memos.api.v1.AuthService.DeleteSession:output_type -> google.protobuf.Empty
+	7, // 0: wekalist.api.v1.GetCurrentSessionResponse.user:type_name -> wekalist.api.v1.User
+	8, // 1: wekalist.api.v1.GetCurrentSessionResponse.last_accessed_at:type_name -> google.protobuf.Timestamp
+	5, // 2: wekalist.api.v1.CreateSessionRequest.password_credentials:type_name -> wekalist.api.v1.CreateSessionRequest.PasswordCredentials
+	6, // 3: wekalist.api.v1.CreateSessionRequest.sso_credentials:type_name -> wekalist.api.v1.CreateSessionRequest.SSOCredentials
+	7, // 4: wekalist.api.v1.CreateSessionResponse.user:type_name -> wekalist.api.v1.User
+	8, // 5: wekalist.api.v1.CreateSessionResponse.last_accessed_at:type_name -> google.protobuf.Timestamp
+	0, // 6: wekalist.api.v1.AuthService.GetCurrentSession:input_type -> wekalist.api.v1.GetCurrentSessionRequest
+	2, // 7: wekalist.api.v1.AuthService.CreateSession:input_type -> wekalist.api.v1.CreateSessionRequest
+	4, // 8: wekalist.api.v1.AuthService.DeleteSession:input_type -> wekalist.api.v1.DeleteSessionRequest
+	1, // 9: wekalist.api.v1.AuthService.GetCurrentSession:output_type -> wekalist.api.v1.GetCurrentSessionResponse
+	3, // 10: wekalist.api.v1.AuthService.CreateSession:output_type -> wekalist.api.v1.CreateSessionResponse
+	9, // 11: wekalist.api.v1.AuthService.DeleteSession:output_type -> google.protobuf.Empty
 	9, // [9:12] is the sub-list for method output_type
 	6, // [6:9] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name

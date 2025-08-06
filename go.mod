@@ -1,4 +1,4 @@
-module github.com/usememos/memos
+module github.com/imrany/wekalist
 
 go 1.23.0
 

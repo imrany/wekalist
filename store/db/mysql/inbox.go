@@ -8,8 +8,8 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 func (d *DB) CreateInbox(ctx context.Context, create *store.Inbox) (*store.Inbox, error) {

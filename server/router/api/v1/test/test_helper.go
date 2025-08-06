@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/usememos/memos/internal/profile"
-	apiv1 "github.com/usememos/memos/server/router/api/v1"
-	"github.com/usememos/memos/store"
-	teststore "github.com/usememos/memos/store/test"
+	"github.com/imrany/wekalist/internal/profile"
+	apiv1 "github.com/imrany/wekalist/server/router/api/v1"
+	"github.com/imrany/wekalist/store"
+	teststore "github.com/imrany/wekalist/store/test"
 )
 
 // TestService holds the test service setup for API v1 services.

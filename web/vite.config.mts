@@ -27,7 +27,7 @@ export default defineConfig({
         target: devProxyServer,
         xfwd: true,
       },
-      "^/memos.api.v1": {
+      "^/wekalist.api.v1": {
         target: devProxyServer,
         xfwd: true,
       },

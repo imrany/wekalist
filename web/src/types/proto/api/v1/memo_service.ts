@@ -13,7 +13,7 @@ import { Attachment } from "./attachment_service";
 import { State, stateFromJSON, stateToNumber } from "./common";
 import { Node } from "./markdown_service";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export enum Visibility {
   VISIBILITY_UNSPECIFIED = "VISIBILITY_UNSPECIFIED",
@@ -189,7 +189,7 @@ export interface ListMemosRequest {
   pageToken: string;
   /**
    * Optional. The state of the memos to list.
-   * Default to `NORMAL`. Set to `ARCHIVED` to list archived memos.
+   * Default to `NORMAL`. Set to `ARCHIVED` to list archived wekalist.
    */
   state: State;
   /**
@@ -200,7 +200,7 @@ export interface ListMemosRequest {
   orderBy: string;
   /**
    * Optional. Filter to apply to the list results.
-   * Filter is a CEL expression to filter memos.
+   * Filter is a CEL expression to filter wekalist.
    * Refer to `Shortcut.filter`.
    */
   filter: string;
@@ -209,7 +209,7 @@ export interface ListMemosRequest {
 }
 
 export interface ListMemosResponse {
-  /** The list of memos. */
+  /** The list of wekalist. */
   memos: Memo[];
   /**
    * A token that can be sent as `page_token` to retrieve the next page.
@@ -279,7 +279,7 @@ export interface DeleteMemoTagRequest {
   parent: string;
   /** Required. The tag name to delete. */
   tag: string;
-  /** Optional. Whether to delete related memos. */
+  /** Optional. Whether to delete related wekalist. */
   deleteRelatedMemos: boolean;
 }
 
@@ -435,7 +435,7 @@ export interface ListMemoCommentsRequest {
 }
 
 export interface ListMemoCommentsResponse {
-  /** The list of comment memos. */
+  /** The list of comment wekalist. */
   memos: Memo[];
   /** A token for the next page of results. */
   nextPageToken: string;
@@ -2586,7 +2586,7 @@ export const DeleteMemoReactionRequest: MessageFns<DeleteMemoReactionRequest> = 
 export type MemoServiceDefinition = typeof MemoServiceDefinition;
 export const MemoServiceDefinition = {
   name: "MemoService",
-  fullName: "memos.api.v1.MemoService",
+  fullName: "wekalist.api.v1.MemoService",
   methods: {
     /** CreateMemo creates a memo. */
     createMemo: {

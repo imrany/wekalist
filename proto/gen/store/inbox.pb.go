@@ -72,7 +72,7 @@ func (InboxMessage_Type) EnumDescriptor() ([]byte, []int) {
 
 type InboxMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          InboxMessage_Type      `protobuf:"varint,1,opt,name=type,proto3,enum=memos.store.InboxMessage_Type" json:"type,omitempty"`
+	Type          InboxMessage_Type      `protobuf:"varint,1,opt,name=type,proto3,enum=wekalist.store.InboxMessage_Type" json:"type,omitempty"`
 	ActivityId    *int32                 `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3,oneof" json:"activity_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -126,18 +126,18 @@ var File_store_inbox_proto protoreflect.FileDescriptor
 
 const file_store_inbox_proto_rawDesc = "" +
 	"\n" +
-	"\x11store/inbox.proto\x12\vmemos.store\"\xbc\x01\n" +
-	"\fInboxMessage\x122\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x1e.memos.store.InboxMessage.TypeR\x04type\x12$\n" +
+	"\x11store/inbox.proto\x12\x0ewekalist.store\"\xbf\x01\n" +
+	"\fInboxMessage\x125\n" +
+	"\x04type\x18\x01 \x01(\x0e2!.wekalist.store.InboxMessage.TypeR\x04type\x12$\n" +
 	"\vactivity_id\x18\x02 \x01(\x05H\x00R\n" +
 	"activityId\x88\x01\x01\"B\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fMEMO_COMMENT\x10\x01\x12\x12\n" +
 	"\x0eVERSION_UPDATE\x10\x02B\x0e\n" +
-	"\f_activity_idB\x95\x01\n" +
-	"\x0fcom.memos.storeB\n" +
-	"InboxProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03MSX\xaa\x02\vMemos.Store\xca\x02\vMemos\\Store\xe2\x02\x17Memos\\Store\\GPBMetadata\xea\x02\fMemos::Storeb\x06proto3"
+	"\f_activity_idB\xa4\x01\n" +
+	"\x12com.wekalist.storeB\n" +
+	"InboxProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_inbox_proto_rawDescOnce sync.Once
@@ -154,11 +154,11 @@ func file_store_inbox_proto_rawDescGZIP() []byte {
 var file_store_inbox_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_store_inbox_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_store_inbox_proto_goTypes = []any{
-	(InboxMessage_Type)(0), // 0: memos.store.InboxMessage.Type
-	(*InboxMessage)(nil),   // 1: memos.store.InboxMessage
+	(InboxMessage_Type)(0), // 0: wekalist.store.InboxMessage.Type
+	(*InboxMessage)(nil),   // 1: wekalist.store.InboxMessage
 }
 var file_store_inbox_proto_depIdxs = []int32{
-	0, // 0: memos.store.InboxMessage.type:type_name -> memos.store.InboxMessage.Type
+	0, // 0: wekalist.store.InboxMessage.type:type_name -> wekalist.store.InboxMessage.Type
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

@@ -10,12 +10,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/pkg/errors"
 
-	"github.com/usememos/memos/internal/util"
+	"github.com/imrany/wekalist/internal/util"
 )
 
 const (
 	// issuer is the issuer of the jwt token.
-	Issuer = "memos"
+	Issuer = "wekalist"
 	// Signing key section. For now, this is only used for signing, not for verifying since we only
 	// have 1 version. But it will be used to maintain backward compatibility if we change the signing mechanism.
 	KeyID = "v1"

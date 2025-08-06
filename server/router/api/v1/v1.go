@@ -14,9 +14,9 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/usememos/memos/internal/profile"
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/profile"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	"github.com/imrany/wekalist/store"
 )
 
 type APIV1Service struct {
@@ -136,7 +136,7 @@ func (s *APIV1Service) RegisterGateway(ctx context.Context, echoServer *echo.Ech
 		}),
 	}
 	wrappedGrpc := grpcweb.WrapServer(s.grpcServer, options...)
-	echoServer.Any("/memos.api.v1.*", echo.WrapHandler(wrappedGrpc))
+	echoServer.Any("/wekalist.api.v1.*", echo.WrapHandler(wrappedGrpc))
 
 	return nil
 }

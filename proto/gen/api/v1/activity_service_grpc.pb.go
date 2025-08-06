@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ActivityService_ListActivities_FullMethodName = "/memos.api.v1.ActivityService/ListActivities"
-	ActivityService_GetActivity_FullMethodName    = "/memos.api.v1.ActivityService/GetActivity"
+	ActivityService_ListActivities_FullMethodName = "/wekalist.api.v1.ActivityService/ListActivities"
+	ActivityService_GetActivity_FullMethodName    = "/wekalist.api.v1.ActivityService/GetActivity"
 )
 
 // ActivityServiceClient is the client API for ActivityService service.
@@ -146,7 +146,7 @@ func _ActivityService_GetActivity_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ActivityService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.ActivityService",
+	ServiceName: "wekalist.api.v1.ActivityService",
 	HandlerType: (*ActivityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

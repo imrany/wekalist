@@ -643,7 +643,7 @@ paths:
                   in: query
                   description: |-
                     Optional. The state of the memos to list.
-                     Default to `NORMAL`. Set to `ARCHIVED` to list archived memos.
+                     Default to `NORMAL`. Set to `ARCHIVED` to list archived wekalist.
                   schema:
                     enum:
                         - STATE_UNSPECIFIED
@@ -663,7 +663,7 @@ paths:
                   in: query
                   description: |-
                     Optional. Filter to apply to the list results.
-                     Filter is a CEL expression to filter memos.
+                     Filter is a CEL expression to filter wekalist.
                      Refer to `Shortcut.filter`.
                   schema:
                     type: string
@@ -1133,7 +1133,7 @@ paths:
                     type: string
                 - name: deleteRelatedMemos
                   in: query
-                  description: Optional. Whether to delete related memos.
+                  description: Optional. Whether to delete related wekalist.
                   schema:
                     type: boolean
             responses:
@@ -2350,12 +2350,12 @@ components:
                     type: string
                     description: |-
                         The memo name of comment.
-                         Format: memos/{memo}
+                         Format: wekalist/{memo}
                 relatedMemo:
                     type: string
                     description: |-
                         The name of related memo.
-                         Format: memos/{memo}
+                         Format: wekalist/{memo}
             description: ActivityMemoCommentPayload represents the payload of a memo comment activity.
         ActivityPayload:
             type: object
@@ -2402,7 +2402,7 @@ components:
                     type: string
                     description: |-
                         Optional. The related memo. Refer to `Memo.name`.
-                         Format: memos/{memo}
+                         Format: wekalist/{memo}
         AutoLinkNode:
             type: object
             properties:
@@ -2812,7 +2812,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Memo'
-                    description: The list of comment memos.
+                    description: The list of comment wekalist.
                 nextPageToken:
                     type: string
                     description: A token for the next page of results.
@@ -2857,7 +2857,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Memo'
-                    description: The list of memos.
+                    description: The list of wekalist.
                 nextPageToken:
                     type: string
                     description: |-

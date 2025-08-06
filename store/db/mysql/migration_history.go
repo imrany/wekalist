@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/store"
 )
 
 func (d *DB) FindMigrationHistoryList(ctx context.Context, _ *store.FindMigrationHistory) ([]*store.MigrationHistory, error) {

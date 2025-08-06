@@ -393,37 +393,37 @@ var File_api_v1_shortcut_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_shortcut_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1dapi/v1/shortcut_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xaf\x01\n" +
+	"\x1dapi/v1/shortcut_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xb2\x01\n" +
 	"\bShortcut\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x19\n" +
 	"\x05title\x18\x02 \x01(\tB\x03\xe0A\x02R\x05title\x12\x1b\n" +
-	"\x06filter\x18\x03 \x01(\tB\x03\xe0A\x01R\x06filter:R\xeaAO\n" +
-	"\x15memos.api.v1/Shortcut\x12!users/{user}/shortcuts/{shortcut}*\tshortcuts2\bshortcut\"M\n" +
-	"\x14ListShortcutsRequest\x125\n" +
-	"\x06parent\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\x12\x15memos.api.v1/ShortcutR\x06parent\"M\n" +
-	"\x15ListShortcutsResponse\x124\n" +
-	"\tshortcuts\x18\x01 \x03(\v2\x16.memos.api.v1.ShortcutR\tshortcuts\"G\n" +
-	"\x12GetShortcutRequest\x121\n" +
-	"\x04name\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\n" +
-	"\x15memos.api.v1/ShortcutR\x04name\"\xb1\x01\n" +
-	"\x15CreateShortcutRequest\x125\n" +
-	"\x06parent\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\x12\x15memos.api.v1/ShortcutR\x06parent\x127\n" +
-	"\bshortcut\x18\x02 \x01(\v2\x16.memos.api.v1.ShortcutB\x03\xe0A\x02R\bshortcut\x12(\n" +
-	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\"\x92\x01\n" +
-	"\x15UpdateShortcutRequest\x127\n" +
-	"\bshortcut\x18\x01 \x01(\v2\x16.memos.api.v1.ShortcutB\x03\xe0A\x02R\bshortcut\x12@\n" +
+	"\x06filter\x18\x03 \x01(\tB\x03\xe0A\x01R\x06filter:U\xeaAR\n" +
+	"\x18wekalist.api.v1/Shortcut\x12!users/{user}/shortcuts/{shortcut}*\tshortcuts2\bshortcut\"P\n" +
+	"\x14ListShortcutsRequest\x128\n" +
+	"\x06parent\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\x12\x18wekalist.api.v1/ShortcutR\x06parent\"P\n" +
+	"\x15ListShortcutsResponse\x127\n" +
+	"\tshortcuts\x18\x01 \x03(\v2\x19.wekalist.api.v1.ShortcutR\tshortcuts\"J\n" +
+	"\x12GetShortcutRequest\x124\n" +
+	"\x04name\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\n" +
+	"\x18wekalist.api.v1/ShortcutR\x04name\"\xb7\x01\n" +
+	"\x15CreateShortcutRequest\x128\n" +
+	"\x06parent\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\x12\x18wekalist.api.v1/ShortcutR\x06parent\x12:\n" +
+	"\bshortcut\x18\x02 \x01(\v2\x19.wekalist.api.v1.ShortcutB\x03\xe0A\x02R\bshortcut\x12(\n" +
+	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\"\x95\x01\n" +
+	"\x15UpdateShortcutRequest\x12:\n" +
+	"\bshortcut\x18\x01 \x01(\v2\x19.wekalist.api.v1.ShortcutB\x03\xe0A\x02R\bshortcut\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\n" +
-	"updateMask\"J\n" +
-	"\x15DeleteShortcutRequest\x121\n" +
-	"\x04name\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\n" +
-	"\x15memos.api.v1/ShortcutR\x04name2\xde\x05\n" +
-	"\x0fShortcutService\x12\x8d\x01\n" +
-	"\rListShortcuts\x12\".memos.api.v1.ListShortcutsRequest\x1a#.memos.api.v1.ListShortcutsResponse\"3\xdaA\x06parent\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{parent=users/*}/shortcuts\x12z\n" +
-	"\vGetShortcut\x12 .memos.api.v1.GetShortcutRequest\x1a\x16.memos.api.v1.Shortcut\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=users/*/shortcuts/*}\x12\x95\x01\n" +
-	"\x0eCreateShortcut\x12#.memos.api.v1.CreateShortcutRequest\x1a\x16.memos.api.v1.Shortcut\"F\xdaA\x0fparent,shortcut\x82\xd3\xe4\x93\x02.:\bshortcut\"\"/api/v1/{parent=users/*}/shortcuts\x12\xa3\x01\n" +
-	"\x0eUpdateShortcut\x12#.memos.api.v1.UpdateShortcutRequest\x1a\x16.memos.api.v1.Shortcut\"T\xdaA\x14shortcut,update_mask\x82\xd3\xe4\x93\x027:\bshortcut2+/api/v1/{shortcut.name=users/*/shortcuts/*}\x12\x80\x01\n" +
-	"\x0eDeleteShortcut\x12#.memos.api.v1.DeleteShortcutRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=users/*/shortcuts/*}B\xac\x01\n" +
-	"\x10com.memos.api.v1B\x14ShortcutServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"updateMask\"M\n" +
+	"\x15DeleteShortcutRequest\x124\n" +
+	"\x04name\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\n" +
+	"\x18wekalist.api.v1/ShortcutR\x04name2\xfa\x05\n" +
+	"\x0fShortcutService\x12\x93\x01\n" +
+	"\rListShortcuts\x12%.wekalist.api.v1.ListShortcutsRequest\x1a&.wekalist.api.v1.ListShortcutsResponse\"3\xdaA\x06parent\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{parent=users/*}/shortcuts\x12\x80\x01\n" +
+	"\vGetShortcut\x12#.wekalist.api.v1.GetShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=users/*/shortcuts/*}\x12\x9b\x01\n" +
+	"\x0eCreateShortcut\x12&.wekalist.api.v1.CreateShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"F\xdaA\x0fparent,shortcut\x82\xd3\xe4\x93\x02.:\bshortcut\"\"/api/v1/{parent=users/*}/shortcuts\x12\xa9\x01\n" +
+	"\x0eUpdateShortcut\x12&.wekalist.api.v1.UpdateShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"T\xdaA\x14shortcut,update_mask\x82\xd3\xe4\x93\x027:\bshortcut2+/api/v1/{shortcut.name=users/*/shortcuts/*}\x12\x83\x01\n" +
+	"\x0eDeleteShortcut\x12&.wekalist.api.v1.DeleteShortcutRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=users/*/shortcuts/*}B\xbb\x01\n" +
+	"\x13com.wekalist.api.v1B\x14ShortcutServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_shortcut_service_proto_rawDescOnce sync.Once
@@ -439,31 +439,31 @@ func file_api_v1_shortcut_service_proto_rawDescGZIP() []byte {
 
 var file_api_v1_shortcut_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_v1_shortcut_service_proto_goTypes = []any{
-	(*Shortcut)(nil),              // 0: memos.api.v1.Shortcut
-	(*ListShortcutsRequest)(nil),  // 1: memos.api.v1.ListShortcutsRequest
-	(*ListShortcutsResponse)(nil), // 2: memos.api.v1.ListShortcutsResponse
-	(*GetShortcutRequest)(nil),    // 3: memos.api.v1.GetShortcutRequest
-	(*CreateShortcutRequest)(nil), // 4: memos.api.v1.CreateShortcutRequest
-	(*UpdateShortcutRequest)(nil), // 5: memos.api.v1.UpdateShortcutRequest
-	(*DeleteShortcutRequest)(nil), // 6: memos.api.v1.DeleteShortcutRequest
+	(*Shortcut)(nil),              // 0: wekalist.api.v1.Shortcut
+	(*ListShortcutsRequest)(nil),  // 1: wekalist.api.v1.ListShortcutsRequest
+	(*ListShortcutsResponse)(nil), // 2: wekalist.api.v1.ListShortcutsResponse
+	(*GetShortcutRequest)(nil),    // 3: wekalist.api.v1.GetShortcutRequest
+	(*CreateShortcutRequest)(nil), // 4: wekalist.api.v1.CreateShortcutRequest
+	(*UpdateShortcutRequest)(nil), // 5: wekalist.api.v1.UpdateShortcutRequest
+	(*DeleteShortcutRequest)(nil), // 6: wekalist.api.v1.DeleteShortcutRequest
 	(*fieldmaskpb.FieldMask)(nil), // 7: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),         // 8: google.protobuf.Empty
 }
 var file_api_v1_shortcut_service_proto_depIdxs = []int32{
-	0, // 0: memos.api.v1.ListShortcutsResponse.shortcuts:type_name -> memos.api.v1.Shortcut
-	0, // 1: memos.api.v1.CreateShortcutRequest.shortcut:type_name -> memos.api.v1.Shortcut
-	0, // 2: memos.api.v1.UpdateShortcutRequest.shortcut:type_name -> memos.api.v1.Shortcut
-	7, // 3: memos.api.v1.UpdateShortcutRequest.update_mask:type_name -> google.protobuf.FieldMask
-	1, // 4: memos.api.v1.ShortcutService.ListShortcuts:input_type -> memos.api.v1.ListShortcutsRequest
-	3, // 5: memos.api.v1.ShortcutService.GetShortcut:input_type -> memos.api.v1.GetShortcutRequest
-	4, // 6: memos.api.v1.ShortcutService.CreateShortcut:input_type -> memos.api.v1.CreateShortcutRequest
-	5, // 7: memos.api.v1.ShortcutService.UpdateShortcut:input_type -> memos.api.v1.UpdateShortcutRequest
-	6, // 8: memos.api.v1.ShortcutService.DeleteShortcut:input_type -> memos.api.v1.DeleteShortcutRequest
-	2, // 9: memos.api.v1.ShortcutService.ListShortcuts:output_type -> memos.api.v1.ListShortcutsResponse
-	0, // 10: memos.api.v1.ShortcutService.GetShortcut:output_type -> memos.api.v1.Shortcut
-	0, // 11: memos.api.v1.ShortcutService.CreateShortcut:output_type -> memos.api.v1.Shortcut
-	0, // 12: memos.api.v1.ShortcutService.UpdateShortcut:output_type -> memos.api.v1.Shortcut
-	8, // 13: memos.api.v1.ShortcutService.DeleteShortcut:output_type -> google.protobuf.Empty
+	0, // 0: wekalist.api.v1.ListShortcutsResponse.shortcuts:type_name -> wekalist.api.v1.Shortcut
+	0, // 1: wekalist.api.v1.CreateShortcutRequest.shortcut:type_name -> wekalist.api.v1.Shortcut
+	0, // 2: wekalist.api.v1.UpdateShortcutRequest.shortcut:type_name -> wekalist.api.v1.Shortcut
+	7, // 3: wekalist.api.v1.UpdateShortcutRequest.update_mask:type_name -> google.protobuf.FieldMask
+	1, // 4: wekalist.api.v1.ShortcutService.ListShortcuts:input_type -> wekalist.api.v1.ListShortcutsRequest
+	3, // 5: wekalist.api.v1.ShortcutService.GetShortcut:input_type -> wekalist.api.v1.GetShortcutRequest
+	4, // 6: wekalist.api.v1.ShortcutService.CreateShortcut:input_type -> wekalist.api.v1.CreateShortcutRequest
+	5, // 7: wekalist.api.v1.ShortcutService.UpdateShortcut:input_type -> wekalist.api.v1.UpdateShortcutRequest
+	6, // 8: wekalist.api.v1.ShortcutService.DeleteShortcut:input_type -> wekalist.api.v1.DeleteShortcutRequest
+	2, // 9: wekalist.api.v1.ShortcutService.ListShortcuts:output_type -> wekalist.api.v1.ListShortcutsResponse
+	0, // 10: wekalist.api.v1.ShortcutService.GetShortcut:output_type -> wekalist.api.v1.Shortcut
+	0, // 11: wekalist.api.v1.ShortcutService.CreateShortcut:output_type -> wekalist.api.v1.Shortcut
+	0, // 12: wekalist.api.v1.ShortcutService.UpdateShortcut:output_type -> wekalist.api.v1.Shortcut
+	8, // 13: wekalist.api.v1.ShortcutService.DeleteShortcut:output_type -> google.protobuf.Empty
 	9, // [9:14] is the sub-list for method output_type
 	4, // [4:9] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

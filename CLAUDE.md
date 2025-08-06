@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Memos is a self-hosted note-taking and knowledge management platform with a Go backend and React/TypeScript frontend. The architecture follows clean separation of concerns with gRPC APIs, REST gateway, and database abstraction.
+Wekalist is a self-hosted note-taking and knowledge management platform with a Go backend and React/TypeScript frontend. The architecture follows clean separation of concerns with gRPC APIs, REST gateway, and database abstraction.
 
 ## Development Commands
 
@@ -14,7 +14,7 @@ Memos is a self-hosted note-taking and knowledge management platform with a Go b
 go run main.go --mode dev --port 8081
 
 # Build binary
-go build -o ./bin/memos main.go
+go build -o ./bin/wekalist main.go
 # OR use build script
 ./scripts/build.sh
 
@@ -141,7 +141,7 @@ go run main.go --mode prod --port 5230
 ```bash
 go run main.go --mode dev --port 8081
 ```
-- Fixed secret key "usememos"
+- Fixed secret key "usewekalist"
 - Enables debugging features
 - Separate frontend development server recommended
 
@@ -154,13 +154,13 @@ go run main.go --mode demo
 ## Key Configuration
 
 ### Environment Variables
-All CLI flags can be set via environment variables with `MEMOS_` prefix:
-- `MEMOS_MODE` - Server mode (dev/prod/demo)
-- `MEMOS_PORT` - Server port
-- `MEMOS_DATA` - Data directory
-- `MEMOS_DRIVER` - Database driver
-- `MEMOS_DSN` - Database connection string
-- `MEMOS_INSTANCE_URL` - Public instance URL
+<!-- All CLI flags can be set via environment variables with `` prefix: -->
+- `MODE` - Server mode (dev/prod/demo)
+- `PORT` - Server port
+- `DATA` - Data directory
+- `DRIVER` - Database driver
+- `DSN` - Database connection string
+- `INSTANCE_URL` - Public instance URL
 
 ### Runtime Configuration
 - **Profile**: `/internal/profile/` handles configuration validation

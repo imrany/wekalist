@@ -9,7 +9,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Empty } from "../../google/protobuf/empty";
 import { FieldMask } from "../../google/protobuf/field_mask";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface IdentityProvider {
   /**
@@ -779,7 +779,7 @@ export const DeleteIdentityProviderRequest: MessageFns<DeleteIdentityProviderReq
 export type IdentityProviderServiceDefinition = typeof IdentityProviderServiceDefinition;
 export const IdentityProviderServiceDefinition = {
   name: "IdentityProviderService",
-  fullName: "memos.api.v1.IdentityProviderService",
+  fullName: "wekalist.api.v1.IdentityProviderService",
   methods: {
     /** ListIdentityProviders lists identity providers. */
     listIdentityProviders: {

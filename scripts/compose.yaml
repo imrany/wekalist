@@ -1,8 +1,8 @@
 services:
-  memos:
-    image: neosmemo/memos:latest
-    container_name: memos
+  wekalist:
+    image: ghcr.io/imrany/wekalist:latest
+    container_name: wekalist
     volumes:
-      - ~/.memos/:/var/opt/memos
+      - ~/.wekalist/:/var/opt/wekalist
     ports:
       - 5230:5230

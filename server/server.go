@@ -18,14 +18,14 @@ import (
 	"github.com/soheilhy/cmux"
 	"google.golang.org/grpc"
 
-	"github.com/usememos/memos/internal/profile"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/server/profiler"
-	apiv1 "github.com/usememos/memos/server/router/api/v1"
-	"github.com/usememos/memos/server/router/frontend"
-	"github.com/usememos/memos/server/router/rss"
-	"github.com/usememos/memos/server/runner/s3presign"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/profile"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/server/profiler"
+	apiv1 "github.com/imrany/wekalist/server/router/api/v1"
+	"github.com/imrany/wekalist/server/router/frontend"
+	"github.com/imrany/wekalist/server/router/rss"
+	"github.com/imrany/wekalist/server/runner/s3presign"
+	"github.com/imrany/wekalist/store"
 )
 
 type Server struct {
@@ -62,7 +62,7 @@ func NewServer(ctx context.Context, profile *profile.Profile, store *store.Store
 		return nil, errors.Wrap(err, "failed to get workspace basic setting")
 	}
 
-	secret := "usememos"
+	secret := "wekalistv1"
 	if profile.Mode == "prod" {
 		secret = workspaceBasicSetting.SecretKey
 	}
@@ -178,7 +178,7 @@ func (s *Server) Shutdown(ctx context.Context) {
 		slog.Error("failed to close database", slog.String("error", err.Error()))
 	}
 
-	slog.Info("memos stopped properly")
+	slog.Info("wekalist stopped properly")
 }
 
 func (s *Server) StartBackgroundRunners(ctx context.Context) {

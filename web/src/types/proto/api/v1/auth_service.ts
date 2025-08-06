@@ -10,7 +10,7 @@ import { Empty } from "../../google/protobuf/empty";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import { User } from "./user_service";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface GetCurrentSessionRequest {
 }
@@ -460,7 +460,7 @@ export const DeleteSessionRequest: MessageFns<DeleteSessionRequest> = {
 export type AuthServiceDefinition = typeof AuthServiceDefinition;
 export const AuthServiceDefinition = {
   name: "AuthService",
-  fullName: "memos.api.v1.AuthService",
+  fullName: "wekalist.api.v1.AuthService",
   methods: {
     /**
      * GetCurrentSession returns the current active session information.

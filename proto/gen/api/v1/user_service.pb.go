@@ -89,7 +89,7 @@ type User struct {
 	// Format: users/{user}
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The role of the user.
-	Role User_Role `protobuf:"varint,2,opt,name=role,proto3,enum=memos.api.v1.User_Role" json:"role,omitempty"`
+	Role User_Role `protobuf:"varint,2,opt,name=role,proto3,enum=wekalist.api.v1.User_Role" json:"role,omitempty"`
 	// Required. The unique username for login.
 	Username string `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
 	// Optional. The email address of the user.
@@ -103,7 +103,7 @@ type User struct {
 	// Input only. The password for the user.
 	Password string `protobuf:"bytes,8,opt,name=password,proto3" json:"password,omitempty"`
 	// The state of the user.
-	State State `protobuf:"varint,9,opt,name=state,proto3,enum=memos.api.v1.State" json:"state,omitempty"`
+	State State `protobuf:"varint,9,opt,name=state,proto3,enum=wekalist.api.v1.State" json:"state,omitempty"`
 	// Output only. The creation timestamp.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Output only. The last update timestamp.
@@ -2107,18 +2107,18 @@ var File_api_v1_user_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_user_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/v1/user_service.proto\x12\fmemos.api.v1\x1a\x13api/v1/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc8\x06\n" +
+	"\x19api/v1/user_service.proto\x12\x0fwekalist.api.v1\x1a\x13api/v1/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd1\x06\n" +
 	"\x04User\x12\x17\n" +
-	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x120\n" +
-	"\x04role\x18\x02 \x01(\x0e2\x17.memos.api.v1.User.RoleB\x03\xe0A\x02R\x04role\x12\x1f\n" +
+	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x123\n" +
+	"\x04role\x18\x02 \x01(\x0e2\x1a.wekalist.api.v1.User.RoleB\x03\xe0A\x02R\x04role\x12\x1f\n" +
 	"\busername\x18\x03 \x01(\tB\x03\xe0A\x02R\busername\x12\x19\n" +
 	"\x05email\x18\x04 \x01(\tB\x03\xe0A\x01R\x05email\x12&\n" +
 	"\fdisplay_name\x18\x05 \x01(\tB\x03\xe0A\x01R\vdisplayName\x12\"\n" +
 	"\n" +
 	"avatar_url\x18\x06 \x01(\tB\x03\xe0A\x01R\tavatarUrl\x12%\n" +
 	"\vdescription\x18\a \x01(\tB\x03\xe0A\x01R\vdescription\x12\x1f\n" +
-	"\bpassword\x18\b \x01(\tB\x03\xe0A\x04R\bpassword\x12.\n" +
-	"\x05state\x18\t \x01(\x0e2\x13.memos.api.v1.StateB\x03\xe0A\x02R\x05state\x12@\n" +
+	"\bpassword\x18\b \x01(\tB\x03\xe0A\x04R\bpassword\x121\n" +
+	"\x05state\x18\t \x01(\x0e2\x16.wekalist.api.v1.StateB\x03\xe0A\x02R\x05state\x12@\n" +
 	"\vcreate_time\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
 	"createTime\x12@\n" +
@@ -2133,8 +2133,8 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\x10ROLE_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04HOST\x10\x01\x12\t\n" +
 	"\x05ADMIN\x10\x02\x12\b\n" +
-	"\x04USER\x10\x03:7\xeaA4\n" +
-	"\x11memos.api.v1/User\x12\fusers/{user}\x1a\x04name*\x05users2\x04user\"*\n" +
+	"\x04USER\x10\x03::\xeaA7\n" +
+	"\x14wekalist.api.v1/User\x12\fusers/{user}\x1a\x04name*\x05users2\x04user\"*\n" +
 	"\rVerifyRequest\x12\x19\n" +
 	"\x05email\x18\x01 \x01(\tB\x03\xe0A\x02R\x05email\"B\n" +
 	"\x0eVerifyResponse\x12\x19\n" +
@@ -2146,49 +2146,49 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\x12\x1b\n" +
 	"\x06filter\x18\x03 \x01(\tB\x03\xe0A\x01R\x06filter\x12\x1e\n" +
 	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\x12&\n" +
-	"\fshow_deleted\x18\x05 \x01(\bB\x03\xe0A\x01R\vshowDeleted\"\x84\x01\n" +
-	"\x11ListUsersResponse\x12(\n" +
-	"\x05users\x18\x01 \x03(\v2\x12.memos.api.v1.UserR\x05users\x12&\n" +
+	"\fshow_deleted\x18\x05 \x01(\bB\x03\xe0A\x01R\vshowDeleted\"\x87\x01\n" +
+	"\x11ListUsersResponse\x12+\n" +
+	"\x05users\x18\x01 \x03(\v2\x15.wekalist.api.v1.UserR\x05users\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"}\n" +
-	"\x0eGetUserRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\x12<\n" +
-	"\tread_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\breadMask\"\xaf\x01\n" +
-	"\x11CreateUserRequest\x12.\n" +
-	"\x04user\x18\x01 \x01(\v2\x12.memos.api.v1.UserB\x06\xe0A\x02\xe0A\x04R\x04user\x12\x1c\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x80\x01\n" +
+	"\x0eGetUserRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x04name\x12<\n" +
+	"\tread_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\breadMask\"\xb2\x01\n" +
+	"\x11CreateUserRequest\x121\n" +
+	"\x04user\x18\x01 \x01(\v2\x15.wekalist.api.v1.UserB\x06\xe0A\x02\xe0A\x04R\x04user\x12\x1c\n" +
 	"\auser_id\x18\x02 \x01(\tB\x03\xe0A\x01R\x06userId\x12(\n" +
 	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\x12\"\n" +
 	"\n" +
-	"request_id\x18\x04 \x01(\tB\x03\xe0A\x01R\trequestId\"\xac\x01\n" +
-	"\x11UpdateUserRequest\x12+\n" +
-	"\x04user\x18\x01 \x01(\v2\x12.memos.api.v1.UserB\x03\xe0A\x02R\x04user\x12@\n" +
+	"request_id\x18\x04 \x01(\tB\x03\xe0A\x01R\trequestId\"\xaf\x01\n" +
+	"\x11UpdateUserRequest\x12.\n" +
+	"\x04user\x18\x01 \x01(\v2\x15.wekalist.api.v1.UserB\x03\xe0A\x02R\x04user\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
 	"updateMask\x12(\n" +
-	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"]\n" +
-	"\x11DeleteUserRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\x12\x19\n" +
+	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"`\n" +
+	"\x11DeleteUserRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x04name\x12\x19\n" +
 	"\x05force\x18\x02 \x01(\bB\x03\xe0A\x01R\x05force\"u\n" +
 	"\x12SearchUsersRequest\x12\x19\n" +
 	"\x05query\x18\x01 \x01(\tB\x03\xe0A\x02R\x05query\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x86\x01\n" +
-	"\x13SearchUsersResponse\x12(\n" +
-	"\x05users\x18\x01 \x03(\v2\x12.memos.api.v1.UserR\x05users\x12&\n" +
+	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x89\x01\n" +
+	"\x13SearchUsersResponse\x12+\n" +
+	"\x05users\x18\x01 \x03(\v2\x15.wekalist.api.v1.UserR\x05users\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"E\n" +
-	"\x14GetUserAvatarRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\"\xe4\x04\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"H\n" +
+	"\x14GetUserAvatarRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x04name\"\xed\x04\n" +
 	"\tUserStats\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12R\n" +
-	"\x17memo_display_timestamps\x18\x02 \x03(\v2\x1a.google.protobuf.TimestampR\x15memoDisplayTimestamps\x12M\n" +
-	"\x0fmemo_type_stats\x18\x03 \x01(\v2%.memos.api.v1.UserStats.MemoTypeStatsR\rmemoTypeStats\x12B\n" +
-	"\ttag_count\x18\x04 \x03(\v2%.memos.api.v1.UserStats.TagCountEntryR\btagCount\x12!\n" +
+	"\x17memo_display_timestamps\x18\x02 \x03(\v2\x1a.google.protobuf.TimestampR\x15memoDisplayTimestamps\x12P\n" +
+	"\x0fmemo_type_stats\x18\x03 \x01(\v2(.wekalist.api.v1.UserStats.MemoTypeStatsR\rmemoTypeStats\x12E\n" +
+	"\ttag_count\x18\x04 \x03(\v2(.wekalist.api.v1.UserStats.TagCountEntryR\btagCount\x12!\n" +
 	"\fpinned_memos\x18\x05 \x03(\tR\vpinnedMemos\x12(\n" +
 	"\x10total_memo_count\x18\x06 \x01(\x05R\x0etotalMemoCount\x1a;\n" +
 	"\rTagCountEntry\x12\x10\n" +
@@ -2202,11 +2202,11 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\n" +
 	"todo_count\x18\x03 \x01(\x05R\ttodoCount\x12\x1d\n" +
 	"\n" +
-	"undo_count\x18\x04 \x01(\x05R\tundoCount:?\xeaA<\n" +
-	"\x16memos.api.v1/UserStats\x12\fusers/{user}*\tuserStats2\tuserStats\"D\n" +
-	"\x13GetUserStatsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\"\xc8\x03\n" +
+	"undo_count\x18\x04 \x01(\x05R\tundoCount:B\xeaA?\n" +
+	"\x19wekalist.api.v1/UserStats\x12\fusers/{user}*\tuserStats2\tuserStats\"G\n" +
+	"\x13GetUserStatsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x04name\"\xcb\x03\n" +
 	"\vUserSetting\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x1b\n" +
 	"\x06locale\x18\x02 \x01(\tB\x03\xe0A\x01R\x06locale\x12#\n" +
@@ -2218,50 +2218,50 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\x14enable_notifications\x18\x06 \x01(\bB\x03\xe0A\x01R\x13enableNotifications\x12+\n" +
 	"\x0fwrapper_api_key\x18\a \x01(\tB\x03\xe0A\x01R\rwrapperApiKey\x127\n" +
 	"\x15wrapper_usage_counter\x18\b \x01(\x05B\x03\xe0A\x01R\x13wrapperUsageCounter\x12/\n" +
-	"\x11wrapper_max_usage\x18\t \x01(\x05B\x03\xe0A\x01R\x0fwrapperMaxUsage:F\xeaAC\n" +
-	"\x18memos.api.v1/UserSetting\x12\fusers/{user}*\fuserSettings2\vuserSetting\"F\n" +
-	"\x15GetUserSettingRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x04name\"\x96\x01\n" +
-	"\x18UpdateUserSettingRequest\x128\n" +
-	"\asetting\x18\x01 \x01(\v2\x19.memos.api.v1.UserSettingB\x03\xe0A\x02R\asetting\x12@\n" +
+	"\x11wrapper_max_usage\x18\t \x01(\x05B\x03\xe0A\x01R\x0fwrapperMaxUsage:I\xeaAF\n" +
+	"\x1bwekalist.api.v1/UserSetting\x12\fusers/{user}*\fuserSettings2\vuserSetting\"I\n" +
+	"\x15GetUserSettingRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x04name\"\x99\x01\n" +
+	"\x18UpdateUserSettingRequest\x12;\n" +
+	"\asetting\x18\x01 \x01(\v2\x1c.wekalist.api.v1.UserSettingB\x03\xe0A\x02R\asetting\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
-	"updateMask\"\xe7\x02\n" +
+	"updateMask\"\xea\x02\n" +
 	"\x0fUserAccessToken\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12&\n" +
 	"\faccess_token\x18\x02 \x01(\tB\x03\xe0A\x03R\vaccessToken\x12%\n" +
 	"\vdescription\x18\x03 \x01(\tB\x03\xe0A\x01R\vdescription\x12<\n" +
 	"\tissued_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\bissuedAt\x12>\n" +
 	"\n" +
-	"expires_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x01R\texpiresAt:n\xeaAk\n" +
-	"\x1cmemos.api.v1/UserAccessToken\x12(users/{user}/accessTokens/{access_token}*\x10userAccessTokens2\x0fuserAccessToken\"\x96\x01\n" +
-	"\x1bListUserAccessTokensRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x06parent\x12 \n" +
+	"expires_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x01R\texpiresAt:q\xeaAn\n" +
+	"\x1fwekalist.api.v1/UserAccessToken\x12(users/{user}/accessTokens/{access_token}*\x10userAccessTokens2\x0fuserAccessToken\"\x99\x01\n" +
+	"\x1bListUserAccessTokensRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x06parent\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\xa9\x01\n" +
-	"\x1cListUserAccessTokensResponse\x12B\n" +
-	"\raccess_tokens\x18\x01 \x03(\v2\x1d.memos.api.v1.UserAccessTokenR\faccessTokens\x12&\n" +
+	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\xac\x01\n" +
+	"\x1cListUserAccessTokensResponse\x12E\n" +
+	"\raccess_tokens\x18\x01 \x03(\v2 .wekalist.api.v1.UserAccessTokenR\faccessTokens\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xc5\x01\n" +
-	"\x1cCreateUserAccessTokenRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x06parent\x12E\n" +
-	"\faccess_token\x18\x02 \x01(\v2\x1d.memos.api.v1.UserAccessTokenB\x03\xe0A\x02R\vaccessToken\x12+\n" +
-	"\x0faccess_token_id\x18\x03 \x01(\tB\x03\xe0A\x01R\raccessTokenId\"X\n" +
-	"\x1cDeleteUserAccessTokenRequest\x128\n" +
-	"\x04name\x18\x01 \x01(\tB$\xe0A\x02\xfaA\x1e\n" +
-	"\x1cmemos.api.v1/UserAccessTokenR\x04name\"\x94\x04\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xcb\x01\n" +
+	"\x1cCreateUserAccessTokenRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x06parent\x12H\n" +
+	"\faccess_token\x18\x02 \x01(\v2 .wekalist.api.v1.UserAccessTokenB\x03\xe0A\x02R\vaccessToken\x12+\n" +
+	"\x0faccess_token_id\x18\x03 \x01(\tB\x03\xe0A\x01R\raccessTokenId\"[\n" +
+	"\x1cDeleteUserAccessTokenRequest\x12;\n" +
+	"\x04name\x18\x01 \x01(\tB'\xe0A\x02\xfaA!\n" +
+	"\x1fwekalist.api.v1/UserAccessTokenR\x04name\"\x9a\x04\n" +
 	"\vUserSession\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\"\n" +
 	"\n" +
 	"session_id\x18\x02 \x01(\tB\x03\xe0A\x03R\tsessionId\x12@\n" +
 	"\vcreate_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
 	"createTime\x12M\n" +
-	"\x12last_accessed_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\x10lastAccessedTime\x12J\n" +
-	"\vclient_info\x18\x05 \x01(\v2$.memos.api.v1.UserSession.ClientInfoB\x03\xe0A\x03R\n" +
+	"\x12last_accessed_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\x10lastAccessedTime\x12M\n" +
+	"\vclient_info\x18\x05 \x01(\v2'.wekalist.api.v1.UserSession.ClientInfoB\x03\xe0A\x03R\n" +
 	"clientInfo\x1a\xa4\x01\n" +
 	"\n" +
 	"ClientInfo\x12\x1d\n" +
@@ -2272,49 +2272,49 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\vdevice_type\x18\x03 \x01(\tB\x03\xe0A\x01R\n" +
 	"deviceType\x12\x13\n" +
 	"\x02os\x18\x04 \x01(\tB\x03\xe0A\x01R\x02os\x12\x1d\n" +
-	"\abrowser\x18\x05 \x01(\tB\x03\xe0A\x01R\abrowser:D\xeaAA\n" +
-	"\x18memos.api.v1/UserSession\x12\x1fusers/{user}/sessions/{session}\x1a\x04name\"L\n" +
-	"\x17ListUserSessionsRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\x06parent\"Q\n" +
-	"\x18ListUserSessionsResponse\x125\n" +
-	"\bsessions\x18\x01 \x03(\v2\x19.memos.api.v1.UserSessionR\bsessions\"P\n" +
-	"\x18RevokeUserSessionRequest\x124\n" +
-	"\x04name\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\n" +
-	"\x18memos.api.v1/UserSessionR\x04name\"_\n" +
+	"\abrowser\x18\x05 \x01(\tB\x03\xe0A\x01R\abrowser:G\xeaAD\n" +
+	"\x1bwekalist.api.v1/UserSession\x12\x1fusers/{user}/sessions/{session}\x1a\x04name\"O\n" +
+	"\x17ListUserSessionsRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\x06parent\"T\n" +
+	"\x18ListUserSessionsResponse\x128\n" +
+	"\bsessions\x18\x01 \x03(\v2\x1c.wekalist.api.v1.UserSessionR\bsessions\"S\n" +
+	"\x18RevokeUserSessionRequest\x127\n" +
+	"\x04name\x18\x01 \x01(\tB#\xe0A\x02\xfaA\x1d\n" +
+	"\x1bwekalist.api.v1/UserSessionR\x04name\"_\n" +
 	"\x17ListAllUserStatsRequest\x12 \n" +
 	"\tpage_size\x18\x01 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x99\x01\n" +
-	"\x18ListAllUserStatsResponse\x126\n" +
+	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x9c\x01\n" +
+	"\x18ListAllUserStatsResponse\x129\n" +
 	"\n" +
-	"user_stats\x18\x01 \x03(\v2\x17.memos.api.v1.UserStatsR\tuserStats\x12&\n" +
+	"user_stats\x18\x01 \x03(\v2\x1a.wekalist.api.v1.UserStatsR\tuserStats\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize2\xca\x11\n" +
-	"\vUserService\x12f\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize2\xa7\x12\n" +
+	"\vUserService\x12l\n" +
 	"\n" +
-	"VerifyUser\x12\x1b.memos.api.v1.VerifyRequest\x1a\x1c.memos.api.v1.VerifyResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x05email\"\x0e/api/v1/verify\x12c\n" +
-	"\tListUsers\x12\x1e.memos.api.v1.ListUsersRequest\x1a\x1f.memos.api.v1.ListUsersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users\x12b\n" +
-	"\aGetUser\x12\x1c.memos.api.v1.GetUserRequest\x1a\x12.memos.api.v1.User\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{name=users/*}\x12e\n" +
+	"VerifyUser\x12\x1e.wekalist.api.v1.VerifyRequest\x1a\x1f.wekalist.api.v1.VerifyResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x05email\"\x0e/api/v1/verify\x12i\n" +
+	"\tListUsers\x12!.wekalist.api.v1.ListUsersRequest\x1a\".wekalist.api.v1.ListUsersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users\x12h\n" +
+	"\aGetUser\x12\x1f.wekalist.api.v1.GetUserRequest\x1a\x15.wekalist.api.v1.User\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{name=users/*}\x12k\n" +
 	"\n" +
-	"CreateUser\x12\x1f.memos.api.v1.CreateUserRequest\x1a\x12.memos.api.v1.User\"\"\xdaA\x04user\x82\xd3\xe4\x93\x02\x15:\x04user\"\r/api/v1/users\x12\x7f\n" +
+	"CreateUser\x12\".wekalist.api.v1.CreateUserRequest\x1a\x15.wekalist.api.v1.User\"\"\xdaA\x04user\x82\xd3\xe4\x93\x02\x15:\x04user\"\r/api/v1/users\x12\x85\x01\n" +
 	"\n" +
-	"UpdateUser\x12\x1f.memos.api.v1.UpdateUserRequest\x1a\x12.memos.api.v1.User\"<\xdaA\x10user,update_mask\x82\xd3\xe4\x93\x02#:\x04user2\x1b/api/v1/{user.name=users/*}\x12l\n" +
+	"UpdateUser\x12\".wekalist.api.v1.UpdateUserRequest\x1a\x15.wekalist.api.v1.User\"<\xdaA\x10user,update_mask\x82\xd3\xe4\x93\x02#:\x04user2\x1b/api/v1/{user.name=users/*}\x12o\n" +
 	"\n" +
-	"DeleteUser\x12\x1f.memos.api.v1.DeleteUserRequest\x1a\x16.google.protobuf.Empty\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18*\x16/api/v1/{name=users/*}\x12x\n" +
-	"\vSearchUsers\x12 .memos.api.v1.SearchUsersRequest\x1a!.memos.api.v1.SearchUsersResponse\"$\xdaA\x05query\x82\xd3\xe4\x93\x02\x16\x12\x14/api/v1/users:search\x12w\n" +
-	"\rGetUserAvatar\x12\".memos.api.v1.GetUserAvatarRequest\x1a\x14.google.api.HttpBody\",\xdaA\x04name\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{name=users/*}/avatar\x12~\n" +
-	"\x10ListAllUserStats\x12%.memos.api.v1.ListAllUserStatsRequest\x1a&.memos.api.v1.ListAllUserStatsResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/users:stats\x12z\n" +
-	"\fGetUserStats\x12!.memos.api.v1.GetUserStatsRequest\x1a\x17.memos.api.v1.UserStats\".\xdaA\x04name\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{name=users/*}:getStats\x12\x82\x01\n" +
-	"\x0eGetUserSetting\x12#.memos.api.v1.GetUserSettingRequest\x1a\x19.memos.api.v1.UserSetting\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/api/v1/{name=users/*}:getSetting\x12\xab\x01\n" +
-	"\x11UpdateUserSetting\x12&.memos.api.v1.UpdateUserSettingRequest\x1a\x19.memos.api.v1.UserSetting\"S\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x027:\asetting2,/api/v1/{setting.name=users/*}:updateSetting\x12\xa5\x01\n" +
-	"\x14ListUserAccessTokens\x12).memos.api.v1.ListUserAccessTokensRequest\x1a*.memos.api.v1.ListUserAccessTokensResponse\"6\xdaA\x06parent\x82\xd3\xe4\x93\x02'\x12%/api/v1/{parent=users/*}/accessTokens\x12\xb5\x01\n" +
-	"\x15CreateUserAccessToken\x12*.memos.api.v1.CreateUserAccessTokenRequest\x1a\x1d.memos.api.v1.UserAccessToken\"Q\xdaA\x13parent,access_token\x82\xd3\xe4\x93\x025:\faccess_token\"%/api/v1/{parent=users/*}/accessTokens\x12\x91\x01\n" +
-	"\x15DeleteUserAccessToken\x12*.memos.api.v1.DeleteUserAccessTokenRequest\x1a\x16.google.protobuf.Empty\"4\xdaA\x04name\x82\xd3\xe4\x93\x02'*%/api/v1/{name=users/*/accessTokens/*}\x12\x95\x01\n" +
-	"\x10ListUserSessions\x12%.memos.api.v1.ListUserSessionsRequest\x1a&.memos.api.v1.ListUserSessionsResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/api/v1/{parent=users/*}/sessions\x12\x85\x01\n" +
-	"\x11RevokeUserSession\x12&.memos.api.v1.RevokeUserSessionRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/sessions/*}B\xa8\x01\n" +
-	"\x10com.memos.api.v1B\x10UserServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"DeleteUser\x12\".wekalist.api.v1.DeleteUserRequest\x1a\x16.google.protobuf.Empty\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18*\x16/api/v1/{name=users/*}\x12~\n" +
+	"\vSearchUsers\x12#.wekalist.api.v1.SearchUsersRequest\x1a$.wekalist.api.v1.SearchUsersResponse\"$\xdaA\x05query\x82\xd3\xe4\x93\x02\x16\x12\x14/api/v1/users:search\x12z\n" +
+	"\rGetUserAvatar\x12%.wekalist.api.v1.GetUserAvatarRequest\x1a\x14.google.api.HttpBody\",\xdaA\x04name\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{name=users/*}/avatar\x12\x84\x01\n" +
+	"\x10ListAllUserStats\x12(.wekalist.api.v1.ListAllUserStatsRequest\x1a).wekalist.api.v1.ListAllUserStatsResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/users:stats\x12\x80\x01\n" +
+	"\fGetUserStats\x12$.wekalist.api.v1.GetUserStatsRequest\x1a\x1a.wekalist.api.v1.UserStats\".\xdaA\x04name\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{name=users/*}:getStats\x12\x88\x01\n" +
+	"\x0eGetUserSetting\x12&.wekalist.api.v1.GetUserSettingRequest\x1a\x1c.wekalist.api.v1.UserSetting\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/api/v1/{name=users/*}:getSetting\x12\xb1\x01\n" +
+	"\x11UpdateUserSetting\x12).wekalist.api.v1.UpdateUserSettingRequest\x1a\x1c.wekalist.api.v1.UserSetting\"S\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x027:\asetting2,/api/v1/{setting.name=users/*}:updateSetting\x12\xab\x01\n" +
+	"\x14ListUserAccessTokens\x12,.wekalist.api.v1.ListUserAccessTokensRequest\x1a-.wekalist.api.v1.ListUserAccessTokensResponse\"6\xdaA\x06parent\x82\xd3\xe4\x93\x02'\x12%/api/v1/{parent=users/*}/accessTokens\x12\xbb\x01\n" +
+	"\x15CreateUserAccessToken\x12-.wekalist.api.v1.CreateUserAccessTokenRequest\x1a .wekalist.api.v1.UserAccessToken\"Q\xdaA\x13parent,access_token\x82\xd3\xe4\x93\x025:\faccess_token\"%/api/v1/{parent=users/*}/accessTokens\x12\x94\x01\n" +
+	"\x15DeleteUserAccessToken\x12-.wekalist.api.v1.DeleteUserAccessTokenRequest\x1a\x16.google.protobuf.Empty\"4\xdaA\x04name\x82\xd3\xe4\x93\x02'*%/api/v1/{name=users/*/accessTokens/*}\x12\x9b\x01\n" +
+	"\x10ListUserSessions\x12(.wekalist.api.v1.ListUserSessionsRequest\x1a).wekalist.api.v1.ListUserSessionsResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/api/v1/{parent=users/*}/sessions\x12\x88\x01\n" +
+	"\x11RevokeUserSession\x12).wekalist.api.v1.RevokeUserSessionRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/sessions/*}B\xb7\x01\n" +
+	"\x13com.wekalist.api.v1B\x10UserServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_user_service_proto_rawDescOnce sync.Once
@@ -2331,103 +2331,103 @@ func file_api_v1_user_service_proto_rawDescGZIP() []byte {
 var file_api_v1_user_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_api_v1_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_api_v1_user_service_proto_goTypes = []any{
-	(User_Role)(0),                       // 0: memos.api.v1.User.Role
-	(*User)(nil),                         // 1: memos.api.v1.User
-	(*VerifyRequest)(nil),                // 2: memos.api.v1.VerifyRequest
-	(*VerifyResponse)(nil),               // 3: memos.api.v1.VerifyResponse
-	(*ListUsersRequest)(nil),             // 4: memos.api.v1.ListUsersRequest
-	(*ListUsersResponse)(nil),            // 5: memos.api.v1.ListUsersResponse
-	(*GetUserRequest)(nil),               // 6: memos.api.v1.GetUserRequest
-	(*CreateUserRequest)(nil),            // 7: memos.api.v1.CreateUserRequest
-	(*UpdateUserRequest)(nil),            // 8: memos.api.v1.UpdateUserRequest
-	(*DeleteUserRequest)(nil),            // 9: memos.api.v1.DeleteUserRequest
-	(*SearchUsersRequest)(nil),           // 10: memos.api.v1.SearchUsersRequest
-	(*SearchUsersResponse)(nil),          // 11: memos.api.v1.SearchUsersResponse
-	(*GetUserAvatarRequest)(nil),         // 12: memos.api.v1.GetUserAvatarRequest
-	(*UserStats)(nil),                    // 13: memos.api.v1.UserStats
-	(*GetUserStatsRequest)(nil),          // 14: memos.api.v1.GetUserStatsRequest
-	(*UserSetting)(nil),                  // 15: memos.api.v1.UserSetting
-	(*GetUserSettingRequest)(nil),        // 16: memos.api.v1.GetUserSettingRequest
-	(*UpdateUserSettingRequest)(nil),     // 17: memos.api.v1.UpdateUserSettingRequest
-	(*UserAccessToken)(nil),              // 18: memos.api.v1.UserAccessToken
-	(*ListUserAccessTokensRequest)(nil),  // 19: memos.api.v1.ListUserAccessTokensRequest
-	(*ListUserAccessTokensResponse)(nil), // 20: memos.api.v1.ListUserAccessTokensResponse
-	(*CreateUserAccessTokenRequest)(nil), // 21: memos.api.v1.CreateUserAccessTokenRequest
-	(*DeleteUserAccessTokenRequest)(nil), // 22: memos.api.v1.DeleteUserAccessTokenRequest
-	(*UserSession)(nil),                  // 23: memos.api.v1.UserSession
-	(*ListUserSessionsRequest)(nil),      // 24: memos.api.v1.ListUserSessionsRequest
-	(*ListUserSessionsResponse)(nil),     // 25: memos.api.v1.ListUserSessionsResponse
-	(*RevokeUserSessionRequest)(nil),     // 26: memos.api.v1.RevokeUserSessionRequest
-	(*ListAllUserStatsRequest)(nil),      // 27: memos.api.v1.ListAllUserStatsRequest
-	(*ListAllUserStatsResponse)(nil),     // 28: memos.api.v1.ListAllUserStatsResponse
-	nil,                                  // 29: memos.api.v1.UserStats.TagCountEntry
-	(*UserStats_MemoTypeStats)(nil),      // 30: memos.api.v1.UserStats.MemoTypeStats
-	(*UserSession_ClientInfo)(nil),       // 31: memos.api.v1.UserSession.ClientInfo
-	(State)(0),                           // 32: memos.api.v1.State
+	(User_Role)(0),                       // 0: wekalist.api.v1.User.Role
+	(*User)(nil),                         // 1: wekalist.api.v1.User
+	(*VerifyRequest)(nil),                // 2: wekalist.api.v1.VerifyRequest
+	(*VerifyResponse)(nil),               // 3: wekalist.api.v1.VerifyResponse
+	(*ListUsersRequest)(nil),             // 4: wekalist.api.v1.ListUsersRequest
+	(*ListUsersResponse)(nil),            // 5: wekalist.api.v1.ListUsersResponse
+	(*GetUserRequest)(nil),               // 6: wekalist.api.v1.GetUserRequest
+	(*CreateUserRequest)(nil),            // 7: wekalist.api.v1.CreateUserRequest
+	(*UpdateUserRequest)(nil),            // 8: wekalist.api.v1.UpdateUserRequest
+	(*DeleteUserRequest)(nil),            // 9: wekalist.api.v1.DeleteUserRequest
+	(*SearchUsersRequest)(nil),           // 10: wekalist.api.v1.SearchUsersRequest
+	(*SearchUsersResponse)(nil),          // 11: wekalist.api.v1.SearchUsersResponse
+	(*GetUserAvatarRequest)(nil),         // 12: wekalist.api.v1.GetUserAvatarRequest
+	(*UserStats)(nil),                    // 13: wekalist.api.v1.UserStats
+	(*GetUserStatsRequest)(nil),          // 14: wekalist.api.v1.GetUserStatsRequest
+	(*UserSetting)(nil),                  // 15: wekalist.api.v1.UserSetting
+	(*GetUserSettingRequest)(nil),        // 16: wekalist.api.v1.GetUserSettingRequest
+	(*UpdateUserSettingRequest)(nil),     // 17: wekalist.api.v1.UpdateUserSettingRequest
+	(*UserAccessToken)(nil),              // 18: wekalist.api.v1.UserAccessToken
+	(*ListUserAccessTokensRequest)(nil),  // 19: wekalist.api.v1.ListUserAccessTokensRequest
+	(*ListUserAccessTokensResponse)(nil), // 20: wekalist.api.v1.ListUserAccessTokensResponse
+	(*CreateUserAccessTokenRequest)(nil), // 21: wekalist.api.v1.CreateUserAccessTokenRequest
+	(*DeleteUserAccessTokenRequest)(nil), // 22: wekalist.api.v1.DeleteUserAccessTokenRequest
+	(*UserSession)(nil),                  // 23: wekalist.api.v1.UserSession
+	(*ListUserSessionsRequest)(nil),      // 24: wekalist.api.v1.ListUserSessionsRequest
+	(*ListUserSessionsResponse)(nil),     // 25: wekalist.api.v1.ListUserSessionsResponse
+	(*RevokeUserSessionRequest)(nil),     // 26: wekalist.api.v1.RevokeUserSessionRequest
+	(*ListAllUserStatsRequest)(nil),      // 27: wekalist.api.v1.ListAllUserStatsRequest
+	(*ListAllUserStatsResponse)(nil),     // 28: wekalist.api.v1.ListAllUserStatsResponse
+	nil,                                  // 29: wekalist.api.v1.UserStats.TagCountEntry
+	(*UserStats_MemoTypeStats)(nil),      // 30: wekalist.api.v1.UserStats.MemoTypeStats
+	(*UserSession_ClientInfo)(nil),       // 31: wekalist.api.v1.UserSession.ClientInfo
+	(State)(0),                           // 32: wekalist.api.v1.State
 	(*timestamppb.Timestamp)(nil),        // 33: google.protobuf.Timestamp
 	(*fieldmaskpb.FieldMask)(nil),        // 34: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),                // 35: google.protobuf.Empty
 	(*httpbody.HttpBody)(nil),            // 36: google.api.HttpBody
 }
 var file_api_v1_user_service_proto_depIdxs = []int32{
-	0,  // 0: memos.api.v1.User.role:type_name -> memos.api.v1.User.Role
-	32, // 1: memos.api.v1.User.state:type_name -> memos.api.v1.State
-	33, // 2: memos.api.v1.User.create_time:type_name -> google.protobuf.Timestamp
-	33, // 3: memos.api.v1.User.update_time:type_name -> google.protobuf.Timestamp
-	1,  // 4: memos.api.v1.ListUsersResponse.users:type_name -> memos.api.v1.User
-	34, // 5: memos.api.v1.GetUserRequest.read_mask:type_name -> google.protobuf.FieldMask
-	1,  // 6: memos.api.v1.CreateUserRequest.user:type_name -> memos.api.v1.User
-	1,  // 7: memos.api.v1.UpdateUserRequest.user:type_name -> memos.api.v1.User
-	34, // 8: memos.api.v1.UpdateUserRequest.update_mask:type_name -> google.protobuf.FieldMask
-	1,  // 9: memos.api.v1.SearchUsersResponse.users:type_name -> memos.api.v1.User
-	33, // 10: memos.api.v1.UserStats.memo_display_timestamps:type_name -> google.protobuf.Timestamp
-	30, // 11: memos.api.v1.UserStats.memo_type_stats:type_name -> memos.api.v1.UserStats.MemoTypeStats
-	29, // 12: memos.api.v1.UserStats.tag_count:type_name -> memos.api.v1.UserStats.TagCountEntry
-	15, // 13: memos.api.v1.UpdateUserSettingRequest.setting:type_name -> memos.api.v1.UserSetting
-	34, // 14: memos.api.v1.UpdateUserSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
-	33, // 15: memos.api.v1.UserAccessToken.issued_at:type_name -> google.protobuf.Timestamp
-	33, // 16: memos.api.v1.UserAccessToken.expires_at:type_name -> google.protobuf.Timestamp
-	18, // 17: memos.api.v1.ListUserAccessTokensResponse.access_tokens:type_name -> memos.api.v1.UserAccessToken
-	18, // 18: memos.api.v1.CreateUserAccessTokenRequest.access_token:type_name -> memos.api.v1.UserAccessToken
-	33, // 19: memos.api.v1.UserSession.create_time:type_name -> google.protobuf.Timestamp
-	33, // 20: memos.api.v1.UserSession.last_accessed_time:type_name -> google.protobuf.Timestamp
-	31, // 21: memos.api.v1.UserSession.client_info:type_name -> memos.api.v1.UserSession.ClientInfo
-	23, // 22: memos.api.v1.ListUserSessionsResponse.sessions:type_name -> memos.api.v1.UserSession
-	13, // 23: memos.api.v1.ListAllUserStatsResponse.user_stats:type_name -> memos.api.v1.UserStats
-	2,  // 24: memos.api.v1.UserService.VerifyUser:input_type -> memos.api.v1.VerifyRequest
-	4,  // 25: memos.api.v1.UserService.ListUsers:input_type -> memos.api.v1.ListUsersRequest
-	6,  // 26: memos.api.v1.UserService.GetUser:input_type -> memos.api.v1.GetUserRequest
-	7,  // 27: memos.api.v1.UserService.CreateUser:input_type -> memos.api.v1.CreateUserRequest
-	8,  // 28: memos.api.v1.UserService.UpdateUser:input_type -> memos.api.v1.UpdateUserRequest
-	9,  // 29: memos.api.v1.UserService.DeleteUser:input_type -> memos.api.v1.DeleteUserRequest
-	10, // 30: memos.api.v1.UserService.SearchUsers:input_type -> memos.api.v1.SearchUsersRequest
-	12, // 31: memos.api.v1.UserService.GetUserAvatar:input_type -> memos.api.v1.GetUserAvatarRequest
-	27, // 32: memos.api.v1.UserService.ListAllUserStats:input_type -> memos.api.v1.ListAllUserStatsRequest
-	14, // 33: memos.api.v1.UserService.GetUserStats:input_type -> memos.api.v1.GetUserStatsRequest
-	16, // 34: memos.api.v1.UserService.GetUserSetting:input_type -> memos.api.v1.GetUserSettingRequest
-	17, // 35: memos.api.v1.UserService.UpdateUserSetting:input_type -> memos.api.v1.UpdateUserSettingRequest
-	19, // 36: memos.api.v1.UserService.ListUserAccessTokens:input_type -> memos.api.v1.ListUserAccessTokensRequest
-	21, // 37: memos.api.v1.UserService.CreateUserAccessToken:input_type -> memos.api.v1.CreateUserAccessTokenRequest
-	22, // 38: memos.api.v1.UserService.DeleteUserAccessToken:input_type -> memos.api.v1.DeleteUserAccessTokenRequest
-	24, // 39: memos.api.v1.UserService.ListUserSessions:input_type -> memos.api.v1.ListUserSessionsRequest
-	26, // 40: memos.api.v1.UserService.RevokeUserSession:input_type -> memos.api.v1.RevokeUserSessionRequest
-	3,  // 41: memos.api.v1.UserService.VerifyUser:output_type -> memos.api.v1.VerifyResponse
-	5,  // 42: memos.api.v1.UserService.ListUsers:output_type -> memos.api.v1.ListUsersResponse
-	1,  // 43: memos.api.v1.UserService.GetUser:output_type -> memos.api.v1.User
-	1,  // 44: memos.api.v1.UserService.CreateUser:output_type -> memos.api.v1.User
-	1,  // 45: memos.api.v1.UserService.UpdateUser:output_type -> memos.api.v1.User
-	35, // 46: memos.api.v1.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	11, // 47: memos.api.v1.UserService.SearchUsers:output_type -> memos.api.v1.SearchUsersResponse
-	36, // 48: memos.api.v1.UserService.GetUserAvatar:output_type -> google.api.HttpBody
-	28, // 49: memos.api.v1.UserService.ListAllUserStats:output_type -> memos.api.v1.ListAllUserStatsResponse
-	13, // 50: memos.api.v1.UserService.GetUserStats:output_type -> memos.api.v1.UserStats
-	15, // 51: memos.api.v1.UserService.GetUserSetting:output_type -> memos.api.v1.UserSetting
-	15, // 52: memos.api.v1.UserService.UpdateUserSetting:output_type -> memos.api.v1.UserSetting
-	20, // 53: memos.api.v1.UserService.ListUserAccessTokens:output_type -> memos.api.v1.ListUserAccessTokensResponse
-	18, // 54: memos.api.v1.UserService.CreateUserAccessToken:output_type -> memos.api.v1.UserAccessToken
-	35, // 55: memos.api.v1.UserService.DeleteUserAccessToken:output_type -> google.protobuf.Empty
-	25, // 56: memos.api.v1.UserService.ListUserSessions:output_type -> memos.api.v1.ListUserSessionsResponse
-	35, // 57: memos.api.v1.UserService.RevokeUserSession:output_type -> google.protobuf.Empty
+	0,  // 0: wekalist.api.v1.User.role:type_name -> wekalist.api.v1.User.Role
+	32, // 1: wekalist.api.v1.User.state:type_name -> wekalist.api.v1.State
+	33, // 2: wekalist.api.v1.User.create_time:type_name -> google.protobuf.Timestamp
+	33, // 3: wekalist.api.v1.User.update_time:type_name -> google.protobuf.Timestamp
+	1,  // 4: wekalist.api.v1.ListUsersResponse.users:type_name -> wekalist.api.v1.User
+	34, // 5: wekalist.api.v1.GetUserRequest.read_mask:type_name -> google.protobuf.FieldMask
+	1,  // 6: wekalist.api.v1.CreateUserRequest.user:type_name -> wekalist.api.v1.User
+	1,  // 7: wekalist.api.v1.UpdateUserRequest.user:type_name -> wekalist.api.v1.User
+	34, // 8: wekalist.api.v1.UpdateUserRequest.update_mask:type_name -> google.protobuf.FieldMask
+	1,  // 9: wekalist.api.v1.SearchUsersResponse.users:type_name -> wekalist.api.v1.User
+	33, // 10: wekalist.api.v1.UserStats.memo_display_timestamps:type_name -> google.protobuf.Timestamp
+	30, // 11: wekalist.api.v1.UserStats.memo_type_stats:type_name -> wekalist.api.v1.UserStats.MemoTypeStats
+	29, // 12: wekalist.api.v1.UserStats.tag_count:type_name -> wekalist.api.v1.UserStats.TagCountEntry
+	15, // 13: wekalist.api.v1.UpdateUserSettingRequest.setting:type_name -> wekalist.api.v1.UserSetting
+	34, // 14: wekalist.api.v1.UpdateUserSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
+	33, // 15: wekalist.api.v1.UserAccessToken.issued_at:type_name -> google.protobuf.Timestamp
+	33, // 16: wekalist.api.v1.UserAccessToken.expires_at:type_name -> google.protobuf.Timestamp
+	18, // 17: wekalist.api.v1.ListUserAccessTokensResponse.access_tokens:type_name -> wekalist.api.v1.UserAccessToken
+	18, // 18: wekalist.api.v1.CreateUserAccessTokenRequest.access_token:type_name -> wekalist.api.v1.UserAccessToken
+	33, // 19: wekalist.api.v1.UserSession.create_time:type_name -> google.protobuf.Timestamp
+	33, // 20: wekalist.api.v1.UserSession.last_accessed_time:type_name -> google.protobuf.Timestamp
+	31, // 21: wekalist.api.v1.UserSession.client_info:type_name -> wekalist.api.v1.UserSession.ClientInfo
+	23, // 22: wekalist.api.v1.ListUserSessionsResponse.sessions:type_name -> wekalist.api.v1.UserSession
+	13, // 23: wekalist.api.v1.ListAllUserStatsResponse.user_stats:type_name -> wekalist.api.v1.UserStats
+	2,  // 24: wekalist.api.v1.UserService.VerifyUser:input_type -> wekalist.api.v1.VerifyRequest
+	4,  // 25: wekalist.api.v1.UserService.ListUsers:input_type -> wekalist.api.v1.ListUsersRequest
+	6,  // 26: wekalist.api.v1.UserService.GetUser:input_type -> wekalist.api.v1.GetUserRequest
+	7,  // 27: wekalist.api.v1.UserService.CreateUser:input_type -> wekalist.api.v1.CreateUserRequest
+	8,  // 28: wekalist.api.v1.UserService.UpdateUser:input_type -> wekalist.api.v1.UpdateUserRequest
+	9,  // 29: wekalist.api.v1.UserService.DeleteUser:input_type -> wekalist.api.v1.DeleteUserRequest
+	10, // 30: wekalist.api.v1.UserService.SearchUsers:input_type -> wekalist.api.v1.SearchUsersRequest
+	12, // 31: wekalist.api.v1.UserService.GetUserAvatar:input_type -> wekalist.api.v1.GetUserAvatarRequest
+	27, // 32: wekalist.api.v1.UserService.ListAllUserStats:input_type -> wekalist.api.v1.ListAllUserStatsRequest
+	14, // 33: wekalist.api.v1.UserService.GetUserStats:input_type -> wekalist.api.v1.GetUserStatsRequest
+	16, // 34: wekalist.api.v1.UserService.GetUserSetting:input_type -> wekalist.api.v1.GetUserSettingRequest
+	17, // 35: wekalist.api.v1.UserService.UpdateUserSetting:input_type -> wekalist.api.v1.UpdateUserSettingRequest
+	19, // 36: wekalist.api.v1.UserService.ListUserAccessTokens:input_type -> wekalist.api.v1.ListUserAccessTokensRequest
+	21, // 37: wekalist.api.v1.UserService.CreateUserAccessToken:input_type -> wekalist.api.v1.CreateUserAccessTokenRequest
+	22, // 38: wekalist.api.v1.UserService.DeleteUserAccessToken:input_type -> wekalist.api.v1.DeleteUserAccessTokenRequest
+	24, // 39: wekalist.api.v1.UserService.ListUserSessions:input_type -> wekalist.api.v1.ListUserSessionsRequest
+	26, // 40: wekalist.api.v1.UserService.RevokeUserSession:input_type -> wekalist.api.v1.RevokeUserSessionRequest
+	3,  // 41: wekalist.api.v1.UserService.VerifyUser:output_type -> wekalist.api.v1.VerifyResponse
+	5,  // 42: wekalist.api.v1.UserService.ListUsers:output_type -> wekalist.api.v1.ListUsersResponse
+	1,  // 43: wekalist.api.v1.UserService.GetUser:output_type -> wekalist.api.v1.User
+	1,  // 44: wekalist.api.v1.UserService.CreateUser:output_type -> wekalist.api.v1.User
+	1,  // 45: wekalist.api.v1.UserService.UpdateUser:output_type -> wekalist.api.v1.User
+	35, // 46: wekalist.api.v1.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	11, // 47: wekalist.api.v1.UserService.SearchUsers:output_type -> wekalist.api.v1.SearchUsersResponse
+	36, // 48: wekalist.api.v1.UserService.GetUserAvatar:output_type -> google.api.HttpBody
+	28, // 49: wekalist.api.v1.UserService.ListAllUserStats:output_type -> wekalist.api.v1.ListAllUserStatsResponse
+	13, // 50: wekalist.api.v1.UserService.GetUserStats:output_type -> wekalist.api.v1.UserStats
+	15, // 51: wekalist.api.v1.UserService.GetUserSetting:output_type -> wekalist.api.v1.UserSetting
+	15, // 52: wekalist.api.v1.UserService.UpdateUserSetting:output_type -> wekalist.api.v1.UserSetting
+	20, // 53: wekalist.api.v1.UserService.ListUserAccessTokens:output_type -> wekalist.api.v1.ListUserAccessTokensResponse
+	18, // 54: wekalist.api.v1.UserService.CreateUserAccessToken:output_type -> wekalist.api.v1.UserAccessToken
+	35, // 55: wekalist.api.v1.UserService.DeleteUserAccessToken:output_type -> google.protobuf.Empty
+	25, // 56: wekalist.api.v1.UserService.ListUserSessions:output_type -> wekalist.api.v1.ListUserSessionsResponse
+	35, // 57: wekalist.api.v1.UserService.RevokeUserSession:output_type -> google.protobuf.Empty
 	41, // [41:58] is the sub-list for method output_type
 	24, // [24:41] is the sub-list for method input_type
 	24, // [24:24] is the sub-list for extension type_name

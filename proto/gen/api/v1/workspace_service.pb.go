@@ -610,7 +610,7 @@ func (x *WorkspaceCustomProfile) GetAppearance() string {
 type WorkspaceStorageSetting struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// storage_type is the storage type.
-	StorageType WorkspaceStorageSetting_StorageType `protobuf:"varint,1,opt,name=storage_type,json=storageType,proto3,enum=memos.api.v1.WorkspaceStorageSetting_StorageType" json:"storage_type,omitempty"`
+	StorageType WorkspaceStorageSetting_StorageType `protobuf:"varint,1,opt,name=storage_type,json=storageType,proto3,enum=wekalist.api.v1.WorkspaceStorageSetting_StorageType" json:"storage_type,omitempty"`
 	// The template of file path.
 	// e.g. assets/{timestamp}_{filename}
 	FilepathTemplate string `protobuf:"bytes,2,opt,name=filepath_template,json=filepathTemplate,proto3" json:"filepath_template,omitempty"`
@@ -997,33 +997,33 @@ var File_api_v1_workspace_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1eapi/v1/workspace_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a google/protobuf/field_mask.proto\"y\n" +
+	"\x1eapi/v1/workspace_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a google/protobuf/field_mask.proto\"y\n" +
 	"\x10WorkspaceProfile\x12\x14\n" +
 	"\x05owner\x18\x01 \x01(\tR\x05owner\x12\x18\n" +
 	"\aversion\x18\x02 \x01(\tR\aversion\x12\x12\n" +
 	"\x04mode\x18\x03 \x01(\tR\x04mode\x12!\n" +
 	"\finstance_url\x18\x06 \x01(\tR\vinstanceUrl\"\x1c\n" +
-	"\x1aGetWorkspaceProfileRequest\"\xf2\x03\n" +
+	"\x1aGetWorkspaceProfileRequest\"\xfe\x03\n" +
 	"\x10WorkspaceSetting\x12\x17\n" +
-	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12P\n" +
-	"\x0fgeneral_setting\x18\x02 \x01(\v2%.memos.api.v1.WorkspaceGeneralSettingH\x00R\x0egeneralSetting\x12P\n" +
-	"\x0fstorage_setting\x18\x03 \x01(\v2%.memos.api.v1.WorkspaceStorageSettingH\x00R\x0estorageSetting\x12]\n" +
-	"\x14memo_related_setting\x18\x04 \x01(\v2).memos.api.v1.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSetting\"Q\n" +
+	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12S\n" +
+	"\x0fgeneral_setting\x18\x02 \x01(\v2(.wekalist.api.v1.WorkspaceGeneralSettingH\x00R\x0egeneralSetting\x12S\n" +
+	"\x0fstorage_setting\x18\x03 \x01(\v2(.wekalist.api.v1.WorkspaceStorageSettingH\x00R\x0estorageSetting\x12`\n" +
+	"\x14memo_related_setting\x18\x04 \x01(\v2,.wekalist.api.v1.WorkspaceMemoRelatedSettingH\x00R\x12memoRelatedSetting\"Q\n" +
 	"\x03Key\x12\x13\n" +
 	"\x0fKEY_UNSPECIFIED\x10\x00\x12\t\n" +
 	"\x05BASIC\x10\x01\x12\v\n" +
 	"\aGENERAL\x10\x02\x12\v\n" +
 	"\aSTORAGE\x10\x03\x12\x10\n" +
-	"\fMEMO_RELATED\x10\x04:f\xeaAc\n" +
-	"\x1eapi.memos.dev/WorkspaceSetting\x12\x1cworkspace/settings/{setting}*\x11workspaceSettings2\x10workspaceSettingB\a\n" +
-	"\x05value\"\xfb\x05\n" +
+	"\fMEMO_RELATED\x10\x04:i\xeaAf\n" +
+	"!api.wekalist.dev/WorkspaceSetting\x12\x1cworkspace/settings/{setting}*\x11workspaceSettings2\x10workspaceSettingB\a\n" +
+	"\x05value\"\xfe\x05\n" +
 	"\x17WorkspaceGeneralSetting\x12\x14\n" +
 	"\x05theme\x18\x01 \x01(\tR\x05theme\x12<\n" +
 	"\x1adisallow_user_registration\x18\x02 \x01(\bR\x18disallowUserRegistration\x124\n" +
 	"\x16disallow_password_auth\x18\x03 \x01(\bR\x14disallowPasswordAuth\x12+\n" +
 	"\x11additional_script\x18\x04 \x01(\tR\x10additionalScript\x12)\n" +
-	"\x10additional_style\x18\x05 \x01(\tR\x0fadditionalStyle\x12K\n" +
-	"\x0ecustom_profile\x18\x06 \x01(\v2$.memos.api.v1.WorkspaceCustomProfileR\rcustomProfile\x121\n" +
+	"\x10additional_style\x18\x05 \x01(\tR\x0fadditionalStyle\x12N\n" +
+	"\x0ecustom_profile\x18\x06 \x01(\v2'.wekalist.api.v1.WorkspaceCustomProfileR\rcustomProfile\x121\n" +
 	"\x15week_start_day_offset\x18\a \x01(\x05R\x12weekStartDayOffset\x128\n" +
 	"\x18disallow_change_username\x18\b \x01(\bR\x16disallowChangeUsername\x128\n" +
 	"\x18disallow_change_nickname\x18\t \x01(\bR\x16disallowChangeNickname\x12:\n" +
@@ -1041,12 +1041,12 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\x06locale\x18\x04 \x01(\tR\x06locale\x12\x1e\n" +
 	"\n" +
 	"appearance\x18\x05 \x01(\tR\n" +
-	"appearance\"\xb7\x04\n" +
-	"\x17WorkspaceStorageSetting\x12T\n" +
-	"\fstorage_type\x18\x01 \x01(\x0e21.memos.api.v1.WorkspaceStorageSetting.StorageTypeR\vstorageType\x12+\n" +
+	"appearance\"\xbd\x04\n" +
+	"\x17WorkspaceStorageSetting\x12W\n" +
+	"\fstorage_type\x18\x01 \x01(\x0e24.wekalist.api.v1.WorkspaceStorageSetting.StorageTypeR\vstorageType\x12+\n" +
 	"\x11filepath_template\x18\x02 \x01(\tR\x10filepathTemplate\x12/\n" +
-	"\x14upload_size_limit_mb\x18\x03 \x01(\x03R\x11uploadSizeLimitMb\x12K\n" +
-	"\ts3_config\x18\x04 \x01(\v2..memos.api.v1.WorkspaceStorageSetting.S3ConfigR\bs3Config\x1a\xcc\x01\n" +
+	"\x14upload_size_limit_mb\x18\x03 \x01(\x03R\x11uploadSizeLimitMb\x12N\n" +
+	"\ts3_config\x18\x04 \x01(\v21.wekalist.api.v1.WorkspaceStorageSetting.S3ConfigR\bs3Config\x1a\xcc\x01\n" +
 	"\bS3Config\x12\"\n" +
 	"\raccess_key_id\x18\x01 \x01(\tR\vaccessKeyId\x12*\n" +
 	"\x11access_key_secret\x18\x02 \x01(\tR\x0faccessKeySecret\x12\x1a\n" +
@@ -1070,19 +1070,19 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\x1adisable_markdown_shortcuts\x18\b \x01(\bR\x18disableMarkdownShortcuts\x127\n" +
 	"\x18enable_blur_nsfw_content\x18\t \x01(\bR\x15enableBlurNsfwContent\x12\x1b\n" +
 	"\tnsfw_tags\x18\n" +
-	" \x03(\tR\bnsfwTags\"X\n" +
-	"\x1aGetWorkspaceSettingRequest\x12:\n" +
-	"\x04name\x18\x01 \x01(\tB&\xe0A\x02\xfaA \n" +
-	"\x1eapi.memos.dev/WorkspaceSettingR\x04name\"\xa0\x01\n" +
-	"\x1dUpdateWorkspaceSettingRequest\x12=\n" +
-	"\asetting\x18\x01 \x01(\v2\x1e.memos.api.v1.WorkspaceSettingB\x03\xe0A\x02R\asetting\x12@\n" +
+	" \x03(\tR\bnsfwTags\"[\n" +
+	"\x1aGetWorkspaceSettingRequest\x12=\n" +
+	"\x04name\x18\x01 \x01(\tB)\xe0A\x02\xfaA#\n" +
+	"!api.wekalist.dev/WorkspaceSettingR\x04name\"\xa3\x01\n" +
+	"\x1dUpdateWorkspaceSettingRequest\x12@\n" +
+	"\asetting\x18\x01 \x01(\v2!.wekalist.api.v1.WorkspaceSettingB\x03\xe0A\x02R\asetting\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\n" +
-	"updateMask2\xe9\x03\n" +
-	"\x10WorkspaceService\x12\x82\x01\n" +
-	"\x13GetWorkspaceProfile\x12(.memos.api.v1.GetWorkspaceProfileRequest\x1a\x1e.memos.api.v1.WorkspaceProfile\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/workspace/profile\x12\x93\x01\n" +
-	"\x13GetWorkspaceSetting\x12(.memos.api.v1.GetWorkspaceSettingRequest\x1a\x1e.memos.api.v1.WorkspaceSetting\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%\x12#/api/v1/{name=workspace/settings/*}\x12\xb9\x01\n" +
-	"\x16UpdateWorkspaceSetting\x12+.memos.api.v1.UpdateWorkspaceSettingRequest\x1a\x1e.memos.api.v1.WorkspaceSetting\"R\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x026:\asetting2+/api/v1/{setting.name=workspace/settings/*}B\xad\x01\n" +
-	"\x10com.memos.api.v1B\x15WorkspaceServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"updateMask2\xfb\x03\n" +
+	"\x10WorkspaceService\x12\x88\x01\n" +
+	"\x13GetWorkspaceProfile\x12+.wekalist.api.v1.GetWorkspaceProfileRequest\x1a!.wekalist.api.v1.WorkspaceProfile\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/workspace/profile\x12\x99\x01\n" +
+	"\x13GetWorkspaceSetting\x12+.wekalist.api.v1.GetWorkspaceSettingRequest\x1a!.wekalist.api.v1.WorkspaceSetting\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%\x12#/api/v1/{name=workspace/settings/*}\x12\xbf\x01\n" +
+	"\x16UpdateWorkspaceSetting\x12..wekalist.api.v1.UpdateWorkspaceSettingRequest\x1a!.wekalist.api.v1.WorkspaceSetting\"R\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x026:\asetting2+/api/v1/{setting.name=workspace/settings/*}B\xbc\x01\n" +
+	"\x13com.wekalist.api.v1B\x15WorkspaceServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_workspace_service_proto_rawDescOnce sync.Once
@@ -1099,35 +1099,35 @@ func file_api_v1_workspace_service_proto_rawDescGZIP() []byte {
 var file_api_v1_workspace_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1_workspace_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_api_v1_workspace_service_proto_goTypes = []any{
-	(WorkspaceSetting_Key)(0),                // 0: memos.api.v1.WorkspaceSetting.Key
-	(WorkspaceStorageSetting_StorageType)(0), // 1: memos.api.v1.WorkspaceStorageSetting.StorageType
-	(*WorkspaceProfile)(nil),                 // 2: memos.api.v1.WorkspaceProfile
-	(*GetWorkspaceProfileRequest)(nil),       // 3: memos.api.v1.GetWorkspaceProfileRequest
-	(*WorkspaceSetting)(nil),                 // 4: memos.api.v1.WorkspaceSetting
-	(*WorkspaceGeneralSetting)(nil),          // 5: memos.api.v1.WorkspaceGeneralSetting
-	(*WorkspaceCustomProfile)(nil),           // 6: memos.api.v1.WorkspaceCustomProfile
-	(*WorkspaceStorageSetting)(nil),          // 7: memos.api.v1.WorkspaceStorageSetting
-	(*WorkspaceMemoRelatedSetting)(nil),      // 8: memos.api.v1.WorkspaceMemoRelatedSetting
-	(*GetWorkspaceSettingRequest)(nil),       // 9: memos.api.v1.GetWorkspaceSettingRequest
-	(*UpdateWorkspaceSettingRequest)(nil),    // 10: memos.api.v1.UpdateWorkspaceSettingRequest
-	(*WorkspaceStorageSetting_S3Config)(nil), // 11: memos.api.v1.WorkspaceStorageSetting.S3Config
+	(WorkspaceSetting_Key)(0),                // 0: wekalist.api.v1.WorkspaceSetting.Key
+	(WorkspaceStorageSetting_StorageType)(0), // 1: wekalist.api.v1.WorkspaceStorageSetting.StorageType
+	(*WorkspaceProfile)(nil),                 // 2: wekalist.api.v1.WorkspaceProfile
+	(*GetWorkspaceProfileRequest)(nil),       // 3: wekalist.api.v1.GetWorkspaceProfileRequest
+	(*WorkspaceSetting)(nil),                 // 4: wekalist.api.v1.WorkspaceSetting
+	(*WorkspaceGeneralSetting)(nil),          // 5: wekalist.api.v1.WorkspaceGeneralSetting
+	(*WorkspaceCustomProfile)(nil),           // 6: wekalist.api.v1.WorkspaceCustomProfile
+	(*WorkspaceStorageSetting)(nil),          // 7: wekalist.api.v1.WorkspaceStorageSetting
+	(*WorkspaceMemoRelatedSetting)(nil),      // 8: wekalist.api.v1.WorkspaceMemoRelatedSetting
+	(*GetWorkspaceSettingRequest)(nil),       // 9: wekalist.api.v1.GetWorkspaceSettingRequest
+	(*UpdateWorkspaceSettingRequest)(nil),    // 10: wekalist.api.v1.UpdateWorkspaceSettingRequest
+	(*WorkspaceStorageSetting_S3Config)(nil), // 11: wekalist.api.v1.WorkspaceStorageSetting.S3Config
 	(*fieldmaskpb.FieldMask)(nil),            // 12: google.protobuf.FieldMask
 }
 var file_api_v1_workspace_service_proto_depIdxs = []int32{
-	5,  // 0: memos.api.v1.WorkspaceSetting.general_setting:type_name -> memos.api.v1.WorkspaceGeneralSetting
-	7,  // 1: memos.api.v1.WorkspaceSetting.storage_setting:type_name -> memos.api.v1.WorkspaceStorageSetting
-	8,  // 2: memos.api.v1.WorkspaceSetting.memo_related_setting:type_name -> memos.api.v1.WorkspaceMemoRelatedSetting
-	6,  // 3: memos.api.v1.WorkspaceGeneralSetting.custom_profile:type_name -> memos.api.v1.WorkspaceCustomProfile
-	1,  // 4: memos.api.v1.WorkspaceStorageSetting.storage_type:type_name -> memos.api.v1.WorkspaceStorageSetting.StorageType
-	11, // 5: memos.api.v1.WorkspaceStorageSetting.s3_config:type_name -> memos.api.v1.WorkspaceStorageSetting.S3Config
-	4,  // 6: memos.api.v1.UpdateWorkspaceSettingRequest.setting:type_name -> memos.api.v1.WorkspaceSetting
-	12, // 7: memos.api.v1.UpdateWorkspaceSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
-	3,  // 8: memos.api.v1.WorkspaceService.GetWorkspaceProfile:input_type -> memos.api.v1.GetWorkspaceProfileRequest
-	9,  // 9: memos.api.v1.WorkspaceService.GetWorkspaceSetting:input_type -> memos.api.v1.GetWorkspaceSettingRequest
-	10, // 10: memos.api.v1.WorkspaceService.UpdateWorkspaceSetting:input_type -> memos.api.v1.UpdateWorkspaceSettingRequest
-	2,  // 11: memos.api.v1.WorkspaceService.GetWorkspaceProfile:output_type -> memos.api.v1.WorkspaceProfile
-	4,  // 12: memos.api.v1.WorkspaceService.GetWorkspaceSetting:output_type -> memos.api.v1.WorkspaceSetting
-	4,  // 13: memos.api.v1.WorkspaceService.UpdateWorkspaceSetting:output_type -> memos.api.v1.WorkspaceSetting
+	5,  // 0: wekalist.api.v1.WorkspaceSetting.general_setting:type_name -> wekalist.api.v1.WorkspaceGeneralSetting
+	7,  // 1: wekalist.api.v1.WorkspaceSetting.storage_setting:type_name -> wekalist.api.v1.WorkspaceStorageSetting
+	8,  // 2: wekalist.api.v1.WorkspaceSetting.memo_related_setting:type_name -> wekalist.api.v1.WorkspaceMemoRelatedSetting
+	6,  // 3: wekalist.api.v1.WorkspaceGeneralSetting.custom_profile:type_name -> wekalist.api.v1.WorkspaceCustomProfile
+	1,  // 4: wekalist.api.v1.WorkspaceStorageSetting.storage_type:type_name -> wekalist.api.v1.WorkspaceStorageSetting.StorageType
+	11, // 5: wekalist.api.v1.WorkspaceStorageSetting.s3_config:type_name -> wekalist.api.v1.WorkspaceStorageSetting.S3Config
+	4,  // 6: wekalist.api.v1.UpdateWorkspaceSettingRequest.setting:type_name -> wekalist.api.v1.WorkspaceSetting
+	12, // 7: wekalist.api.v1.UpdateWorkspaceSettingRequest.update_mask:type_name -> google.protobuf.FieldMask
+	3,  // 8: wekalist.api.v1.WorkspaceService.GetWorkspaceProfile:input_type -> wekalist.api.v1.GetWorkspaceProfileRequest
+	9,  // 9: wekalist.api.v1.WorkspaceService.GetWorkspaceSetting:input_type -> wekalist.api.v1.GetWorkspaceSettingRequest
+	10, // 10: wekalist.api.v1.WorkspaceService.UpdateWorkspaceSetting:input_type -> wekalist.api.v1.UpdateWorkspaceSettingRequest
+	2,  // 11: wekalist.api.v1.WorkspaceService.GetWorkspaceProfile:output_type -> wekalist.api.v1.WorkspaceProfile
+	4,  // 12: wekalist.api.v1.WorkspaceService.GetWorkspaceSetting:output_type -> wekalist.api.v1.WorkspaceSetting
+	4,  // 13: wekalist.api.v1.WorkspaceService.UpdateWorkspaceSetting:output_type -> wekalist.api.v1.WorkspaceSetting
 	11, // [11:14] is the sub-list for method output_type
 	8,  // [8:11] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name

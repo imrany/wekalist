@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package memos.api.v1;
+package wekalist.api.v1;
 
 import "api/v1/common.proto";
 import "google/api/annotations.proto";
@@ -132,7 +132,7 @@ service UserService {
 
 message User {
   option (google.api.resource) = {
-    type: "memos.api.v1/User"
+    type: "wekalist.api.v1/User"
     pattern: "users/{user}"
     name_field: "name"
     singular: "user"
@@ -257,7 +257,7 @@ message GetUserRequest {
   // Format: users/{user}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 
   // Optional. The fields to return in the response.
@@ -301,7 +301,7 @@ message DeleteUserRequest {
   // Format: users/{user}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 
   // Optional. If set to true, the user will be deleted even if they have associated data.
@@ -335,14 +335,14 @@ message GetUserAvatarRequest {
   // Format: users/{user}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 }
 
 // User statistics messages
 message UserStats {
   option (google.api.resource) = {
-    type: "memos.api.v1/UserStats"
+    type: "wekalist.api.v1/UserStats"
     pattern: "users/{user}"
     singular: "userStats"
     plural: "userStats"
@@ -381,14 +381,14 @@ message GetUserStatsRequest {
   // Format: users/{user}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 }
 
 // User settings message
 message UserSetting {
   option (google.api.resource) = {
-    type: "memos.api.v1/UserSetting"
+    type: "wekalist.api.v1/UserSetting"
     pattern: "users/{user}"
     singular: "userSetting"
     plural: "userSettings"
@@ -426,7 +426,7 @@ message GetUserSettingRequest {
   // Format: users/{user}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 }
 
@@ -441,7 +441,7 @@ message UpdateUserSettingRequest {
 // User access token message
 message UserAccessToken {
   option (google.api.resource) = {
-    type: "memos.api.v1/UserAccessToken"
+    type: "wekalist.api.v1/UserAccessToken"
     pattern: "users/{user}/accessTokens/{access_token}"
     singular: "userAccessToken"
     plural: "userAccessTokens"
@@ -469,7 +469,7 @@ message ListUserAccessTokensRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 
   // Optional. The maximum number of access tokens to return.
@@ -495,7 +495,7 @@ message CreateUserAccessTokenRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 
   // Required. The access token to create.
@@ -510,13 +510,13 @@ message DeleteUserAccessTokenRequest {
   // Format: users/{user}/accessTokens/{access_token}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/UserAccessToken"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/UserAccessToken"}
   ];
 }
 
 message UserSession {
   option (google.api.resource) = {
-    type: "memos.api.v1/UserSession"
+    type: "wekalist.api.v1/UserSession"
     pattern: "users/{user}/sessions/{session}"
     name_field: "name"
   };
@@ -561,7 +561,7 @@ message ListUserSessionsRequest {
   // Format: users/{user}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/User"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/User"}
   ];
 }
 
@@ -575,7 +575,7 @@ message RevokeUserSessionRequest {
   // Format: users/{user}/sessions/{session}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {type: "memos.api.v1/UserSession"}
+    (google.api.resource_reference) = {type: "wekalist.api.v1/UserSession"}
   ];
 }
 

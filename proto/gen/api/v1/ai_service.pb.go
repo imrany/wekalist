@@ -135,16 +135,16 @@ var File_api_v1_ai_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_ai_service_proto_rawDesc = "" +
 	"\n" +
-	"\x17api/v1/ai_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x17google/rpc/status.proto\"+\n" +
+	"\x17api/v1/ai_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x17google/rpc/status.proto\"+\n" +
 	"\fGenAiRequest\x12\x1b\n" +
 	"\x06prompt\x18\x01 \x01(\tB\x03\xe0A\x02R\x06prompt\"~\n" +
 	"\rGenAiResponse\x12\x1b\n" +
 	"\x06prompt\x18\x01 \x01(\tB\x03\xe0A\x02R\x06prompt\x12\x1f\n" +
 	"\bresponse\x18\x02 \x01(\tB\x03\xe0A\x02R\bresponse\x12/\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.google.rpc.StatusB\x03\xe0A\x01R\x06status2h\n" +
-	"\tAiService\x12[\n" +
-	"\x05GenAi\x12\x1a.memos.api.v1.GenAiRequest\x1a\x1b.memos.api.v1.GenAiResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x06prompt\"\t/v1/genaiB\xa6\x01\n" +
-	"\x10com.memos.api.v1B\x0eAiServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"\x06status\x18\x03 \x01(\v2\x12.google.rpc.StatusB\x03\xe0A\x01R\x06status2n\n" +
+	"\tAiService\x12a\n" +
+	"\x05GenAi\x12\x1d.wekalist.api.v1.GenAiRequest\x1a\x1e.wekalist.api.v1.GenAiResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x06prompt\"\t/v1/genaiB\xb5\x01\n" +
+	"\x13com.wekalist.api.v1B\x0eAiServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_ai_service_proto_rawDescOnce sync.Once
@@ -160,14 +160,14 @@ func file_api_v1_ai_service_proto_rawDescGZIP() []byte {
 
 var file_api_v1_ai_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_api_v1_ai_service_proto_goTypes = []any{
-	(*GenAiRequest)(nil),  // 0: memos.api.v1.GenAiRequest
-	(*GenAiResponse)(nil), // 1: memos.api.v1.GenAiResponse
+	(*GenAiRequest)(nil),  // 0: wekalist.api.v1.GenAiRequest
+	(*GenAiResponse)(nil), // 1: wekalist.api.v1.GenAiResponse
 	(*status.Status)(nil), // 2: google.rpc.Status
 }
 var file_api_v1_ai_service_proto_depIdxs = []int32{
-	2, // 0: memos.api.v1.GenAiResponse.status:type_name -> google.rpc.Status
-	0, // 1: memos.api.v1.AiService.GenAi:input_type -> memos.api.v1.GenAiRequest
-	1, // 2: memos.api.v1.AiService.GenAi:output_type -> memos.api.v1.GenAiResponse
+	2, // 0: wekalist.api.v1.GenAiResponse.status:type_name -> google.rpc.Status
+	0, // 1: wekalist.api.v1.AiService.GenAi:input_type -> wekalist.api.v1.GenAiRequest
+	1, // 2: wekalist.api.v1.AiService.GenAi:output_type -> wekalist.api.v1.GenAiResponse
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

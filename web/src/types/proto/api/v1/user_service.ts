@@ -12,7 +12,7 @@ import { FieldMask } from "../../google/protobuf/field_mask";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import { State, stateFromJSON, stateToNumber } from "./common";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface User {
   /**
@@ -2807,7 +2807,7 @@ export const ListAllUserStatsResponse: MessageFns<ListAllUserStatsResponse> = {
 export type UserServiceDefinition = typeof UserServiceDefinition;
 export const UserServiceDefinition = {
   name: "UserService",
-  fullName: "memos.api.v1.UserService",
+  fullName: "wekalist.api.v1.UserService",
   methods: {
     /** VerifyUser, verifies user's email. */
     verifyUser: {

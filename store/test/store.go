@@ -13,10 +13,10 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/usememos/memos/internal/profile"
-	"github.com/usememos/memos/internal/version"
-	"github.com/usememos/memos/store"
-	"github.com/usememos/memos/store/db"
+	"github.com/imrany/wekalist/internal/profile"
+	"github.com/imrany/wekalist/internal/version"
+	"github.com/imrany/wekalist/store"
+	"github.com/imrany/wekalist/store/db"
 )
 
 func NewTestingStore(ctx context.Context, t *testing.T) *store.Store {

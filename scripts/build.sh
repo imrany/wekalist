@@ -11,9 +11,9 @@ OS=$(uname -s)
 
 # Set output file name based on the OS
 if [[ "$OS" == *"CYGWIN"* || "$OS" == *"MINGW"* || "$OS" == *"MSYS"* ]]; then
-  OUTPUT="./bin/memos.exe"
+  OUTPUT="./bin/wekalist.exe"
 else
-  OUTPUT="./bin/memos"
+  OUTPUT="./bin/wekalist"
 fi
 
 echo "Building for $OS..."

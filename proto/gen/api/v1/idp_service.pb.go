@@ -77,7 +77,7 @@ type IdentityProvider struct {
 	// Format: identityProviders/{idp}
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Required. The type of the identity provider.
-	Type IdentityProvider_Type `protobuf:"varint,2,opt,name=type,proto3,enum=memos.api.v1.IdentityProvider_Type" json:"type,omitempty"`
+	Type IdentityProvider_Type `protobuf:"varint,2,opt,name=type,proto3,enum=wekalist.api.v1.IdentityProvider_Type" json:"type,omitempty"`
 	// Required. The display title of the identity provider.
 	Title string `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
 	// Optional. Filter applied to user identifiers.
@@ -666,20 +666,20 @@ var File_api_v1_idp_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_idp_service_proto_rawDesc = "" +
 	"\n" +
-	"\x18api/v1/idp_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\x8b\x03\n" +
+	"\x18api/v1/idp_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\x94\x03\n" +
 	"\x10IdentityProvider\x12\x17\n" +
-	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12<\n" +
-	"\x04type\x18\x02 \x01(\x0e2#.memos.api.v1.IdentityProvider.TypeB\x03\xe0A\x02R\x04type\x12\x19\n" +
+	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12?\n" +
+	"\x04type\x18\x02 \x01(\x0e2&.wekalist.api.v1.IdentityProvider.TypeB\x03\xe0A\x02R\x04type\x12\x19\n" +
 	"\x05title\x18\x03 \x01(\tB\x03\xe0A\x02R\x05title\x120\n" +
-	"\x11identifier_filter\x18\x04 \x01(\tB\x03\xe0A\x01R\x10identifierFilter\x12A\n" +
-	"\x06config\x18\x05 \x01(\v2$.memos.api.v1.IdentityProviderConfigB\x03\xe0A\x02R\x06config\"(\n" +
+	"\x11identifier_filter\x18\x04 \x01(\tB\x03\xe0A\x01R\x10identifierFilter\x12D\n" +
+	"\x06config\x18\x05 \x01(\v2'.wekalist.api.v1.IdentityProviderConfigB\x03\xe0A\x02R\x06config\"(\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
-	"\x06OAUTH2\x10\x01:f\xeaAc\n" +
-	"\x1dmemos.api.v1/IdentityProvider\x12\x17identityProviders/{idp}\x1a\x04name*\x11identityProviders2\x10identityProvider\"e\n" +
-	"\x16IdentityProviderConfig\x12A\n" +
-	"\roauth2_config\x18\x01 \x01(\v2\x1a.memos.api.v1.OAuth2ConfigH\x00R\foauth2ConfigB\b\n" +
+	"\x06OAUTH2\x10\x01:i\xeaAf\n" +
+	" wekalist.api.v1/IdentityProvider\x12\x17identityProviders/{idp}\x1a\x04name*\x11identityProviders2\x10identityProvider\"h\n" +
+	"\x16IdentityProviderConfig\x12D\n" +
+	"\roauth2_config\x18\x01 \x01(\v2\x1d.wekalist.api.v1.OAuth2ConfigH\x00R\foauth2ConfigB\b\n" +
 	"\x06config\"\x86\x01\n" +
 	"\fFieldMapping\x12\x1e\n" +
 	"\n" +
@@ -688,38 +688,38 @@ const file_api_v1_idp_service_proto_rawDesc = "" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
-	"avatar_url\x18\x04 \x01(\tR\tavatarUrl\"\x85\x02\n" +
+	"avatar_url\x18\x04 \x01(\tR\tavatarUrl\"\x88\x02\n" +
 	"\fOAuth2Config\x12\x1b\n" +
 	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12#\n" +
 	"\rclient_secret\x18\x02 \x01(\tR\fclientSecret\x12\x19\n" +
 	"\bauth_url\x18\x03 \x01(\tR\aauthUrl\x12\x1b\n" +
 	"\ttoken_url\x18\x04 \x01(\tR\btokenUrl\x12\"\n" +
 	"\ruser_info_url\x18\x05 \x01(\tR\vuserInfoUrl\x12\x16\n" +
-	"\x06scopes\x18\x06 \x03(\tR\x06scopes\x12?\n" +
-	"\rfield_mapping\x18\a \x01(\v2\x1a.memos.api.v1.FieldMappingR\ffieldMapping\"\x1e\n" +
-	"\x1cListIdentityProvidersRequest\"n\n" +
-	"\x1dListIdentityProvidersResponse\x12M\n" +
-	"\x12identity_providers\x18\x01 \x03(\v2\x1e.memos.api.v1.IdentityProviderR\x11identityProviders\"W\n" +
-	"\x1aGetIdentityProviderRequest\x129\n" +
-	"\x04name\x18\x01 \x01(\tB%\xe0A\x02\xfaA\x1f\n" +
-	"\x1dmemos.api.v1/IdentityProviderR\x04name\"\xa8\x01\n" +
-	"\x1dCreateIdentityProviderRequest\x12P\n" +
-	"\x11identity_provider\x18\x01 \x01(\v2\x1e.memos.api.v1.IdentityProviderB\x03\xe0A\x02R\x10identityProvider\x125\n" +
-	"\x14identity_provider_id\x18\x02 \x01(\tB\x03\xe0A\x01R\x12identityProviderId\"\xb3\x01\n" +
-	"\x1dUpdateIdentityProviderRequest\x12P\n" +
-	"\x11identity_provider\x18\x01 \x01(\v2\x1e.memos.api.v1.IdentityProviderB\x03\xe0A\x02R\x10identityProvider\x12@\n" +
+	"\x06scopes\x18\x06 \x03(\tR\x06scopes\x12B\n" +
+	"\rfield_mapping\x18\a \x01(\v2\x1d.wekalist.api.v1.FieldMappingR\ffieldMapping\"\x1e\n" +
+	"\x1cListIdentityProvidersRequest\"q\n" +
+	"\x1dListIdentityProvidersResponse\x12P\n" +
+	"\x12identity_providers\x18\x01 \x03(\v2!.wekalist.api.v1.IdentityProviderR\x11identityProviders\"Z\n" +
+	"\x1aGetIdentityProviderRequest\x12<\n" +
+	"\x04name\x18\x01 \x01(\tB(\xe0A\x02\xfaA\"\n" +
+	" wekalist.api.v1/IdentityProviderR\x04name\"\xab\x01\n" +
+	"\x1dCreateIdentityProviderRequest\x12S\n" +
+	"\x11identity_provider\x18\x01 \x01(\v2!.wekalist.api.v1.IdentityProviderB\x03\xe0A\x02R\x10identityProvider\x125\n" +
+	"\x14identity_provider_id\x18\x02 \x01(\tB\x03\xe0A\x01R\x12identityProviderId\"\xb6\x01\n" +
+	"\x1dUpdateIdentityProviderRequest\x12S\n" +
+	"\x11identity_provider\x18\x01 \x01(\v2!.wekalist.api.v1.IdentityProviderB\x03\xe0A\x02R\x10identityProvider\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
-	"updateMask\"Z\n" +
-	"\x1dDeleteIdentityProviderRequest\x129\n" +
-	"\x04name\x18\x01 \x01(\tB%\xe0A\x02\xfaA\x1f\n" +
-	"\x1dmemos.api.v1/IdentityProviderR\x04name2\xe2\x06\n" +
-	"\x17IdentityProviderService\x12\x93\x01\n" +
-	"\x15ListIdentityProviders\x12*.memos.api.v1.ListIdentityProvidersRequest\x1a+.memos.api.v1.ListIdentityProvidersResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/identityProviders\x12\x92\x01\n" +
-	"\x13GetIdentityProvider\x12(.memos.api.v1.GetIdentityProviderRequest\x1a\x1e.memos.api.v1.IdentityProvider\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=identityProviders/*}\x12\xaf\x01\n" +
-	"\x16CreateIdentityProvider\x12+.memos.api.v1.CreateIdentityProviderRequest\x1a\x1e.memos.api.v1.IdentityProvider\"H\xdaA\x11identity_provider\x82\xd3\xe4\x93\x02.:\x11identity_provider\"\x19/api/v1/identityProviders\x12\xd6\x01\n" +
-	"\x16UpdateIdentityProvider\x12+.memos.api.v1.UpdateIdentityProviderRequest\x1a\x1e.memos.api.v1.IdentityProvider\"o\xdaA\x1didentity_provider,update_mask\x82\xd3\xe4\x93\x02I:\x11identity_provider24/api/v1/{identity_provider.name=identityProviders/*}\x12\x90\x01\n" +
-	"\x16DeleteIdentityProvider\x12+.memos.api.v1.DeleteIdentityProviderRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=identityProviders/*}B\xa7\x01\n" +
-	"\x10com.memos.api.v1B\x0fIdpServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"updateMask\"]\n" +
+	"\x1dDeleteIdentityProviderRequest\x12<\n" +
+	"\x04name\x18\x01 \x01(\tB(\xe0A\x02\xfaA\"\n" +
+	" wekalist.api.v1/IdentityProviderR\x04name2\xfd\x06\n" +
+	"\x17IdentityProviderService\x12\x99\x01\n" +
+	"\x15ListIdentityProviders\x12-.wekalist.api.v1.ListIdentityProvidersRequest\x1a..wekalist.api.v1.ListIdentityProvidersResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/identityProviders\x12\x98\x01\n" +
+	"\x13GetIdentityProvider\x12+.wekalist.api.v1.GetIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=identityProviders/*}\x12\xb5\x01\n" +
+	"\x16CreateIdentityProvider\x12..wekalist.api.v1.CreateIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"H\xdaA\x11identity_provider\x82\xd3\xe4\x93\x02.:\x11identity_provider\"\x19/api/v1/identityProviders\x12\xdc\x01\n" +
+	"\x16UpdateIdentityProvider\x12..wekalist.api.v1.UpdateIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"o\xdaA\x1didentity_provider,update_mask\x82\xd3\xe4\x93\x02I:\x11identity_provider24/api/v1/{identity_provider.name=identityProviders/*}\x12\x93\x01\n" +
+	"\x16DeleteIdentityProvider\x12..wekalist.api.v1.DeleteIdentityProviderRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=identityProviders/*}B\xb6\x01\n" +
+	"\x13com.wekalist.api.v1B\x0fIdpServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_idp_service_proto_rawDescOnce sync.Once
@@ -736,39 +736,39 @@ func file_api_v1_idp_service_proto_rawDescGZIP() []byte {
 var file_api_v1_idp_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_api_v1_idp_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_api_v1_idp_service_proto_goTypes = []any{
-	(IdentityProvider_Type)(0),            // 0: memos.api.v1.IdentityProvider.Type
-	(*IdentityProvider)(nil),              // 1: memos.api.v1.IdentityProvider
-	(*IdentityProviderConfig)(nil),        // 2: memos.api.v1.IdentityProviderConfig
-	(*FieldMapping)(nil),                  // 3: memos.api.v1.FieldMapping
-	(*OAuth2Config)(nil),                  // 4: memos.api.v1.OAuth2Config
-	(*ListIdentityProvidersRequest)(nil),  // 5: memos.api.v1.ListIdentityProvidersRequest
-	(*ListIdentityProvidersResponse)(nil), // 6: memos.api.v1.ListIdentityProvidersResponse
-	(*GetIdentityProviderRequest)(nil),    // 7: memos.api.v1.GetIdentityProviderRequest
-	(*CreateIdentityProviderRequest)(nil), // 8: memos.api.v1.CreateIdentityProviderRequest
-	(*UpdateIdentityProviderRequest)(nil), // 9: memos.api.v1.UpdateIdentityProviderRequest
-	(*DeleteIdentityProviderRequest)(nil), // 10: memos.api.v1.DeleteIdentityProviderRequest
+	(IdentityProvider_Type)(0),            // 0: wekalist.api.v1.IdentityProvider.Type
+	(*IdentityProvider)(nil),              // 1: wekalist.api.v1.IdentityProvider
+	(*IdentityProviderConfig)(nil),        // 2: wekalist.api.v1.IdentityProviderConfig
+	(*FieldMapping)(nil),                  // 3: wekalist.api.v1.FieldMapping
+	(*OAuth2Config)(nil),                  // 4: wekalist.api.v1.OAuth2Config
+	(*ListIdentityProvidersRequest)(nil),  // 5: wekalist.api.v1.ListIdentityProvidersRequest
+	(*ListIdentityProvidersResponse)(nil), // 6: wekalist.api.v1.ListIdentityProvidersResponse
+	(*GetIdentityProviderRequest)(nil),    // 7: wekalist.api.v1.GetIdentityProviderRequest
+	(*CreateIdentityProviderRequest)(nil), // 8: wekalist.api.v1.CreateIdentityProviderRequest
+	(*UpdateIdentityProviderRequest)(nil), // 9: wekalist.api.v1.UpdateIdentityProviderRequest
+	(*DeleteIdentityProviderRequest)(nil), // 10: wekalist.api.v1.DeleteIdentityProviderRequest
 	(*fieldmaskpb.FieldMask)(nil),         // 11: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),                 // 12: google.protobuf.Empty
 }
 var file_api_v1_idp_service_proto_depIdxs = []int32{
-	0,  // 0: memos.api.v1.IdentityProvider.type:type_name -> memos.api.v1.IdentityProvider.Type
-	2,  // 1: memos.api.v1.IdentityProvider.config:type_name -> memos.api.v1.IdentityProviderConfig
-	4,  // 2: memos.api.v1.IdentityProviderConfig.oauth2_config:type_name -> memos.api.v1.OAuth2Config
-	3,  // 3: memos.api.v1.OAuth2Config.field_mapping:type_name -> memos.api.v1.FieldMapping
-	1,  // 4: memos.api.v1.ListIdentityProvidersResponse.identity_providers:type_name -> memos.api.v1.IdentityProvider
-	1,  // 5: memos.api.v1.CreateIdentityProviderRequest.identity_provider:type_name -> memos.api.v1.IdentityProvider
-	1,  // 6: memos.api.v1.UpdateIdentityProviderRequest.identity_provider:type_name -> memos.api.v1.IdentityProvider
-	11, // 7: memos.api.v1.UpdateIdentityProviderRequest.update_mask:type_name -> google.protobuf.FieldMask
-	5,  // 8: memos.api.v1.IdentityProviderService.ListIdentityProviders:input_type -> memos.api.v1.ListIdentityProvidersRequest
-	7,  // 9: memos.api.v1.IdentityProviderService.GetIdentityProvider:input_type -> memos.api.v1.GetIdentityProviderRequest
-	8,  // 10: memos.api.v1.IdentityProviderService.CreateIdentityProvider:input_type -> memos.api.v1.CreateIdentityProviderRequest
-	9,  // 11: memos.api.v1.IdentityProviderService.UpdateIdentityProvider:input_type -> memos.api.v1.UpdateIdentityProviderRequest
-	10, // 12: memos.api.v1.IdentityProviderService.DeleteIdentityProvider:input_type -> memos.api.v1.DeleteIdentityProviderRequest
-	6,  // 13: memos.api.v1.IdentityProviderService.ListIdentityProviders:output_type -> memos.api.v1.ListIdentityProvidersResponse
-	1,  // 14: memos.api.v1.IdentityProviderService.GetIdentityProvider:output_type -> memos.api.v1.IdentityProvider
-	1,  // 15: memos.api.v1.IdentityProviderService.CreateIdentityProvider:output_type -> memos.api.v1.IdentityProvider
-	1,  // 16: memos.api.v1.IdentityProviderService.UpdateIdentityProvider:output_type -> memos.api.v1.IdentityProvider
-	12, // 17: memos.api.v1.IdentityProviderService.DeleteIdentityProvider:output_type -> google.protobuf.Empty
+	0,  // 0: wekalist.api.v1.IdentityProvider.type:type_name -> wekalist.api.v1.IdentityProvider.Type
+	2,  // 1: wekalist.api.v1.IdentityProvider.config:type_name -> wekalist.api.v1.IdentityProviderConfig
+	4,  // 2: wekalist.api.v1.IdentityProviderConfig.oauth2_config:type_name -> wekalist.api.v1.OAuth2Config
+	3,  // 3: wekalist.api.v1.OAuth2Config.field_mapping:type_name -> wekalist.api.v1.FieldMapping
+	1,  // 4: wekalist.api.v1.ListIdentityProvidersResponse.identity_providers:type_name -> wekalist.api.v1.IdentityProvider
+	1,  // 5: wekalist.api.v1.CreateIdentityProviderRequest.identity_provider:type_name -> wekalist.api.v1.IdentityProvider
+	1,  // 6: wekalist.api.v1.UpdateIdentityProviderRequest.identity_provider:type_name -> wekalist.api.v1.IdentityProvider
+	11, // 7: wekalist.api.v1.UpdateIdentityProviderRequest.update_mask:type_name -> google.protobuf.FieldMask
+	5,  // 8: wekalist.api.v1.IdentityProviderService.ListIdentityProviders:input_type -> wekalist.api.v1.ListIdentityProvidersRequest
+	7,  // 9: wekalist.api.v1.IdentityProviderService.GetIdentityProvider:input_type -> wekalist.api.v1.GetIdentityProviderRequest
+	8,  // 10: wekalist.api.v1.IdentityProviderService.CreateIdentityProvider:input_type -> wekalist.api.v1.CreateIdentityProviderRequest
+	9,  // 11: wekalist.api.v1.IdentityProviderService.UpdateIdentityProvider:input_type -> wekalist.api.v1.UpdateIdentityProviderRequest
+	10, // 12: wekalist.api.v1.IdentityProviderService.DeleteIdentityProvider:input_type -> wekalist.api.v1.DeleteIdentityProviderRequest
+	6,  // 13: wekalist.api.v1.IdentityProviderService.ListIdentityProviders:output_type -> wekalist.api.v1.ListIdentityProvidersResponse
+	1,  // 14: wekalist.api.v1.IdentityProviderService.GetIdentityProvider:output_type -> wekalist.api.v1.IdentityProvider
+	1,  // 15: wekalist.api.v1.IdentityProviderService.CreateIdentityProvider:output_type -> wekalist.api.v1.IdentityProvider
+	1,  // 16: wekalist.api.v1.IdentityProviderService.UpdateIdentityProvider:output_type -> wekalist.api.v1.IdentityProvider
+	12, // 17: wekalist.api.v1.IdentityProviderService.DeleteIdentityProvider:output_type -> google.protobuf.Empty
 	13, // [13:18] is the sub-list for method output_type
 	8,  // [8:13] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name

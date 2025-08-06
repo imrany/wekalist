@@ -12,9 +12,9 @@ import (
 	"github.com/usememos/gomark"
 	"github.com/usememos/gomark/renderer"
 
-	"github.com/usememos/memos/internal/profile"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/profile"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 const (
@@ -117,7 +117,7 @@ func (s *RSSService) generateRSSFromMemoList(ctx context.Context, memoList []*st
 		if err != nil {
 			return "", err
 		}
-		link := &feeds.Link{Href: baseURL + "/memos/" + memo.UID}
+		link := &feeds.Link{Href: baseURL + "/wekalist/" + memo.UID}
 		feed.Items[i] = &feeds.Item{
 			Link:        link,
 			Description: description,
@@ -167,7 +167,7 @@ func getRSSHeading(ctx context.Context, stores *store.Store) (RSSHeading, error)
 	}
 	if settings == nil || settings.CustomProfile == nil {
 		return RSSHeading{
-			Title:       "Memos",
+			Title:       "Wekalist",
 			Description: "An open source, lightweight note-taking service. Easily capture and share your great thoughts.",
 		}, nil
 	}

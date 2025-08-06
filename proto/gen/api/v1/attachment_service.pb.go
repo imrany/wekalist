@@ -44,7 +44,7 @@ type Attachment struct {
 	// Output only. The size of the attachment in bytes.
 	Size int64 `protobuf:"varint,7,opt,name=size,proto3" json:"size,omitempty"`
 	// Optional. The related memo. Refer to `Memo.name`.
-	// Format: memos/{memo}
+	// Format: wekalist/{memo}
 	Memo          *string `protobuf:"bytes,8,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -549,7 +549,7 @@ var File_api_v1_attachment_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_attachment_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1fapi/v1/attachment_service.proto\x12\fmemos.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x02\n" +
+	"\x1fapi/v1/attachment_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/httpbody.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfe\x02\n" +
 	"\n" +
 	"Attachment\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12@\n" +
@@ -560,13 +560,13 @@ const file_api_v1_attachment_service_proto_rawDesc = "" +
 	"\rexternal_link\x18\x05 \x01(\tB\x03\xe0A\x01R\fexternalLink\x12\x17\n" +
 	"\x04type\x18\x06 \x01(\tB\x03\xe0A\x02R\x04type\x12\x17\n" +
 	"\x04size\x18\a \x01(\x03B\x03\xe0A\x03R\x04size\x12\x1c\n" +
-	"\x04memo\x18\b \x01(\tB\x03\xe0A\x01H\x00R\x04memo\x88\x01\x01:O\xeaAL\n" +
-	"\x17memos.api.v1/Attachment\x12\x18attachments/{attachment}*\vattachments2\n" +
+	"\x04memo\x18\b \x01(\tB\x03\xe0A\x01H\x00R\x04memo\x88\x01\x01:R\xeaAO\n" +
+	"\x1awekalist.api.v1/Attachment\x12\x18attachments/{attachment}*\vattachments2\n" +
 	"attachmentB\a\n" +
-	"\x05_memo\"\x82\x01\n" +
-	"\x17CreateAttachmentRequest\x12=\n" +
+	"\x05_memo\"\x85\x01\n" +
+	"\x17CreateAttachmentRequest\x12@\n" +
 	"\n" +
-	"attachment\x18\x01 \x01(\v2\x18.memos.api.v1.AttachmentB\x03\xe0A\x02R\n" +
+	"attachment\x18\x01 \x01(\v2\x1b.wekalist.api.v1.AttachmentB\x03\xe0A\x02R\n" +
 	"attachment\x12(\n" +
 	"\rattachment_id\x18\x02 \x01(\tB\x03\xe0A\x01R\fattachmentId\"\x9b\x01\n" +
 	"\x16ListAttachmentsRequest\x12 \n" +
@@ -574,40 +574,40 @@ const file_api_v1_attachment_service_proto_rawDesc = "" +
 	"\n" +
 	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\x12\x1b\n" +
 	"\x06filter\x18\x03 \x01(\tB\x03\xe0A\x01R\x06filter\x12\x1e\n" +
-	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x9c\x01\n" +
-	"\x17ListAttachmentsResponse\x12:\n" +
-	"\vattachments\x18\x01 \x03(\v2\x18.memos.api.v1.AttachmentR\vattachments\x12&\n" +
+	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x9f\x01\n" +
+	"\x17ListAttachmentsResponse\x12=\n" +
+	"\vattachments\x18\x01 \x03(\v2\x1b.wekalist.api.v1.AttachmentR\vattachments\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"K\n" +
-	"\x14GetAttachmentRequest\x123\n" +
-	"\x04name\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\n" +
-	"\x17memos.api.v1/AttachmentR\x04name\"\x95\x01\n" +
-	"\x1aGetAttachmentBinaryRequest\x123\n" +
-	"\x04name\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\n" +
-	"\x17memos.api.v1/AttachmentR\x04name\x12\x1f\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"N\n" +
+	"\x14GetAttachmentRequest\x126\n" +
+	"\x04name\x18\x01 \x01(\tB\"\xe0A\x02\xfaA\x1c\n" +
+	"\x1awekalist.api.v1/AttachmentR\x04name\"\x98\x01\n" +
+	"\x1aGetAttachmentBinaryRequest\x126\n" +
+	"\x04name\x18\x01 \x01(\tB\"\xe0A\x02\xfaA\x1c\n" +
+	"\x1awekalist.api.v1/AttachmentR\x04name\x12\x1f\n" +
 	"\bfilename\x18\x02 \x01(\tB\x03\xe0A\x02R\bfilename\x12!\n" +
-	"\tthumbnail\x18\x03 \x01(\bB\x03\xe0A\x01R\tthumbnail\"\x9a\x01\n" +
-	"\x17UpdateAttachmentRequest\x12=\n" +
+	"\tthumbnail\x18\x03 \x01(\bB\x03\xe0A\x01R\tthumbnail\"\x9d\x01\n" +
+	"\x17UpdateAttachmentRequest\x12@\n" +
 	"\n" +
-	"attachment\x18\x01 \x01(\v2\x18.memos.api.v1.AttachmentB\x03\xe0A\x02R\n" +
+	"attachment\x18\x01 \x01(\v2\x1b.wekalist.api.v1.AttachmentB\x03\xe0A\x02R\n" +
 	"attachment\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
-	"updateMask\"N\n" +
-	"\x17DeleteAttachmentRequest\x123\n" +
-	"\x04name\x18\x01 \x01(\tB\x1f\xe0A\x02\xfaA\x19\n" +
-	"\x17memos.api.v1/AttachmentR\x04name2\xe5\x06\n" +
-	"\x11AttachmentService\x12\x89\x01\n" +
-	"\x10CreateAttachment\x12%.memos.api.v1.CreateAttachmentRequest\x1a\x18.memos.api.v1.Attachment\"4\xdaA\n" +
+	"updateMask\"Q\n" +
+	"\x17DeleteAttachmentRequest\x126\n" +
+	"\x04name\x18\x01 \x01(\tB\"\xe0A\x02\xfaA\x1c\n" +
+	"\x1awekalist.api.v1/AttachmentR\x04name2\x86\a\n" +
+	"\x11AttachmentService\x12\x8f\x01\n" +
+	"\x10CreateAttachment\x12(.wekalist.api.v1.CreateAttachmentRequest\x1a\x1b.wekalist.api.v1.Attachment\"4\xdaA\n" +
 	"attachment\x82\xd3\xe4\x93\x02!:\n" +
-	"attachment\"\x13/api/v1/attachments\x12{\n" +
-	"\x0fListAttachments\x12$.memos.api.v1.ListAttachmentsRequest\x1a%.memos.api.v1.ListAttachmentsResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/attachments\x12z\n" +
-	"\rGetAttachment\x12\".memos.api.v1.GetAttachmentRequest\x1a\x18.memos.api.v1.Attachment\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{name=attachments/*}\x12\x9e\x01\n" +
-	"\x13GetAttachmentBinary\x12(.memos.api.v1.GetAttachmentBinaryRequest\x1a\x14.google.api.HttpBody\"G\xdaA\x17name,filename,thumbnail\x82\xd3\xe4\x93\x02'\x12%/file/{name=attachments/*}/{filename}\x12\xa9\x01\n" +
-	"\x10UpdateAttachment\x12%.memos.api.v1.UpdateAttachmentRequest\x1a\x18.memos.api.v1.Attachment\"T\xdaA\x16attachment,update_mask\x82\xd3\xe4\x93\x025:\n" +
-	"attachment2'/api/v1/{attachment.name=attachments/*}\x12~\n" +
-	"\x10DeleteAttachment\x12%.memos.api.v1.DeleteAttachmentRequest\x1a\x16.google.protobuf.Empty\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{name=attachments/*}B\xae\x01\n" +
-	"\x10com.memos.api.v1B\x16AttachmentServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"attachment\"\x13/api/v1/attachments\x12\x81\x01\n" +
+	"\x0fListAttachments\x12'.wekalist.api.v1.ListAttachmentsRequest\x1a(.wekalist.api.v1.ListAttachmentsResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/attachments\x12\x80\x01\n" +
+	"\rGetAttachment\x12%.wekalist.api.v1.GetAttachmentRequest\x1a\x1b.wekalist.api.v1.Attachment\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{name=attachments/*}\x12\xa1\x01\n" +
+	"\x13GetAttachmentBinary\x12+.wekalist.api.v1.GetAttachmentBinaryRequest\x1a\x14.google.api.HttpBody\"G\xdaA\x17name,filename,thumbnail\x82\xd3\xe4\x93\x02'\x12%/file/{name=attachments/*}/{filename}\x12\xaf\x01\n" +
+	"\x10UpdateAttachment\x12(.wekalist.api.v1.UpdateAttachmentRequest\x1a\x1b.wekalist.api.v1.Attachment\"T\xdaA\x16attachment,update_mask\x82\xd3\xe4\x93\x025:\n" +
+	"attachment2'/api/v1/{attachment.name=attachments/*}\x12\x81\x01\n" +
+	"\x10DeleteAttachment\x12(.wekalist.api.v1.DeleteAttachmentRequest\x1a\x16.google.protobuf.Empty\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{name=attachments/*}B\xbd\x01\n" +
+	"\x13com.wekalist.api.v1B\x16AttachmentServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_attachment_service_proto_rawDescOnce sync.Once
@@ -623,37 +623,37 @@ func file_api_v1_attachment_service_proto_rawDescGZIP() []byte {
 
 var file_api_v1_attachment_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_api_v1_attachment_service_proto_goTypes = []any{
-	(*Attachment)(nil),                 // 0: memos.api.v1.Attachment
-	(*CreateAttachmentRequest)(nil),    // 1: memos.api.v1.CreateAttachmentRequest
-	(*ListAttachmentsRequest)(nil),     // 2: memos.api.v1.ListAttachmentsRequest
-	(*ListAttachmentsResponse)(nil),    // 3: memos.api.v1.ListAttachmentsResponse
-	(*GetAttachmentRequest)(nil),       // 4: memos.api.v1.GetAttachmentRequest
-	(*GetAttachmentBinaryRequest)(nil), // 5: memos.api.v1.GetAttachmentBinaryRequest
-	(*UpdateAttachmentRequest)(nil),    // 6: memos.api.v1.UpdateAttachmentRequest
-	(*DeleteAttachmentRequest)(nil),    // 7: memos.api.v1.DeleteAttachmentRequest
+	(*Attachment)(nil),                 // 0: wekalist.api.v1.Attachment
+	(*CreateAttachmentRequest)(nil),    // 1: wekalist.api.v1.CreateAttachmentRequest
+	(*ListAttachmentsRequest)(nil),     // 2: wekalist.api.v1.ListAttachmentsRequest
+	(*ListAttachmentsResponse)(nil),    // 3: wekalist.api.v1.ListAttachmentsResponse
+	(*GetAttachmentRequest)(nil),       // 4: wekalist.api.v1.GetAttachmentRequest
+	(*GetAttachmentBinaryRequest)(nil), // 5: wekalist.api.v1.GetAttachmentBinaryRequest
+	(*UpdateAttachmentRequest)(nil),    // 6: wekalist.api.v1.UpdateAttachmentRequest
+	(*DeleteAttachmentRequest)(nil),    // 7: wekalist.api.v1.DeleteAttachmentRequest
 	(*timestamppb.Timestamp)(nil),      // 8: google.protobuf.Timestamp
 	(*fieldmaskpb.FieldMask)(nil),      // 9: google.protobuf.FieldMask
 	(*httpbody.HttpBody)(nil),          // 10: google.api.HttpBody
 	(*emptypb.Empty)(nil),              // 11: google.protobuf.Empty
 }
 var file_api_v1_attachment_service_proto_depIdxs = []int32{
-	8,  // 0: memos.api.v1.Attachment.create_time:type_name -> google.protobuf.Timestamp
-	0,  // 1: memos.api.v1.CreateAttachmentRequest.attachment:type_name -> memos.api.v1.Attachment
-	0,  // 2: memos.api.v1.ListAttachmentsResponse.attachments:type_name -> memos.api.v1.Attachment
-	0,  // 3: memos.api.v1.UpdateAttachmentRequest.attachment:type_name -> memos.api.v1.Attachment
-	9,  // 4: memos.api.v1.UpdateAttachmentRequest.update_mask:type_name -> google.protobuf.FieldMask
-	1,  // 5: memos.api.v1.AttachmentService.CreateAttachment:input_type -> memos.api.v1.CreateAttachmentRequest
-	2,  // 6: memos.api.v1.AttachmentService.ListAttachments:input_type -> memos.api.v1.ListAttachmentsRequest
-	4,  // 7: memos.api.v1.AttachmentService.GetAttachment:input_type -> memos.api.v1.GetAttachmentRequest
-	5,  // 8: memos.api.v1.AttachmentService.GetAttachmentBinary:input_type -> memos.api.v1.GetAttachmentBinaryRequest
-	6,  // 9: memos.api.v1.AttachmentService.UpdateAttachment:input_type -> memos.api.v1.UpdateAttachmentRequest
-	7,  // 10: memos.api.v1.AttachmentService.DeleteAttachment:input_type -> memos.api.v1.DeleteAttachmentRequest
-	0,  // 11: memos.api.v1.AttachmentService.CreateAttachment:output_type -> memos.api.v1.Attachment
-	3,  // 12: memos.api.v1.AttachmentService.ListAttachments:output_type -> memos.api.v1.ListAttachmentsResponse
-	0,  // 13: memos.api.v1.AttachmentService.GetAttachment:output_type -> memos.api.v1.Attachment
-	10, // 14: memos.api.v1.AttachmentService.GetAttachmentBinary:output_type -> google.api.HttpBody
-	0,  // 15: memos.api.v1.AttachmentService.UpdateAttachment:output_type -> memos.api.v1.Attachment
-	11, // 16: memos.api.v1.AttachmentService.DeleteAttachment:output_type -> google.protobuf.Empty
+	8,  // 0: wekalist.api.v1.Attachment.create_time:type_name -> google.protobuf.Timestamp
+	0,  // 1: wekalist.api.v1.CreateAttachmentRequest.attachment:type_name -> wekalist.api.v1.Attachment
+	0,  // 2: wekalist.api.v1.ListAttachmentsResponse.attachments:type_name -> wekalist.api.v1.Attachment
+	0,  // 3: wekalist.api.v1.UpdateAttachmentRequest.attachment:type_name -> wekalist.api.v1.Attachment
+	9,  // 4: wekalist.api.v1.UpdateAttachmentRequest.update_mask:type_name -> google.protobuf.FieldMask
+	1,  // 5: wekalist.api.v1.AttachmentService.CreateAttachment:input_type -> wekalist.api.v1.CreateAttachmentRequest
+	2,  // 6: wekalist.api.v1.AttachmentService.ListAttachments:input_type -> wekalist.api.v1.ListAttachmentsRequest
+	4,  // 7: wekalist.api.v1.AttachmentService.GetAttachment:input_type -> wekalist.api.v1.GetAttachmentRequest
+	5,  // 8: wekalist.api.v1.AttachmentService.GetAttachmentBinary:input_type -> wekalist.api.v1.GetAttachmentBinaryRequest
+	6,  // 9: wekalist.api.v1.AttachmentService.UpdateAttachment:input_type -> wekalist.api.v1.UpdateAttachmentRequest
+	7,  // 10: wekalist.api.v1.AttachmentService.DeleteAttachment:input_type -> wekalist.api.v1.DeleteAttachmentRequest
+	0,  // 11: wekalist.api.v1.AttachmentService.CreateAttachment:output_type -> wekalist.api.v1.Attachment
+	3,  // 12: wekalist.api.v1.AttachmentService.ListAttachments:output_type -> wekalist.api.v1.ListAttachmentsResponse
+	0,  // 13: wekalist.api.v1.AttachmentService.GetAttachment:output_type -> wekalist.api.v1.Attachment
+	10, // 14: wekalist.api.v1.AttachmentService.GetAttachmentBinary:output_type -> google.api.HttpBody
+	0,  // 15: wekalist.api.v1.AttachmentService.UpdateAttachment:output_type -> wekalist.api.v1.Attachment
+	11, // 16: wekalist.api.v1.AttachmentService.DeleteAttachment:output_type -> google.protobuf.Empty
 	11, // [11:17] is the sub-list for method output_type
 	5,  // [5:11] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name

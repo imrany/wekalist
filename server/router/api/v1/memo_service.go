@@ -19,11 +19,11 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/usememos/memos/plugin/webhook"
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/server/runner/memopayload"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/plugin/webhook"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/server/runner/memopayload"
+	"github.com/imrany/wekalist/store"
 )
 
 func (s *APIV1Service) CreateMemo(ctx context.Context, request *v1pb.CreateMemoRequest) (*v1pb.Memo, error) {

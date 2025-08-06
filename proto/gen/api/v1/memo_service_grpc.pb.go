@@ -20,22 +20,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MemoService_CreateMemo_FullMethodName          = "/memos.api.v1.MemoService/CreateMemo"
-	MemoService_ListMemos_FullMethodName           = "/memos.api.v1.MemoService/ListMemos"
-	MemoService_GetMemo_FullMethodName             = "/memos.api.v1.MemoService/GetMemo"
-	MemoService_UpdateMemo_FullMethodName          = "/memos.api.v1.MemoService/UpdateMemo"
-	MemoService_DeleteMemo_FullMethodName          = "/memos.api.v1.MemoService/DeleteMemo"
-	MemoService_RenameMemoTag_FullMethodName       = "/memos.api.v1.MemoService/RenameMemoTag"
-	MemoService_DeleteMemoTag_FullMethodName       = "/memos.api.v1.MemoService/DeleteMemoTag"
-	MemoService_SetMemoAttachments_FullMethodName  = "/memos.api.v1.MemoService/SetMemoAttachments"
-	MemoService_ListMemoAttachments_FullMethodName = "/memos.api.v1.MemoService/ListMemoAttachments"
-	MemoService_SetMemoRelations_FullMethodName    = "/memos.api.v1.MemoService/SetMemoRelations"
-	MemoService_ListMemoRelations_FullMethodName   = "/memos.api.v1.MemoService/ListMemoRelations"
-	MemoService_CreateMemoComment_FullMethodName   = "/memos.api.v1.MemoService/CreateMemoComment"
-	MemoService_ListMemoComments_FullMethodName    = "/memos.api.v1.MemoService/ListMemoComments"
-	MemoService_ListMemoReactions_FullMethodName   = "/memos.api.v1.MemoService/ListMemoReactions"
-	MemoService_UpsertMemoReaction_FullMethodName  = "/memos.api.v1.MemoService/UpsertMemoReaction"
-	MemoService_DeleteMemoReaction_FullMethodName  = "/memos.api.v1.MemoService/DeleteMemoReaction"
+	MemoService_CreateMemo_FullMethodName          = "/wekalist.api.v1.MemoService/CreateMemo"
+	MemoService_ListMemos_FullMethodName           = "/wekalist.api.v1.MemoService/ListMemos"
+	MemoService_GetMemo_FullMethodName             = "/wekalist.api.v1.MemoService/GetMemo"
+	MemoService_UpdateMemo_FullMethodName          = "/wekalist.api.v1.MemoService/UpdateMemo"
+	MemoService_DeleteMemo_FullMethodName          = "/wekalist.api.v1.MemoService/DeleteMemo"
+	MemoService_RenameMemoTag_FullMethodName       = "/wekalist.api.v1.MemoService/RenameMemoTag"
+	MemoService_DeleteMemoTag_FullMethodName       = "/wekalist.api.v1.MemoService/DeleteMemoTag"
+	MemoService_SetMemoAttachments_FullMethodName  = "/wekalist.api.v1.MemoService/SetMemoAttachments"
+	MemoService_ListMemoAttachments_FullMethodName = "/wekalist.api.v1.MemoService/ListMemoAttachments"
+	MemoService_SetMemoRelations_FullMethodName    = "/wekalist.api.v1.MemoService/SetMemoRelations"
+	MemoService_ListMemoRelations_FullMethodName   = "/wekalist.api.v1.MemoService/ListMemoRelations"
+	MemoService_CreateMemoComment_FullMethodName   = "/wekalist.api.v1.MemoService/CreateMemoComment"
+	MemoService_ListMemoComments_FullMethodName    = "/wekalist.api.v1.MemoService/ListMemoComments"
+	MemoService_ListMemoReactions_FullMethodName   = "/wekalist.api.v1.MemoService/ListMemoReactions"
+	MemoService_UpsertMemoReaction_FullMethodName  = "/wekalist.api.v1.MemoService/UpsertMemoReaction"
+	MemoService_DeleteMemoReaction_FullMethodName  = "/wekalist.api.v1.MemoService/DeleteMemoReaction"
 )
 
 // MemoServiceClient is the client API for MemoService service.
@@ -651,7 +651,7 @@ func _MemoService_DeleteMemoReaction_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MemoService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.MemoService",
+	ServiceName: "wekalist.api.v1.MemoService",
 	HandlerType: (*MemoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

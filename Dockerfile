@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Memos
+# Multi-stage Dockerfile for wekalist
 # Stage 1: Build the web frontend
 FROM node:20-alpine AS web-builder
 
@@ -42,8 +42,8 @@ COPY --from=web-builder /build/server/router/frontend/dist ./server/router/front
 # CGO_ENABLED=0 for a static binary
 # -ldflags="-w -s" to reduce binary size
 RUN CGO_ENABLED=0 GOOS=linux go build \
-    -ldflags="-w -s -X github.com/usememos/memos/internal/version.version=$(git describe --tags --always --dirty)" \
-    -o memos \
+    -ldflags="-w -s -X github.com/imrany/wekalist/internal/version.version=$(git describe --tags --always --dirty)" \
+    -o wekalist \
     ./main.go
 
 # Stage 3: Final runtime image
@@ -51,23 +51,23 @@ FROM alpine:3.19
 
 # Install runtime dependencies
 RUN apk --no-cache add ca-certificates tzdata && \
-    addgroup -S memos && \
-    adduser -S memos -G memos
+    addgroup -S wekalist && \
+    adduser -S wekalist -G wekalist
 
-WORKDIR /opt/memos
+WORKDIR /opt/wekalist
 
 # Copy the binary from builder stage
-COPY --from=go-builder /app/memos .
+COPY --from=go-builder /app/wekalist .
 
 # Copy any additional static files if needed
 # COPY --from=go-builder /app/scripts/entrypoint.sh .
 
 # Create data directory
-RUN mkdir -p /opt/memos/data && \
-    chown -R memos:memos /opt/memos
+RUN mkdir -p /opt/wekalist/data && \
+    chown -R wekalist:wekalist /opt/wekalist
 
 # Switch to non-root user
-USER memos
+USER wekalist
 
 # Expose the port (adjust if different)
 EXPOSE 5230
@@ -79,7 +79,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 # Set environment variables
 ENV MODE=prod
 ENV PORT=5230
-ENV DATA=/opt/memos/data
+ENV DATA=/opt/wekalist/data
 
 # Start the application
-CMD ["./memos"]
+CMD ["./wekalist"]

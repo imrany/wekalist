@@ -6,8 +6,8 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./bin/memos
-    binary: memos
+  - main: ./bin/wekalist
+    binary: wekalist
     goos:
       - linux
       - darwin

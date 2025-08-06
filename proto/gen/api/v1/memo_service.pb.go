@@ -218,7 +218,7 @@ type Memo struct {
 	// Format: memos/{memo}, memo is the user defined id or uuid.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The state of the memo.
-	State State `protobuf:"varint,2,opt,name=state,proto3,enum=memos.api.v1.State" json:"state,omitempty"`
+	State State `protobuf:"varint,2,opt,name=state,proto3,enum=wekalist.api.v1.State" json:"state,omitempty"`
 	// The name of the creator.
 	// Format: users/{user}
 	Creator string `protobuf:"bytes,3,opt,name=creator,proto3" json:"creator,omitempty"`
@@ -233,7 +233,7 @@ type Memo struct {
 	// Output only. The parsed nodes from the content.
 	Nodes []*Node `protobuf:"bytes,8,rep,name=nodes,proto3" json:"nodes,omitempty"`
 	// The visibility of the memo.
-	Visibility Visibility `protobuf:"varint,9,opt,name=visibility,proto3,enum=memos.api.v1.Visibility" json:"visibility,omitempty"`
+	Visibility Visibility `protobuf:"varint,9,opt,name=visibility,proto3,enum=wekalist.api.v1.Visibility" json:"visibility,omitempty"`
 	// Output only. The tags extracted from the content.
 	Tags []string `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
 	// Whether the memo is pinned.
@@ -560,14 +560,14 @@ type ListMemosRequest struct {
 	// Provide this to retrieve the subsequent page.
 	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// Optional. The state of the memos to list.
-	// Default to `NORMAL`. Set to `ARCHIVED` to list archived memos.
-	State State `protobuf:"varint,3,opt,name=state,proto3,enum=memos.api.v1.State" json:"state,omitempty"`
+	// Default to `NORMAL`. Set to `ARCHIVED` to list archived wekalist.
+	State State `protobuf:"varint,3,opt,name=state,proto3,enum=wekalist.api.v1.State" json:"state,omitempty"`
 	// Optional. The order to sort results by.
 	// Default to "display_time desc".
 	// Example: "display_time desc" or "create_time asc"
 	OrderBy string `protobuf:"bytes,4,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`
 	// Optional. Filter to apply to the list results.
-	// Filter is a CEL expression to filter memos.
+	// Filter is a CEL expression to filter wekalist.
 	// Refer to `Shortcut.filter`.
 	Filter string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	// Optional. If true, show deleted memos in the response.
@@ -650,7 +650,7 @@ func (x *ListMemosRequest) GetShowDeleted() bool {
 
 type ListMemosResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The list of memos.
+	// The list of wekalist.
 	Memos []*Memo `protobuf:"bytes,1,rep,name=memos,proto3" json:"memos,omitempty"`
 	// A token that can be sent as `page_token` to retrieve the next page.
 	// If this field is omitted, there are no subsequent pages.
@@ -958,7 +958,7 @@ type DeleteMemoTagRequest struct {
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// Required. The tag name to delete.
 	Tag string `protobuf:"bytes,2,opt,name=tag,proto3" json:"tag,omitempty"`
-	// Optional. Whether to delete related memos.
+	// Optional. Whether to delete related wekalist.
 	DeleteRelatedMemos bool `protobuf:"varint,3,opt,name=delete_related_memos,json=deleteRelatedMemos,proto3" json:"delete_related_memos,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -1203,7 +1203,7 @@ type MemoRelation struct {
 	Memo *MemoRelation_Memo `protobuf:"bytes,1,opt,name=memo,proto3" json:"memo,omitempty"`
 	// The related memo.
 	RelatedMemo   *MemoRelation_Memo `protobuf:"bytes,2,opt,name=related_memo,json=relatedMemo,proto3" json:"related_memo,omitempty"`
-	Type          MemoRelation_Type  `protobuf:"varint,3,opt,name=type,proto3,enum=memos.api.v1.MemoRelation_Type" json:"type,omitempty"`
+	Type          MemoRelation_Type  `protobuf:"varint,3,opt,name=type,proto3,enum=wekalist.api.v1.MemoRelation_Type" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1580,7 +1580,7 @@ func (x *ListMemoCommentsRequest) GetOrderBy() string {
 
 type ListMemoCommentsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The list of comment memos.
+	// The list of comment wekalist.
 	Memos []*Memo `protobuf:"bytes,1,rep,name=memos,proto3" json:"memos,omitempty"`
 	// A token for the next page of results.
 	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
@@ -1998,205 +1998,205 @@ var File_api_v1_memo_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_memo_service_proto_rawDesc = "" +
 	"\n" +
-	"\x19api/v1/memo_service.proto\x12\fmemos.api.v1\x1a\x1fapi/v1/attachment_service.proto\x1a\x13api/v1/common.proto\x1a\x1dapi/v1/markdown_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xce\x02\n" +
+	"\x19api/v1/memo_service.proto\x12\x0fwekalist.api.v1\x1a\x1fapi/v1/attachment_service.proto\x1a\x13api/v1/common.proto\x1a\x1dapi/v1/markdown_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd7\x02\n" +
 	"\bReaction\x12\x1a\n" +
-	"\x04name\x18\x01 \x01(\tB\x06\xe0A\x03\xe0A\bR\x04name\x123\n" +
-	"\acreator\x18\x02 \x01(\tB\x19\xe0A\x03\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\acreator\x128\n" +
+	"\x04name\x18\x01 \x01(\tB\x06\xe0A\x03\xe0A\bR\x04name\x126\n" +
+	"\acreator\x18\x02 \x01(\tB\x1c\xe0A\x03\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\acreator\x12;\n" +
 	"\n" +
-	"content_id\x18\x03 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\tcontentId\x12(\n" +
+	"content_id\x18\x03 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\tcontentId\x12(\n" +
 	"\rreaction_type\x18\x04 \x01(\tB\x03\xe0A\x02R\freactionType\x12@\n" +
 	"\vcreate_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
-	"createTime:K\xeaAH\n" +
-	"\x15memos.api.v1/Reaction\x12\x14reactions/{reaction}\x1a\x04name*\treactions2\breaction\"\x87\t\n" +
+	"createTime:N\xeaAK\n" +
+	"\x18wekalist.api.v1/Reaction\x12\x14reactions/{reaction}\x1a\x04name*\treactions2\breaction\"\xa8\t\n" +
 	"\x04Memo\x12\x17\n" +
-	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12.\n" +
-	"\x05state\x18\x02 \x01(\x0e2\x13.memos.api.v1.StateB\x03\xe0A\x02R\x05state\x123\n" +
-	"\acreator\x18\x03 \x01(\tB\x19\xe0A\x03\xfaA\x13\n" +
-	"\x11memos.api.v1/UserR\acreator\x12@\n" +
+	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x121\n" +
+	"\x05state\x18\x02 \x01(\x0e2\x16.wekalist.api.v1.StateB\x03\xe0A\x02R\x05state\x126\n" +
+	"\acreator\x18\x03 \x01(\tB\x1c\xe0A\x03\xfaA\x16\n" +
+	"\x14wekalist.api.v1/UserR\acreator\x12@\n" +
 	"\vcreate_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
 	"createTime\x12@\n" +
 	"\vupdate_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\n" +
 	"updateTime\x12B\n" +
 	"\fdisplay_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x01R\vdisplayTime\x12\x1d\n" +
-	"\acontent\x18\a \x01(\tB\x03\xe0A\x02R\acontent\x12-\n" +
-	"\x05nodes\x18\b \x03(\v2\x12.memos.api.v1.NodeB\x03\xe0A\x03R\x05nodes\x12=\n" +
+	"\acontent\x18\a \x01(\tB\x03\xe0A\x02R\acontent\x120\n" +
+	"\x05nodes\x18\b \x03(\v2\x15.wekalist.api.v1.NodeB\x03\xe0A\x03R\x05nodes\x12@\n" +
 	"\n" +
-	"visibility\x18\t \x01(\x0e2\x18.memos.api.v1.VisibilityB\x03\xe0A\x02R\n" +
+	"visibility\x18\t \x01(\x0e2\x1b.wekalist.api.v1.VisibilityB\x03\xe0A\x02R\n" +
 	"visibility\x12\x17\n" +
 	"\x04tags\x18\n" +
 	" \x03(\tB\x03\xe0A\x03R\x04tags\x12\x1b\n" +
-	"\x06pinned\x18\v \x01(\bB\x03\xe0A\x01R\x06pinned\x12?\n" +
-	"\vattachments\x18\f \x03(\v2\x18.memos.api.v1.AttachmentB\x03\xe0A\x01R\vattachments\x12=\n" +
-	"\trelations\x18\r \x03(\v2\x1a.memos.api.v1.MemoRelationB\x03\xe0A\x01R\trelations\x129\n" +
-	"\treactions\x18\x0e \x03(\v2\x16.memos.api.v1.ReactionB\x03\xe0A\x03R\treactions\x12<\n" +
-	"\bproperty\x18\x0f \x01(\v2\x1b.memos.api.v1.Memo.PropertyB\x03\xe0A\x03R\bproperty\x126\n" +
-	"\x06parent\x18\x10 \x01(\tB\x19\xe0A\x03\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoH\x00R\x06parent\x88\x01\x01\x12\x1d\n" +
-	"\asnippet\x18\x11 \x01(\tB\x03\xe0A\x03R\asnippet\x12<\n" +
-	"\blocation\x18\x12 \x01(\v2\x16.memos.api.v1.LocationB\x03\xe0A\x01H\x01R\blocation\x88\x01\x01\x1a\x96\x01\n" +
+	"\x06pinned\x18\v \x01(\bB\x03\xe0A\x01R\x06pinned\x12B\n" +
+	"\vattachments\x18\f \x03(\v2\x1b.wekalist.api.v1.AttachmentB\x03\xe0A\x01R\vattachments\x12@\n" +
+	"\trelations\x18\r \x03(\v2\x1d.wekalist.api.v1.MemoRelationB\x03\xe0A\x01R\trelations\x12<\n" +
+	"\treactions\x18\x0e \x03(\v2\x19.wekalist.api.v1.ReactionB\x03\xe0A\x03R\treactions\x12?\n" +
+	"\bproperty\x18\x0f \x01(\v2\x1e.wekalist.api.v1.Memo.PropertyB\x03\xe0A\x03R\bproperty\x129\n" +
+	"\x06parent\x18\x10 \x01(\tB\x1c\xe0A\x03\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoH\x00R\x06parent\x88\x01\x01\x12\x1d\n" +
+	"\asnippet\x18\x11 \x01(\tB\x03\xe0A\x03R\asnippet\x12?\n" +
+	"\blocation\x18\x12 \x01(\v2\x19.wekalist.api.v1.LocationB\x03\xe0A\x01H\x01R\blocation\x88\x01\x01\x1a\x96\x01\n" +
 	"\bProperty\x12\x19\n" +
 	"\bhas_link\x18\x01 \x01(\bR\ahasLink\x12\"\n" +
 	"\rhas_task_list\x18\x02 \x01(\bR\vhasTaskList\x12\x19\n" +
 	"\bhas_code\x18\x03 \x01(\bR\ahasCode\x120\n" +
-	"\x14has_incomplete_tasks\x18\x04 \x01(\bR\x12hasIncompleteTasks:7\xeaA4\n" +
-	"\x11memos.api.v1/Memo\x12\fmemos/{memo}\x1a\x04name*\x05memos2\x04memoB\t\n" +
+	"\x14has_incomplete_tasks\x18\x04 \x01(\bR\x12hasIncompleteTasks::\xeaA7\n" +
+	"\x14wekalist.api.v1/Memo\x12\fmemos/{memo}\x1a\x04name*\x05memos2\x04memoB\t\n" +
 	"\a_parentB\v\n" +
 	"\t_location\"u\n" +
 	"\bLocation\x12%\n" +
 	"\vplaceholder\x18\x01 \x01(\tB\x03\xe0A\x01R\vplaceholder\x12\x1f\n" +
 	"\blatitude\x18\x02 \x01(\x01B\x03\xe0A\x01R\blatitude\x12!\n" +
-	"\tlongitude\x18\x03 \x01(\x01B\x03\xe0A\x01R\tlongitude\"\xac\x01\n" +
-	"\x11CreateMemoRequest\x12+\n" +
-	"\x04memo\x18\x01 \x01(\v2\x12.memos.api.v1.MemoB\x03\xe0A\x02R\x04memo\x12\x1c\n" +
+	"\tlongitude\x18\x03 \x01(\x01B\x03\xe0A\x01R\tlongitude\"\xaf\x01\n" +
+	"\x11CreateMemoRequest\x12.\n" +
+	"\x04memo\x18\x01 \x01(\v2\x15.wekalist.api.v1.MemoB\x03\xe0A\x02R\x04memo\x12\x1c\n" +
 	"\amemo_id\x18\x02 \x01(\tB\x03\xe0A\x01R\x06memoId\x12(\n" +
 	"\rvalidate_only\x18\x03 \x01(\bB\x03\xe0A\x01R\fvalidateOnly\x12\"\n" +
 	"\n" +
-	"request_id\x18\x04 \x01(\tB\x03\xe0A\x01R\trequestId\"\xed\x01\n" +
+	"request_id\x18\x04 \x01(\tB\x03\xe0A\x01R\trequestId\"\xf0\x01\n" +
 	"\x10ListMemosRequest\x12 \n" +
 	"\tpage_size\x18\x01 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\x12.\n" +
-	"\x05state\x18\x03 \x01(\x0e2\x13.memos.api.v1.StateB\x03\xe0A\x01R\x05state\x12\x1e\n" +
+	"page_token\x18\x02 \x01(\tB\x03\xe0A\x01R\tpageToken\x121\n" +
+	"\x05state\x18\x03 \x01(\x0e2\x16.wekalist.api.v1.StateB\x03\xe0A\x01R\x05state\x12\x1e\n" +
 	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\x12\x1b\n" +
 	"\x06filter\x18\x05 \x01(\tB\x03\xe0A\x01R\x06filter\x12&\n" +
-	"\fshow_deleted\x18\x06 \x01(\bB\x03\xe0A\x01R\vshowDeleted\"\x84\x01\n" +
-	"\x11ListMemosResponse\x12(\n" +
-	"\x05memos\x18\x01 \x03(\v2\x12.memos.api.v1.MemoR\x05memos\x12&\n" +
+	"\fshow_deleted\x18\x06 \x01(\bB\x03\xe0A\x01R\vshowDeleted\"\x87\x01\n" +
+	"\x11ListMemosResponse\x12+\n" +
+	"\x05memos\x18\x01 \x03(\v2\x15.wekalist.api.v1.MemoR\x05memos\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"}\n" +
-	"\x0eGetMemoRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12<\n" +
-	"\tread_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\breadMask\"\xac\x01\n" +
-	"\x11UpdateMemoRequest\x12+\n" +
-	"\x04memo\x18\x01 \x01(\v2\x12.memos.api.v1.MemoB\x03\xe0A\x02R\x04memo\x12@\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x80\x01\n" +
+	"\x0eGetMemoRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12<\n" +
+	"\tread_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x01R\breadMask\"\xaf\x01\n" +
+	"\x11UpdateMemoRequest\x12.\n" +
+	"\x04memo\x18\x01 \x01(\v2\x15.wekalist.api.v1.MemoB\x03\xe0A\x02R\x04memo\x12@\n" +
 	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\n" +
 	"updateMask\x12(\n" +
-	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"]\n" +
-	"\x11DeleteMemoRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12\x19\n" +
-	"\x05force\x18\x02 \x01(\bB\x03\xe0A\x01R\x05force\"\x85\x01\n" +
-	"\x14RenameMemoTagRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x06parent\x12\x1c\n" +
+	"\rallow_missing\x18\x03 \x01(\bB\x03\xe0A\x01R\fallowMissing\"`\n" +
+	"\x11DeleteMemoRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12\x19\n" +
+	"\x05force\x18\x02 \x01(\bB\x03\xe0A\x01R\x05force\"\x88\x01\n" +
+	"\x14RenameMemoTagRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x06parent\x12\x1c\n" +
 	"\aold_tag\x18\x02 \x01(\tB\x03\xe0A\x02R\x06oldTag\x12\x1c\n" +
-	"\anew_tag\x18\x03 \x01(\tB\x03\xe0A\x02R\x06newTag\"\x97\x01\n" +
-	"\x14DeleteMemoTagRequest\x121\n" +
-	"\x06parent\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x06parent\x12\x15\n" +
+	"\anew_tag\x18\x03 \x01(\tB\x03\xe0A\x02R\x06newTag\"\x9a\x01\n" +
+	"\x14DeleteMemoTagRequest\x124\n" +
+	"\x06parent\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x06parent\x12\x15\n" +
 	"\x03tag\x18\x02 \x01(\tB\x03\xe0A\x02R\x03tag\x125\n" +
-	"\x14delete_related_memos\x18\x03 \x01(\bB\x03\xe0A\x01R\x12deleteRelatedMemos\"\x8b\x01\n" +
-	"\x19SetMemoAttachmentsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12?\n" +
-	"\vattachments\x18\x02 \x03(\v2\x18.memos.api.v1.AttachmentB\x03\xe0A\x02R\vattachments\"\x91\x01\n" +
-	"\x1aListMemoAttachmentsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12 \n" +
+	"\x14delete_related_memos\x18\x03 \x01(\bB\x03\xe0A\x01R\x12deleteRelatedMemos\"\x91\x01\n" +
+	"\x19SetMemoAttachmentsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12B\n" +
+	"\vattachments\x18\x02 \x03(\v2\x1b.wekalist.api.v1.AttachmentB\x03\xe0A\x02R\vattachments\"\x94\x01\n" +
+	"\x1aListMemoAttachmentsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\xa0\x01\n" +
-	"\x1bListMemoAttachmentsResponse\x12:\n" +
-	"\vattachments\x18\x01 \x03(\v2\x18.memos.api.v1.AttachmentR\vattachments\x12&\n" +
+	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\xa3\x01\n" +
+	"\x1bListMemoAttachmentsResponse\x12=\n" +
+	"\vattachments\x18\x01 \x03(\v2\x1b.wekalist.api.v1.AttachmentR\vattachments\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xdb\x02\n" +
-	"\fMemoRelation\x128\n" +
-	"\x04memo\x18\x01 \x01(\v2\x1f.memos.api.v1.MemoRelation.MemoB\x03\xe0A\x02R\x04memo\x12G\n" +
-	"\frelated_memo\x18\x02 \x01(\v2\x1f.memos.api.v1.MemoRelation.MemoB\x03\xe0A\x02R\vrelatedMemo\x128\n" +
-	"\x04type\x18\x03 \x01(\x0e2\x1f.memos.api.v1.MemoRelation.TypeB\x03\xe0A\x02R\x04type\x1aT\n" +
-	"\x04Memo\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12\x1d\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xe7\x02\n" +
+	"\fMemoRelation\x12;\n" +
+	"\x04memo\x18\x01 \x01(\v2\".wekalist.api.v1.MemoRelation.MemoB\x03\xe0A\x02R\x04memo\x12J\n" +
+	"\frelated_memo\x18\x02 \x01(\v2\".wekalist.api.v1.MemoRelation.MemoB\x03\xe0A\x02R\vrelatedMemo\x12;\n" +
+	"\x04type\x18\x03 \x01(\x0e2\".wekalist.api.v1.MemoRelation.TypeB\x03\xe0A\x02R\x04type\x1aW\n" +
+	"\x04Memo\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12\x1d\n" +
 	"\asnippet\x18\x02 \x01(\tB\x03\xe0A\x03R\asnippet\"8\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\r\n" +
 	"\tREFERENCE\x10\x01\x12\v\n" +
-	"\aCOMMENT\x10\x02\"\x87\x01\n" +
-	"\x17SetMemoRelationsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12=\n" +
-	"\trelations\x18\x02 \x03(\v2\x1a.memos.api.v1.MemoRelationB\x03\xe0A\x02R\trelations\"\x8f\x01\n" +
-	"\x18ListMemoRelationsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12 \n" +
+	"\aCOMMENT\x10\x02\"\x8d\x01\n" +
+	"\x17SetMemoRelationsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12@\n" +
+	"\trelations\x18\x02 \x03(\v2\x1d.wekalist.api.v1.MemoRelationB\x03\xe0A\x02R\trelations\"\x92\x01\n" +
+	"\x18ListMemoRelationsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x9c\x01\n" +
-	"\x19ListMemoRelationsResponse\x128\n" +
-	"\trelations\x18\x01 \x03(\v2\x1a.memos.api.v1.MemoRelationR\trelations\x12&\n" +
+	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x9f\x01\n" +
+	"\x19ListMemoRelationsResponse\x12;\n" +
+	"\trelations\x18\x01 \x03(\v2\x1d.wekalist.api.v1.MemoRelationR\trelations\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xa0\x01\n" +
-	"\x18CreateMemoCommentRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x121\n" +
-	"\acomment\x18\x02 \x01(\v2\x12.memos.api.v1.MemoB\x03\xe0A\x02R\acomment\x12\"\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\xa6\x01\n" +
+	"\x18CreateMemoCommentRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x124\n" +
+	"\acomment\x18\x02 \x01(\v2\x15.wekalist.api.v1.MemoB\x03\xe0A\x02R\acomment\x12\"\n" +
 	"\n" +
-	"comment_id\x18\x03 \x01(\tB\x03\xe0A\x01R\tcommentId\"\xae\x01\n" +
-	"\x17ListMemoCommentsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12 \n" +
+	"comment_id\x18\x03 \x01(\tB\x03\xe0A\x01R\tcommentId\"\xb1\x01\n" +
+	"\x17ListMemoCommentsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
 	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\x12\x1e\n" +
-	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x8b\x01\n" +
-	"\x18ListMemoCommentsResponse\x12(\n" +
-	"\x05memos\x18\x01 \x03(\v2\x12.memos.api.v1.MemoR\x05memos\x12&\n" +
+	"\border_by\x18\x04 \x01(\tB\x03\xe0A\x01R\aorderBy\"\x8e\x01\n" +
+	"\x18ListMemoCommentsResponse\x12+\n" +
+	"\x05memos\x18\x01 \x03(\v2\x15.wekalist.api.v1.MemoR\x05memos\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x8f\x01\n" +
-	"\x18ListMemoReactionsRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x12 \n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x92\x01\n" +
+	"\x18ListMemoReactionsRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12 \n" +
 	"\tpage_size\x18\x02 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x98\x01\n" +
-	"\x19ListMemoReactionsResponse\x124\n" +
-	"\treactions\x18\x01 \x03(\v2\x16.memos.api.v1.ReactionR\treactions\x12&\n" +
+	"page_token\x18\x03 \x01(\tB\x03\xe0A\x01R\tpageToken\"\x9b\x01\n" +
+	"\x19ListMemoReactionsResponse\x127\n" +
+	"\treactions\x18\x01 \x03(\v2\x19.wekalist.api.v1.ReactionR\treactions\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x83\x01\n" +
-	"\x19UpsertMemoReactionRequest\x12-\n" +
-	"\x04name\x18\x01 \x01(\tB\x19\xe0A\x02\xfaA\x13\n" +
-	"\x11memos.api.v1/MemoR\x04name\x127\n" +
-	"\breaction\x18\x02 \x01(\v2\x16.memos.api.v1.ReactionB\x03\xe0A\x02R\breaction\"N\n" +
-	"\x19DeleteMemoReactionRequest\x121\n" +
-	"\x04name\x18\x01 \x01(\tB\x1d\xe0A\x02\xfaA\x17\n" +
-	"\x15memos.api.v1/ReactionR\x04name*P\n" +
+	"total_size\x18\x03 \x01(\x05R\ttotalSize\"\x89\x01\n" +
+	"\x19UpsertMemoReactionRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\tB\x1c\xe0A\x02\xfaA\x16\n" +
+	"\x14wekalist.api.v1/MemoR\x04name\x12:\n" +
+	"\breaction\x18\x02 \x01(\v2\x19.wekalist.api.v1.ReactionB\x03\xe0A\x02R\breaction\"Q\n" +
+	"\x19DeleteMemoReactionRequest\x124\n" +
+	"\x04name\x18\x01 \x01(\tB \xe0A\x02\xfaA\x1a\n" +
+	"\x18wekalist.api.v1/ReactionR\x04name*P\n" +
 	"\n" +
 	"Visibility\x12\x1a\n" +
 	"\x16VISIBILITY_UNSPECIFIED\x10\x00\x12\v\n" +
 	"\aPRIVATE\x10\x01\x12\r\n" +
 	"\tPROTECTED\x10\x02\x12\n" +
 	"\n" +
-	"\x06PUBLIC\x10\x032\xeb\x10\n" +
-	"\vMemoService\x12e\n" +
+	"\x06PUBLIC\x10\x032\xba\x11\n" +
+	"\vMemoService\x12k\n" +
 	"\n" +
-	"CreateMemo\x12\x1f.memos.api.v1.CreateMemoRequest\x1a\x12.memos.api.v1.Memo\"\"\xdaA\x04memo\x82\xd3\xe4\x93\x02\x15:\x04memo\"\r/api/v1/memos\x12f\n" +
-	"\tListMemos\x12\x1e.memos.api.v1.ListMemosRequest\x1a\x1f.memos.api.v1.ListMemosResponse\"\x18\xdaA\x00\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/memos\x12b\n" +
-	"\aGetMemo\x12\x1c.memos.api.v1.GetMemoRequest\x1a\x12.memos.api.v1.Memo\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{name=memos/*}\x12\x7f\n" +
+	"CreateMemo\x12\".wekalist.api.v1.CreateMemoRequest\x1a\x15.wekalist.api.v1.Memo\"\"\xdaA\x04memo\x82\xd3\xe4\x93\x02\x15:\x04memo\"\r/api/v1/memos\x12l\n" +
+	"\tListMemos\x12!.wekalist.api.v1.ListMemosRequest\x1a\".wekalist.api.v1.ListMemosResponse\"\x18\xdaA\x00\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/memos\x12h\n" +
+	"\aGetMemo\x12\x1f.wekalist.api.v1.GetMemoRequest\x1a\x15.wekalist.api.v1.Memo\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{name=memos/*}\x12\x85\x01\n" +
 	"\n" +
-	"UpdateMemo\x12\x1f.memos.api.v1.UpdateMemoRequest\x1a\x12.memos.api.v1.Memo\"<\xdaA\x10memo,update_mask\x82\xd3\xe4\x93\x02#:\x04memo2\x1b/api/v1/{memo.name=memos/*}\x12l\n" +
+	"UpdateMemo\x12\".wekalist.api.v1.UpdateMemoRequest\x1a\x15.wekalist.api.v1.Memo\"<\xdaA\x10memo,update_mask\x82\xd3\xe4\x93\x02#:\x04memo2\x1b/api/v1/{memo.name=memos/*}\x12o\n" +
 	"\n" +
-	"DeleteMemo\x12\x1f.memos.api.v1.DeleteMemoRequest\x1a\x16.google.protobuf.Empty\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18*\x16/api/v1/{name=memos/*}\x12\x95\x01\n" +
-	"\rRenameMemoTag\x12\".memos.api.v1.RenameMemoTagRequest\x1a\x16.google.protobuf.Empty\"H\xdaA\x16parent,old_tag,new_tag\x82\xd3\xe4\x93\x02):\x01*2$/api/v1/{parent=memos/*}/tags:rename\x12\x85\x01\n" +
-	"\rDeleteMemoTag\x12\".memos.api.v1.DeleteMemoTagRequest\x1a\x16.google.protobuf.Empty\"8\xdaA\n" +
-	"parent,tag\x82\xd3\xe4\x93\x02%*#/api/v1/{parent=memos/*}/tags/{tag}\x12\x8b\x01\n" +
-	"\x12SetMemoAttachments\x12'.memos.api.v1.SetMemoAttachmentsRequest\x1a\x16.google.protobuf.Empty\"4\xdaA\x04name\x82\xd3\xe4\x93\x02':\x01*2\"/api/v1/{name=memos/*}/attachments\x12\x9d\x01\n" +
-	"\x13ListMemoAttachments\x12(.memos.api.v1.ListMemoAttachmentsRequest\x1a).memos.api.v1.ListMemoAttachmentsResponse\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=memos/*}/attachments\x12\x85\x01\n" +
-	"\x10SetMemoRelations\x12%.memos.api.v1.SetMemoRelationsRequest\x1a\x16.google.protobuf.Empty\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%:\x01*2 /api/v1/{name=memos/*}/relations\x12\x95\x01\n" +
-	"\x11ListMemoRelations\x12&.memos.api.v1.ListMemoRelationsRequest\x1a'.memos.api.v1.ListMemoRelationsResponse\"/\xdaA\x04name\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{name=memos/*}/relations\x12\x90\x01\n" +
-	"\x11CreateMemoComment\x12&.memos.api.v1.CreateMemoCommentRequest\x1a\x12.memos.api.v1.Memo\"?\xdaA\fname,comment\x82\xd3\xe4\x93\x02*:\acomment\"\x1f/api/v1/{name=memos/*}/comments\x12\x91\x01\n" +
-	"\x10ListMemoComments\x12%.memos.api.v1.ListMemoCommentsRequest\x1a&.memos.api.v1.ListMemoCommentsResponse\".\xdaA\x04name\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{name=memos/*}/comments\x12\x95\x01\n" +
-	"\x11ListMemoReactions\x12&.memos.api.v1.ListMemoReactionsRequest\x1a'.memos.api.v1.ListMemoReactionsResponse\"/\xdaA\x04name\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{name=memos/*}/reactions\x12\x89\x01\n" +
-	"\x12UpsertMemoReaction\x12'.memos.api.v1.UpsertMemoReactionRequest\x1a\x16.memos.api.v1.Reaction\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%:\x01*\" /api/v1/{name=memos/*}/reactions\x12\x80\x01\n" +
-	"\x12DeleteMemoReaction\x12'.memos.api.v1.DeleteMemoReactionRequest\x1a\x16.google.protobuf.Empty\")\xdaA\x04name\x82\xd3\xe4\x93\x02\x1c*\x1a/api/v1/{name=reactions/*}B\xa8\x01\n" +
-	"\x10com.memos.api.v1B\x10MemoServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03MAX\xaa\x02\fMemos.Api.V1\xca\x02\fMemos\\Api\\V1\xe2\x02\x18Memos\\Api\\V1\\GPBMetadata\xea\x02\x0eMemos::Api::V1b\x06proto3"
+	"DeleteMemo\x12\".wekalist.api.v1.DeleteMemoRequest\x1a\x16.google.protobuf.Empty\"%\xdaA\x04name\x82\xd3\xe4\x93\x02\x18*\x16/api/v1/{name=memos/*}\x12\x98\x01\n" +
+	"\rRenameMemoTag\x12%.wekalist.api.v1.RenameMemoTagRequest\x1a\x16.google.protobuf.Empty\"H\xdaA\x16parent,old_tag,new_tag\x82\xd3\xe4\x93\x02):\x01*2$/api/v1/{parent=memos/*}/tags:rename\x12\x88\x01\n" +
+	"\rDeleteMemoTag\x12%.wekalist.api.v1.DeleteMemoTagRequest\x1a\x16.google.protobuf.Empty\"8\xdaA\n" +
+	"parent,tag\x82\xd3\xe4\x93\x02%*#/api/v1/{parent=memos/*}/tags/{tag}\x12\x8e\x01\n" +
+	"\x12SetMemoAttachments\x12*.wekalist.api.v1.SetMemoAttachmentsRequest\x1a\x16.google.protobuf.Empty\"4\xdaA\x04name\x82\xd3\xe4\x93\x02':\x01*2\"/api/v1/{name=memos/*}/attachments\x12\xa3\x01\n" +
+	"\x13ListMemoAttachments\x12+.wekalist.api.v1.ListMemoAttachmentsRequest\x1a,.wekalist.api.v1.ListMemoAttachmentsResponse\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=memos/*}/attachments\x12\x88\x01\n" +
+	"\x10SetMemoRelations\x12(.wekalist.api.v1.SetMemoRelationsRequest\x1a\x16.google.protobuf.Empty\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%:\x01*2 /api/v1/{name=memos/*}/relations\x12\x9b\x01\n" +
+	"\x11ListMemoRelations\x12).wekalist.api.v1.ListMemoRelationsRequest\x1a*.wekalist.api.v1.ListMemoRelationsResponse\"/\xdaA\x04name\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{name=memos/*}/relations\x12\x96\x01\n" +
+	"\x11CreateMemoComment\x12).wekalist.api.v1.CreateMemoCommentRequest\x1a\x15.wekalist.api.v1.Memo\"?\xdaA\fname,comment\x82\xd3\xe4\x93\x02*:\acomment\"\x1f/api/v1/{name=memos/*}/comments\x12\x97\x01\n" +
+	"\x10ListMemoComments\x12(.wekalist.api.v1.ListMemoCommentsRequest\x1a).wekalist.api.v1.ListMemoCommentsResponse\".\xdaA\x04name\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{name=memos/*}/comments\x12\x9b\x01\n" +
+	"\x11ListMemoReactions\x12).wekalist.api.v1.ListMemoReactionsRequest\x1a*.wekalist.api.v1.ListMemoReactionsResponse\"/\xdaA\x04name\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{name=memos/*}/reactions\x12\x8f\x01\n" +
+	"\x12UpsertMemoReaction\x12*.wekalist.api.v1.UpsertMemoReactionRequest\x1a\x19.wekalist.api.v1.Reaction\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%:\x01*\" /api/v1/{name=memos/*}/reactions\x12\x83\x01\n" +
+	"\x12DeleteMemoReaction\x12*.wekalist.api.v1.DeleteMemoReactionRequest\x1a\x16.google.protobuf.Empty\")\xdaA\x04name\x82\xd3\xe4\x93\x02\x1c*\x1a/api/v1/{name=reactions/*}B\xb7\x01\n" +
+	"\x13com.wekalist.api.v1B\x10MemoServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_memo_service_proto_rawDescOnce sync.Once
@@ -2213,104 +2213,104 @@ func file_api_v1_memo_service_proto_rawDescGZIP() []byte {
 var file_api_v1_memo_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1_memo_service_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_api_v1_memo_service_proto_goTypes = []any{
-	(Visibility)(0),                     // 0: memos.api.v1.Visibility
-	(MemoRelation_Type)(0),              // 1: memos.api.v1.MemoRelation.Type
-	(*Reaction)(nil),                    // 2: memos.api.v1.Reaction
-	(*Memo)(nil),                        // 3: memos.api.v1.Memo
-	(*Location)(nil),                    // 4: memos.api.v1.Location
-	(*CreateMemoRequest)(nil),           // 5: memos.api.v1.CreateMemoRequest
-	(*ListMemosRequest)(nil),            // 6: memos.api.v1.ListMemosRequest
-	(*ListMemosResponse)(nil),           // 7: memos.api.v1.ListMemosResponse
-	(*GetMemoRequest)(nil),              // 8: memos.api.v1.GetMemoRequest
-	(*UpdateMemoRequest)(nil),           // 9: memos.api.v1.UpdateMemoRequest
-	(*DeleteMemoRequest)(nil),           // 10: memos.api.v1.DeleteMemoRequest
-	(*RenameMemoTagRequest)(nil),        // 11: memos.api.v1.RenameMemoTagRequest
-	(*DeleteMemoTagRequest)(nil),        // 12: memos.api.v1.DeleteMemoTagRequest
-	(*SetMemoAttachmentsRequest)(nil),   // 13: memos.api.v1.SetMemoAttachmentsRequest
-	(*ListMemoAttachmentsRequest)(nil),  // 14: memos.api.v1.ListMemoAttachmentsRequest
-	(*ListMemoAttachmentsResponse)(nil), // 15: memos.api.v1.ListMemoAttachmentsResponse
-	(*MemoRelation)(nil),                // 16: memos.api.v1.MemoRelation
-	(*SetMemoRelationsRequest)(nil),     // 17: memos.api.v1.SetMemoRelationsRequest
-	(*ListMemoRelationsRequest)(nil),    // 18: memos.api.v1.ListMemoRelationsRequest
-	(*ListMemoRelationsResponse)(nil),   // 19: memos.api.v1.ListMemoRelationsResponse
-	(*CreateMemoCommentRequest)(nil),    // 20: memos.api.v1.CreateMemoCommentRequest
-	(*ListMemoCommentsRequest)(nil),     // 21: memos.api.v1.ListMemoCommentsRequest
-	(*ListMemoCommentsResponse)(nil),    // 22: memos.api.v1.ListMemoCommentsResponse
-	(*ListMemoReactionsRequest)(nil),    // 23: memos.api.v1.ListMemoReactionsRequest
-	(*ListMemoReactionsResponse)(nil),   // 24: memos.api.v1.ListMemoReactionsResponse
-	(*UpsertMemoReactionRequest)(nil),   // 25: memos.api.v1.UpsertMemoReactionRequest
-	(*DeleteMemoReactionRequest)(nil),   // 26: memos.api.v1.DeleteMemoReactionRequest
-	(*Memo_Property)(nil),               // 27: memos.api.v1.Memo.Property
-	(*MemoRelation_Memo)(nil),           // 28: memos.api.v1.MemoRelation.Memo
+	(Visibility)(0),                     // 0: wekalist.api.v1.Visibility
+	(MemoRelation_Type)(0),              // 1: wekalist.api.v1.MemoRelation.Type
+	(*Reaction)(nil),                    // 2: wekalist.api.v1.Reaction
+	(*Memo)(nil),                        // 3: wekalist.api.v1.Memo
+	(*Location)(nil),                    // 4: wekalist.api.v1.Location
+	(*CreateMemoRequest)(nil),           // 5: wekalist.api.v1.CreateMemoRequest
+	(*ListMemosRequest)(nil),            // 6: wekalist.api.v1.ListMemosRequest
+	(*ListMemosResponse)(nil),           // 7: wekalist.api.v1.ListMemosResponse
+	(*GetMemoRequest)(nil),              // 8: wekalist.api.v1.GetMemoRequest
+	(*UpdateMemoRequest)(nil),           // 9: wekalist.api.v1.UpdateMemoRequest
+	(*DeleteMemoRequest)(nil),           // 10: wekalist.api.v1.DeleteMemoRequest
+	(*RenameMemoTagRequest)(nil),        // 11: wekalist.api.v1.RenameMemoTagRequest
+	(*DeleteMemoTagRequest)(nil),        // 12: wekalist.api.v1.DeleteMemoTagRequest
+	(*SetMemoAttachmentsRequest)(nil),   // 13: wekalist.api.v1.SetMemoAttachmentsRequest
+	(*ListMemoAttachmentsRequest)(nil),  // 14: wekalist.api.v1.ListMemoAttachmentsRequest
+	(*ListMemoAttachmentsResponse)(nil), // 15: wekalist.api.v1.ListMemoAttachmentsResponse
+	(*MemoRelation)(nil),                // 16: wekalist.api.v1.MemoRelation
+	(*SetMemoRelationsRequest)(nil),     // 17: wekalist.api.v1.SetMemoRelationsRequest
+	(*ListMemoRelationsRequest)(nil),    // 18: wekalist.api.v1.ListMemoRelationsRequest
+	(*ListMemoRelationsResponse)(nil),   // 19: wekalist.api.v1.ListMemoRelationsResponse
+	(*CreateMemoCommentRequest)(nil),    // 20: wekalist.api.v1.CreateMemoCommentRequest
+	(*ListMemoCommentsRequest)(nil),     // 21: wekalist.api.v1.ListMemoCommentsRequest
+	(*ListMemoCommentsResponse)(nil),    // 22: wekalist.api.v1.ListMemoCommentsResponse
+	(*ListMemoReactionsRequest)(nil),    // 23: wekalist.api.v1.ListMemoReactionsRequest
+	(*ListMemoReactionsResponse)(nil),   // 24: wekalist.api.v1.ListMemoReactionsResponse
+	(*UpsertMemoReactionRequest)(nil),   // 25: wekalist.api.v1.UpsertMemoReactionRequest
+	(*DeleteMemoReactionRequest)(nil),   // 26: wekalist.api.v1.DeleteMemoReactionRequest
+	(*Memo_Property)(nil),               // 27: wekalist.api.v1.Memo.Property
+	(*MemoRelation_Memo)(nil),           // 28: wekalist.api.v1.MemoRelation.Memo
 	(*timestamppb.Timestamp)(nil),       // 29: google.protobuf.Timestamp
-	(State)(0),                          // 30: memos.api.v1.State
-	(*Node)(nil),                        // 31: memos.api.v1.Node
-	(*Attachment)(nil),                  // 32: memos.api.v1.Attachment
+	(State)(0),                          // 30: wekalist.api.v1.State
+	(*Node)(nil),                        // 31: wekalist.api.v1.Node
+	(*Attachment)(nil),                  // 32: wekalist.api.v1.Attachment
 	(*fieldmaskpb.FieldMask)(nil),       // 33: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),               // 34: google.protobuf.Empty
 }
 var file_api_v1_memo_service_proto_depIdxs = []int32{
-	29, // 0: memos.api.v1.Reaction.create_time:type_name -> google.protobuf.Timestamp
-	30, // 1: memos.api.v1.Memo.state:type_name -> memos.api.v1.State
-	29, // 2: memos.api.v1.Memo.create_time:type_name -> google.protobuf.Timestamp
-	29, // 3: memos.api.v1.Memo.update_time:type_name -> google.protobuf.Timestamp
-	29, // 4: memos.api.v1.Memo.display_time:type_name -> google.protobuf.Timestamp
-	31, // 5: memos.api.v1.Memo.nodes:type_name -> memos.api.v1.Node
-	0,  // 6: memos.api.v1.Memo.visibility:type_name -> memos.api.v1.Visibility
-	32, // 7: memos.api.v1.Memo.attachments:type_name -> memos.api.v1.Attachment
-	16, // 8: memos.api.v1.Memo.relations:type_name -> memos.api.v1.MemoRelation
-	2,  // 9: memos.api.v1.Memo.reactions:type_name -> memos.api.v1.Reaction
-	27, // 10: memos.api.v1.Memo.property:type_name -> memos.api.v1.Memo.Property
-	4,  // 11: memos.api.v1.Memo.location:type_name -> memos.api.v1.Location
-	3,  // 12: memos.api.v1.CreateMemoRequest.memo:type_name -> memos.api.v1.Memo
-	30, // 13: memos.api.v1.ListMemosRequest.state:type_name -> memos.api.v1.State
-	3,  // 14: memos.api.v1.ListMemosResponse.memos:type_name -> memos.api.v1.Memo
-	33, // 15: memos.api.v1.GetMemoRequest.read_mask:type_name -> google.protobuf.FieldMask
-	3,  // 16: memos.api.v1.UpdateMemoRequest.memo:type_name -> memos.api.v1.Memo
-	33, // 17: memos.api.v1.UpdateMemoRequest.update_mask:type_name -> google.protobuf.FieldMask
-	32, // 18: memos.api.v1.SetMemoAttachmentsRequest.attachments:type_name -> memos.api.v1.Attachment
-	32, // 19: memos.api.v1.ListMemoAttachmentsResponse.attachments:type_name -> memos.api.v1.Attachment
-	28, // 20: memos.api.v1.MemoRelation.memo:type_name -> memos.api.v1.MemoRelation.Memo
-	28, // 21: memos.api.v1.MemoRelation.related_memo:type_name -> memos.api.v1.MemoRelation.Memo
-	1,  // 22: memos.api.v1.MemoRelation.type:type_name -> memos.api.v1.MemoRelation.Type
-	16, // 23: memos.api.v1.SetMemoRelationsRequest.relations:type_name -> memos.api.v1.MemoRelation
-	16, // 24: memos.api.v1.ListMemoRelationsResponse.relations:type_name -> memos.api.v1.MemoRelation
-	3,  // 25: memos.api.v1.CreateMemoCommentRequest.comment:type_name -> memos.api.v1.Memo
-	3,  // 26: memos.api.v1.ListMemoCommentsResponse.memos:type_name -> memos.api.v1.Memo
-	2,  // 27: memos.api.v1.ListMemoReactionsResponse.reactions:type_name -> memos.api.v1.Reaction
-	2,  // 28: memos.api.v1.UpsertMemoReactionRequest.reaction:type_name -> memos.api.v1.Reaction
-	5,  // 29: memos.api.v1.MemoService.CreateMemo:input_type -> memos.api.v1.CreateMemoRequest
-	6,  // 30: memos.api.v1.MemoService.ListMemos:input_type -> memos.api.v1.ListMemosRequest
-	8,  // 31: memos.api.v1.MemoService.GetMemo:input_type -> memos.api.v1.GetMemoRequest
-	9,  // 32: memos.api.v1.MemoService.UpdateMemo:input_type -> memos.api.v1.UpdateMemoRequest
-	10, // 33: memos.api.v1.MemoService.DeleteMemo:input_type -> memos.api.v1.DeleteMemoRequest
-	11, // 34: memos.api.v1.MemoService.RenameMemoTag:input_type -> memos.api.v1.RenameMemoTagRequest
-	12, // 35: memos.api.v1.MemoService.DeleteMemoTag:input_type -> memos.api.v1.DeleteMemoTagRequest
-	13, // 36: memos.api.v1.MemoService.SetMemoAttachments:input_type -> memos.api.v1.SetMemoAttachmentsRequest
-	14, // 37: memos.api.v1.MemoService.ListMemoAttachments:input_type -> memos.api.v1.ListMemoAttachmentsRequest
-	17, // 38: memos.api.v1.MemoService.SetMemoRelations:input_type -> memos.api.v1.SetMemoRelationsRequest
-	18, // 39: memos.api.v1.MemoService.ListMemoRelations:input_type -> memos.api.v1.ListMemoRelationsRequest
-	20, // 40: memos.api.v1.MemoService.CreateMemoComment:input_type -> memos.api.v1.CreateMemoCommentRequest
-	21, // 41: memos.api.v1.MemoService.ListMemoComments:input_type -> memos.api.v1.ListMemoCommentsRequest
-	23, // 42: memos.api.v1.MemoService.ListMemoReactions:input_type -> memos.api.v1.ListMemoReactionsRequest
-	25, // 43: memos.api.v1.MemoService.UpsertMemoReaction:input_type -> memos.api.v1.UpsertMemoReactionRequest
-	26, // 44: memos.api.v1.MemoService.DeleteMemoReaction:input_type -> memos.api.v1.DeleteMemoReactionRequest
-	3,  // 45: memos.api.v1.MemoService.CreateMemo:output_type -> memos.api.v1.Memo
-	7,  // 46: memos.api.v1.MemoService.ListMemos:output_type -> memos.api.v1.ListMemosResponse
-	3,  // 47: memos.api.v1.MemoService.GetMemo:output_type -> memos.api.v1.Memo
-	3,  // 48: memos.api.v1.MemoService.UpdateMemo:output_type -> memos.api.v1.Memo
-	34, // 49: memos.api.v1.MemoService.DeleteMemo:output_type -> google.protobuf.Empty
-	34, // 50: memos.api.v1.MemoService.RenameMemoTag:output_type -> google.protobuf.Empty
-	34, // 51: memos.api.v1.MemoService.DeleteMemoTag:output_type -> google.protobuf.Empty
-	34, // 52: memos.api.v1.MemoService.SetMemoAttachments:output_type -> google.protobuf.Empty
-	15, // 53: memos.api.v1.MemoService.ListMemoAttachments:output_type -> memos.api.v1.ListMemoAttachmentsResponse
-	34, // 54: memos.api.v1.MemoService.SetMemoRelations:output_type -> google.protobuf.Empty
-	19, // 55: memos.api.v1.MemoService.ListMemoRelations:output_type -> memos.api.v1.ListMemoRelationsResponse
-	3,  // 56: memos.api.v1.MemoService.CreateMemoComment:output_type -> memos.api.v1.Memo
-	22, // 57: memos.api.v1.MemoService.ListMemoComments:output_type -> memos.api.v1.ListMemoCommentsResponse
-	24, // 58: memos.api.v1.MemoService.ListMemoReactions:output_type -> memos.api.v1.ListMemoReactionsResponse
-	2,  // 59: memos.api.v1.MemoService.UpsertMemoReaction:output_type -> memos.api.v1.Reaction
-	34, // 60: memos.api.v1.MemoService.DeleteMemoReaction:output_type -> google.protobuf.Empty
+	29, // 0: wekalist.api.v1.Reaction.create_time:type_name -> google.protobuf.Timestamp
+	30, // 1: wekalist.api.v1.Memo.state:type_name -> wekalist.api.v1.State
+	29, // 2: wekalist.api.v1.Memo.create_time:type_name -> google.protobuf.Timestamp
+	29, // 3: wekalist.api.v1.Memo.update_time:type_name -> google.protobuf.Timestamp
+	29, // 4: wekalist.api.v1.Memo.display_time:type_name -> google.protobuf.Timestamp
+	31, // 5: wekalist.api.v1.Memo.nodes:type_name -> wekalist.api.v1.Node
+	0,  // 6: wekalist.api.v1.Memo.visibility:type_name -> wekalist.api.v1.Visibility
+	32, // 7: wekalist.api.v1.Memo.attachments:type_name -> wekalist.api.v1.Attachment
+	16, // 8: wekalist.api.v1.Memo.relations:type_name -> wekalist.api.v1.MemoRelation
+	2,  // 9: wekalist.api.v1.Memo.reactions:type_name -> wekalist.api.v1.Reaction
+	27, // 10: wekalist.api.v1.Memo.property:type_name -> wekalist.api.v1.Memo.Property
+	4,  // 11: wekalist.api.v1.Memo.location:type_name -> wekalist.api.v1.Location
+	3,  // 12: wekalist.api.v1.CreateMemoRequest.memo:type_name -> wekalist.api.v1.Memo
+	30, // 13: wekalist.api.v1.ListMemosRequest.state:type_name -> wekalist.api.v1.State
+	3,  // 14: wekalist.api.v1.ListMemosResponse.memos:type_name -> wekalist.api.v1.Memo
+	33, // 15: wekalist.api.v1.GetMemoRequest.read_mask:type_name -> google.protobuf.FieldMask
+	3,  // 16: wekalist.api.v1.UpdateMemoRequest.memo:type_name -> wekalist.api.v1.Memo
+	33, // 17: wekalist.api.v1.UpdateMemoRequest.update_mask:type_name -> google.protobuf.FieldMask
+	32, // 18: wekalist.api.v1.SetMemoAttachmentsRequest.attachments:type_name -> wekalist.api.v1.Attachment
+	32, // 19: wekalist.api.v1.ListMemoAttachmentsResponse.attachments:type_name -> wekalist.api.v1.Attachment
+	28, // 20: wekalist.api.v1.MemoRelation.memo:type_name -> wekalist.api.v1.MemoRelation.Memo
+	28, // 21: wekalist.api.v1.MemoRelation.related_memo:type_name -> wekalist.api.v1.MemoRelation.Memo
+	1,  // 22: wekalist.api.v1.MemoRelation.type:type_name -> wekalist.api.v1.MemoRelation.Type
+	16, // 23: wekalist.api.v1.SetMemoRelationsRequest.relations:type_name -> wekalist.api.v1.MemoRelation
+	16, // 24: wekalist.api.v1.ListMemoRelationsResponse.relations:type_name -> wekalist.api.v1.MemoRelation
+	3,  // 25: wekalist.api.v1.CreateMemoCommentRequest.comment:type_name -> wekalist.api.v1.Memo
+	3,  // 26: wekalist.api.v1.ListMemoCommentsResponse.memos:type_name -> wekalist.api.v1.Memo
+	2,  // 27: wekalist.api.v1.ListMemoReactionsResponse.reactions:type_name -> wekalist.api.v1.Reaction
+	2,  // 28: wekalist.api.v1.UpsertMemoReactionRequest.reaction:type_name -> wekalist.api.v1.Reaction
+	5,  // 29: wekalist.api.v1.MemoService.CreateMemo:input_type -> wekalist.api.v1.CreateMemoRequest
+	6,  // 30: wekalist.api.v1.MemoService.ListMemos:input_type -> wekalist.api.v1.ListMemosRequest
+	8,  // 31: wekalist.api.v1.MemoService.GetMemo:input_type -> wekalist.api.v1.GetMemoRequest
+	9,  // 32: wekalist.api.v1.MemoService.UpdateMemo:input_type -> wekalist.api.v1.UpdateMemoRequest
+	10, // 33: wekalist.api.v1.MemoService.DeleteMemo:input_type -> wekalist.api.v1.DeleteMemoRequest
+	11, // 34: wekalist.api.v1.MemoService.RenameMemoTag:input_type -> wekalist.api.v1.RenameMemoTagRequest
+	12, // 35: wekalist.api.v1.MemoService.DeleteMemoTag:input_type -> wekalist.api.v1.DeleteMemoTagRequest
+	13, // 36: wekalist.api.v1.MemoService.SetMemoAttachments:input_type -> wekalist.api.v1.SetMemoAttachmentsRequest
+	14, // 37: wekalist.api.v1.MemoService.ListMemoAttachments:input_type -> wekalist.api.v1.ListMemoAttachmentsRequest
+	17, // 38: wekalist.api.v1.MemoService.SetMemoRelations:input_type -> wekalist.api.v1.SetMemoRelationsRequest
+	18, // 39: wekalist.api.v1.MemoService.ListMemoRelations:input_type -> wekalist.api.v1.ListMemoRelationsRequest
+	20, // 40: wekalist.api.v1.MemoService.CreateMemoComment:input_type -> wekalist.api.v1.CreateMemoCommentRequest
+	21, // 41: wekalist.api.v1.MemoService.ListMemoComments:input_type -> wekalist.api.v1.ListMemoCommentsRequest
+	23, // 42: wekalist.api.v1.MemoService.ListMemoReactions:input_type -> wekalist.api.v1.ListMemoReactionsRequest
+	25, // 43: wekalist.api.v1.MemoService.UpsertMemoReaction:input_type -> wekalist.api.v1.UpsertMemoReactionRequest
+	26, // 44: wekalist.api.v1.MemoService.DeleteMemoReaction:input_type -> wekalist.api.v1.DeleteMemoReactionRequest
+	3,  // 45: wekalist.api.v1.MemoService.CreateMemo:output_type -> wekalist.api.v1.Memo
+	7,  // 46: wekalist.api.v1.MemoService.ListMemos:output_type -> wekalist.api.v1.ListMemosResponse
+	3,  // 47: wekalist.api.v1.MemoService.GetMemo:output_type -> wekalist.api.v1.Memo
+	3,  // 48: wekalist.api.v1.MemoService.UpdateMemo:output_type -> wekalist.api.v1.Memo
+	34, // 49: wekalist.api.v1.MemoService.DeleteMemo:output_type -> google.protobuf.Empty
+	34, // 50: wekalist.api.v1.MemoService.RenameMemoTag:output_type -> google.protobuf.Empty
+	34, // 51: wekalist.api.v1.MemoService.DeleteMemoTag:output_type -> google.protobuf.Empty
+	34, // 52: wekalist.api.v1.MemoService.SetMemoAttachments:output_type -> google.protobuf.Empty
+	15, // 53: wekalist.api.v1.MemoService.ListMemoAttachments:output_type -> wekalist.api.v1.ListMemoAttachmentsResponse
+	34, // 54: wekalist.api.v1.MemoService.SetMemoRelations:output_type -> google.protobuf.Empty
+	19, // 55: wekalist.api.v1.MemoService.ListMemoRelations:output_type -> wekalist.api.v1.ListMemoRelationsResponse
+	3,  // 56: wekalist.api.v1.MemoService.CreateMemoComment:output_type -> wekalist.api.v1.Memo
+	22, // 57: wekalist.api.v1.MemoService.ListMemoComments:output_type -> wekalist.api.v1.ListMemoCommentsResponse
+	24, // 58: wekalist.api.v1.MemoService.ListMemoReactions:output_type -> wekalist.api.v1.ListMemoReactionsResponse
+	2,  // 59: wekalist.api.v1.MemoService.UpsertMemoReaction:output_type -> wekalist.api.v1.Reaction
+	34, // 60: wekalist.api.v1.MemoService.DeleteMemoReaction:output_type -> google.protobuf.Empty
 	45, // [45:61] is the sub-list for method output_type
 	29, // [29:45] is the sub-list for method input_type
 	29, // [29:29] is the sub-list for extension type_name

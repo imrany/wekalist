@@ -17,13 +17,13 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/usememos/memos/internal/base"
-	"github.com/usememos/memos/internal/util"
-	"github.com/usememos/memos/plugin/idp"
-	"github.com/usememos/memos/plugin/idp/oauth2"
-	v1pb "github.com/usememos/memos/proto/gen/api/v1"
-	storepb "github.com/usememos/memos/proto/gen/store"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/base"
+	"github.com/imrany/wekalist/internal/util"
+	"github.com/imrany/wekalist/plugin/idp"
+	"github.com/imrany/wekalist/plugin/idp/oauth2"
+	v1pb "github.com/imrany/wekalist/proto/gen/api/v1"
+	storepb "github.com/imrany/wekalist/proto/gen/store"
+	"github.com/imrany/wekalist/store"
 )
 
 const (

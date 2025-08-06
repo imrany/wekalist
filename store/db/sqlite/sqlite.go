@@ -9,8 +9,8 @@ import (
 	// Import the SQLite driver.
 	_ "modernc.org/sqlite"
 
-	"github.com/usememos/memos/internal/profile"
-	"github.com/usememos/memos/store"
+	"github.com/imrany/wekalist/internal/profile"
+	"github.com/imrany/wekalist/store"
 )
 
 type DB struct {

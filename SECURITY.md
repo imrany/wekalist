@@ -2,6 +2,6 @@
 
 ## Reporting a bug
 
-Report security bugs via GitHub [issues](https://github.com/usememos/memos/issues).
+Report security bugs via GitHub [issues](https://github.com/imrany/wekalist/issues).
 
-For more information, please contact [usememos@gmail.com](usememos@gmail.com).
+For more information, please contact [imranmat254@gmail.com](imranmat254@gmail.com).

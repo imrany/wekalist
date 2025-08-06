@@ -9,7 +9,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Empty } from "../../google/protobuf/empty";
 import { FieldMask } from "../../google/protobuf/field_mask";
 
-export const protobufPackage = "memos.api.v1";
+export const protobufPackage = "wekalist.api.v1";
 
 export interface Shortcut {
   /**
@@ -464,7 +464,7 @@ export const DeleteShortcutRequest: MessageFns<DeleteShortcutRequest> = {
 export type ShortcutServiceDefinition = typeof ShortcutServiceDefinition;
 export const ShortcutServiceDefinition = {
   name: "ShortcutService",
-  fullName: "memos.api.v1.ShortcutService",
+  fullName: "wekalist.api.v1.ShortcutService",
   methods: {
     /** ListShortcuts returns a list of shortcuts for a user. */
     listShortcuts: {

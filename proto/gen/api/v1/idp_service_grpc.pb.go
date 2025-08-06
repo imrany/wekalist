@@ -20,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	IdentityProviderService_ListIdentityProviders_FullMethodName  = "/memos.api.v1.IdentityProviderService/ListIdentityProviders"
-	IdentityProviderService_GetIdentityProvider_FullMethodName    = "/memos.api.v1.IdentityProviderService/GetIdentityProvider"
-	IdentityProviderService_CreateIdentityProvider_FullMethodName = "/memos.api.v1.IdentityProviderService/CreateIdentityProvider"
-	IdentityProviderService_UpdateIdentityProvider_FullMethodName = "/memos.api.v1.IdentityProviderService/UpdateIdentityProvider"
-	IdentityProviderService_DeleteIdentityProvider_FullMethodName = "/memos.api.v1.IdentityProviderService/DeleteIdentityProvider"
+	IdentityProviderService_ListIdentityProviders_FullMethodName  = "/wekalist.api.v1.IdentityProviderService/ListIdentityProviders"
+	IdentityProviderService_GetIdentityProvider_FullMethodName    = "/wekalist.api.v1.IdentityProviderService/GetIdentityProvider"
+	IdentityProviderService_CreateIdentityProvider_FullMethodName = "/wekalist.api.v1.IdentityProviderService/CreateIdentityProvider"
+	IdentityProviderService_UpdateIdentityProvider_FullMethodName = "/wekalist.api.v1.IdentityProviderService/UpdateIdentityProvider"
+	IdentityProviderService_DeleteIdentityProvider_FullMethodName = "/wekalist.api.v1.IdentityProviderService/DeleteIdentityProvider"
 )
 
 // IdentityProviderServiceClient is the client API for IdentityProviderService service.
@@ -256,7 +256,7 @@ func _IdentityProviderService_DeleteIdentityProvider_Handler(srv interface{}, ct
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var IdentityProviderService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "memos.api.v1.IdentityProviderService",
+	ServiceName: "wekalist.api.v1.IdentityProviderService",
 	HandlerType: (*IdentityProviderServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
