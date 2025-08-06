@@ -351,7 +351,9 @@
       "default-memo-visibility": "Default memo visibility",
       "apperance": "Appearance",
       "theme": "Theme",
-      "enable-notifications":"Enable Notifications"
+      "enable-notifications":"Enable Notifications",
+      "webhook-delete":"Delete Webhook",
+      "webhook-deletion":"Are you sure to delete webhook {{webhook}}? You cannot undo this action."
     },
     "sso": "SSO",
     "sso-section": {

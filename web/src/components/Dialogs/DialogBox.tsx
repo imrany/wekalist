@@ -9,6 +9,7 @@ import {
 } from "../ui/dialog";
 import { User, UserAccessToken, UserSession } from "@/types/proto/api/v1/user_service";
 import { getFormatedAccessToken } from "../Settings/AccessTokenSection";
+import { Webhook } from "@/types/proto/api/v1/webhook_service";
 
 export enum DialogType {
   DELETE_MEMO = "Delete",
@@ -16,7 +17,8 @@ export enum DialogType {
   ARCHIVE_MEMBER = "Archive Member",
   DELETE_MEMBER = "Delete Member",
   REVOKE_SESSION = "Revoke Session",
-  DELETE_ACCESS_TOKEN="Delete Access Token"
+  DELETE_ACCESS_TOKEN="Delete Access Token",
+  DELETE_WEB_HOOK="Delete Web Hook",
 }
 
 type Props = {
@@ -27,6 +29,7 @@ type Props = {
   selectedUser?: User;
   selectedUserSession?: UserSession;
   selectedUserAccessToken?: UserAccessToken;
+  selectedWebHook?:Webhook;
 };
 
 type DialogConfig = {
@@ -36,7 +39,7 @@ type DialogConfig = {
 };
 
 export default function DialogBox(props: Props) {
-  const { open, onOpenChange, actionButtonFunction, dialogType, selectedUser, selectedUserSession, selectedUserAccessToken } = props;
+  const { open, onOpenChange, actionButtonFunction, dialogType, selectedUser, selectedUserSession, selectedUserAccessToken, selectedWebHook } = props;
   const t = useTranslate();
 
   const getFormattedSessionId = (sessionId: string) => {
@@ -75,6 +78,11 @@ export default function DialogBox(props: Props) {
     [DialogType.DELETE_ACCESS_TOKEN]: {
       title:t("setting.access-token-section.access-token-delete"),
       confirmMessage: t("setting.access-token-section.access-token-deletion", { accessToken: getFormatedAccessToken(selectedUserAccessToken?.accessToken || "") }),
+      actionButtonText: t("common.delete")
+    },
+    [DialogType.DELETE_WEB_HOOK]: {
+      title:t("setting.preference-section.webhook-delete"),
+      confirmMessage: t("setting.preference-section.webhook-deletion", { webhook: selectedWebHook?.displayName || "" }),
       actionButtonText: t("common.delete")
     }
   };

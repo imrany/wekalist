@@ -7,11 +7,15 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { Webhook } from "@/types/proto/api/v1/webhook_service";
 import { useTranslate } from "@/utils/i18n";
 import CreateWebhookDialog from "../CreateWebhookDialog";
+import DialogBox, { DialogType } from "../Dialogs/DialogBox";
+import { toast } from "sonner";
 
 const WebhookSection = () => {
   const t = useTranslate();
   const currentUser = useCurrentUser();
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
+  const [open, setOpen]=useState(false)
+  const [selectedWebHook, setSelectedWebHook]=useState<Webhook>()
   const [isCreateWebhookDialogOpen, setIsCreateWebhookDialogOpen] = useState(false);
 
   const listWebhooks = async () => {
@@ -28,6 +32,18 @@ const WebhookSection = () => {
     });
   }, [currentUser]);
 
+  const onOpenChange = (state: boolean) => {
+    setOpen(state);
+    if (!state) {
+      setSelectedWebHook(undefined);
+    }
+  };
+
+  const handleOpenDeleteWebhookDialogConfirm = (webhook: Webhook) => {
+    setSelectedWebHook(webhook);
+    setOpen(true);
+  };
+
   const handleCreateWebhookDialogConfirm = async () => {
     const webhooks = await listWebhooks();
     setWebhooks(webhooks);
@@ -35,10 +51,16 @@ const WebhookSection = () => {
   };
 
   const handleDeleteWebhook = async (webhook: Webhook) => {
-    const confirmed = window.confirm(`Are you sure to delete webhook \`${webhook.displayName}\`? You cannot undo this action.`);
-    if (confirmed) {
+    if (!webhook) return;
+
+    try{
       await webhookServiceClient.deleteWebhook({ name: webhook.name });
       setWebhooks(webhooks.filter((item) => item.name !== webhook.name));
+      toast.success(t("setting.access-token-section.access-token-deleted"));
+      onOpenChange(false); // Close dialog after success
+    }catch(error){
+      console.error("Failed to delete webhook:", error);
+      toast.error("Failed to delete webhook");
     }
   };
 
@@ -82,7 +104,7 @@ const WebhookSection = () => {
                       <Button
                         variant="ghost"
                         onClick={() => {
-                          handleDeleteWebhook(webhook);
+                          handleOpenDeleteWebhookDialogConfirm(webhook);
                         }}
                       >
                         <TrashIcon className="text-destructive w-4 h-auto" />
@@ -117,6 +139,14 @@ const WebhookSection = () => {
         open={isCreateWebhookDialogOpen}
         onOpenChange={setIsCreateWebhookDialogOpen}
         onSuccess={handleCreateWebhookDialogConfirm}
+      />
+      {/* Confirmation Dialog */}
+      <DialogBox
+        dialogType={DialogType.DELETE_WEB_HOOK} 
+        open={open} 
+        selectedWebHook={selectedWebHook}
+        onOpenChange={onOpenChange}
+        actionButtonFunction={handleDeleteWebhook}
       />
     </div>
   );
