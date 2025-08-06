@@ -143,8 +143,8 @@ const file_api_v1_ai_service_proto_rawDesc = "" +
 	"\bresponse\x18\x02 \x01(\tB\x03\xe0A\x02R\bresponse\x12/\n" +
 	"\x06status\x18\x03 \x01(\v2\x12.google.rpc.StatusB\x03\xe0A\x01R\x06status2n\n" +
 	"\tAiService\x12a\n" +
-	"\x05GenAi\x12\x1d.wekalist.api.v1.GenAiRequest\x1a\x1e.wekalist.api.v1.GenAiResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x06prompt\"\t/v1/genaiB\xb5\x01\n" +
-	"\x13com.wekalist.api.v1B\x0eAiServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x05GenAi\x12\x1d.wekalist.api.v1.GenAiRequest\x1a\x1e.wekalist.api.v1.GenAiResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x06prompt\"\t/v1/genaiB\xb6\x01\n" +
+	"\x13com.wekalist.api.v1B\x0eAiServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_ai_service_proto_rawDescOnce sync.Once

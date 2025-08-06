@@ -606,8 +606,8 @@ const file_api_v1_attachment_service_proto_rawDesc = "" +
 	"\x13GetAttachmentBinary\x12+.wekalist.api.v1.GetAttachmentBinaryRequest\x1a\x14.google.api.HttpBody\"G\xdaA\x17name,filename,thumbnail\x82\xd3\xe4\x93\x02'\x12%/file/{name=attachments/*}/{filename}\x12\xaf\x01\n" +
 	"\x10UpdateAttachment\x12(.wekalist.api.v1.UpdateAttachmentRequest\x1a\x1b.wekalist.api.v1.Attachment\"T\xdaA\x16attachment,update_mask\x82\xd3\xe4\x93\x025:\n" +
 	"attachment2'/api/v1/{attachment.name=attachments/*}\x12\x81\x01\n" +
-	"\x10DeleteAttachment\x12(.wekalist.api.v1.DeleteAttachmentRequest\x1a\x16.google.protobuf.Empty\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{name=attachments/*}B\xbd\x01\n" +
-	"\x13com.wekalist.api.v1B\x16AttachmentServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x10DeleteAttachment\x12(.wekalist.api.v1.DeleteAttachmentRequest\x1a\x16.google.protobuf.Empty\"+\xdaA\x04name\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{name=attachments/*}B\xbe\x01\n" +
+	"\x13com.wekalist.api.v1B\x16AttachmentServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_attachment_service_proto_rawDescOnce sync.Once

@@ -2195,8 +2195,8 @@ const file_api_v1_memo_service_proto_rawDesc = "" +
 	"\x10ListMemoComments\x12(.wekalist.api.v1.ListMemoCommentsRequest\x1a).wekalist.api.v1.ListMemoCommentsResponse\".\xdaA\x04name\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{name=memos/*}/comments\x12\x9b\x01\n" +
 	"\x11ListMemoReactions\x12).wekalist.api.v1.ListMemoReactionsRequest\x1a*.wekalist.api.v1.ListMemoReactionsResponse\"/\xdaA\x04name\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{name=memos/*}/reactions\x12\x8f\x01\n" +
 	"\x12UpsertMemoReaction\x12*.wekalist.api.v1.UpsertMemoReactionRequest\x1a\x19.wekalist.api.v1.Reaction\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%:\x01*\" /api/v1/{name=memos/*}/reactions\x12\x83\x01\n" +
-	"\x12DeleteMemoReaction\x12*.wekalist.api.v1.DeleteMemoReactionRequest\x1a\x16.google.protobuf.Empty\")\xdaA\x04name\x82\xd3\xe4\x93\x02\x1c*\x1a/api/v1/{name=reactions/*}B\xb7\x01\n" +
-	"\x13com.wekalist.api.v1B\x10MemoServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x12DeleteMemoReaction\x12*.wekalist.api.v1.DeleteMemoReactionRequest\x1a\x16.google.protobuf.Empty\")\xdaA\x04name\x82\xd3\xe4\x93\x02\x1c*\x1a/api/v1/{name=reactions/*}B\xb8\x01\n" +
+	"\x13com.wekalist.api.v1B\x10MemoServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_memo_service_proto_rawDescOnce sync.Once

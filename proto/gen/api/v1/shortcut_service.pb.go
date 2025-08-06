@@ -422,8 +422,8 @@ const file_api_v1_shortcut_service_proto_rawDesc = "" +
 	"\vGetShortcut\x12#.wekalist.api.v1.GetShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=users/*/shortcuts/*}\x12\x9b\x01\n" +
 	"\x0eCreateShortcut\x12&.wekalist.api.v1.CreateShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"F\xdaA\x0fparent,shortcut\x82\xd3\xe4\x93\x02.:\bshortcut\"\"/api/v1/{parent=users/*}/shortcuts\x12\xa9\x01\n" +
 	"\x0eUpdateShortcut\x12&.wekalist.api.v1.UpdateShortcutRequest\x1a\x19.wekalist.api.v1.Shortcut\"T\xdaA\x14shortcut,update_mask\x82\xd3\xe4\x93\x027:\bshortcut2+/api/v1/{shortcut.name=users/*/shortcuts/*}\x12\x83\x01\n" +
-	"\x0eDeleteShortcut\x12&.wekalist.api.v1.DeleteShortcutRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=users/*/shortcuts/*}B\xbb\x01\n" +
-	"\x13com.wekalist.api.v1B\x14ShortcutServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x0eDeleteShortcut\x12&.wekalist.api.v1.DeleteShortcutRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=users/*/shortcuts/*}B\xbc\x01\n" +
+	"\x13com.wekalist.api.v1B\x14ShortcutServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_shortcut_service_proto_rawDescOnce sync.Once

@@ -402,8 +402,8 @@ const file_store_idp_proto_rawDesc = "" +
 	"\ttoken_url\x18\x04 \x01(\tR\btokenUrl\x12\"\n" +
 	"\ruser_info_url\x18\x05 \x01(\tR\vuserInfoUrl\x12\x16\n" +
 	"\x06scopes\x18\x06 \x03(\tR\x06scopes\x12A\n" +
-	"\rfield_mapping\x18\a \x01(\v2\x1c.wekalist.store.FieldMappingR\ffieldMappingB\xa2\x01\n" +
-	"\x12com.wekalist.storeB\bIdpProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
+	"\rfield_mapping\x18\a \x01(\v2\x1c.wekalist.store.FieldMappingR\ffieldMappingB\xa3\x01\n" +
+	"\x12com.wekalist.storeB\bIdpProtoP\x01Z*github.com/imrany/wekalist/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_idp_proto_rawDescOnce sync.Once

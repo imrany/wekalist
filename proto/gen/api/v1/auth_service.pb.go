@@ -443,8 +443,8 @@ const file_api_v1_auth_service_proto_rawDesc = "" +
 	"\vAuthService\x12\x91\x01\n" +
 	"\x11GetCurrentSession\x12).wekalist.api.v1.GetCurrentSessionRequest\x1a*.wekalist.api.v1.GetCurrentSessionResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/auth/sessions/current\x12\x80\x01\n" +
 	"\rCreateSession\x12%.wekalist.api.v1.CreateSessionRequest\x1a&.wekalist.api.v1.CreateSessionResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/sessions\x12u\n" +
-	"\rDeleteSession\x12%.wekalist.api.v1.DeleteSessionRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/auth/sessions/currentB\xb7\x01\n" +
-	"\x13com.wekalist.api.v1B\x10AuthServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\rDeleteSession\x12%.wekalist.api.v1.DeleteSessionRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/auth/sessions/currentB\xb8\x01\n" +
+	"\x13com.wekalist.api.v1B\x10AuthServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_auth_service_proto_rawDescOnce sync.Once

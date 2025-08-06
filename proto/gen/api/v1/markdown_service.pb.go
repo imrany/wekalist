@@ -2926,8 +2926,8 @@ const file_api_v1_markdown_service_proto_rawDesc = "" +
 	"\rParseMarkdown\x12%.wekalist.api.v1.ParseMarkdownRequest\x1a&.wekalist.api.v1.ParseMarkdownResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v1/markdown:parse\x12\x98\x01\n" +
 	"\x14RestoreMarkdownNodes\x12,.wekalist.api.v1.RestoreMarkdownNodesRequest\x1a-.wekalist.api.v1.RestoreMarkdownNodesResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/v1/markdown:restore\x12\xa0\x01\n" +
 	"\x16StringifyMarkdownNodes\x12..wekalist.api.v1.StringifyMarkdownNodesRequest\x1a/.wekalist.api.v1.StringifyMarkdownNodesResponse\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/api/v1/markdown:stringify\x12\x85\x01\n" +
-	"\x0fGetLinkMetadata\x12'.wekalist.api.v1.GetLinkMetadataRequest\x1a\x1d.wekalist.api.v1.LinkMetadata\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/markdown/links:getMetadataB\xbb\x01\n" +
-	"\x13com.wekalist.api.v1B\x14MarkdownServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x0fGetLinkMetadata\x12'.wekalist.api.v1.GetLinkMetadataRequest\x1a\x1d.wekalist.api.v1.LinkMetadata\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/markdown/links:getMetadataB\xbc\x01\n" +
+	"\x13com.wekalist.api.v1B\x14MarkdownServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_markdown_service_proto_rawDescOnce sync.Once

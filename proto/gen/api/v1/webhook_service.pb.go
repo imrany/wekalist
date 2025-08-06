@@ -423,8 +423,8 @@ const file_api_v1_webhook_service_proto_rawDesc = "" +
 	"GetWebhook\x12\".wekalist.api.v1.GetWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/api/v1/{name=users/*/webhooks/*}\x12\x95\x01\n" +
 	"\rCreateWebhook\x12%.wekalist.api.v1.CreateWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"C\xdaA\x0eparent,webhook\x82\xd3\xe4\x93\x02,:\awebhook\"!/api/v1/{parent=users/*}/webhooks\x12\xa2\x01\n" +
 	"\rUpdateWebhook\x12%.wekalist.api.v1.UpdateWebhookRequest\x1a\x18.wekalist.api.v1.Webhook\"P\xdaA\x13webhook,update_mask\x82\xd3\xe4\x93\x024:\awebhook2)/api/v1/{webhook.name=users/*/webhooks/*}\x12\x80\x01\n" +
-	"\rDeleteWebhook\x12%.wekalist.api.v1.DeleteWebhookRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/webhooks/*}B\xba\x01\n" +
-	"\x13com.wekalist.api.v1B\x13WebhookServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\rDeleteWebhook\x12%.wekalist.api.v1.DeleteWebhookRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/webhooks/*}B\xbb\x01\n" +
+	"\x13com.wekalist.api.v1B\x13WebhookServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_webhook_service_proto_rawDescOnce sync.Once

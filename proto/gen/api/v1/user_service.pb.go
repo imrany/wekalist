@@ -2313,8 +2313,8 @@ const file_api_v1_user_service_proto_rawDesc = "" +
 	"\x15CreateUserAccessToken\x12-.wekalist.api.v1.CreateUserAccessTokenRequest\x1a .wekalist.api.v1.UserAccessToken\"Q\xdaA\x13parent,access_token\x82\xd3\xe4\x93\x025:\faccess_token\"%/api/v1/{parent=users/*}/accessTokens\x12\x94\x01\n" +
 	"\x15DeleteUserAccessToken\x12-.wekalist.api.v1.DeleteUserAccessTokenRequest\x1a\x16.google.protobuf.Empty\"4\xdaA\x04name\x82\xd3\xe4\x93\x02'*%/api/v1/{name=users/*/accessTokens/*}\x12\x9b\x01\n" +
 	"\x10ListUserSessions\x12(.wekalist.api.v1.ListUserSessionsRequest\x1a).wekalist.api.v1.ListUserSessionsResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/api/v1/{parent=users/*}/sessions\x12\x88\x01\n" +
-	"\x11RevokeUserSession\x12).wekalist.api.v1.RevokeUserSessionRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/sessions/*}B\xb7\x01\n" +
-	"\x13com.wekalist.api.v1B\x10UserServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x11RevokeUserSession\x12).wekalist.api.v1.RevokeUserSessionRequest\x1a\x16.google.protobuf.Empty\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/api/v1/{name=users/*/sessions/*}B\xb8\x01\n" +
+	"\x13com.wekalist.api.v1B\x10UserServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_user_service_proto_rawDescOnce sync.Once

@@ -1081,8 +1081,8 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\x10WorkspaceService\x12\x88\x01\n" +
 	"\x13GetWorkspaceProfile\x12+.wekalist.api.v1.GetWorkspaceProfileRequest\x1a!.wekalist.api.v1.WorkspaceProfile\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/workspace/profile\x12\x99\x01\n" +
 	"\x13GetWorkspaceSetting\x12+.wekalist.api.v1.GetWorkspaceSettingRequest\x1a!.wekalist.api.v1.WorkspaceSetting\"2\xdaA\x04name\x82\xd3\xe4\x93\x02%\x12#/api/v1/{name=workspace/settings/*}\x12\xbf\x01\n" +
-	"\x16UpdateWorkspaceSetting\x12..wekalist.api.v1.UpdateWorkspaceSettingRequest\x1a!.wekalist.api.v1.WorkspaceSetting\"R\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x026:\asetting2+/api/v1/{setting.name=workspace/settings/*}B\xbc\x01\n" +
-	"\x13com.wekalist.api.v1B\x15WorkspaceServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x16UpdateWorkspaceSetting\x12..wekalist.api.v1.UpdateWorkspaceSettingRequest\x1a!.wekalist.api.v1.WorkspaceSetting\"R\xdaA\x13setting,update_mask\x82\xd3\xe4\x93\x026:\asetting2+/api/v1/{setting.name=workspace/settings/*}B\xbd\x01\n" +
+	"\x13com.wekalist.api.v1B\x15WorkspaceServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_workspace_service_proto_rawDescOnce sync.Once

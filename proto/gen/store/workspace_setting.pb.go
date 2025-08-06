@@ -920,8 +920,8 @@ const file_store_workspace_setting_proto_rawDesc = "" +
 	"\x05BASIC\x10\x01\x12\v\n" +
 	"\aGENERAL\x10\x02\x12\v\n" +
 	"\aSTORAGE\x10\x03\x12\x10\n" +
-	"\fMEMO_RELATED\x10\x04B\xaf\x01\n" +
-	"\x12com.wekalist.storeB\x15WorkspaceSettingProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
+	"\fMEMO_RELATED\x10\x04B\xb0\x01\n" +
+	"\x12com.wekalist.storeB\x15WorkspaceSettingProtoP\x01Z*github.com/imrany/wekalist/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_workspace_setting_proto_rawDescOnce sync.Once

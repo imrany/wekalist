@@ -135,9 +135,9 @@ const file_store_inbox_proto_rawDesc = "" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fMEMO_COMMENT\x10\x01\x12\x12\n" +
 	"\x0eVERSION_UPDATE\x10\x02B\x0e\n" +
-	"\f_activity_idB\xa4\x01\n" +
+	"\f_activity_idB\xa5\x01\n" +
 	"\x12com.wekalist.storeB\n" +
-	"InboxProtoP\x01Z)github.com/usememos/memos/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
+	"InboxProtoP\x01Z*github.com/imrany/wekalist/proto/gen/store\xa2\x02\x03WSX\xaa\x02\x0eWekalist.Store\xca\x02\x0eWekalist\\Store\xe2\x02\x1aWekalist\\Store\\GPBMetadata\xea\x02\x0fWekalist::Storeb\x06proto3"
 
 var (
 	file_store_inbox_proto_rawDescOnce sync.Once

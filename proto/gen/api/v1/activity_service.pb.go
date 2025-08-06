@@ -553,8 +553,8 @@ const file_api_v1_activity_service_proto_rawDesc = "" +
 	"\x18wekalist.api.v1/ActivityR\x04name2\x8b\x02\n" +
 	"\x0fActivityService\x12}\n" +
 	"\x0eListActivities\x12&.wekalist.api.v1.ListActivitiesRequest\x1a'.wekalist.api.v1.ListActivitiesResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/api/v1/activities\x12y\n" +
-	"\vGetActivity\x12#.wekalist.api.v1.GetActivityRequest\x1a\x19.wekalist.api.v1.Activity\"*\xdaA\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{name=activities/*}B\xbb\x01\n" +
-	"\x13com.wekalist.api.v1B\x14ActivityServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\vGetActivity\x12#.wekalist.api.v1.GetActivityRequest\x1a\x19.wekalist.api.v1.Activity\"*\xdaA\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{name=activities/*}B\xbc\x01\n" +
+	"\x13com.wekalist.api.v1B\x14ActivityServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_activity_service_proto_rawDescOnce sync.Once

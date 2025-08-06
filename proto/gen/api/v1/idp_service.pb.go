@@ -718,8 +718,8 @@ const file_api_v1_idp_service_proto_rawDesc = "" +
 	"\x13GetIdentityProvider\x12+.wekalist.api.v1.GetIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{name=identityProviders/*}\x12\xb5\x01\n" +
 	"\x16CreateIdentityProvider\x12..wekalist.api.v1.CreateIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"H\xdaA\x11identity_provider\x82\xd3\xe4\x93\x02.:\x11identity_provider\"\x19/api/v1/identityProviders\x12\xdc\x01\n" +
 	"\x16UpdateIdentityProvider\x12..wekalist.api.v1.UpdateIdentityProviderRequest\x1a!.wekalist.api.v1.IdentityProvider\"o\xdaA\x1didentity_provider,update_mask\x82\xd3\xe4\x93\x02I:\x11identity_provider24/api/v1/{identity_provider.name=identityProviders/*}\x12\x93\x01\n" +
-	"\x16DeleteIdentityProvider\x12..wekalist.api.v1.DeleteIdentityProviderRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=identityProviders/*}B\xb6\x01\n" +
-	"\x13com.wekalist.api.v1B\x0fIdpServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\x16DeleteIdentityProvider\x12..wekalist.api.v1.DeleteIdentityProviderRequest\x1a\x16.google.protobuf.Empty\"1\xdaA\x04name\x82\xd3\xe4\x93\x02$*\"/api/v1/{name=identityProviders/*}B\xb7\x01\n" +
+	"\x13com.wekalist.api.v1B\x0fIdpServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_idp_service_proto_rawDescOnce sync.Once

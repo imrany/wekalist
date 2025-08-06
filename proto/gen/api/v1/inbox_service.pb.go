@@ -546,8 +546,8 @@ const file_api_v1_inbox_service_proto_rawDesc = "" +
 	"\fInboxService\x12\x8b\x01\n" +
 	"\vListInboxes\x12#.wekalist.api.v1.ListInboxesRequest\x1a$.wekalist.api.v1.ListInboxesResponse\"1\xdaA\x06parent\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{parent=users/*}/inboxes\x12\x8d\x01\n" +
 	"\vUpdateInbox\x12#.wekalist.api.v1.UpdateInboxRequest\x1a\x16.wekalist.api.v1.Inbox\"A\xdaA\x11inbox,update_mask\x82\xd3\xe4\x93\x02':\x05inbox2\x1e/api/v1/{inbox.name=inboxes/*}\x12s\n" +
-	"\vDeleteInbox\x12#.wekalist.api.v1.DeleteInboxRequest\x1a\x16.google.protobuf.Empty\"'\xdaA\x04name\x82\xd3\xe4\x93\x02\x1a*\x18/api/v1/{name=inboxes/*}B\xb8\x01\n" +
-	"\x13com.wekalist.api.v1B\x11InboxServiceProtoP\x01Z0github.com/usememos/memos/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
+	"\vDeleteInbox\x12#.wekalist.api.v1.DeleteInboxRequest\x1a\x16.google.protobuf.Empty\"'\xdaA\x04name\x82\xd3\xe4\x93\x02\x1a*\x18/api/v1/{name=inboxes/*}B\xb9\x01\n" +
+	"\x13com.wekalist.api.v1B\x11InboxServiceProtoP\x01Z1github.com/imrany/wekalist/proto/gen/api/v1;apiv1\xa2\x02\x03WAX\xaa\x02\x0fWekalist.Api.V1\xca\x02\x0fWekalist\\Api\\V1\xe2\x02\x1bWekalist\\Api\\V1\\GPBMetadata\xea\x02\x11Wekalist::Api::V1b\x06proto3"
 
 var (
 	file_api_v1_inbox_service_proto_rawDescOnce sync.Once
