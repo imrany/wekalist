@@ -2,21 +2,31 @@ version: 1
 
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod tidy
+    - pnpm install --prefix web
+    - pnpm run release --prefix web
 
 builds:
-  - main: ./bin/wekalist
+  - main: ./main.go
     binary: wekalist
     goos:
       - linux
       - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags: >-
+      -s -w -X github.com/imrany/wekalist/internal/version.version={{ .Tag }}
 
 archives:
   - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of `uname`.
-    name_template: >-
-      {{ .ProjectName }}_{{ .Tag }}_{{ .Os }}_{{ .Arch }}
+    name_template: "{{ .ProjectName }}_{{ .Tag }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+      - server/router/frontend/dist/**
 
 changelog:
   sort: asc
@@ -34,3 +44,13 @@ release:
   make_latest: true
   mode: replace
   skip_upload: false
+
+dockers:
+  - dockerfile: scripts/Dockerfile
+    image_templates:
+      - ghcr.io/imrany/wekalist:{{ .Tag }}
+      - ghcr.io/imrany/wekalist:latest
+    build_flag_templates:
+      - --platform=linux/amd64,linux/arm64
+    skip_push: false
+    use: buildx
