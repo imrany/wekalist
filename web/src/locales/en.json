@@ -353,6 +353,7 @@
       "theme": "Theme",
       "enable-notifications":"Enable Notifications",
       "webhook-delete":"Delete Webhook",
+      "webhook-deleted":"Webhook Deleted",
       "webhook-deletion":"Are you sure to delete webhook {{webhook}}? You cannot undo this action."
     },
     "sso": "SSO",

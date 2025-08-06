@@ -56,7 +56,7 @@ const WebhookSection = () => {
     try{
       await webhookServiceClient.deleteWebhook({ name: webhook.name });
       setWebhooks(webhooks.filter((item) => item.name !== webhook.name));
-      toast.success(t("setting.access-token-section.access-token-deleted"));
+      toast.success(t("setting.preference-section.webhook-deleted"));
       onOpenChange(false); // Close dialog after success
     }catch(error){
       console.error("Failed to delete webhook:", error);
