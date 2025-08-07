@@ -195,7 +195,7 @@ const MemoEditor = observer((props: Props) => {
             timestamp: new Date().toISOString(),
           },
         },
-        sendToAll: true, // Send to all subscribers
+        sendToAll: false, // Send to all subscribers except the creator
         username: "", // Not needed when sendToAll is true
         sendToAllExcept: currentUser.username
       };
@@ -209,6 +209,68 @@ const MemoEditor = observer((props: Props) => {
       }
     } catch (error) {
       console.error("Error sending push notification:", error);
+      // Don't show user error for notification failures to avoid interrupting their workflow
+    }
+  };
+
+  // Function to send comment notification to memo owner
+  const sendCommentNotification = async (comment: Memo, parentMemo: Memo, isUpdate: boolean = false) => {
+    // Don't send notification if commenting on own memo
+    const creator = parentMemo.creator.split("/")[1];
+    if (creator === currentUser.username) {
+      return;
+    }
+
+    try {
+      const content = stripMarkdown(comment.content || "");
+      const previewText = truncateText(content, 100);
+      
+      // Get parent memo content preview for context
+      const parentContent = stripMarkdown(parentMemo.content || "");
+      const parentPreview = truncateText(parentContent, 50);
+      
+      const title = isUpdate 
+        ? `💬 ${currentUser.username} updated their comment on your memo`
+        : `💬 ${currentUser.username} commented on your memo`;
+      const body = previewText || (isUpdate ? "Comment has been updated" : "New comment on your memo");
+      
+      // Include memo URL if available
+      const parentMemoId = extractMemoIdFromName(parentMemo.name);
+      const baseUrl = window.location.origin;
+      const memoUrl = `${baseUrl}/memos/${parentMemoId}`;
+
+      const notificationRequest: SendNotificationRequest = {
+        email: currentUser.email,
+        payload: {
+          title,
+          body,
+          icon: "", // Adjust path to your app icon "/icon-192.png"
+          badge: "", // Adjust path to your app badge "/badge-72.png"
+          url: memoUrl,
+          data: {
+            memoId: parentMemoId,
+            commentId: extractMemoIdFromName(comment.name),
+            authorName: currentUser.username,
+            isComment: "true",
+            isUpdate: isUpdate.toString(),
+            parentMemoPreview: parentPreview,
+            timestamp: new Date().toISOString(),
+          },
+        },
+        sendToAll: false, // Don't send to all
+        username: creator, // Send only to memo owner
+        sendToAllExcept: ""
+      };
+
+      const response = await SubscriptionServiceClient.sendNotification(notificationRequest);
+      
+      if (response.success) {
+        console.log(`Comment notification sent successfully to memo owner`);
+      } else {
+        console.warn("Failed to send comment notification:", response.message);
+      }
+    } catch (error) {
+      console.error("Error sending comment notification:", error);
       // Don't show user error for notification failures to avoid interrupting their workflow
     }
   };
@@ -469,9 +531,18 @@ const MemoEditor = observer((props: Props) => {
           }
           savedMemo = await memoStore.updateMemo(memoPatch, Array.from(updateMask));
           
-          // Send notification for updated public memo
-          if (wasPublicMemo && state.memoVisibility === Visibility.PUBLIC) {
-            await sendPublicMemoNotification(savedMemo, true);
+          // Check if this is a comment update
+          if (parentMemoName) {
+            // This is updating a comment
+            const parentMemo = await memoStore.getOrFetchMemoByName(parentMemoName);
+            if (parentMemo) {
+              await sendCommentNotification(savedMemo, parentMemo, true);
+            }
+          } else {
+            // This is updating a memo - send notification for updated public memo
+            if (wasPublicMemo && state.memoVisibility === Visibility.PUBLIC) {
+              await sendPublicMemoNotification(savedMemo, true);
+            }
           }
           
           if (onConfirm) {
@@ -480,38 +551,45 @@ const MemoEditor = observer((props: Props) => {
         }
       } else {
         // Create memo or memo comment.
-        const request = !parentMemoName
-          ? memoStore.createMemo({
-              memo: Memo.fromPartial({
-                content,
-                visibility: state.memoVisibility,
-                attachments: state.attachmentList,
-                relations: state.relationList,
-                location: state.location,
-              }),
-              // Optional fields can be omitted
-              memoId: "",
-              validateOnly: false,
-              requestId: "",
-            })
-          : memoServiceClient
-              .createMemoComment({
-                name: parentMemoName,
-                comment: {
-                  content,
-                  visibility: state.memoVisibility,
-                  attachments: state.attachmentList,
-                  relations: state.relationList,
-                  location: state.location,
-                },
-              })
-              .then((memo) => memo);
-        
-        savedMemo = await request;
-        
-        // Send notification for new public memo (but not for comments)
-        if (!parentMemoName && state.memoVisibility === Visibility.PUBLIC) {
-          await sendPublicMemoNotification(savedMemo, false);
+        if (!parentMemoName) {
+          // Creating a new memo
+          savedMemo = await memoStore.createMemo({
+            memo: Memo.fromPartial({
+              content,
+              visibility: state.memoVisibility,
+              attachments: state.attachmentList,
+              relations: state.relationList,
+              location: state.location,
+            }),
+            // Optional fields can be omitted
+            memoId: "",
+            validateOnly: false,
+            requestId: "",
+          });
+          
+          // Send notification for new public memo
+          if (state.memoVisibility === Visibility.PUBLIC) {
+            await sendPublicMemoNotification(savedMemo, false);
+          }
+        } else {
+          // Creating a comment
+          const parentMemo = await memoStore.getOrFetchMemoByName(parentMemoName);
+          
+          savedMemo = await memoServiceClient.createMemoComment({
+            name: parentMemoName,
+            comment: {
+              content,
+              visibility: state.memoVisibility,
+              attachments: state.attachmentList,
+              relations: state.relationList,
+              location: state.location,
+            },
+          });
+          
+          // Send comment notification to memo owner
+          if (parentMemo) {
+            await sendCommentNotification(savedMemo, parentMemo);
+          }
         }
         
         if (onConfirm) {
