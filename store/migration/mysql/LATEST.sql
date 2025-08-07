@@ -128,5 +128,5 @@ CREATE TABLE `subscription` (
   `username` VARCHAR(256) NOT NULL,
   `email` VARCHAR(256),
   `endpoint` VARCHAR(256) NOT NULL,
-  `keys` TEXT NOT
+  `keys` JSON NOT NULL
 )

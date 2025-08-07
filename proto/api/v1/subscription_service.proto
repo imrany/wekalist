@@ -57,7 +57,9 @@ message SendNotificationRequest {
     string email = 2 [(google.api.field_behavior) = OPTIONAL];
     NotificationPayload payload = 3 [(google.api.field_behavior) = REQUIRED];
     bool send_to_all = 4 [(google.api.field_behavior) = OPTIONAL];
+    string send_to_all_except = 5 [(google.api.field_behavior) = OPTIONAL];
 }
+
 
 message NotificationPayload {
     string title = 1 [(google.api.field_behavior) = REQUIRED];

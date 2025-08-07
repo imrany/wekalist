@@ -11,8 +11,6 @@ import (
 	status "google.golang.org/genproto/googleapis/rpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	_ "google.golang.org/protobuf/types/known/emptypb"
-	_ "google.golang.org/protobuf/types/known/fieldmaskpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -206,13 +204,14 @@ func (x *SubscriptionResponse) GetStatus() *status.Status {
 }
 
 type SendNotificationRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	Payload       *NotificationPayload   `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`
-	SendToAll     bool                   `protobuf:"varint,4,opt,name=send_to_all,json=sendToAll,proto3" json:"send_to_all,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Username        string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email           string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Payload         *NotificationPayload   `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`
+	SendToAll       bool                   `protobuf:"varint,4,opt,name=send_to_all,json=sendToAll,proto3" json:"send_to_all,omitempty"`
+	SendToAllExcept string                 `protobuf:"bytes,5,opt,name=send_to_all_except,json=sendToAllExcept,proto3" json:"send_to_all_except,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *SendNotificationRequest) Reset() {
@@ -271,6 +270,13 @@ func (x *SendNotificationRequest) GetSendToAll() bool {
 		return x.SendToAll
 	}
 	return false
+}
+
+func (x *SendNotificationRequest) GetSendToAllExcept() string {
+	if x != nil {
+		return x.SendToAllExcept
+	}
+	return ""
 }
 
 type NotificationPayload struct {
@@ -421,7 +427,7 @@ var File_api_v1_subscription_service_proto protoreflect.FileDescriptor
 
 const file_api_v1_subscription_service_proto_rawDesc = "" +
 	"\n" +
-	"!api/v1/subscription_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x17google/rpc/status.proto\x1a\x17google/api/client.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xf4\x01\n" +
+	"!api/v1/subscription_service.proto\x12\x0fwekalist.api.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x17google/rpc/status.proto\"\xf4\x01\n" +
 	"\x13SubscriptionRequest\x12\x1f\n" +
 	"\bendpoint\x18\x01 \x01(\tB\x03\xe0A\x02R\bendpoint\x12\x1f\n" +
 	"\busername\x18\x02 \x01(\tB\x03\xe0A\x02R\busername\x12\x19\n" +
@@ -436,12 +442,13 @@ const file_api_v1_subscription_service_proto_rawDesc = "" +
 	"\x14SubscriptionResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12/\n" +
-	"\x06status\x18\x03 \x01(\v2\x12.google.rpc.StatusB\x03\xe0A\x01R\x06status\"\xbf\x01\n" +
+	"\x06status\x18\x03 \x01(\v2\x12.google.rpc.StatusB\x03\xe0A\x01R\x06status\"\xf1\x01\n" +
 	"\x17SendNotificationRequest\x12\x1f\n" +
 	"\busername\x18\x01 \x01(\tB\x03\xe0A\x01R\busername\x12\x19\n" +
 	"\x05email\x18\x02 \x01(\tB\x03\xe0A\x01R\x05email\x12C\n" +
 	"\apayload\x18\x03 \x01(\v2$.wekalist.api.v1.NotificationPayloadB\x03\xe0A\x02R\apayload\x12#\n" +
-	"\vsend_to_all\x18\x04 \x01(\bB\x03\xe0A\x01R\tsendToAll\"\x96\x02\n" +
+	"\vsend_to_all\x18\x04 \x01(\bB\x03\xe0A\x01R\tsendToAll\x120\n" +
+	"\x12send_to_all_except\x18\x05 \x01(\tB\x03\xe0A\x01R\x0fsendToAllExcept\"\x96\x02\n" +
 	"\x13NotificationPayload\x12\x19\n" +
 	"\x05title\x18\x01 \x01(\tB\x03\xe0A\x02R\x05title\x12\x17\n" +
 	"\x04body\x18\x02 \x01(\tB\x03\xe0A\x02R\x04body\x12\x17\n" +

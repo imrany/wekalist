@@ -1,0 +1,2 @@
+ALTER TABLE subscription ADD COLUMN keys JSONB NOT NULL DEFAULT '{}';
+

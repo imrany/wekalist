@@ -128,5 +128,5 @@ CREATE TABLE subscription (
   username TEXT NOT NULL,
   email TEXT,
   endpoint TEXT NOT NULL,
-  keys TEXT NOT NULL DEFAULT '{}'
+  keys JSONB NOT NULL DEFAULT '{}'
 )

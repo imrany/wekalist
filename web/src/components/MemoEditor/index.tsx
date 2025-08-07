@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import useLocalStorage from "react-use/lib/useLocalStorage";
 import { Button } from "@/components/ui/button";
-import { memoServiceClient } from "@/grpcweb";
+import { memoServiceClient, SubscriptionServiceClient } from "@/grpcweb";
 import { TAB_SPACE_WIDTH } from "@/helpers/consts";
 import { isValidUrl } from "@/helpers/utils";
 import useAsyncEffect from "@/hooks/useAsyncEffect";
@@ -18,6 +18,7 @@ import { extractMemoIdFromName } from "@/store/common";
 import { Attachment } from "@/types/proto/api/v1/attachment_service";
 import { Location, Memo, MemoRelation, MemoRelation_Type, Visibility } from "@/types/proto/api/v1/memo_service";
 import { UserSetting } from "@/types/proto/api/v1/user_service";
+import { SendNotificationRequest } from "@/types/proto/api/v1/subscription_service";
 import { useTranslate } from "@/utils/i18n";
 import { convertVisibilityFromString } from "@/utils/memo";
 import DateTimeInput from "../DateTimeInput";
@@ -57,6 +58,24 @@ interface State {
   isComposing: boolean;
   isDraggingFile: boolean;
 }
+
+// Utility function to truncate text for notifications
+const truncateText = (text: string, maxLength: number = 100): string => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength).trim() + "...";
+};
+
+// Utility function to extract plain text from markdown content
+const stripMarkdown = (content: string): string => {
+  return content
+    .replace(/[*_~`]/g, '') // Remove basic markdown formatting
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Convert links to just text
+    .replace(/^#+\s+/gm, '') // Remove headers
+    .replace(/^\s*[-*+]\s+/gm, '') // Remove list items
+    .replace(/^\s*\d+\.\s+/gm, '') // Remove numbered lists
+    .replace(/\n{2,}/g, '\n') // Collapse multiple newlines
+    .trim();
+};
 
 const MemoEditor = observer((props: Props) => {
   const { className, cacheKey, memoName, parentMemoName, autoFocus, onConfirm, onCancel } = props;
@@ -136,6 +155,63 @@ const MemoEditor = observer((props: Props) => {
       }
     }
   }, [memoName]);
+
+  // Function to send push notifications for public memos
+  const sendPublicMemoNotification = async (memo: Memo, isUpdate: boolean = false) => {
+    // Only send notifications for public memos and not for comments
+    if (memo.visibility !== Visibility.PUBLIC || parentMemoName) {
+      return;
+    }
+
+    try {
+      const content = stripMarkdown(memo.content || "");
+      const previewText = truncateText(content, 120);
+      
+      // Generate notification title and body
+      const title = isUpdate 
+        ? `📝 ${currentUser.username} updated a memo`
+        : `📝 New memo from ${currentUser.username}`;
+      
+      const body = previewText || (isUpdate ? "Memo has been updated" : "New memo published");
+      
+      // Include memo URL if available
+      const memoId = extractMemoIdFromName(memo.name);
+      const baseUrl = window.location.origin;
+      const memoUrl = `${baseUrl}/memos/${memoId}`;
+
+      const notificationRequest: SendNotificationRequest = {
+        email: currentUser.email,
+        payload: {
+          title,
+          body,
+          icon: "", // Adjust path to your app icon "/icon-192.png"
+          badge: "", // Adjust path to your app badge "/badge-72.png"
+          url: memoUrl,
+          data: {
+            memoId,
+            authorName: currentUser.username,
+            isUpdate: isUpdate.toString(),
+            visibility: memo.visibility.toString(),
+            timestamp: new Date().toISOString(),
+          },
+        },
+        sendToAll: true, // Send to all subscribers
+        username: "", // Not needed when sendToAll is true
+        sendToAllExcept: currentUser.username
+      };
+
+      const response = await SubscriptionServiceClient.sendNotification(notificationRequest);
+      
+      if (response.success) {
+        console.log(`Notification sent successfully to ${response.recipientsCount} recipients`);
+      } else {
+        console.warn("Failed to send notification:", response.message);
+      }
+    } catch (error) {
+      console.error("Error sending push notification:", error);
+      // Don't show user error for notification failures to avoid interrupting their workflow
+    }
+  };
 
   const handleCompositionStart = () => {
     setState((prevState) => ({
@@ -333,9 +409,15 @@ const MemoEditor = observer((props: Props) => {
       };
     });
     const content = editorRef.current?.getContent() ?? "";
+    
     try {
+      let savedMemo: Memo;
+      let wasPublicMemo = false;
+      let isUpdate = false;
+
       // Update memo.
       if (memoName) {
+        isUpdate = true;
         const prevMemo = await memoStore.getOrFetchMemoByName(memoName);
         if (prevMemo) {
           const updateMask = new Set<string>();
@@ -343,6 +425,10 @@ const MemoEditor = observer((props: Props) => {
             name: prevMemo.name,
             content,
           };
+          
+          // Track if this was previously a public memo or is becoming public
+          wasPublicMemo = prevMemo.visibility === Visibility.PUBLIC || state.memoVisibility === Visibility.PUBLIC;
+          
           if (!isEqual(content, prevMemo.content)) {
             updateMask.add("content");
             memoPatch.content = content;
@@ -381,9 +467,15 @@ const MemoEditor = observer((props: Props) => {
             }
             return;
           }
-          const memo = await memoStore.updateMemo(memoPatch, Array.from(updateMask));
+          savedMemo = await memoStore.updateMemo(memoPatch, Array.from(updateMask));
+          
+          // Send notification for updated public memo
+          if (wasPublicMemo && state.memoVisibility === Visibility.PUBLIC) {
+            await sendPublicMemoNotification(savedMemo, true);
+          }
+          
           if (onConfirm) {
-            onConfirm(memo.name);
+            onConfirm(savedMemo.name);
           }
         }
       } else {
@@ -414,11 +506,19 @@ const MemoEditor = observer((props: Props) => {
                 },
               })
               .then((memo) => memo);
-        const memo = await request;
+        
+        savedMemo = await request;
+        
+        // Send notification for new public memo (but not for comments)
+        if (!parentMemoName && state.memoVisibility === Visibility.PUBLIC) {
+          await sendPublicMemoNotification(savedMemo, false);
+        }
+        
         if (onConfirm) {
-          onConfirm(memo.name);
+          onConfirm(savedMemo.name);
         }
       }
+      
       editorRef.current?.setContent("");
     } catch (error: any) {
       console.error(error);

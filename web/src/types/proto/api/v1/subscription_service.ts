@@ -38,6 +38,7 @@ export interface SendNotificationRequest {
   email: string;
   payload?: NotificationPayload | undefined;
   sendToAll: boolean;
+  sendToAllExcept: string;
 }
 
 export interface NotificationPayload {
@@ -339,7 +340,7 @@ export const SubscriptionResponse: MessageFns<SubscriptionResponse> = {
 };
 
 function createBaseSendNotificationRequest(): SendNotificationRequest {
-  return { username: "", email: "", payload: undefined, sendToAll: false };
+  return { username: "", email: "", payload: undefined, sendToAll: false, sendToAllExcept: "" };
 }
 
 export const SendNotificationRequest: MessageFns<SendNotificationRequest> = {
@@ -355,6 +356,9 @@ export const SendNotificationRequest: MessageFns<SendNotificationRequest> = {
     }
     if (message.sendToAll !== false) {
       writer.uint32(32).bool(message.sendToAll);
+    }
+    if (message.sendToAllExcept !== "") {
+      writer.uint32(42).string(message.sendToAllExcept);
     }
     return writer;
   },
@@ -398,6 +402,14 @@ export const SendNotificationRequest: MessageFns<SendNotificationRequest> = {
           message.sendToAll = reader.bool();
           continue;
         }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.sendToAllExcept = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -418,6 +430,7 @@ export const SendNotificationRequest: MessageFns<SendNotificationRequest> = {
       ? NotificationPayload.fromPartial(object.payload)
       : undefined;
     message.sendToAll = object.sendToAll ?? false;
+    message.sendToAllExcept = object.sendToAllExcept ?? "";
     return message;
   },
 };

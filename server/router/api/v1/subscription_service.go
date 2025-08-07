@@ -82,6 +82,21 @@ func (s *APIV1Service) SendNotification(ctx context.Context, request *v1pb.SendN
         subscriptions, err = s.Store.ListSubscriptions(ctx, &store.FindSubscription{
             Username: &request.Username,
         })
+    } else if request.SendToAllExcept != "" {
+        allSubscriptions, err := s.Store.ListSubscriptions(ctx, nil)
+        if err != nil {
+            return &v1pb.SendNotificationResponse{
+                Success: false,
+                Message: "Failed to retrieve subscriptions",
+            }, status.Error(codes.Internal, fmt.Sprintf("database error, %s", err.Error()))
+        }
+
+        // Filter out the excluded user
+        for _, sub := range allSubscriptions {
+            if sub.Username != request.SendToAllExcept {
+                subscriptions = append(subscriptions, sub)
+            }
+        }
     } else {
         return &v1pb.SendNotificationResponse{
             Success: false,
@@ -93,7 +108,7 @@ func (s *APIV1Service) SendNotification(ctx context.Context, request *v1pb.SendN
         return &v1pb.SendNotificationResponse{
             Success: false,
             Message: "Failed to retrieve subscriptions",
-        }, status.Error(codes.Internal, "database error")
+        }, status.Error(codes.Internal, fmt.Sprintf("database error, %s", err.Error()))
     }
 
     if len(subscriptions) == 0 {

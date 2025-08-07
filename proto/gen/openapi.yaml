@@ -3506,6 +3506,8 @@ components:
                     $ref: '#/components/schemas/NotificationPayload'
                 sendToAll:
                     type: boolean
+                sendToAllExcept:
+                    type: string
         SendNotificationResponse:
             type: object
             properties:
