@@ -26,9 +26,9 @@ const NavigationDrawer = observer(() => {
           <span className="font-bold text-lg leading-10 text-ellipsis overflow-hidden text-foreground">{title}</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-80 max-w-full overflow-auto px-2 bg-background">
-        <SheetHeader>
-          <SheetTitle />
+      <SheetContent aria-describedby="wekalist-sheet" side="left" className="w-80 max-w-full overflow-auto px-2 bg-background">
+        <SheetHeader aria-describedby="wekalist-sheet-header">
+          <SheetTitle aria-describedby="wekalist-sheet-title"/>
         </SheetHeader>
         <Navigation className="pb-4" />
       </SheetContent>

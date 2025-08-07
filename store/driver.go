@@ -69,4 +69,9 @@ type Driver interface {
 	UpsertReaction(ctx context.Context, create *Reaction) (*Reaction, error)
 	ListReactions(ctx context.Context, find *FindReaction) ([]*Reaction, error)
 	DeleteReaction(ctx context.Context, delete *DeleteReaction) error
+
+	//subscription model related methods
+	CreateSubscription(ctx context.Context, create *Subscription)(*Subscription, error)
+	ListSubscriptions(ctx context.Context, find *FindSubscription)([]*Subscription, error)
+	DeleteSubscription(ctx context.Context, delete *DeleteSubscription) error
 }

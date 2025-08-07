@@ -130,3 +130,12 @@ CREATE TABLE reaction (
   reaction_type TEXT NOT NULL,
   UNIQUE(creator_id, content_id, reaction_type)
 );
+
+-- subscription
+CREATE TABLE subscription (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL,
+  email TEXT,
+  endpoint TEXT NOT NULL,
+  keys TEXT NOT NULL DEFAULT '{}'
+)

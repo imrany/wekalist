@@ -124,7 +124,7 @@ const Setting = observer(() => {
           <div className="w-full grow sm:pl-4 overflow-x-auto">
             <div className="w-auto inline-block my-2 sm:hidden">
               <Select value={state.selectedSection} onValueChange={(value) => handleSectionSelectorItemClick(value as SettingSection)}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger aria-describedby="wekalist-sheet-" className="w-[180px]">
                   <SelectValue placeholder="Select section" />
                 </SelectTrigger>
                 <SelectContent>

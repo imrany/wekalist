@@ -10,7 +10,6 @@ A modern, open-source, AI-driven self-hosted knowledge management and note-takin
 [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://www.usememos.com/docs)
 [![Live Demo](https://img.shields.io/badge/Demo-Try%20Now-orange)](https://demo.usememos.com/)
 [![Blog](https://img.shields.io/badge/Blog-Read%20More-lightblue)](https://www.usememos.com/blog)
-[![Docker Image](https://img.shields.io/badge/docker)](https://hub.docker.com/r/neosmemo/memos)
 
 </div>
 

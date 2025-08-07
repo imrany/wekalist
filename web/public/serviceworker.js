@@ -76,8 +76,8 @@ self.addEventListener("push", event => {
 
     self.registration.showNotification(data.title, {
         body: data.body,
-        icon: data.icon?data.icon:'/icons/web-app-manifest-128x128.png',
-        badge:'/icons/web-app-manifest-72x72.png',
+        icon: data.icon || '/full-logo.webp',
+        badge: data.badge || '/logo.webp',
         data: { link: data.link } // Ensure the link is stored within the data
     });
 });

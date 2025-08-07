@@ -1,4 +1,3 @@
-#!/usr/bin/env sh
 
 file_env() {
    var="$1"

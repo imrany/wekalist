@@ -11,12 +11,15 @@ var authenticationAllowlistMethods = map[string]bool{
 	"/wekalist.api.v1.UserService/GetUser":                           true,
 	"/wekalist.api.v1.UserService/GetUserAvatar":                     true,
 	"/wekalist.api.v1.UserService/GetUsererviceStats":                true,
-	"/wekalist.api.v1.AiService/GenAi":                      		   true,
+	"/wekalist.api.v1.AiService/GenAi":                      		  true,
 	"/wekalist.api.v1.UserService/ListAllUserStats":                  true,
 	"/wekalist.api.v1.UserService/SearchUsers":                       true,
 	"/wekalist.api.v1.MemoService/GetMemo":                           true,
 	"/wekalist.api.v1.MemoService/ListMemos":                         true,
 	"/wekalist.api.v1.MarkdownService/GetLinkMetadata":               true,
+	"/wekalist.api.v1.SubscriptionService/AddSubscription":           true,
+	"/wekalist.api.v1.SubscriptionService/RemoveSubscription":        true,
+	"/wekalist.api.v1.SubscriptionService/SendNotification":          true,
 	"/wekalist.api.v1.AttachmentService/GetAttachmentBinary":         true,
 }
 

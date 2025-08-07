@@ -121,3 +121,12 @@ CREATE TABLE `reaction` (
   `reaction_type` VARCHAR(256) NOT NULL,
   UNIQUE(`creator_id`,`content_id`,`reaction_type`)  
 );
+
+-- subscription
+CREATE TABLE `subscription` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(256) NOT NULL,
+  `email` VARCHAR(256),
+  `endpoint` VARCHAR(256) NOT NULL,
+  `keys` TEXT NOT
+)

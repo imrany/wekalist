@@ -2297,6 +2297,104 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /v1/notifications/send:
+        post:
+            tags:
+                - SubscriptionService
+            operationId: SubscriptionService_SendNotification
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SendNotificationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendNotificationResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/subscribe:
+        post:
+            tags:
+                - SubscriptionService
+            operationId: SubscriptionService_AddSubscription
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SubscriptionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubscriptionResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - SubscriptionService
+            operationId: SubscriptionService_RemoveSubscription
+            parameters:
+                - name: endpoint
+                  in: query
+                  schema:
+                    type: string
+                - name: username
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubscriptionResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/unsubscribe:
+        post:
+            tags:
+                - SubscriptionService
+            operationId: SubscriptionService_RemoveSubscription
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RemoveSubscriptionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SubscriptionResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
     schemas:
         Activity:
@@ -3221,6 +3319,26 @@ components:
                     $ref: '#/components/schemas/SpoilerNode'
                 htmlElementNode:
                     $ref: '#/components/schemas/HTMLElementNode'
+        NotificationPayload:
+            required:
+                - title
+                - body
+            type: object
+            properties:
+                title:
+                    type: string
+                body:
+                    type: string
+                icon:
+                    type: string
+                badge:
+                    type: string
+                url:
+                    type: string
+                data:
+                    type: object
+                    additionalProperties:
+                        type: string
         OAuth2Config:
             type: object
             properties:
@@ -3316,6 +3434,16 @@ components:
                 params:
                     type: string
                     description: Additional parameters for the referenced content.
+        RemoveSubscriptionRequest:
+            required:
+                - endpoint
+                - username
+            type: object
+            properties:
+                endpoint:
+                    type: string
+                username:
+                    type: string
         RenameMemoTagRequest:
             required:
                 - parent
@@ -3364,6 +3492,29 @@ components:
                 totalSize:
                     type: integer
                     description: The total count of matching users.
+                    format: int32
+        SendNotificationRequest:
+            required:
+                - payload
+            type: object
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+                payload:
+                    $ref: '#/components/schemas/NotificationPayload'
+                sendToAll:
+                    type: boolean
+        SendNotificationResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+                recipientsCount:
+                    type: integer
                     format: int32
         SetMemoAttachmentsRequest:
             required:
@@ -3460,6 +3611,32 @@ components:
             properties:
                 content:
                     type: string
+        SubscriptionRequest:
+            required:
+                - endpoint
+                - username
+                - keys
+            type: object
+            properties:
+                endpoint:
+                    type: string
+                username:
+                    type: string
+                email:
+                    type: string
+                keys:
+                    type: object
+                    additionalProperties:
+                        type: string
+        SubscriptionResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+                status:
+                    $ref: '#/components/schemas/Status'
         SuperscriptNode:
             type: object
             properties:
@@ -3992,6 +4169,7 @@ tags:
     - name: MarkdownService
     - name: MemoService
     - name: ShortcutService
+    - name: SubscriptionService
     - name: UserService
     - name: WebhookService
     - name: WorkspaceService

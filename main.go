@@ -45,6 +45,10 @@ func runServer(_ *cobra.Command, _ []string) {
         DSN:                  viper.GetString("dsn"),
         InstanceURL:          viper.GetString("instance-url"),
         Version:              version.GetCurrentVersion(viper.GetString("mode")),
+        WebPushConfig: profile.WebPushConfig{
+            VAPIDPublicKey: "BOxQ1MrRQ3E0EvBglmCHO_FeoBOoHCKXnaOKhDni1EzD2rThuBeLo3WsBys-Brddm8afLm4XPo2AY16irwslYDs",
+            VAPIDPrivateKey: "GHS5xD66OkzOnCiWGQ-QGsjA9YsYJbCNhFSW_2DTyF8",
+        },
     }
 
     if err := profile.Validate(); err != nil {

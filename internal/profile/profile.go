@@ -32,7 +32,16 @@ type Profile struct {
 	Version string
 	// InstanceURL is the url of your wekalist instance.
 	InstanceURL string
+	WebPushConfig WebPushConfig 
 }
+
+// Webpush config
+type WebPushConfig struct {
+    VAPIDPublicKey  string
+    VAPIDPrivateKey string
+}
+
+
 
 func (p *Profile) IsDev() bool {
 	return p.Mode != "prod"

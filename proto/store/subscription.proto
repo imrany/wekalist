@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package wekalist.subcription;
+
+option go_package = "gen/subcription";
+
+message SubcriptionPayload{
+    string endpoint = 1;
+    string username = 2;
+    string email = 3;
+    map<string, string> keys = 4;
+}

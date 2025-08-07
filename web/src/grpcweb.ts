@@ -11,6 +11,7 @@ import { UserServiceDefinition } from "./types/proto/api/v1/user_service";
 import { WebhookServiceDefinition } from "./types/proto/api/v1/webhook_service";
 import { WorkspaceServiceDefinition } from "./types/proto/api/v1/workspace_service";
 import { AiServiceDefinition } from "./types/proto/api/v1/ai_service";
+import { SubscriptionServiceDefinition } from "./types/proto/api/v1/subscription_service";
 
 const channel = createChannel(
   window.location.origin,
@@ -42,5 +43,7 @@ export const webhookServiceClient = clientFactory.create(WebhookServiceDefinitio
 export const markdownServiceClient = clientFactory.create(MarkdownServiceDefinition, channel);
 
 export const AiServiceClient = clientFactory.create(AiServiceDefinition, channel);
+
+export const SubscriptionServiceClient = clientFactory.create(SubscriptionServiceDefinition, channel);
 
 export const identityProviderServiceClient = clientFactory.create(IdentityProviderServiceDefinition, channel);

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package wekalist.api.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/rpc/status.proto";
+
+option go_package = "gen/api/v1";
+
+service SubscriptionService {
+    rpc AddSubscription(SubscriptionRequest) returns (SubscriptionResponse) {
+        option (google.api.http) = {
+            post: "/v1/subscribe"
+            body: "*"
+        };
+    }
+    
+    rpc RemoveSubscription(RemoveSubscriptionRequest) returns (SubscriptionResponse) {
+        option (google.api.http) = {
+            delete: "/v1/subscribe",
+            additional_bindings {
+                post: "/v1/unsubscribe"
+                body: "*"
+            }
+        };
+    }
+    
+    rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse) {
+        option (google.api.http) = {
+            post: "/v1/notifications/send"
+            body: "*"
+        };
+    }
+}
+
+message SubscriptionRequest {
+    string endpoint = 1 [(google.api.field_behavior) = REQUIRED];
+    string username = 2 [(google.api.field_behavior) = REQUIRED];
+    string email = 3 [(google.api.field_behavior) = OPTIONAL];
+    map<string, string> keys = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+message RemoveSubscriptionRequest {
+    string endpoint = 1 [(google.api.field_behavior) = REQUIRED];
+    string username = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message SubscriptionResponse {
+    bool success = 1;
+    string message = 2;
+    google.rpc.Status status = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+message SendNotificationRequest {
+    string username = 1 [(google.api.field_behavior) = OPTIONAL];
+    string email = 2 [(google.api.field_behavior) = OPTIONAL];
+    NotificationPayload payload = 3 [(google.api.field_behavior) = REQUIRED];
+    bool send_to_all = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+message NotificationPayload {
+    string title = 1 [(google.api.field_behavior) = REQUIRED];
+    string body = 2 [(google.api.field_behavior) = REQUIRED];
+    string icon = 3 [(google.api.field_behavior) = OPTIONAL];
+    string badge = 4 [(google.api.field_behavior) = OPTIONAL];
+    string url = 5 [(google.api.field_behavior) = OPTIONAL];
+    map<string, string> data = 6 [(google.api.field_behavior) = OPTIONAL];
+}
+
+message SendNotificationResponse {
+    bool success = 1;
+    string message = 2;
+    int32 recipients_count = 3;
+}
