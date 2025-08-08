@@ -242,6 +242,10 @@ const userStore = (() => {
   };
 })();
 
+// TODO: refactor initialUserStore as it has temporal coupling
+// need to make it more clear that the order of the body is important
+// or it leads to false positives
+// See: https://github.com/usememos/memos/issues/4978
 export const initialUserStore = async () => {
   try {
     const { user: currentUser } = await authServiceClient.getCurrentSession({});
