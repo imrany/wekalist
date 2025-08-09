@@ -2,9 +2,11 @@ package v1
 
 import (
 	"context"
+	"crypto/tls"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 
@@ -48,8 +50,19 @@ func (s *APIV1Service) GenAi(ctx context.Context, request *v1pb.GenAiRequest) (*
 	// }
 
 	// Establish gRPC connection with proper credentials
-	serverAddr := "https://wrapper.villebiz.com" // Consider making this configurable
-	conn, err := grpc.NewClient(serverAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	serverAddr := "wrapper.villebiz.com:443"
+	
+	// Use TLS credentials for HTTPS connection
+	var creds credentials.TransportCredentials
+	if true { // Set to false for local development without TLS
+		creds = credentials.NewTLS(&tls.Config{
+			ServerName: "wrapper.villebiz.com",
+		})
+	} else {
+		creds = insecure.NewCredentials()
+	}
+	
+	conn, err := grpc.NewClient(serverAddr, grpc.WithTransportCredentials(creds))
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to connect to AI service: %s", err.Error())
 	}
@@ -63,7 +76,7 @@ func (s *APIV1Service) GenAi(ctx context.Context, request *v1pb.GenAiRequest) (*
 		Prompt: request.Prompt,
 	})
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to generate AI response: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to generate AI response: %v", err.Error())
 	}
 
 	// Update usage counter after successful AI call
