@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wekalist - Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .deck-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .slide h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .problem-list, .solution-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .problem-list li, .solution-list li {
+            background: #fef5e7;
+            border-left: 4px solid #f56500;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .solution-list li {
+            background: #f0fff4;
+            border-left-color: #38a169;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 10px;
+            width: 25px;
+            height: 25px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .timeline-quarter {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .competitive-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .competitive-table th,
+        .competitive-table td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .competitive-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .competitive-table .wekalist-col {
+            background: #f0fff4;
+            font-weight: 600;
+            color: #38a169;
+        }
+
+        .check {
+            color: #38a169;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #e53e3e;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+                margin-bottom: 20px;
+            }
+            
+            .slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .slide h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="deck-container">
+        <!-- Slide 1: Title -->
+        <div class="slide" id="slide-1">
+            <h1>Wekalist</h1>
+            <p class="subtitle">The Self-Hosted Productivity Platform That Puts Your Organization in Control</p>
+            <p style="font-size: 1.1rem; color: #666; margin-top: 50px;">Unifying scheduling, task management, and team collaboration with AI-driven insights</p>
+        </div>
+
+        <!-- Slide 2: Problem -->
+        <div class="slide" id="slide-2">
+            <h2>The Problem</h2>
+            <p class="subtitle">Organizations are drowning in productivity tool chaos</p>
+            <ul class="problem-list">
+                <li><strong>Tool Fragmentation:</strong> Teams use 5-10 different productivity tools, creating silos and inefficiencies</li>
+                <li><strong>Data Privacy Concerns:</strong> Sensitive organizational data scattered across cloud platforms</li>
+                <li><strong>Limited Customization:</strong> One-size-fits-all solutions that don't adapt to unique workflows</li>
+                <li><strong>Lack of Control:</strong> Dependency on external providers with unpredictable pricing and feature changes</li>
+                <li><strong>Integration Nightmares:</strong> Countless hours wasted on manual data synchronization</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Solution -->
+        <div class="slide" id="slide-3">
+            <h2>Our Solution</h2>
+            <p class="subtitle">Wekalist: A unified, self-hosted productivity ecosystem</p>
+            <ul class="solution-list">
+                <li><strong>Complete Integration:</strong> Scheduling, tasks, and collaboration in one seamless platform</li>
+                <li><strong>Full Data Control:</strong> Self-hosted infrastructure keeps your data on your servers</li>
+                <li><strong>Infinite Customization:</strong> Adapt every workflow to your organization's unique needs</li>
+                <li><strong>AI-Powered Insights:</strong> Smart recommendations and automation that learns from your patterns</li>
+                <li><strong>Open Architecture:</strong> Extensible platform that grows with your organization</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Key Features -->
+        <div class="slide" id="slide-4">
+            <h2>Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🗓️ Unified Scheduling</h4>
+                    <p>Intelligent calendar management with resource booking, meeting optimization, and conflict resolution.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>✅ Smart Task Management</h4>
+                    <p>AI-driven task prioritization, automated workflows, and progress tracking across teams.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🤝 Seamless Collaboration</h4>
+                    <p>Real-time communication, document sharing, and project coordination in one interface.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🧠 AI Insights</h4>
+                    <p>Predictive analytics, productivity recommendations, and automated scheduling optimization.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Complete Privacy</h4>
+                    <p>Self-hosted deployment ensures your data never leaves your infrastructure.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔧 Custom Workflows</h4>
+                    <p>Unlimited customization options to match your organization's exact processes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Market Opportunity -->
+        <div class="slide" id="slide-5">
+            <h2>Market Opportunity</h2>
+            <p class="subtitle">The productivity software market is exploding</p>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number">$47B</div>
+                    <div class="stat-label">Global productivity software market size</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">13.4%</div>
+                    <div class="stat-label">Expected annual growth rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Organizations concerned about data privacy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">67%</div>
+                    <div class="stat-label">Teams using 5+ productivity tools</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Competitive Advantage -->
+        <div class="slide" id="slide-6">
+            <h2>Competitive Advantage</h2>
+            <table class="competitive-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th class="wekalist-col">Wekalist</th>
+                        <th>Microsoft 365</th>
+                        <th>Slack + Asana</th>
+                        <th>Notion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Self-Hosted</strong></td>
+                        <td class="wekalist-col check">✓</td>
+                        <td class="cross">✗</td>
+                        <td class="cross">✗</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unified Platform</strong></td>
+                        <td class="wekalist-col check">✓</td>
+                        <td>Partial</td>
+                        <td class="cross">✗</td>
+                        <td>Partial</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI-Driven Insights</strong></td>
+                        <td class="wekalist-col check">✓</td>
+                        <td>Limited</td>
+                        <td>Limited</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Full Customization</strong></td>
+                        <td class="wekalist-col check">✓</td>
+                        <td>Limited</td>
+                        <td>Limited</td>
+                        <td>Partial</td>
+                    </tr>
+                    <tr>
+                        <td><strong>No Vendor Lock-in</strong></td>
+                        <td class="wekalist-col check">✓</td>
+                        <td class="cross">✗</td>
+                        <td class="cross">✗</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Slide 7: Business Model -->
+        <div class="slide" id="slide-7">
+            <h2>Business Model</h2>
+            <p class="subtitle">Multiple revenue streams for sustainable growth</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>💎 Core License</h4>
+                    <p><strong>$50/user/month</strong><br>Self-hosted platform with core productivity features and basic AI insights.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🚀 Enterprise License</h4>
+                    <p><strong>$100/user/month</strong><br>Advanced AI features, custom integrations, and dedicated support.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🛠️ Professional Services</h4>
+                    <p><strong>$200/hour</strong><br>Implementation, customization, and ongoing consulting services.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔌 Marketplace</h4>
+                    <p><strong>30% revenue share</strong><br>Third-party integrations and custom modules from our partner ecosystem.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Roadmap -->
+        <div class="slide" id="slide-8">
+            <h2>Product Roadmap</h2>
+            <p class="subtitle">Strategic development timeline for market domination</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-quarter">Q2 2025</div>
+                    <h4>MVP Launch</h4>
+                    <p>Core scheduling and task management features with basic self-hosting capabilities</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-quarter">Q3 2025</div>
+                    <h4>AI Integration</h4>
+                    <p>Smart insights, predictive scheduling, and automated workflow recommendations</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-quarter">Q4 2025</div>
+                    <h4>Enterprise Features</h4>
+                    <p>Advanced security, LDAP integration, and enterprise-grade scalability</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-quarter">Q1 2026</div>
+                    <h4>Marketplace Launch</h4>
+                    <p>Third-party integrations, custom modules, and partner ecosystem</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-quarter">Q2 2026</div>
+                    <h4>Global Expansion</h4>
+                    <p>Multi-language support, regional compliance, and international partnerships</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Team -->
+        <div class="slide" id="slide-9">
+            <h2>Our Team</h2>
+            <p class="subtitle">World-class expertise in productivity and enterprise software</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>👨‍💼 CEO & Co-Founder</h4>
+                    <p>15+ years building enterprise productivity solutions. Former VP at Microsoft Office division.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>👩‍💻 CTO & Co-Founder</h4>
+                    <p>AI/ML expert with PhD from Stanford. Led engineering teams at Google and Slack.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎨 Head of Product</h4>
+                    <p>UX visionary who designed collaboration tools used by millions at Atlassian and Notion.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Head of Security</h4>
+                    <p>Cybersecurity expert, former CISO at Fortune 500 companies. PhD in Computer Security.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Funding Ask -->
+        <div class="slide" id="slide-10">
+            <h2>Funding Ask</h2>
+            <p class="subtitle">$5M Series A to accelerate growth and market capture</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>💰 $2M - Product Development</h4>
+                    <p>Accelerate AI features, mobile apps, and advanced enterprise functionality</p>
+                </div>
+                <div class="feature-card">
+                    <h4>👥 $1.5M - Team Expansion</h4>
+                    <p>Hire world-class engineers, designers, and enterprise sales professionals</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📈 $1M - Marketing & Sales</h4>
+                    <p>Build brand awareness and establish enterprise sales channels</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🌍 $500K - Infrastructure</h4>
+                    <p>Global infrastructure, security audits, and compliance certifications</p>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <a href="#contact" class="cta-button">Let's Build the Future of Productivity Together</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-dot active" onclick="scrollToSlide(1)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(3)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(5)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(6)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(7)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(8)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(9)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(10)"></div>
+    </div>
+
+    <script>
+        function scrollToSlide(slideNumber) {
+            const slide = document.getElementById(`slide-${slideNumber}`);
+            slide.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active dot
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === slideNumber);
+            });
+        }
+
+        // Update active dot based on scroll position
+        window.addEventListener('scroll', () => {
+            const slides = document.querySelectorAll('.slide');
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+            
+            slides.forEach((slide, index) => {
+                const slideTop = slide.offsetTop;
+                const slideBottom = slideTop + slide.offsetHeight;
+                
+                if (scrollPosition >= slideTop && scrollPosition <= slideBottom) {
+                    document.querySelectorAll('.nav-dot').forEach((dot, dotIndex) => {
+                        dot.classList.toggle('active', dotIndex === index);
+                    });
+                }
+            });
+        });
+
+        // Add smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const slideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(50px)';
+            slide.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            slideObserver.observe(slide);
+        });
+
+        // Initialize first slide
+        document.querySelector('.slide').style.opacity = '1';
+        document.querySelector('.slide').style.transform = 'translateY(0)';
+    </script>
+</body>
+</html>
