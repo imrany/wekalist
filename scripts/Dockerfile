@@ -81,5 +81,7 @@ ENV MODE=prod
 ENV PORT=5230
 ENV DATA=/opt/wekalist/data
 
+LABEL org.opencontainers.image.description DESCRIPTION="Wekalist is a modern, open-source, AI-driven self-hosted knowledge management and note-taking platform designed for privacy-conscious users and organizations."
+
 # Start the application
 CMD ["./wekalist"]
