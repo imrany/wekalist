@@ -138,4 +138,4 @@ CREATE TABLE subscription (
   email TEXT,
   endpoint TEXT NOT NULL,
   keys TEXT NOT NULL DEFAULT '{}'
-)
+);

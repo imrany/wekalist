@@ -63,48 +63,52 @@ func (d *DB) CreateSubscription(ctx context.Context, create *store.Subscription)
 	jsonKeys := JSONMap(create.Keys)
 	
 	fields := []string{"`username`", "`email`", "`keys`", "`endpoint`"}
-	
 	placeholder := []string{"?", "?", "?", "?"}
 	args := []any{create.Username, create.Email, jsonKeys, create.Endpoint}
 
-	stmt := "INSERT INTO `subscription` (" + strings.Join(fields, ", ") + ") VALUES (" + strings.Join(placeholder, ", ") + ") RETURNING `id`, `username`"
-	var id string
-	var keysJSON JSONMap
-
-	if err := d.db.QueryRowContext(ctx, stmt, args...).Scan(
-		&id,
-		&create.Username,
-		&create.Endpoint,
-		&create.Username,
-		&create.Email,
-		&keysJSON,
-	); err != nil {
-		return nil, err
+	// MySQL doesn't support RETURNING - use INSERT and then get LAST_INSERT_ID
+	stmt := "INSERT INTO `subscription` (" + strings.Join(fields, ", ") + ") VALUES (" + strings.Join(placeholder, ", ") + ")"
+	
+	result, err := d.db.ExecContext(ctx, stmt, args...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create subscription: %w", err)
 	}
 
-	create.ID = &id
-	create.Keys = map[string]string(keysJSON)
+	// Get the last inserted ID
+	lastInsertID, err := result.LastInsertId()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get last insert ID: %w", err)
+	}
+
+	// Convert int64 to string for ID
+	idStr := fmt.Sprintf("%d", lastInsertID)
+	create.ID = &idStr
+	
 	return create, nil
 }
 
 func (d *DB) ListSubscriptions(ctx context.Context, find *store.FindSubscription) ([]*store.Subscription, error) {
 	where, args := []string{"1 = 1"}, []any{}
+	
 	if find != nil {
-        if find.ID != nil {
-            where, args = append(where, "`id` = ?"), append(args, *find.ID)
-        }
-        if find.Endpoint != nil {
-            where, args = append(where, "`endpoint` = ?"), append(args, *find.Endpoint)
-        }
-        if find.Username != nil {
-            where, args = append(where, "`username` = ?"), append(args, *find.Username)
-        }
-    }
+		if find.ID != nil {
+			where = append(where, "`id` = ?")
+			args = append(args, *find.ID)
+		}
+		if find.Endpoint != nil {
+			where = append(where, "`endpoint` = ?")
+			args = append(args, *find.Endpoint)
+		}
+		if find.Username != nil {
+			where = append(where, "`username` = ?")
+			args = append(args, *find.Username)
+		}
+	}
 
 	query := "SELECT `id`, `endpoint`, `username`, `email`, `keys` FROM `subscription` WHERE " + strings.Join(where, " AND ")
 	rows, err := d.db.QueryContext(ctx, query, args...)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to query subscriptions: %w", err)
 	}
 	defer rows.Close()
 
@@ -129,14 +133,14 @@ func (d *DB) ListSubscriptions(ctx context.Context, find *store.FindSubscription
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to iterate rows: %w", err)
 	}
 
 	return subscriptions, nil
 }
 
 func (d *DB) DeleteSubscription(ctx context.Context, delete *store.DeleteSubscription) error {
-	result, err := d.db.ExecContext(ctx, "DELETE FROM `subscription` WHERE username = ?", delete.Username)
+	result, err := d.db.ExecContext(ctx, "DELETE FROM `subscription` WHERE `username` = ?", delete.Username)
 	if err != nil {
 		return fmt.Errorf("failed to delete subscription: %w", err)
 	}

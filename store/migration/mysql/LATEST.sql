@@ -129,4 +129,4 @@ CREATE TABLE `subscription` (
   `email` VARCHAR(256),
   `endpoint` VARCHAR(256) NOT NULL,
   `keys` JSON NOT NULL
-)
+);

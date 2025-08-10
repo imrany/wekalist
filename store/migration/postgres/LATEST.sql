@@ -129,4 +129,4 @@ CREATE TABLE subscription (
   email TEXT,
   endpoint TEXT NOT NULL,
   keys JSONB NOT NULL DEFAULT '{}'
-)
+);
