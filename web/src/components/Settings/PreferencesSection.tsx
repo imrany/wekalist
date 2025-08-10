@@ -110,22 +110,22 @@ const PreferencesSection = observer(() => {
     }
   };
 
-  const unsubscribeServiceWorker = async (): Promise<void> => {
+  const unsubscribeServiceWorker = async (): Promise<boolean> => {
     if (!('serviceWorker' in navigator && 'PushManager' in window)) {
-      return;
+      return true; // Consider it successful if not supported
     }
 
     try {
       const registration = await navigator.serviceWorker.getRegistration();
       if (!registration) {
         console.log('No service worker registration found');
-        return;
+        return true;
       }
 
       const subscription = await registration.pushManager.getSubscription();
       if (!subscription) {
         console.log('No subscription found');
-        return;
+        return true;
       }
 
       // Unsubscribe locally
@@ -156,15 +156,19 @@ const PreferencesSection = observer(() => {
         }
 
         setSubscriptionStatus('not-subscribed');
+        return true;
       }
+      
+      return false;
     } catch (error) {
       console.error('Error during unsubscription:', error);
       toast.error('Failed to unsubscribe from push notifications');
+      return false;
     }
   };
 
-  const handleSubscribe = async (): Promise<void> => {
-    if (isSubscribing) return;
+  const handleSubscribe = async (): Promise<boolean> => {
+    if (isSubscribing) return false;
     
     setIsSubscribing(true);
 
@@ -172,7 +176,7 @@ const PreferencesSection = observer(() => {
       // Check browser support
       if (!('serviceWorker' in navigator && 'PushManager' in window)) {
         toast.error('Push notifications not supported in this browser');
-        return;
+        return false;
       }
 
       // Check notification permission
@@ -184,7 +188,7 @@ const PreferencesSection = observer(() => {
       
       if (permission === 'denied') {
         toast.error('Notification permission denied. Please enable in browser settings.');
-        return;
+        return false;
       }
 
       // Register service worker
@@ -206,7 +210,7 @@ const PreferencesSection = observer(() => {
         } catch (subscribeError: any) {
           if (subscribeError.name === 'AbortError' || subscribeError.message?.includes('could not connect to push server')) {
             toast.error('Cannot connect to push server. Please check your internet connection and try again.');
-            return;
+            return false;
           }
           throw subscribeError;
         }
@@ -240,9 +244,11 @@ const PreferencesSection = observer(() => {
         
         // Clean up the local subscription if server registration failed
         await subscription.unsubscribe();
+        return false;
       } else {
         toast.success("Successfully subscribed to push notifications");
         setSubscriptionStatus('subscribed');
+        return true;
       }
     } catch (error: any) {
       console.error('Subscription error:', error);
@@ -259,20 +265,32 @@ const PreferencesSection = observer(() => {
       } else {
         toast.error(`Subscription failed: ${error.message || 'Unknown error'}`);
       }
+      
+      return false;
     } finally {
       setIsSubscribing(false);
     }
   };
 
   const handleEnableNotificationsChange = async (enableNotifications: boolean): Promise<void> => {
-    // Update user setting first
-    await userStore.updateUserSetting({ enableNotifications }, ["enable_notifications"]);
-    
-    // Then handle subscription/unsubscription
     if (enableNotifications) {
-      await handleSubscribe();
+      // Try to subscribe first
+      const subscriptionSuccessful = await handleSubscribe();
+      
+      // Only update user setting if subscription was successful
+      if (subscriptionSuccessful) {
+        await userStore.updateUserSetting({ enableNotifications: true }, ["enable_notifications"]);
+      }
+      // If subscription failed, the switch will remain off due to the setting not being updated
     } else {
-      await unsubscribeServiceWorker();
+      // For unsubscribe, try to unsubscribe first
+      const unsubscribeSuccessful = await unsubscribeServiceWorker();
+      
+      // Update user setting regardless of unsubscribe success
+      // (we want to disable notifications even if unsubscribe partially fails)
+      if (unsubscribeSuccessful) {
+        await userStore.updateUserSetting({ enableNotifications: false }, ["enable_notifications"]);
+      }
     }
   };
 
@@ -287,6 +305,7 @@ const PreferencesSection = observer(() => {
   }, []);
 
   // Handle initial subscription based on user setting
+  // This effect should only run once when component mounts and subscription status is determined
   useEffect(() => {
     const handleInitialSubscription = async () => {
       if (subscriptionStatus === 'unknown') return;
@@ -294,15 +313,26 @@ const PreferencesSection = observer(() => {
       const shouldBeSubscribed = setting.enableNotifications;
       const isCurrentlySubscribed = subscriptionStatus === 'subscribed';
       
+      // Only handle the case where setting says enabled but we're not actually subscribed
+      // This can happen after browser restart, cache clear, etc.
       if (shouldBeSubscribed && !isCurrentlySubscribed) {
-        await handleSubscribe();
+        const subscriptionSuccessful = await handleSubscribe();
+        
+        // If subscription fails, disable the setting to reflect reality
+        if (!subscriptionSuccessful) {
+          await userStore.updateUserSetting({ enableNotifications: false }, ["enable_notifications"]);
+        }
       } else if (!shouldBeSubscribed && isCurrentlySubscribed) {
+        // Clean up orphaned subscriptions
         await unsubscribeServiceWorker();
       }
     };
 
-    handleInitialSubscription();
-  }, [setting.enableNotifications, subscriptionStatus]);
+    // Only run this once when the component first loads and we know the subscription status
+    if (subscriptionStatus !== 'unknown') {
+      handleInitialSubscription();
+    }
+  }, [subscriptionStatus]); // Only depend on subscriptionStatus, not setting.enableNotifications
 
   return (
     <div className="w-full flex flex-col gap-2 pt-2 pb-4">
