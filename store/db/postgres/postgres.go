@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"log"
+	"strings"
 
 	// Import the PostgreSQL driver.
 	_ "github.com/lib/pq"
@@ -23,11 +24,26 @@ func NewDB(profile *profile.Profile) (store.Driver, error) {
 		return nil, errors.New("profile is nil")
 	}
 
+	// Add sslmode=disable if not present in DSN for local development
+	dsn := profile.DSN
+	if !strings.Contains(dsn, "sslmode=") {
+		separator := "?"
+		if strings.Contains(dsn, "?") {
+			separator = "&"
+		}
+		dsn = dsn + separator + "sslmode=disable"
+	}
+
 	// Open the PostgreSQL connection
-	db, err := sql.Open("postgres", profile.DSN)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		log.Printf("Failed to open database: %s", err)
-		return nil, errors.Wrapf(err, "failed to open database: %s", profile.DSN)
+		return nil, errors.Wrapf(err, "failed to open database: %s", dsn)
+	}
+
+	// Test the connection
+	if err := db.Ping(); err != nil {
+		return nil, errors.Wrap(err, "failed to ping database")
 	}
 
 	var driver store.Driver = &DB{
@@ -35,7 +51,6 @@ func NewDB(profile *profile.Profile) (store.Driver, error) {
 		profile: profile,
 	}
 
-	// Return the DB struct
 	return driver, nil
 }
 
