@@ -8,7 +8,7 @@ A modern, open-source, AI-driven self-hosted knowledge management and note-takin
 
 [![Home Page](https://img.shields.io/badge/Home-www.usememos.com-blue)](https://www.usememos.com)
 [![Documentation](https://img.shields.io/badge/Docs-Available-green)](https://www.usememos.com/docs)
-[![Live Demo](https://img.shields.io/badge/Demo-Try%20Now-orange)](https://demo.usememos.com/)
+[![Live Demo](https://img.shields.io/badge/Demo-Try%20Now-orange)](https://wekalist.villebiz.com/)
 [![Blog](https://img.shields.io/badge/Blog-Read%20More-lightblue)](https://www.usememos.com/blog)
 
 </div>
