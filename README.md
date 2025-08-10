@@ -86,6 +86,16 @@ docker run -d \
   ghcr.io/imrany/wekalist:latest
 ```
 
+Using Postgres
+```bash
+docker run -d --name wekalist --restart unless-stopped -p 5230:5230 -v ~/.wekalist/:/var/opt/wekalist ghcr.io/imrany/wekalist:latest --driver postgres --dsn 'postgresql://postgres:PASSWORD@localhost:5432/wekalist'
+```
+
+Using Mysql
+```bash
+docker run -d --name wekalist --restart unless-stopped -p 5230:5230 -v ~/.wekalist/:/var/opt/wekalist ghcr.io/imrany/wekalist:latest --driver mysql --dsn 'root:password@tcp(localhost)/wekalist'
+```
+
 Access the application at `http://localhost:5230` and complete the initial setup process.
 
 ### Docker Compose Deployment
