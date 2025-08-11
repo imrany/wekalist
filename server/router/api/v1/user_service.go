@@ -898,3 +898,310 @@ func extractImageInfo(dataURI string) (string, string, error) {
 	base64Data := matches[2]
 	return imageType, base64Data, nil
 }
+
+// Helper functions for user settings
+
+// ExtractUserIDAndSettingKeyFromName extracts user ID and setting key from resource name.
+// e.g., "users/123/settings/general" -> 123, "general".
+func ExtractUserIDAndSettingKeyFromName(name string) (int32, string, error) {
+	// Expected format: users/{user}/settings/{setting}
+	parts := strings.Split(name, "/")
+	if len(parts) != 4 || parts[0] != "users" || parts[2] != "settings" {
+		return 0, "", errors.Errorf("invalid resource name format: %s", name)
+	}
+
+	userID, err := util.ConvertStringToInt32(parts[1])
+	if err != nil {
+		return 0, "", errors.Errorf("invalid user ID: %s", parts[1])
+	}
+
+	settingKey := parts[3]
+	return userID, settingKey, nil
+}
+
+// convertSettingKeyToStore converts API setting key to store enum.
+func convertSettingKeyToStore(key string) (storepb.UserSetting_Key, error) {
+	switch key {
+	case v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_GENERAL)]:
+		return storepb.UserSetting_GENERAL, nil
+	case v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_SESSIONS)]:
+		return storepb.UserSetting_SESSIONS, nil
+	case v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_ACCESS_TOKENS)]:
+		return storepb.UserSetting_ACCESS_TOKENS, nil
+	case v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_WEBHOOKS)]:
+		return storepb.UserSetting_WEBHOOKS, nil
+	default:
+		return storepb.UserSetting_KEY_UNSPECIFIED, errors.Errorf("unknown setting key: %s", key)
+	}
+}
+
+// convertSettingKeyFromStore converts store enum to API setting key.
+func convertSettingKeyFromStore(key storepb.UserSetting_Key) string {
+	switch key {
+	case storepb.UserSetting_GENERAL:
+		return v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_GENERAL)]
+	case storepb.UserSetting_SESSIONS:
+		return v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_SESSIONS)]
+	case storepb.UserSetting_ACCESS_TOKENS:
+		return v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_ACCESS_TOKENS)]
+	case storepb.UserSetting_SHORTCUTS:
+		return "SHORTCUTS" // Not defined in API proto
+	case storepb.UserSetting_WEBHOOKS:
+		return v1pb.UserSetting_Key_name[int32(v1pb.UserSetting_WEBHOOKS)]
+	default:
+		return "unknown"
+	}
+}
+
+// convertUserSettingFromStore converts store UserSetting to API UserSetting.
+func convertUserSettingFromStore(storeSetting *storepb.UserSetting, userID int32, key storepb.UserSetting_Key) *v1pb.UserSetting {
+	if storeSetting == nil {
+		// Return default setting if none exists
+		settingKey := convertSettingKeyFromStore(key)
+		setting := &v1pb.UserSetting{
+			Name: fmt.Sprintf("users/%d/settings/%s", userID, settingKey),
+		}
+
+		switch key {
+		case storepb.UserSetting_GENERAL:
+			setting.Value = &v1pb.UserSetting_GeneralSetting_{
+				GeneralSetting: getDefaultUserGeneralSetting(),
+			}
+		case storepb.UserSetting_SESSIONS:
+			setting.Value = &v1pb.UserSetting_SessionsSetting_{
+				SessionsSetting: &v1pb.UserSetting_SessionsSetting{
+					Sessions: []*v1pb.UserSession{},
+				},
+			}
+		case storepb.UserSetting_ACCESS_TOKENS:
+			setting.Value = &v1pb.UserSetting_AccessTokensSetting_{
+				AccessTokensSetting: &v1pb.UserSetting_AccessTokensSetting{
+					AccessTokens: []*v1pb.UserAccessToken{},
+				},
+			}
+		case storepb.UserSetting_WEBHOOKS:
+			setting.Value = &v1pb.UserSetting_WebhooksSetting_{
+				WebhooksSetting: &v1pb.UserSetting_WebhooksSetting{
+					Webhooks: []*v1pb.UserWebhook{},
+				},
+			}
+		}
+		return setting
+	}
+
+	settingKey := convertSettingKeyFromStore(storeSetting.Key)
+	setting := &v1pb.UserSetting{
+		Name: fmt.Sprintf("users/%d/settings/%s", userID, settingKey),
+	}
+
+	switch storeSetting.Key {
+	case storepb.UserSetting_GENERAL:
+		if general := storeSetting.GetGeneral(); general != nil {
+			setting.Value = &v1pb.UserSetting_GeneralSetting_{
+				GeneralSetting: &v1pb.UserSetting_GeneralSetting{
+					Locale:         general.Locale,
+					Appearance:     general.Appearance,
+					MemoVisibility: general.MemoVisibility,
+					Theme:          general.Theme,
+				},
+			}
+		} else {
+			setting.Value = &v1pb.UserSetting_GeneralSetting_{
+				GeneralSetting: getDefaultUserGeneralSetting(),
+			}
+		}
+	case storepb.UserSetting_SESSIONS:
+		sessions := storeSetting.GetSessions()
+		apiSessions := make([]*v1pb.UserSession, 0, len(sessions.Sessions))
+		for _, session := range sessions.Sessions {
+			apiSession := &v1pb.UserSession{
+				Name:             fmt.Sprintf("users/%d/sessions/%s", userID, session.SessionId),
+				SessionId:        session.SessionId,
+				CreateTime:       session.CreateTime,
+				LastAccessedTime: session.LastAccessedTime,
+				ClientInfo: &v1pb.UserSession_ClientInfo{
+					UserAgent:  session.ClientInfo.UserAgent,
+					IpAddress:  session.ClientInfo.IpAddress,
+					DeviceType: session.ClientInfo.DeviceType,
+					Os:         session.ClientInfo.Os,
+					Browser:    session.ClientInfo.Browser,
+				},
+			}
+			apiSessions = append(apiSessions, apiSession)
+		}
+		setting.Value = &v1pb.UserSetting_SessionsSetting_{
+			SessionsSetting: &v1pb.UserSetting_SessionsSetting{
+				Sessions: apiSessions,
+			},
+		}
+	case storepb.UserSetting_ACCESS_TOKENS:
+		accessTokens := storeSetting.GetAccessTokens()
+		apiTokens := make([]*v1pb.UserAccessToken, 0, len(accessTokens.AccessTokens))
+		for _, token := range accessTokens.AccessTokens {
+			apiToken := &v1pb.UserAccessToken{
+				Name:        fmt.Sprintf("users/%d/accessTokens/%s", userID, token.AccessToken),
+				AccessToken: token.AccessToken,
+				Description: token.Description,
+			}
+			apiTokens = append(apiTokens, apiToken)
+		}
+		setting.Value = &v1pb.UserSetting_AccessTokensSetting_{
+			AccessTokensSetting: &v1pb.UserSetting_AccessTokensSetting{
+				AccessTokens: apiTokens,
+			},
+		}
+	case storepb.UserSetting_WEBHOOKS:
+		webhooks := storeSetting.GetWebhooks()
+		apiWebhooks := make([]*v1pb.UserWebhook, 0, len(webhooks.Webhooks))
+		for _, webhook := range webhooks.Webhooks {
+			apiWebhook := &v1pb.UserWebhook{
+				Name:        fmt.Sprintf("users/%d/webhooks/%s", userID, webhook.Id),
+				Url:         webhook.Url,
+				DisplayName: webhook.Title,
+			}
+			apiWebhooks = append(apiWebhooks, apiWebhook)
+		}
+		setting.Value = &v1pb.UserSetting_WebhooksSetting_{
+			WebhooksSetting: &v1pb.UserSetting_WebhooksSetting{
+				Webhooks: apiWebhooks,
+			},
+		}
+	}
+
+	return setting
+}
+
+// convertUserSettingToStore converts API UserSetting to store UserSetting.
+func convertUserSettingToStore(apiSetting *v1pb.UserSetting, userID int32, key storepb.UserSetting_Key) (*storepb.UserSetting, error) {
+	storeSetting := &storepb.UserSetting{
+		UserId: userID,
+		Key:    key,
+	}
+
+	switch key {
+	case storepb.UserSetting_GENERAL:
+		if general := apiSetting.GetGeneralSetting(); general != nil {
+			storeSetting.Value = &storepb.UserSetting_General{
+				General: &storepb.GeneralUserSetting{
+					Locale:         general.Locale,
+					Appearance:     general.Appearance,
+					MemoVisibility: general.MemoVisibility,
+					Theme:          general.Theme,
+				},
+			}
+		} else {
+			return nil, errors.Errorf("general setting is required")
+		}
+	case storepb.UserSetting_SESSIONS:
+		if sessions := apiSetting.GetSessionsSetting(); sessions != nil {
+			storeSessions := make([]*storepb.SessionsUserSetting_Session, 0, len(sessions.Sessions))
+			for _, session := range sessions.Sessions {
+				storeSession := &storepb.SessionsUserSetting_Session{
+					SessionId:        session.SessionId,
+					CreateTime:       session.CreateTime,
+					LastAccessedTime: session.LastAccessedTime,
+					ClientInfo: &storepb.SessionsUserSetting_ClientInfo{
+						UserAgent:  session.ClientInfo.UserAgent,
+						IpAddress:  session.ClientInfo.IpAddress,
+						DeviceType: session.ClientInfo.DeviceType,
+						Os:         session.ClientInfo.Os,
+						Browser:    session.ClientInfo.Browser,
+					},
+				}
+				storeSessions = append(storeSessions, storeSession)
+			}
+			storeSetting.Value = &storepb.UserSetting_Sessions{
+				Sessions: &storepb.SessionsUserSetting{
+					Sessions: storeSessions,
+				},
+			}
+		} else {
+			return nil, errors.Errorf("sessions setting is required")
+		}
+	case storepb.UserSetting_ACCESS_TOKENS:
+		if accessTokens := apiSetting.GetAccessTokensSetting(); accessTokens != nil {
+			storeTokens := make([]*storepb.AccessTokensUserSetting_AccessToken, 0, len(accessTokens.AccessTokens))
+			for _, token := range accessTokens.AccessTokens {
+				storeToken := &storepb.AccessTokensUserSetting_AccessToken{
+					AccessToken: token.AccessToken,
+					Description: token.Description,
+				}
+				storeTokens = append(storeTokens, storeToken)
+			}
+			storeSetting.Value = &storepb.UserSetting_AccessTokens{
+				AccessTokens: &storepb.AccessTokensUserSetting{
+					AccessTokens: storeTokens,
+				},
+			}
+		} else {
+			return nil, errors.Errorf("access tokens setting is required")
+		}
+	case storepb.UserSetting_WEBHOOKS:
+		if webhooks := apiSetting.GetWebhooksSetting(); webhooks != nil {
+			storeWebhooks := make([]*storepb.WebhooksUserSetting_Webhook, 0, len(webhooks.Webhooks))
+			for _, webhook := range webhooks.Webhooks {
+				storeWebhook := &storepb.WebhooksUserSetting_Webhook{
+					Id:    extractWebhookIDFromName(webhook.Name),
+					Title: webhook.DisplayName,
+					Url:   webhook.Url,
+				}
+				storeWebhooks = append(storeWebhooks, storeWebhook)
+			}
+			storeSetting.Value = &storepb.UserSetting_Webhooks{
+				Webhooks: &storepb.WebhooksUserSetting{
+					Webhooks: storeWebhooks,
+				},
+			}
+		} else {
+			return nil, errors.Errorf("webhooks setting is required")
+		}
+	default:
+		return nil, errors.Errorf("unsupported setting key: %v", key)
+	}
+
+	return storeSetting, nil
+}
+
+// extractWebhookIDFromName extracts webhook ID from resource name.
+// e.g., "users/123/webhooks/webhook-id" -> "webhook-id".
+func extractWebhookIDFromName(name string) string {
+	parts := strings.Split(name, "/")
+	if len(parts) >= 4 && parts[0] == "users" && parts[2] == "webhooks" {
+		return parts[3]
+	}
+	return ""
+}
+
+// validateUserFilter validates the user filter string.
+func (s *APIV1Service) validateUserFilter(_ context.Context, filterStr string) error {
+	if filterStr == "" {
+		return errors.New("filter cannot be empty")
+	}
+	// Validate the filter.
+	parsedExpr, err := filter.Parse(filterStr, filter.UserFilterCELAttributes...)
+	if err != nil {
+		return errors.Wrap(err, "failed to parse filter")
+	}
+	convertCtx := filter.NewConvertContext()
+
+	// Determine the dialect based on the actual database driver
+	var dialect filter.SQLDialect
+	switch s.Profile.Driver {
+	case "sqlite":
+		dialect = &filter.SQLiteDialect{}
+	case "mysql":
+		dialect = &filter.MySQLDialect{}
+	case "postgres":
+		dialect = &filter.PostgreSQLDialect{}
+	default:
+		// Default to SQLite for unknown drivers
+		dialect = &filter.SQLiteDialect{}
+	}
+
+	converter := filter.NewCommonSQLConverter(dialect)
+	err = converter.ConvertExprToSQL(convertCtx, parsedExpr.GetExpr())
+	if err != nil {
+		return errors.Wrap(err, "failed to convert filter to SQL")
+	}
+	return nil
+}
