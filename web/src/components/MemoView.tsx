@@ -43,7 +43,6 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
   const location = useLocation();
   const navigateTo = useNavigateTo();
   const currentUser = useCurrentUser();
-  const user = useCurrentUser();
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const [creator, setCreator] = useState(userStore.getUserByName(memo.creator));
   const [showNSFWContent, setShowNSFWContent] = useState(props.showNsfwContent);
@@ -59,7 +58,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
   ).length;
   const relativeTimeFormat = Date.now() - memo.displayTime!.getTime() > 1000 * 60 * 60 * 24 ? "datetime" : "auto";
   const isArchived = memo.state === State.ARCHIVED;
-  const readonly = memo.creator !== user?.name && !isSuperUser(user);
+  const readonly = memo.creator !== currentUser?.name && !isSuperUser(currentUser);
   const isInMemoDetailPage = location.pathname.startsWith(`/${memo.name}`);
   const parentPage = props.parentPage || location.pathname;
   const nsfw =
@@ -191,7 +190,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
             )}
             {currentUser && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
             
-            <MemoSummary memo={memo} />
+            {currentUser&&<MemoSummary memo={memo} />}
           </div>
           {!isInMemoDetailPage && (workspaceMemoRelatedSetting.enableComment || commentAmount > 0) && (
             <Link
