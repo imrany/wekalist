@@ -1,4 +1,4 @@
-import { BookmarkIcon, Bot, BotMessageSquare, Briefcase, EyeOffIcon, MessageCircleMoreIcon, Stars } from "lucide-react";
+import { BookmarkIcon, EyeOffIcon, MessageCircleMoreIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { memo, useCallback, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -18,7 +18,7 @@ import MemoAttachmentListView from "./MemoAttachmentListView";
 import MemoContent from "./MemoContent";
 import MemoEditor from "./MemoEditor";
 import MemoLocationView from "./MemoLocationView";
-import MemoReactionistView from "./MemoReactionListView";
+import MemoReactionListView from "./MemoReactionListView";
 import MemoRelationListView from "./MemoRelationListView";
 import PreviewImageDialog from "./PreviewImageDialog";
 import ReactionSelector from "./ReactionSelector";
@@ -45,31 +45,41 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
   const currentUser = useCurrentUser();
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const [creator, setCreator] = useState(userStore.getUserByName(memo.creator));
-  const [showNSFWContent, setShowNSFWContent] = useState(props.showNsfwContent);
+  const [showNSFWContent, setShowNSFWContent] = useState(props.showNsfwContent ?? false);
   const [previewImage, setPreviewImage] = useState<{ open: boolean; urls: string[]; index: number }>({
     open: false,
     urls: [],
     index: 0,
   });
+
   const workspaceMemoRelatedSetting = workspaceStore.state.memoRelatedSetting;
-  const referencedMemos = memo.relations.filter((relation) => relation.type === MemoRelation_Type.REFERENCE);
-  const commentAmount = memo.relations.filter(
+  const referencedMemos = memo.relations?.filter((relation) => relation.type === MemoRelation_Type.REFERENCE) ?? [];
+  const commentAmount = memo.relations?.filter(
     (relation) => relation.type === MemoRelation_Type.COMMENT && relation.relatedMemo?.name === memo.name,
-  ).length;
-  const relativeTimeFormat = Date.now() - memo.displayTime!.getTime() > 1000 * 60 * 60 * 24 ? "datetime" : "auto";
+  )?.length ?? 0;
+  
+  const relativeTimeFormat = memo.displayTime && Date.now() - memo.displayTime.getTime() > 1000 * 60 * 60 * 24 ? "datetime" : "auto";
   const isArchived = memo.state === State.ARCHIVED;
   const readonly = memo.creator !== currentUser?.name && !isSuperUser(currentUser);
   const isInMemoDetailPage = location.pathname.startsWith(`/${memo.name}`);
   const parentPage = props.parentPage || location.pathname;
   const nsfw =
-    workspaceMemoRelatedSetting.enableBlurNsfwContent &&
-    memo.tags?.some((tag) => workspaceMemoRelatedSetting.nsfwTags.some((nsfwTag) => tag === nsfwTag || tag.startsWith(`${nsfwTag}/`)));
+    workspaceMemoRelatedSetting?.enableBlurNsfwContent &&
+    memo.tags?.some((tag) => 
+      workspaceMemoRelatedSetting.nsfwTags?.some((nsfwTag) => 
+        tag === nsfwTag || tag.startsWith(`${nsfwTag}/`)
+      )
+    );
 
   // Initial related data: creator.
   useAsyncEffect(async () => {
-    const user = await userStore.getOrFetchUserByName(memo.creator);
-    setCreator(user);
-  }, []);
+    try {
+      const user = await userStore.getOrFetchUserByName(memo.creator);
+      setCreator(user);
+    } catch (error) {
+      console.error('Failed to fetch user:', error);
+    }
+  }, [memo.creator]);
 
   const handleGotoMemoDetailPage = useCallback(() => {
     navigateTo(`/${memo.name}`, {
@@ -77,7 +87,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
         from: parentPage,
       },
     });
-  }, [memo.name, parentPage]);
+  }, [memo.name, parentPage, navigateTo]);
 
   const handleMemoContentClick = useCallback(async (e: React.MouseEvent) => {
     const targetEl = e.target as HTMLElement;
@@ -95,34 +105,58 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
       return;
     }
 
-    if (workspaceMemoRelatedSetting.enableDoubleClickEdit) {
+    if (workspaceMemoRelatedSetting?.enableDoubleClickEdit) {
       e.preventDefault();
       setShowEditor(true);
     }
-  }, []);
+  }, [readonly, workspaceMemoRelatedSetting?.enableDoubleClickEdit]);
 
-  const onEditorConfirm = () => {
+  const onEditorConfirm = useCallback(() => {
     setShowEditor(false);
     userStore.setStatsStateId();
-  };
+  }, []);
 
-  const onPinIconClick = async () => {
-    if (memo.pinned) {
-      await memoStore.updateMemo(
-        {
-          name: memo.name,
-          pinned: false,
-        },
-        ["pinned"],
-      );
+  const onEditorCancel = useCallback(() => {
+    setShowEditor(false);
+  }, []);
+
+  const onPinIconClick = useCallback(async () => {
+    try {
+      if (memo.pinned) {
+        await memoStore.updateMemo(
+          {
+            name: memo.name,
+            pinned: false,
+          },
+          ["pinned"],
+        );
+      }
+    } catch (error) {
+      console.error('Failed to update memo pin status:', error);
     }
-  };
+  }, [memo.name, memo.pinned]);
+
+  const onShowNSFWContent = useCallback(() => {
+    setShowNSFWContent(true);
+  }, []);
+
+  const onHideNSFWContent = useCallback(() => {
+    setShowNSFWContent(false);
+  }, []);
+
+  const onEditMemo = useCallback(() => {
+    setShowEditor(true);
+  }, []);
 
   const displayTime = isArchived ? (
-    memo.displayTime?.toLocaleString()
-  ) : (
-    <relative-time datetime={memo.displayTime?.toISOString()} format={relativeTimeFormat}></relative-time>
-  );
+    memo.displayTime?.toLocaleString() ?? ''
+  ) : memo.displayTime ? (
+    <relative-time datetime={memo.displayTime.toISOString()} format={relativeTimeFormat}></relative-time>
+  ) : null;
+
+  if (!memo) {
+    return null;
+  }
 
   return showEditor ? (
     <MemoEditor
@@ -131,7 +165,7 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
       cacheKey={`inline-memo-editor-${memo.name}`}
       memoName={memo.name}
       onConfirm={onEditorConfirm}
-      onCancel={() => setShowEditor(false)}
+      onCancel={onEditorCancel}
     />
   ) : (
     <div
@@ -179,20 +213,24 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
         <div className="flex flex-row justify-end items-center select-none shrink-0 gap-2">
           <div className="w-auto md:invisible group-hover:visible flex flex-row justify-between items-center gap-2">
             {props.showVisibility && memo.visibility !== Visibility.PRIVATE && (
-              <Tooltip>
-                <TooltipTrigger>
-                  <span className="flex justify-center items-center rounded-md p-1 hover:opacity-80">
-                    <VisibilityIcon visibility={memo.visibility} />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>{t(`memo.visibility.${convertVisibilityToString(memo.visibility).toLowerCase()}` as any)}</TooltipContent>
-              </Tooltip>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="flex justify-center items-center rounded-md p-1 hover:opacity-80">
+                      <VisibilityIcon visibility={memo.visibility} />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {t(`memo.visibility.${convertVisibilityToString(memo.visibility).toLowerCase()}` as any)}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
-            {currentUser && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
+            {!readonly && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
             
-            {currentUser&&<MemoSummary memo={memo} />}
+            {!readonly && <MemoSummary memo={memo} />}
           </div>
-          {!isInMemoDetailPage && (workspaceMemoRelatedSetting.enableComment || commentAmount > 0) && (
+          {!isInMemoDetailPage && (workspaceMemoRelatedSetting?.enableComment || commentAmount > 0) && (
             <Link
               className={cn(
                 "flex flex-row justify-start items-center rounded-md p-1 hover:opacity-80",
@@ -212,9 +250,9 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="cursor-pointer">
-                    <BookmarkIcon className="w-4 h-auto text-primary" onClick={onPinIconClick} />
-                  </span>
+                  <button className="cursor-pointer p-1" onClick={onPinIconClick} type="button">
+                    <BookmarkIcon className="w-4 h-auto text-primary" />
+                  </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{t("common.unpin")}</p>
@@ -223,12 +261,12 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
             </TooltipProvider>
           )}
           {nsfw && showNSFWContent && (
-            <span className="cursor-pointer">
-              <EyeOffIcon className="w-4 h-auto text-primary" onClick={() => setShowNSFWContent(false)} />
-            </span>
+            <button className="cursor-pointer p-1" onClick={onHideNSFWContent} type="button">
+              <EyeOffIcon className="w-4 h-auto text-primary" />
+            </button>
           )}
 
-          <MemoActionMenu memo={memo} readonly={readonly} onEdit={() => setShowEditor(true)} />
+          <MemoActionMenu memo={memo} readonly={readonly} onEdit={onEditMemo} />
         </div>
       </div>
       <div
@@ -248,16 +286,19 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
           parentPage={parentPage}
         />
         {memo.location && <MemoLocationView location={memo.location} />}
-        <MemoAttachmentListView attachments={memo.attachments} />
-        <MemoRelationListView memo={memo} relations={referencedMemos} parentPage={parentPage} />
-        <MemoReactionistView memo={memo} reactions={memo.reactions} />
+        {memo.attachments && <MemoAttachmentListView attachments={memo.attachments} />}
+        {referencedMemos.length > 0 && (
+          <MemoRelationListView memo={memo} relations={referencedMemos} parentPage={parentPage} />
+        )}
+        {memo.reactions && <MemoReactionListView memo={memo} reactions={memo.reactions} />}
       </div>
       {nsfw && !showNSFWContent && (
         <>
           <div className="absolute inset-0 bg-transparent" />
           <button
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-2 px-4 text-sm text-muted-foreground hover:text-foreground hover:bg-accent hover:border-accent border border-border rounded-lg bg-card transition-colors"
-            onClick={() => setShowNSFWContent(true)}
+            onClick={onShowNSFWContent}
+            type="button"
           >
             {t("memo.click-to-show-nsfw-content")}
           </button>

@@ -1,5 +1,6 @@
 import { HashIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { useCallback, useMemo } from "react";
 import OverflowTip from "@/components/kit/OverflowTip";
 import { Button } from "@/components/ui/button";
 import { userStore } from "@/store";
@@ -14,23 +15,112 @@ interface Props {
 const TagSelector = observer((props: Props) => {
   const t = useTranslate();
   const { editorRef } = props;
-  const tags = Object.entries(userStore.state.tagCount)
-    .sort((a, b) => a[0].localeCompare(b[0]))
-    .sort((a, b) => b[1] - a[1])
-    .map(([tag]) => tag);
+  
+  const defaultTags = useMemo(() => [
+    "todo",
+    "journal",
+    "meeting",
+    "brainstorm",
+    "research",
+    "project",
+    "idea",
+    "summary",
+    "recipe",
+    "review",
+    "draft",
+    "note",
+    "reference",
+    "archive",
+    "important",
+    "follow-up",
+    "inspiration",
+    "action-item",
+    "question",
+    "feedback",
+    "discussion",
+    "analysis",
+    "planning",
+    "development",
+    "design",
+    "testing",
+    "deployment",
+    "documentation",
+    "collaboration",
+    "presentation",
+    "report",
+    "milestone",
+    "deadline",
+    "update",
+    "announcement",
+    "event",
+    "notification",
+    "reminder",
+    "alert",
+    "status",
+    "priority",
+    "urgent",
+    "completed",
+    "pending",
+    "canceled",
+    "resolved",
+    "escalated",
+    "reviewed",
+    "approved",   
+    "rejected",
+    "archived",
+    "deleted",
+    "favorite",
+    "shared",
+    "private",
+    "public",
+    "confidential",
+    "restricted",
+    "open",
+    "closed",
+    "active",
+    "inactive",
+    "task",
+    "issue",
+    "bug",
+    "feature",
+    "enhancement",
+    "improvement",
+    "answer",   
+    "solution",
+    "comment"
+  ], []);
 
-  const handleTagClick = (tag: string) => {
+  const userTags = useMemo(() => {
+    return Object.entries(userStore.state.tagCount)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .sort((a, b) => b[1] - a[1])
+      .map(([tag]) => tag);
+  }, []);
+
+  const tags = useMemo(() => {
+    return Array.from(new Set([...defaultTags, ...userTags]));
+  }, [defaultTags, userTags]);
+
+  const handleTagClick = useCallback((tag: string) => {
     const current = editorRef.current;
-    if (current === null) return;
+    if (!current) return;
 
-    const line = current.getLine(current.getCursorLineNumber());
-    const lastCharOfLine = line.slice(-1);
+    try {
+      const line = current.getLine(current.getCursorLineNumber());
+      const lastCharOfLine = line.slice(-1);
 
-    if (lastCharOfLine !== " " && lastCharOfLine !== "　" && line !== "") {
-      current.insertText("\n");
+      if (lastCharOfLine !== " " && lastCharOfLine !== "　" && line !== "") {
+        current.insertText("\n");
+      }
+      current.insertText(`#${tag} `);
+    } catch (error) {
+      console.error("Failed to insert tag:", error);
     }
-    current.insertText(`#${tag} `);
-  };
+  }, [editorRef]);
+
+  const handlePopoverClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
 
   return (
     <Popover>
@@ -42,20 +132,19 @@ const TagSelector = observer((props: Props) => {
       <PopoverContent align="start" sideOffset={2}>
         {tags.length > 0 ? (
           <div className="flex flex-row justify-start items-start flex-wrap px-2 max-w-48 h-auto max-h-48 overflow-y-auto gap-x-2">
-            {tags.map((tag) => {
-              return (
-                <div
-                  key={tag}
-                  className="inline-flex w-auto max-w-full cursor-pointer text-base leading-6 text-muted-foreground hover:opacity-80"
-                  onClick={() => handleTagClick(tag)}
-                >
-                  <OverflowTip>#{tag}</OverflowTip>
-                </div>
-              );
-            })}
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className="inline-flex w-auto max-w-full cursor-pointer text-base leading-6 text-muted-foreground hover:opacity-80 hover:text-foreground transition-colors p-0 border-none bg-transparent"
+                onClick={() => handleTagClick(tag)}
+              >
+                <OverflowTip>#{tag}</OverflowTip>
+              </button>
+            ))}
           </div>
         ) : (
-          <p className="italic mx-2" onClick={(e) => e.stopPropagation()}>
+          <p className="italic mx-2" onClick={handlePopoverClick}>
             {t("tag.no-tag-found")}
           </p>
         )}
