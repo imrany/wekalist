@@ -11,11 +11,15 @@ import useNavigateTo from "@/hooks/useNavigateTo";
 import { workspaceStore } from "@/store";
 import { initialUserStore } from "@/store/user";
 import { useTranslate } from "@/utils/i18n";
+import { WorkspaceGeneralSetting, WorkspaceSetting_Key } from "@/types/proto/api/v1/workspace_service";
 
 const PasswordSignInForm = observer(() => {
   const t = useTranslate();
   const navigateTo = useNavigateTo();
   const actionBtnLoadingState = useLoading(false);
+  const { enableEmailVerification } = WorkspaceGeneralSetting.fromPartial(
+    workspaceStore.getWorkspaceSettingByKey(WorkspaceSetting_Key.GENERAL)?.generalSetting || {},
+  );
   const [usernameOrEmail, setUsernameOrEmail] = useState(
     workspaceStore.state.profile.mode === "demo" ? "yourselfhosted" : ""
   );
@@ -64,15 +68,15 @@ const PasswordSignInForm = observer(() => {
       <div className="flex flex-col justify-start items-start w-full gap-4">
         <div className="w-full flex flex-col justify-start items-start">
           <span className="leading-8 text-muted-foreground">
-            {t("common.username-or-email")}
+            {enableEmailVerification?t("common.username-or-email"):t("common.username")}
           </span>
           <Input
             className="w-full bg-background h-10"
             type="text"
             readOnly={actionBtnLoadingState.isLoading}
-            placeholder={t("common.username-or-email")}
+            placeholder={enableEmailVerification?t("common.username-or-email"):t("common.username")}
             value={usernameOrEmail}
-            autoComplete="username email"
+            autoComplete={enableEmailVerification?"username email":"username"}
             autoCapitalize="off"
             spellCheck={false}
             onChange={handleUsernameOrEmailInputChanged}
