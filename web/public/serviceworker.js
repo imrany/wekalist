@@ -78,6 +78,10 @@ self.addEventListener("push", event => {
         body: data.body,
         icon: data.icon || '/full-logo.webp',
         badge: data.badge || '/logo.webp',
+        // Enable sound
+        silent: false,
+        // Custom sound (limited browser support)
+        sound: '/sounds/bell-notification.wav',
         data: { link: data.url } // Ensure the link is stored within the data
     });
 });
