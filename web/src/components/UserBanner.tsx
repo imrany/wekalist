@@ -30,7 +30,7 @@ const UserBanner = (props: Props) => {
           {currentUser.avatarUrl ? (
             <UserAvatar className="shrink-0" avatarUrl={currentUser.avatarUrl} />
           ) : (
-            <User2Icon className="w-6 mx-auto h-auto text-muted-foreground" />
+            <User2Icon className="w-8 mx-auto h-auto text-muted-foreground" />
           )}
           {!collapsed && (
             <span className="ml-2 text-lg font-medium text-foreground grow truncate">
