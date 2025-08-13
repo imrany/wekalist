@@ -187,7 +187,7 @@ const App = observer(() => {
         link.rel = "icon";
         document.head.appendChild(link);
       }
-      link.href = customProfile.logoUrl || "/logo.webp";
+      link.href = customProfile.logoUrl || "/logo.svg";
     }
   }, [workspaceGeneralSetting.customProfile]);
 

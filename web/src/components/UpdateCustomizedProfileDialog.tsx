@@ -67,7 +67,7 @@ function UpdateCustomizedProfileDialog({ open, onOpenChange, onSuccess }: Props)
   const handleRestoreButtonClick = () => {
     setPartialState({
       title: "Wekalist",
-      logoUrl: "/logo.webp",
+      logoUrl: "/logo.svg",
       description: "",
       locale: "en",
       appearance: "system",

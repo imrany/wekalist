@@ -77,7 +77,7 @@ self.addEventListener("push", event => {
     self.registration.showNotification(data.title, {
         body: data.body,
         icon: data.icon || '/full-logo.webp',
-        badge: data.badge || '/logo.webp',
+        badge: data.badge || '/logo.svg',
         // Enable sound
         silent: false,
         // Custom sound (limited browser support)
