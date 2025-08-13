@@ -11,7 +11,7 @@ const UserAvatar = (props: Props) => {
     <div className={cn(`w-8 h-8 overflow-clip`, className)}>
       <img
         className="w-full h-full shadow rounded-xl min-w-full min-h-full object-cover"
-        src={avatarUrl || "/full-logo.webp"}
+        src={avatarUrl || "/full-logo.png"}
         decoding="async"
         loading="lazy"
         alt=""

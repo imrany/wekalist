@@ -12,7 +12,7 @@ const NavigationDrawer = observer(() => {
   const [open, setOpen] = useState(false);
   const workspaceGeneralSetting = workspaceStore.state.generalSetting;
   const title = workspaceGeneralSetting.customProfile?.title || "Wekalist";
-  const avatarUrl = workspaceGeneralSetting.customProfile?.logoUrl || "/full-logo.webp";
+  const avatarUrl = workspaceGeneralSetting.customProfile?.logoUrl || "/full-logo.png";
 
   useEffect(() => {
     setOpen(false);

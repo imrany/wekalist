@@ -1,11 +1,9 @@
-const staticCacheName = 'site-static-v0.26.1'; // also Versioning static cache
-const dynamicCache = 'site-dynamic-v0.26.1'; // Versioning dynamic cache
+const staticCacheName = 'site-static-v0.27.16'; // also Versioning static cache
+const dynamicCache = 'site-dynamic-v0.27.16'; // Versioning dynamic cache
 
 const assets = [
-    // '/',
     '/index.html',
     '/assets',
-    '/icons',
 ];
 
 // Installing service worker
@@ -25,9 +23,7 @@ self.addEventListener('activate', (evt) => {
     evt.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
-                keys.filter((key) => key !== staticCacheName && key !== dynamicCache)
-                   .map((key) => caches.delete(key))
-                // keys.map((key) => caches.delete(key)) // Delete all caches
+                keys.map((key) => caches.delete(key)) // Delete all caches
             );
         }).then(() => {
             return self.clients.claim(); // Ensures the new service worker controls all the clients
@@ -76,7 +72,7 @@ self.addEventListener("push", event => {
 
     self.registration.showNotification(data.title, {
         body: data.body,
-        icon: data.icon || '/full-logo.webp',
+        icon: data.icon || '/full-logo.png',
         badge: data.badge || '/logo.svg',
         // Enable sound
         silent: false,

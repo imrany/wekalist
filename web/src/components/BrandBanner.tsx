@@ -12,7 +12,7 @@ const BrandBanner = observer((props: Props) => {
   const { collapsed } = props;
   const workspaceGeneralSetting = workspaceStore.state.generalSetting;
   const title = workspaceGeneralSetting.customProfile?.title || "Wekalist";
-  const avatarUrl = workspaceGeneralSetting.customProfile?.logoUrl || "/full-logo.webp";
+  const avatarUrl = workspaceGeneralSetting.customProfile?.logoUrl || "/full-logo.png";
 
   return (
     <div className={cn("relative w-full h-auto shrink-0", props.className)}>
