@@ -4,8 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const Sheet = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Root>, React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root>>(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ({ ...props }, _ref) => {
+  ({ ...props }, ref) => {
     return <SheetPrimitive.Root data-slot="sheet" {...props} />;
   },
 );
@@ -61,6 +60,7 @@ const SheetContent = React.forwardRef<
       <SheetPrimitive.Content
         ref={ref}
         data-slot="sheet-content"
+        aria-describedby={undefined}
         className={cn(
           "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
           side === "right" &&
