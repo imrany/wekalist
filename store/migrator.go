@@ -43,6 +43,7 @@ func (s *Store) Migrate(ctx context.Context) error {
 
 	switch s.profile.Mode {
 	case "prod":
+	case "dev":
 		workspaceBasicSetting, err := s.GetWorkspaceBasicSetting(ctx)
 		if err != nil {
 			return errors.Wrap(err, "failed to get workspace basic setting")

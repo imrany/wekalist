@@ -166,7 +166,7 @@ func (s *APIV1Service) ListMemos(ctx context.Context, request *v1pb.ListMemosReq
 	memoFind.Offset = &offset
 	memos, err := s.Store.ListMemos(ctx, memoFind)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to list memos: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to list memos: %s", err.Error())
 	}
 
 	memoMessages := []*v1pb.Memo{}

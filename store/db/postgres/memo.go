@@ -122,7 +122,7 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 			query = fmt.Sprintf("%s OFFSET %d", query, *find.Offset)
 		}
 	}
-
+	
 	rows, err := d.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, err
