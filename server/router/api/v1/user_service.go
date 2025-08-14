@@ -121,8 +121,10 @@ func (s *APIV1Service) SearchUsers(ctx context.Context, request *v1pb.SearchUser
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to get user: %v", err)
 	}
-	if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
-		return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+	if currentUser != nil {
+		if currentUser.Role != store.RoleHost && currentUser.Role != store.RoleAdmin {
+			return nil, status.Errorf(codes.PermissionDenied, "permission denied")
+		}
 	}
 
 	// Search users by username, email, or display name
