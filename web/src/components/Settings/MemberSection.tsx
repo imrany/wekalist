@@ -184,17 +184,15 @@ const MemberSection = observer(() => {
                             <DropdownMenuItem onClick={() => handleOpenConfirmationDialog(DialogType.ARCHIVE_MEMBER, user)}>
                               {t("setting.member-section.archive-member")}
                             </DropdownMenuItem>
-                          ) : (
-                            <>
-                              <DropdownMenuItem onClick={() => handleRestoreUserClick(user)}>{t("common.restore")}</DropdownMenuItem>
-                              <DropdownMenuItem
-                                onClick={() => handleOpenConfirmationDialog(DialogType.DELETE_MEMBER, user)}
-                                className="text-destructive focus:text-destructive"
-                              >
-                                {t("setting.member-section.delete-member")}
-                              </DropdownMenuItem>
-                            </>
+                          ):(
+                            <DropdownMenuItem onClick={() => handleRestoreUserClick(user)}>{t("common.restore")}</DropdownMenuItem>
                           )}
+                          <DropdownMenuItem
+                            onClick={() => handleOpenConfirmationDialog(DialogType.DELETE_MEMBER, user)}
+                            className="text-destructive focus:text-destructive"
+                          >
+                            {t("setting.member-section.delete-member")}
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     )}
