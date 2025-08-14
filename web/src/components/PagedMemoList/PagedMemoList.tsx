@@ -28,22 +28,17 @@ const PagedMemoList = observer((props: Props) => {
   const t = useTranslate();
   const { md } = useResponsiveWidth();
 
-  // Simplified state management - separate state variables for clarity
-  const [isRequesting, setIsRequesting] = useState(true);
+  const [isRequesting, setIsRequesting] = useState(false);
   const [nextPageToken, setNextPageToken] = useState("");
-
-  // Ref to manage auto-fetch timeout to prevent memory leaks
   const autoFetchTimeoutRef = useRef<number | null>(null);
 
-  // Apply custom sorting if provided, otherwise use store memos directly
   const sortedMemoList = props.listSort ? props.listSort(memoStore.state.memos) : memoStore.state.memos;
-
-  // Show memo editor only on the root route
   const showMemoEditor = Boolean(matchPath(Routes.ROOT, window.location.pathname));
 
-  // Fetch more memos with pagination support
   const fetchMoreMemos = async (pageToken: string) => {
-    setIsRequesting(true);
+    if (memoStore.state.memos.length === 0) {
+      setIsRequesting(true);
+    }
 
     try {
       const response = await memoStore.fetchMemos({
@@ -60,55 +55,46 @@ const PagedMemoList = observer((props: Props) => {
     }
   };
 
-  // Helper function to check if page has enough content to be scrollable
   const isPageScrollable = () => {
     const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    return documentHeight > window.innerHeight + 100; // 100px buffer for safe measure
+    return documentHeight > window.innerHeight + 100;
   };
 
-  // Auto-fetch more content if page isn't scrollable and more data is available
   const checkAndFetchIfNeeded = useCallback(async () => {
-    // Clear any pending auto-fetch timeout
     if (autoFetchTimeoutRef.current) {
       clearTimeout(autoFetchTimeoutRef.current);
     }
 
-    // Wait for DOM to update before checking scrollability
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 400));
 
-    // Only fetch if: page isn't scrollable, we have more data, not currently loading, and have memos
     const shouldFetch = !isPageScrollable() && nextPageToken && !isRequesting && sortedMemoList.length > 0;
 
     if (shouldFetch) {
       await fetchMoreMemos(nextPageToken);
 
-      // Schedule another check with delay to prevent rapid successive calls
       autoFetchTimeoutRef.current = window.setTimeout(() => {
         checkAndFetchIfNeeded();
       }, 500);
     }
   }, [nextPageToken, isRequesting, sortedMemoList.length]);
 
-  // Refresh the entire memo list from the beginning
   const refreshList = async () => {
     memoStore.state.updateStateId();
     setNextPageToken("");
     await fetchMoreMemos("");
   };
 
-  // Initial load and reload when props change
+  const filterKey = `${props.state}-${props.orderBy}-${props.filter}-${props.pageSize}`;
   useEffect(() => {
     refreshList();
-  }, [props.state, props.orderBy, props.filter, props.pageSize]);
+  }, [filterKey]);
 
-  // Auto-fetch more content when list changes and page isn't full
   useEffect(() => {
     if (!isRequesting && sortedMemoList.length > 0) {
       checkAndFetchIfNeeded();
     }
   }, [sortedMemoList.length, isRequesting, nextPageToken, checkAndFetchIfNeeded]);
 
-  // Cleanup timeout on component unmount
   useEffect(() => {
     return () => {
       if (autoFetchTimeoutRef.current) {
@@ -117,7 +103,6 @@ const PagedMemoList = observer((props: Props) => {
     };
   }, []);
 
-  // Infinite scroll: fetch more when user scrolls near bottom
   useEffect(() => {
     if (!nextPageToken) return;
 
@@ -141,14 +126,12 @@ const PagedMemoList = observer((props: Props) => {
         listMode={viewStore.state.layout === "LIST"}
       />
 
-      {/* Loading indicator */}
       {isRequesting && (
         <div className="w-full flex flex-row justify-center items-center my-4">
           <LoaderIcon className="animate-spin text-muted-foreground" />
         </div>
       )}
 
-      {/* Empty state or back-to-top button */}
       {!isRequesting && (
         <>
           {!nextPageToken && sortedMemoList.length === 0 ? (
@@ -195,28 +178,17 @@ const BackToTop = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const shouldShow = window.scrollY > 400;
-      setIsVisible(shouldShow);
+      setIsVisible(window.scrollY > 400);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // Don't render if not visible
-  if (!isVisible) {
-    return null;
-  }
+  if (!isVisible) return null;
 
   return (
-    <Button variant="ghost" onClick={scrollToTop}>
+    <Button variant="ghost" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
       {t("router.back-to-top")}
       <ArrowUpIcon className="ml-1 w-4 h-auto" />
     </Button>
