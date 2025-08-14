@@ -10,7 +10,7 @@ import PagedMemoList from "@/components/PagedMemoList";
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
 import useLoading from "@/hooks/useLoading";
-import { viewStore, userStore } from "@/store";
+import { viewStore, userStore, workspaceStore } from "@/store";
 import { extractUserIdFromName } from "@/store/common";
 import memoFilterStore from "@/store/memoFilter";
 import { State } from "@/types/proto/api/v1/common";
@@ -18,6 +18,7 @@ import { Memo } from "@/types/proto/api/v1/memo_service";
 import { User } from "@/types/proto/api/v1/user_service";
 import { useTranslate } from "@/utils/i18n";
 import useShare from "@/hooks/useShare";
+import { WorkspaceSetting_Key } from "@/types/proto/api/v1/workspace_service";
 
 const UserProfile = observer(() => {
   const t = useTranslate();
@@ -50,10 +51,36 @@ const UserProfile = observer(() => {
 
     const conditions = [`creator_id == ${extractUserIdFromName(user.name)}`];
     for (const filter of memoFilterStore.filters) {
-      if (filter.factor === "contentSearch") {
-        conditions.push(`content.contains("${filter.value}")`);
-      } else if (filter.factor === "tagSearch") {
-        conditions.push(`tag in ["${filter.value}"]`);
+      switch (filter.factor) {
+        case "contentSearch":
+          conditions.push(`content.contains("${filter.value}")`);
+          break;
+        case "tagSearch":
+          conditions.push(`tag in ["${filter.value}"]`);
+          break;
+        case "pinned":
+          conditions.push(`pinned`);
+          break;
+        case "property.hasLink":
+          conditions.push(`has_link`);
+          break;
+        case "property.hasTaskList":
+          conditions.push(`has_task_list`);
+          break;
+        case "property.hasCode":
+          conditions.push(`has_code`);
+          break;
+        case "displayTime": {
+          const displayWithUpdateTime = workspaceStore.getWorkspaceSettingByKey(
+            WorkspaceSetting_Key.MEMO_RELATED,
+          ).memoRelatedSetting?.displayWithUpdateTime;
+          const factor = displayWithUpdateTime ? "updated_ts" : "created_ts";
+          const filterDate = new Date(filter.value);
+          const filterUtcTimestamp = filterDate.getTime() + filterDate.getTimezoneOffset() * 60 * 1000;
+          const timestampAfter = filterUtcTimestamp / 1000;
+          conditions.push(`${factor} >= ${timestampAfter} && ${factor} < ${timestampAfter + 60 * 60 * 24}`);
+          break;
+        }
       }
     }
     return conditions.length > 0 ? conditions.join(" && ") : undefined;
