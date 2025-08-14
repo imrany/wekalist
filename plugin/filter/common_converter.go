@@ -228,62 +228,68 @@ func (c *CommonSQLConverter) handleInOperator(ctx *ConvertContext, callExpr *exp
 }
 
 func (c *CommonSQLConverter) handleElementInTags(ctx *ConvertContext, elementExpr *exprv1.Expr) error {
-	element, err := GetConstValue(elementExpr)
-	if err != nil {
-		return errors.Errorf("first argument must be a constant value for 'element in tags': %v", err)
-	}
+    element, err := GetConstValue(elementExpr)
+    if err != nil {
+        return errors.Errorf("first argument must be a constant value for 'element in tags': %v", err)
+    }
 
-	// Use dialect-specific JSON contains logic
-	template := c.dialect.GetJSONContains("$.tags", "element")
-	sqlExpr := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
-	if _, err := ctx.Buffer.WriteString(sqlExpr); err != nil {
-		return err
-	}
+    // Use dialect-specific JSON contains logic
+    template := c.dialect.GetJSONContains("$.tags", "element")
+    sqlExpr := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
+    if _, err := ctx.Buffer.WriteString(sqlExpr); err != nil {
+        return err
+    }
 
-	// Handle args based on dialect
-	if _, ok := c.dialect.(*SQLiteDialect); ok {
-		// SQLite uses LIKE with pattern
-		ctx.Args = append(ctx.Args, fmt.Sprintf(`%%"%s"%%`, element))
-	} else {
-		// MySQL and PostgreSQL expect plain values
-		ctx.Args = append(ctx.Args, element)
-	}
-	c.paramIndex++
+    // Handle args based on dialect
+    switch c.dialect.(type) {
+    case *SQLiteDialect:
+        ctx.Args = append(ctx.Args, fmt.Sprintf(`%%"%s"%%`, element))
+    default:
+        // Quote the string for JSONB compatibility
+        quoted := fmt.Sprintf(`"%s"`, element)
+        ctx.Args = append(ctx.Args, quoted)
+    }
 
-	return nil
+    c.paramIndex++
+    return nil
 }
 
 func (c *CommonSQLConverter) handleTagInList(ctx *ConvertContext, values []any) error {
-	subconditions := []string{}
-	args := []any{}
+    subconditions := []string{}
+    args := []any{}
 
-	for _, v := range values {
-		if _, ok := c.dialect.(*SQLiteDialect); ok {
-			subconditions = append(subconditions, c.dialect.GetJSONLike("$.tags", "pattern"))
-			args = append(args, fmt.Sprintf(`%%"%s"%%`, v))
-		} else {
-			// Replace ? with proper placeholder for each dialect
-			template := c.dialect.GetJSONContains("$.tags", "element")
-			sql := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
-			subconditions = append(subconditions, sql)
-			args = append(args, v)
-		}
-		c.paramIndex++
-	}
+    for _, v := range values {
+        switch c.dialect.(type) {
+        case *SQLiteDialect:
+            subconditions = append(subconditions, c.dialect.GetJSONLike("$.tags", "pattern"))
+            args = append(args, fmt.Sprintf(`%%"%s"%%`, v))
+        default:
+            template := c.dialect.GetJSONContains("$.tags", "element")
+            sql := strings.Replace(template, "?", c.dialect.GetParameterPlaceholder(c.paramIndex), 1)
+            subconditions = append(subconditions, sql)
 
-	if len(subconditions) == 1 {
-		if _, err := ctx.Buffer.WriteString(subconditions[0]); err != nil {
-			return err
-		}
-	} else {
-		if _, err := ctx.Buffer.WriteString(fmt.Sprintf("(%s)", strings.Join(subconditions, " OR "))); err != nil {
-			return err
-		}
-	}
+            // Quote each tag for JSONB compatibility
+            quoted := fmt.Sprintf(`"%s"`, v)
+            args = append(args, quoted)
+        }
+        c.paramIndex++
+    }
 
-	ctx.Args = append(ctx.Args, args...)
-	return nil
+    // Combine conditions
+    if len(subconditions) == 1 {
+        if _, err := ctx.Buffer.WriteString(subconditions[0]); err != nil {
+            return err
+        }
+    } else {
+        if _, err := ctx.Buffer.WriteString(fmt.Sprintf("(%s)", strings.Join(subconditions, " OR "))); err != nil {
+            return err
+        }
+    }
+
+    ctx.Args = append(ctx.Args, args...)
+    return nil
 }
+
 
 func (c *CommonSQLConverter) handleVisibilityInList(ctx *ConvertContext, values []any) error {
 	placeholders := []string{}

@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -56,6 +57,7 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 			return nil, err
 		}
 		condition := convertCtx.Buffer.String()
+		log.Printf("condition: %s, convertCtx: %v", condition, convertCtx.Args)
 		if condition != "" {
 			where = append(where, fmt.Sprintf("(%s)", condition))
 			args = append(args, convertCtx.Args...)
@@ -124,6 +126,7 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 	}
 	
 	rows, err := d.db.QueryContext(ctx, query, args...)
+	log.Printf("query: %v, args: %v, err: %v", query, args, err)
 	if err != nil {
 		return nil, err
 	}

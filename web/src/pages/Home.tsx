@@ -70,6 +70,7 @@ const Home = observer(() => {
       }
     }
 
+    console.log(conditions)
     return conditions.length > 0 ? conditions.join(" && ") : undefined;
   }, [filterKey]);
 

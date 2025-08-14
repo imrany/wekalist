@@ -1,0 +1,3 @@
+ALTER TABLE subscription
+  ALTER COLUMN keys TYPE JSONB USING keys::JSONB,
+  ALTER COLUMN keys SET DEFAULT '{}';
