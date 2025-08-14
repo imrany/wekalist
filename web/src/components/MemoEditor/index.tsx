@@ -712,8 +712,8 @@ const MemoEditor = observer((props: Props) => {
           className={cn(
             "absolute right-1 top-1",
             "flex flex-row justify-end items-center gap-1",
-            "invisible group-focus-within:visible group-hover:visible hover:visible focus-within:visible",
-            (isVisibilitySelectorOpen || memoName) && "visible",
+            "visible sm:invisible group-focus-within:visible group-hover:visible hover:visible focus-within:visible",
+            (isVisibilitySelectorOpen || memoName) && "sm:visible",
           )}
           onFocus={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
