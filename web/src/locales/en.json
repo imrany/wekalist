@@ -221,7 +221,9 @@
     "restored-successfully": "Restored successfully",
     "succeed-copy-link": "Link copied successfully.",
     "update-succeed": "Update succeeded",
-    "user-not-found": "User not found"
+    "user-not-found": "User not found",
+    "no-filtered-data": "No memos match your filter",
+    "filtering-memos": "Filtering memos..."
   },
   "reference": {
     "add-references": "Add references",

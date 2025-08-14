@@ -29,14 +29,19 @@ const PagedMemoList = observer((props: Props) => {
   const { md } = useResponsiveWidth();
 
   const [isRequesting, setIsRequesting] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [nextPageToken, setNextPageToken] = useState("");
   const autoFetchTimeoutRef = useRef<number | null>(null);
 
   const sortedMemoList = props.listSort ? props.listSort(memoStore.state.memos) : memoStore.state.memos;
   const showMemoEditor = Boolean(matchPath(Routes.ROOT, window.location.pathname));
+  
+  // Check if any filters are applied
+  const hasActiveFilter = Boolean(props.filter && props.filter.trim() !== "");
 
   const fetchMoreMemos = async (pageToken: string) => {
-    if (memoStore.state.memos.length === 0) {
+    // Always show spinner for initial page loads (pageToken === "")
+    if (pageToken === "" || memoStore.state.memos.length === 0) {
       setIsRequesting(true);
     }
 
@@ -79,13 +84,20 @@ const PagedMemoList = observer((props: Props) => {
   }, [nextPageToken, isRequesting, sortedMemoList.length]);
 
   const refreshList = async () => {
+    setIsRefreshing(true);
     memoStore.state.updateStateId();
     setNextPageToken("");
-    await fetchMoreMemos("");
+    try {
+      await fetchMoreMemos("");
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   const filterKey = `${props.state}-${props.orderBy}-${props.filter}-${props.pageSize}`;
   useEffect(() => {
+    // Always show spinner when filter changes (including clearing filters)
+    setIsRefreshing(true);
     refreshList();
   }, [filterKey]);
 
@@ -117,27 +129,41 @@ const PagedMemoList = observer((props: Props) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [nextPageToken, isRequesting]);
 
+  // Show loading state when:
+  // 1. Currently requesting (any request)
+  // 2. Currently refreshing (filter changes)
+  // 3. Has filter applied AND no memos loaded yet (initial filter application)
+  const showLoadingSpinner = isRequesting || isRefreshing || (hasActiveFilter && sortedMemoList.length === 0);
+
   const children = (
     <div className="flex flex-col justify-start items-start w-full max-w-full">
       <MasonryView
         memoList={sortedMemoList}
         renderer={props.renderer}
+        showLoadingSpinner={showLoadingSpinner}
         prefixElement={showMemoEditor ? <MemoEditor className="mb-2" cacheKey="home-memo-editor" /> : undefined}
         listMode={viewStore.state.layout === "LIST"}
       />
 
-      {isRequesting && (
+      {showLoadingSpinner && (
         <div className="w-full flex flex-row justify-center items-center my-4">
           <LoaderIcon className="animate-spin text-muted-foreground" />
+          {hasActiveFilter && (
+            <span className="ml-2 text-sm text-muted-foreground">
+              {t("message.filtering-memos")}
+            </span>
+          )}
         </div>
       )}
 
-      {!isRequesting && (
+      {!isRequesting && !showLoadingSpinner && (
         <>
           {!nextPageToken && sortedMemoList.length === 0 ? (
             <div className="w-full mt-12 mb-8 flex flex-col justify-center items-center italic">
               <Empty />
-              <p className="mt-2 text-muted-foreground">{t("message.no-data")}</p>
+              <p className="mt-2 text-muted-foreground">
+                {hasActiveFilter ? t("message.no-filtered-data") : t("message.no-data")}
+              </p>
             </div>
           ) : (
             <div className="w-full opacity-70 flex flex-row justify-center items-center my-4">

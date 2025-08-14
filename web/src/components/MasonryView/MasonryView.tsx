@@ -7,6 +7,7 @@ interface Props {
   renderer: (memo: Memo) => JSX.Element;
   prefixElement?: JSX.Element;
   listMode?: boolean;
+  showLoadingSpinner?:boolean
 }
 
 interface MemoItemProps {
@@ -164,7 +165,7 @@ const MasonryView = (props: Props) => {
           {/* Prefix element (like memo editor) goes in first column */}
           {props.prefixElement && columnIndex === 0 && <div ref={prefixElementRef}>{props.prefixElement}</div>}
 
-          {distribution[columnIndex]?.map((memoIndex) => {
+          {!props.showLoadingSpinner&&distribution[columnIndex]?.map((memoIndex) => {
             const memo = props.memoList[memoIndex];
             return memo ? (
               <MemoItem
