@@ -1,6 +1,6 @@
 # Wekalist
 
-<img align="right" height="96px" src="https://www.wekalist.villebiz.com/full-logo.png" alt="Wekalist" />
+<img align="right" height="96px" src="https://wekalist.villebiz.com/full-logo.png" alt="Wekalist" />
 
 A modern, open-source, AI-driven self-hosted knowledge management and note-taking platform designed for privacy-conscious users and organizations. Wekalist provides a lightweight yet powerful solution for capturing, organizing, AI suggestions and generation, and sharing thoughts with comprehensive Markdown support and cross-platform accessibility.
 
