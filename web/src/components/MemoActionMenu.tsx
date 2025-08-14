@@ -18,7 +18,7 @@ import useNavigateTo from "@/hooks/useNavigateTo";
 import { memoStore, userStore } from "@/store";
 import { State } from "@/types/proto/api/v1/common";
 import { NodeType } from "@/types/proto/api/v1/markdown_service";
-import { Memo } from "@/types/proto/api/v1/memo_service";
+import { Memo, Visibility } from "@/types/proto/api/v1/memo_service";
 import { useTranslate } from "@/utils/i18n";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -207,7 +207,7 @@ const MemoActionMenu = observer((props: Props) => {
               </DropdownMenuItem>
             </>
           )}
-          {!isArchived && (
+          {!isArchived &&  memo.visibility !== Visibility.PRIVATE && memo.visibility !== Visibility.PROTECTED && (
             <DropdownMenuItem onClick={handleCopyLink}>
               <CopyIcon className="w-4 h-auto" />
               {t("memo.copy-link")}
