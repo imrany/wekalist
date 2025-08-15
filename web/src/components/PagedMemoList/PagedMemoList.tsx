@@ -37,7 +37,10 @@ const PagedMemoList = observer((props: Props) => {
   const showMemoEditor = Boolean(matchPath(Routes.ROOT, window.location.pathname));
   
   // Check if any filters are applied
-  const hasActiveFilter = Boolean(props.filter && props.filter.trim() !== "");
+  const hasActiveFilter = Boolean(
+    props.filter && props.filter.trim() !== "" && 
+    props.filter.trim().split("&&").length !== 1
+  );
 
   const fetchMoreMemos = async (pageToken: string) => {
     // Always show spinner for initial page loads (pageToken === "")
