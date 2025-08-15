@@ -27,6 +27,8 @@ interface State {
 
 const BASIC_SECTIONS: SettingSection[] = ["my-account", "preference"];
 const ADMIN_SECTIONS: SettingSection[] = ["member", "system", "memo-related", "storage", "sso"];
+const ALL_SECTIONS = [...BASIC_SECTIONS, ...ADMIN_SECTIONS] as const;
+
 const SECTION_ICON_MAP: Record<SettingSection, LucideIcon> = {
   "my-account": UserIcon,
   preference: CogIcon,
@@ -45,51 +47,104 @@ const Setting = observer(() => {
   const [state, setState] = useState<State>({
     selectedSection: "my-account",
   });
+  const [openSectionSelect, setOpenSectionSelect] = useState(false);
+  
   const isHost = user.role === User_Role.HOST;
 
   const settingsSectionList = useMemo(() => {
-    let settingList = [...BASIC_SECTIONS];
-    if (isHost) {
-      settingList = settingList.concat(ADMIN_SECTIONS);
-    }
-    return settingList;
+    return isHost ? [...BASIC_SECTIONS, ...ADMIN_SECTIONS] : BASIC_SECTIONS;
   }, [isHost]);
 
+  // Handle hash-based navigation
   useEffect(() => {
     let hash = location.hash.slice(1) as SettingSection;
-    // If the hash is not a valid section, redirect to the default section.
-    if (![...BASIC_SECTIONS, ...ADMIN_SECTIONS].includes(hash)) {
+    
+    // Validate hash against available sections for current user
+    const validSections = isHost ? ALL_SECTIONS : BASIC_SECTIONS;
+    if (!validSections.includes(hash)) {
       hash = "my-account";
+      // Optionally update the URL to reflect the corrected hash
+      window.history.replaceState(null, "", "#my-account");
     }
-    setState({
+    
+    setState(prevState => ({
+      ...prevState,
       selectedSection: hash,
-    });
-  }, [location.hash]);
+    }));
+  }, [location.hash, isHost]);
 
+  // Fetch workspace settings for admin users
   useEffect(() => {
-    if (!isHost) {
-      return;
-    }
+    if (!isHost) return;
 
-    // Initial fetch for workspace settings.
-    (async () => {
-      [WorkspaceSetting_Key.MEMO_RELATED, WorkspaceSetting_Key.STORAGE].forEach(async (key) => {
-        await workspaceStore.fetchWorkspaceSetting(key);
-      });
-    })();
+    const fetchWorkspaceSettings = async () => {
+      const settingsToFetch = [
+        WorkspaceSetting_Key.MEMO_RELATED,
+        WorkspaceSetting_Key.STORAGE
+      ];
+      
+      try {
+        // Use Promise.all instead of forEach for better performance and error handling
+        await Promise.all(
+          settingsToFetch.map(key => workspaceStore.fetchWorkspaceSetting(key))
+        );
+      } catch (error) {
+        console.error("Failed to fetch workspace settings:", error);
+        // Handle error appropriately - maybe show a toast notification
+      }
+    };
+
+    fetchWorkspaceSettings();
   }, [isHost]);
 
   const handleSectionSelectorItemClick = useCallback((settingSection: SettingSection) => {
+    // Validate that the user has access to this section
+    const hasAccess = isHost || BASIC_SECTIONS.includes(settingSection);
+    if (!hasAccess) {
+      console.warn(`User attempted to access restricted section: ${settingSection}`);
+      return;
+    }
+    
     window.location.hash = settingSection;
+    setOpenSectionSelect(false); // Close mobile select after selection
+  }, [isHost]);
+
+  const handleSelectTriggerClick = useCallback(() => {
+    setOpenSectionSelect(true);
   }, []);
+
+  const renderSettingSection = () => {
+    switch (state.selectedSection) {
+      case "my-account":
+        return <MyAccountSection />;
+      case "preference":
+        return <PreferencesSection />;
+      case "member":
+        return <MemberSection />;
+      case "system":
+        return <WorkspaceSection />;
+      case "memo-related":
+        return <MemoRelatedSettings />;
+      case "storage":
+        return <StorageSection />;
+      case "sso":
+        return <SSOSection />;
+      default:
+        return <MyAccountSection />; // Fallback
+    }
+  };
 
   return (
     <section className="@container w-full max-w-5xl min-h-full flex flex-col justify-start items-start sm:pt-3 md:pt-6 pb-8">
       {!md && <MobileHeader />}
       <div className="w-full px-4 sm:px-6">
         <div className="w-full border border-border flex flex-row justify-start items-start px-4 py-3 rounded-xl bg-background text-muted-foreground">
+          
+          {/* Desktop Sidebar */}
           <div className="hidden sm:flex flex-col justify-start items-start w-40 h-auto shrink-0 py-2">
-            <span className="text-sm mt-0.5 pl-3 font-mono select-none text-muted-foreground">{t("common.basic")}</span>
+            <span className="text-sm mt-0.5 pl-3 font-mono select-none text-muted-foreground">
+              {t("common.basic")}
+            </span>
             <div className="w-full flex flex-col justify-start items-start mt-1">
               {BASIC_SECTIONS.map((item) => (
                 <SectionMenuItem
@@ -101,9 +156,13 @@ const Setting = observer(() => {
                 />
               ))}
             </div>
-            {isHost ? (
+            
+            {/* Admin Sections */}
+            {isHost && (
               <>
-                <span className="text-sm mt-4 pl-3 font-mono select-none text-muted-foreground">{t("common.admin")}</span>
+                <span className="text-sm mt-4 pl-3 font-mono select-none text-muted-foreground">
+                  {t("common.admin")}
+                </span>
                 <div className="w-full flex flex-col justify-start items-start mt-1">
                   {ADMIN_SECTIONS.map((item) => (
                     <SectionMenuItem
@@ -119,12 +178,24 @@ const Setting = observer(() => {
                   </span>
                 </div>
               </>
-            ) : null}
+            )}
           </div>
+
+          {/* Main Content Area */}
           <div className="w-full grow sm:pl-4 overflow-x-auto">
+            
+            {/* Mobile Section Selector */}
             <div className="w-auto inline-block my-2 sm:hidden">
-              <Select value={state.selectedSection} onValueChange={(value) => handleSectionSelectorItemClick(value as SettingSection)}>
-                <SelectTrigger aria-describedby="wekalist-sheet-" className="w-[180px]">
+              <Select 
+                open={openSectionSelect}
+                onOpenChange={setOpenSectionSelect}
+                value={state.selectedSection} 
+                onValueChange={(value) => handleSectionSelectorItemClick(value as SettingSection)}
+              >
+                <SelectTrigger 
+                  className="w-[180px]"
+                  onClick={handleSelectTriggerClick}
+                >
                   <SelectValue placeholder="Select section" />
                 </SelectTrigger>
                 <SelectContent>
@@ -136,21 +207,9 @@ const Setting = observer(() => {
                 </SelectContent>
               </Select>
             </div>
-            {state.selectedSection === "my-account" ? (
-              <MyAccountSection />
-            ) : state.selectedSection === "preference" ? (
-              <PreferencesSection />
-            ) : state.selectedSection === "member" ? (
-              <MemberSection />
-            ) : state.selectedSection === "system" ? (
-              <WorkspaceSection />
-            ) : state.selectedSection === "memo-related" ? (
-              <MemoRelatedSettings />
-            ) : state.selectedSection === "storage" ? (
-              <StorageSection />
-            ) : state.selectedSection === "sso" ? (
-              <SSOSection />
-            ) : null}
+
+            {/* Render Current Section */}
+            {renderSettingSection()}
           </div>
         </div>
       </div>
