@@ -73,6 +73,7 @@ const Attachments = observer(() => {
       await attachmentServiceClient.deleteAttachment({ name: attachment.name });
     }
     setAttachments(attachments.filter((attachment) => attachment.memo));
+    setOpen(false);
   };
 
   const onOpenChange = (state: boolean) => {
