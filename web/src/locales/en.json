@@ -34,6 +34,10 @@
     "wait-resend-otp":"Wait for resend OTP button...",
     "username-too-short":"Username too short"
   },
+  "attachment":{
+    "attachments-delete":"Delete Attachments",
+    "delete-all-unused-attachment":"Are you sure to delete all unused attachments? This action cannot be undone."
+  },
   "common": {
     "about": "About",
     "add": "Add",

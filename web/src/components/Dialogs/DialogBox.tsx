@@ -19,6 +19,7 @@ export enum DialogType {
   REVOKE_SESSION = "Revoke Session",
   DELETE_ACCESS_TOKEN="Delete Access Token",
   DELETE_WEB_HOOK="Delete Web Hook",
+  DELETE_UNUSED_ATTACHMENTS="Delete Unused Attachments",
 }
 
 type Props = {
@@ -84,6 +85,11 @@ export default function DialogBox(props: Props) {
       title:t("setting.preference-section.webhook-delete"),
       confirmMessage: t("setting.preference-section.webhook-deletion", { webhook: selectedWebHook?.displayName || "" }),
       actionButtonText: t("common.delete")
+    },
+    [DialogType.DELETE_UNUSED_ATTACHMENTS]:{
+      title:t("attachment.attachments-delete"),
+      confirmMessage: t("attachment.delete-all-unused-attachment"),
+      actionButtonText: t("common.delete")
     }
   };
 
@@ -100,6 +106,8 @@ export default function DialogBox(props: Props) {
         actionButtonFunction(selectedUserAccessToken);
       } else if (dialogType === DialogType.DELETE_WEB_HOOK) {
         actionButtonFunction(selectedWebHook);
+      } else if (dialogType === DialogType.DELETE_UNUSED_ATTACHMENTS) {
+        actionButtonFunction();
       } else {
         // For memo-related actions, call without parameters
         actionButtonFunction();
