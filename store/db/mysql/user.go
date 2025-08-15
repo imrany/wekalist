@@ -151,12 +151,41 @@ func (d *DB) GetUser(ctx context.Context, find *store.FindUser) (*store.User, er
 }
 
 func (d *DB) DeleteUser(ctx context.Context, delete *store.DeleteUser) error {
-	result, err := d.db.ExecContext(ctx, "DELETE FROM `user` WHERE `id` = ?", delete.ID)
+	// Start a transaction
+	tx, err := d.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
-	if _, err := result.RowsAffected(); err != nil {
+	defer tx.Rollback()
+
+	// Delete related user_setting records first
+	_, err = tx.ExecContext(ctx, "DELETE FROM `user_setting` WHERE `user_id` = ?", delete.ID)
+	if err != nil {
+		return fmt.Errorf("failed to delete user settings: %w", err)
+	}
+
+	// Delete other related records if they exist
+	// Add more DELETE statements here for other tables that reference the user
+	// For example:
+	// _, err = tx.ExecContext(ctx, `DELETE FROM "user_sessions" WHERE user_id = $1`, delete.ID)
+	// if err != nil {
+	//     return fmt.Errorf("failed to delete user sessions: %w", err)
+	// }
+
+	// Finally, delete the user
+	result, err := tx.ExecContext(ctx, "DELETE FROM `user` WHERE `id` = ?", delete.ID)
+	if err != nil {
+		return fmt.Errorf("failed to delete user: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
 		return err
 	}
-	return nil
+	if rowsAffected == 0 {
+		return fmt.Errorf("user not found")
+	}
+
+	// Commit the transaction
+	return tx.Commit()
 }
