@@ -200,7 +200,7 @@ const CommandSuggestions = observer(
         return;
       }
       if (e.key === "ArrowDown") {
-        select((prev) => (prev + 1) % suggestions.length);
+        select((prev) => (prev + 1) % suggestions.length)
         e.preventDefault();
         return;
       }
@@ -210,6 +210,7 @@ const CommandSuggestions = observer(
         return;
       }
       if (e.key === "Enter" || e.key === "Tab") {
+        console.log(selected, suggestions)
         if (suggestions[selected]) {
           autocomplete(suggestions[selected]);
           e.preventDefault();
