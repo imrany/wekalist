@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import { isEqual } from "lodash-es";
-import { LoaderIcon, SendIcon, Stars } from "lucide-react";
+import { LoaderIcon, SendIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -332,6 +332,7 @@ const MemoEditor = observer((props: Props) => {
   };
 
   const handleSetRelationList = (relationList: MemoRelation[]) => {
+    console.log(relationList)
     setState((prevState) => ({
       ...prevState,
       relationList,
