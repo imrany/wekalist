@@ -6,7 +6,7 @@ import PagedMemoList from "@/components/PagedMemoList";
 import useResponsiveWidth from "@/hooks/useResponsiveWidth";
 import { viewStore } from "@/store";
 import { State } from "@/types/proto/api/v1/common";
-import { Memo } from "@/types/proto/api/v1/memo_service";
+import { Memo, Visibility } from "@/types/proto/api/v1/memo_service";
 
 const Explore = observer(() => {
   const { md } = useResponsiveWidth();
@@ -16,10 +16,18 @@ const Explore = observer(() => {
       {!md && <MobileHeader />}
       <div className="w-full px-4 sm:px-6 max-sm:pt-3">
         <PagedMemoList 
-          renderer={(memo: Memo) => <MemoView key={`${memo.name}-${memo.updateTime}`} memo={memo} showCreator showVisibility compact />}
+          renderer={(memo: Memo) => (
+            <MemoView
+              key={`${memo.name}-${memo.updateTime}`}
+              memo={memo}
+              showCreator
+              showVisibility
+              compact
+            />
+          )}
           listSort={(memos: Memo[]) =>
             memos
-              .filter((memo) => memo.state === State.NORMAL)
+              .filter((memo) => memo.state === State.NORMAL && memo.visibility === Visibility.PUBLIC)
               .sort((a, b) =>
                 viewStore.state.orderByTimeAsc
                   ? dayjs(a.displayTime).unix() - dayjs(b.displayTime).unix()
