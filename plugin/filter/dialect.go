@@ -7,8 +7,8 @@ import (
 
 // SQLDialect defines database-specific SQL generation methods.
 type SQLDialect interface {
-	// Basic field access
-	GetTablePrefix() string
+	// Basic field access - make table name optional
+	GetTablePrefix(name ...string) string
 	GetParameterPlaceholder(index int) string
 
 	// JSON operations
@@ -53,7 +53,11 @@ func GetDialect(dbType DatabaseType) SQLDialect {
 // SQLiteDialect implements SQLDialect for SQLite.
 type SQLiteDialect struct{}
 
-func (*SQLiteDialect) GetTablePrefix() string {
+func (*SQLiteDialect) GetTablePrefix(name ...string) string {
+	if len(name) > 0 && name[0] != "" {
+		return fmt.Sprintf("`%s`", name[0])
+	}
+	// Default table prefix for SQLite
 	return "`memo`"
 }
 
@@ -106,7 +110,11 @@ func (*SQLiteDialect) GetCurrentTimestamp() string {
 // MySQLDialect implements SQLDialect for MySQL.
 type MySQLDialect struct{}
 
-func (*MySQLDialect) GetTablePrefix() string {
+func (*MySQLDialect) GetTablePrefix(name ...string) string {
+	if len(name) > 0 && name[0] != "" {
+		return fmt.Sprintf("`%s`", name[0])
+	}
+	// Default table prefix for MySQL
 	return "`memo`"
 }
 
@@ -156,7 +164,11 @@ func (*MySQLDialect) GetCurrentTimestamp() string {
 // PostgreSQLDialect implements SQLDialect for PostgreSQL.
 type PostgreSQLDialect struct{}
 
-func (*PostgreSQLDialect) GetTablePrefix() string {
+func (*PostgreSQLDialect) GetTablePrefix(name ...string) string {
+	if len(name) > 0 && name[0] != "" {
+		return name[0]
+	}
+	// Default table prefix for PostgreSQL
 	return "memo"
 }
 
