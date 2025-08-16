@@ -92,7 +92,7 @@ const UserProfile = observer(() => {
     }
 
     const url = `${window.location.origin}/u/${encodeURIComponent(user.username)}`
-    const share = useShare(`Checkout ${user.username}`, `Checkout ${user.username},\n${user.description}`, url)
+    const share = useShare(`Checkout ${user.displayName?user.displayName:user.username}`, `Checkout ${user.displayName?user.displayName:user.username},\n${user.description}`, url)
     if (share.type === 'error') {
       copy(url);
       toast.success(t("message.copied"));
