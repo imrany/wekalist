@@ -360,7 +360,8 @@ func (c *CommonSQLConverter) handleIdentifier(ctx *ConvertContext, identExpr *ex
 		return errors.Errorf("invalid identifier %s", identifier)
 	}
 
-	if identifier == "pinned" {
+	switch identifier {
+	case "pinned":
 		tablePrefix := c.dialect.GetTablePrefix()
 		if _, ok := c.dialect.(*PostgreSQLDialect); ok {
 			if _, err := ctx.Buffer.WriteString(fmt.Sprintf("%s.pinned IS TRUE", tablePrefix)); err != nil {
@@ -371,19 +372,19 @@ func (c *CommonSQLConverter) handleIdentifier(ctx *ConvertContext, identExpr *ex
 				return err
 			}
 		}
-	} else if identifier == "has_task_list" {
+	case "has_task_list":
 		if _, err := ctx.Buffer.WriteString(c.dialect.GetBooleanCheck("$.property.hasTaskList")); err != nil {
 			return err
 		}
-	} else if identifier == "has_link" {
+	case "has_link":
 		if _, err := ctx.Buffer.WriteString(c.dialect.GetBooleanCheck("$.property.hasLink")); err != nil {
 			return err
 		}
-	} else if identifier == "has_code" {
+	case "has_code":
 		if _, err := ctx.Buffer.WriteString(c.dialect.GetBooleanCheck("$.property.hasCode")); err != nil {
 			return err
 		}
-	} else if identifier == "has_incomplete_tasks" {
+	case "has_incomplete_tasks":
 		if _, err := ctx.Buffer.WriteString(c.dialect.GetBooleanCheck("$.property.hasIncompleteTasks")); err != nil {
 			return err
 		}
