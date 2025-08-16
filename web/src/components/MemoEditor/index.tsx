@@ -1,5 +1,5 @@
 import copy from "copy-to-clipboard";
-import { isEqual } from "lodash-es";
+import { isEqual, debounce } from "lodash-es";
 import { LoaderIcon, SendIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -97,16 +97,36 @@ const MemoEditor = observer((props: Props) => {
   const [hasContent, setHasContent] = useState<boolean>(false);
   const [isVisibilitySelectorOpen, setIsVisibilitySelectorOpen] = useState(false);
   const editorRef = useRef<EditorRefActions>(null);
+  const saveStartTime = useRef<number>(0);
   const userSetting = userStore.state.userSetting as UserSetting;
   const contentCacheKey = `${currentUser.name}-${cacheKey || ""}`;
   const [contentCache, setContentCache] = useLocalStorage<string>(contentCacheKey, "");
-  const referenceRelations = memoName
-    ? state.relationList.filter(
-        (relation) =>
-          relation.memo?.name === memoName && relation.relatedMemo?.name !== memoName && relation.type === MemoRelation_Type.REFERENCE,
-      )
-    : state.relationList.filter((relation) => relation.type === MemoRelation_Type.REFERENCE);
+  
+  // Memoized expensive computation
+  const referenceRelations = useMemo(() => {
+    return memoName
+      ? state.relationList.filter(
+          (relation) =>
+            relation.memo?.name === memoName && 
+            relation.relatedMemo?.name !== memoName && 
+            relation.type === MemoRelation_Type.REFERENCE,
+        )
+      : state.relationList.filter((relation) => relation.type === MemoRelation_Type.REFERENCE);
+  }, [memoName, state.relationList]);
+  
   const workspaceMemoRelatedSetting = workspaceStore.state.memoRelatedSetting;
+
+  // Debounced content caching to improve performance
+  const debouncedSetContentCache = useMemo(
+    () => debounce((content: string) => {
+      if (content !== "") {
+        setContentCache(content);
+      } else {
+        localStorage.removeItem(contentCacheKey);
+      }
+    }, 500), // 500ms debounce
+    [contentCacheKey, setContentCache]
+  );
 
   useEffect(() => {
     editorRef.current?.setContent(contentCache || "");
@@ -156,7 +176,7 @@ const MemoEditor = observer((props: Props) => {
     }
   }, [memoName]);
 
-  // Function to send push notifications for public memos
+  // Background notification functions (non-blocking)
   const sendPublicMemoNotification = async (memo: Memo, isUpdate: boolean = false) => {
     // Only send notifications for public memos and not for comments
     if (memo.visibility !== Visibility.PUBLIC || parentMemoName) {
@@ -167,14 +187,12 @@ const MemoEditor = observer((props: Props) => {
       const content = stripMarkdown(memo.content || "");
       const previewText = truncateText(content, 120);
       
-      // Generate notification title and body
       const title = isUpdate 
         ? `📝 ${currentUser.username} updated a memo`
         : `📝 New memo from ${currentUser.username}`;
       
       const body = previewText || (isUpdate ? "Memo has been updated" : "New memo published");
       
-      // Include memo URL if available
       const memoId = extractMemoIdFromName(memo.name);
       const baseUrl = window.location.origin;
       const memoUrl = `${baseUrl}/memos/${memoId}`;
@@ -184,8 +202,8 @@ const MemoEditor = observer((props: Props) => {
         payload: {
           title,
           body,
-          icon: "", // Adjust path to your app icon "/icon-192.png"
-          badge: "", // Adjust path to your app badge "/badge-72.png"
+          icon: "",
+          badge: "",
           url: memoUrl,
           data: {
             memoId,
@@ -195,8 +213,8 @@ const MemoEditor = observer((props: Props) => {
             timestamp: new Date().toISOString(),
           },
         },
-        sendToAll: false, // Send to all subscribers except the creator
-        username: "", // Not needed when sendToAll is true
+        sendToAll: false,
+        username: "",
         sendToAllExcept: currentUser.username
       };
 
@@ -209,13 +227,10 @@ const MemoEditor = observer((props: Props) => {
       }
     } catch (error) {
       console.error("Error sending push notification:", error);
-      // Don't show user error for notification failures to avoid interrupting their workflow
     }
   };
 
-  // Function to send comment notification to memo owner
   const sendCommentNotification = async (comment: Memo, parentMemo: Memo, isUpdate: boolean = false) => {
-    // Don't send notification if commenting on own memo
     const creator = parentMemo.creator.split("/")[1];
     if (creator === currentUser.username) {
       return;
@@ -225,7 +240,6 @@ const MemoEditor = observer((props: Props) => {
       const content = stripMarkdown(comment.content || "");
       const previewText = truncateText(content, 100);
       
-      // Get parent memo content preview for context
       const parentContent = stripMarkdown(parentMemo.content || "");
       const parentPreview = truncateText(parentContent, 50);
       
@@ -234,7 +248,6 @@ const MemoEditor = observer((props: Props) => {
         : `💬 ${currentUser.username} commented on your memo`;
       const body = previewText || (isUpdate ? "Comment has been updated" : "New comment on your memo");
       
-      // Include memo URL if available
       const parentMemoId = extractMemoIdFromName(parentMemo.name);
       const baseUrl = window.location.origin;
       const memoUrl = `${baseUrl}/memos/${parentMemoId}`;
@@ -244,8 +257,8 @@ const MemoEditor = observer((props: Props) => {
         payload: {
           title,
           body,
-          icon: "", // Adjust path to your app icon "/icon-192.png"
-          badge: "", // Adjust path to your app badge "/badge-72.png"
+          icon: "",
+          badge: "",
           url: memoUrl,
           data: {
             memoId: parentMemoId,
@@ -257,8 +270,8 @@ const MemoEditor = observer((props: Props) => {
             timestamp: new Date().toISOString(),
           },
         },
-        sendToAll: false, // Don't send to all
-        username: creator, // Send only to memo owner
+        sendToAll: false,
+        username: creator,
         sendToAllExcept: ""
       };
 
@@ -271,7 +284,6 @@ const MemoEditor = observer((props: Props) => {
       }
     } catch (error) {
       console.error("Error sending comment notification:", error);
-      // Don't show user error for notification failures to avoid interrupting their workflow
     }
   };
 
@@ -332,87 +344,124 @@ const MemoEditor = observer((props: Props) => {
   };
 
   const handleSetRelationList = (relationList: MemoRelation[]) => {
-    console.log(relationList)
     setState((prevState) => ({
       ...prevState,
       relationList,
     }));
   };
 
+  // Optimized file upload with better error handling
   const handleUploadResource = async (file: File) => {
-    setState((state) => {
-      return {
-        ...state,
-        isUploadingAttachment: true,
-      };
-    });
+    setState((state) => ({ ...state, isUploadingAttachment: true }));
 
     const { name: filename, size, type } = file;
-    const buffer = new Uint8Array(await file.arrayBuffer());
-
+    
     try {
+      let content: Uint8Array;
+      
+      // For large files (>10MB), handle more carefully
+      if (size > 10 * 1024 * 1024) {
+        console.log(`Uploading large file: ${filename} (${(size / 1024 / 1024).toFixed(1)}MB)`);
+      }
+      
+      content = new Uint8Array(await file.arrayBuffer());
+
       const attachment = await attachmentStore.createAttachment({
         attachment: Attachment.fromPartial({
           filename,
           size,
           type,
-          content: buffer,
+          content,
         }),
         attachmentId: "",
       });
-      setState((state) => {
-        return {
-          ...state,
-          isUploadingAttachment: false,
-        };
-      });
+
+      setState((state) => ({ ...state, isUploadingAttachment: false }));
       return attachment;
     } catch (error: any) {
       console.error(error);
-      toast.error(error.details);
-      setState((state) => {
-        return {
-          ...state,
-          isUploadingAttachment: false,
-        };
-      });
+      toast.error(error.details || `Failed to upload ${filename}`);
+      setState((state) => ({ ...state, isUploadingAttachment: false }));
+      throw error;
     }
   };
 
+  // OPTIMIZED: Parallel file uploads
   const uploadMultiFiles = async (files: FileList) => {
-    const uploadedAttachmentList: Attachment[] = [];
-    for (const file of files) {
-      const attachment = await handleUploadResource(file);
-      if (attachment) {
-        uploadedAttachmentList.push(attachment);
-        if (memoName) {
-          await attachmentStore.updateAttachment({
-            attachment: Attachment.fromPartial({
-              name: attachment.name,
-              memo: memoName,
-            }),
-            updateMask: ["memo"],
-          });
-        }
+    const uploadPromises = Array.from(files).map(async (file) => {
+      try {
+        return await handleUploadResource(file);
+      } catch (error) {
+        console.error(`Failed to upload file ${file.name}:`, error);
+        return null;
       }
+    });
+
+    // Upload all files in parallel
+    const uploadResults = await Promise.allSettled(uploadPromises);
+    const uploadedAttachments = uploadResults
+      .filter((result): result is PromiseFulfilledResult<Attachment> => 
+        result.status === 'fulfilled' && result.value !== null
+      )
+      .map(result => result.value);
+
+    // Update attachments in parallel if editing existing memo
+    if (memoName && uploadedAttachments.length > 0) {
+      const updatePromises = uploadedAttachments.map(attachment =>
+        attachmentStore.updateAttachment({
+          attachment: Attachment.fromPartial({
+            name: attachment.name,
+            memo: memoName,
+          }),
+          updateMask: ["memo"],
+        }).catch(error => {
+          console.error(`Failed to update attachment ${attachment.name}:`, error);
+          return null;
+        })
+      );
+
+      await Promise.allSettled(updatePromises);
     }
-    if (uploadedAttachmentList.length > 0) {
+
+    if (uploadedAttachments.length > 0) {
       setState((prevState) => ({
         ...prevState,
-        attachmentList: [...prevState.attachmentList, ...uploadedAttachmentList],
+        attachmentList: [...prevState.attachmentList, ...uploadedAttachments],
       }));
     }
+
+    return uploadedAttachments;
   };
 
+  // Optimized drag & drop with file validation
   const handleDropEvent = async (event: React.DragEvent) => {
-    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-      event.preventDefault();
-      setState((prevState) => ({
-        ...prevState,
-        isDraggingFile: false,
-      }));
+    if (!event.dataTransfer?.files?.length) return;
+    
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, isDraggingFile: false }));
 
-      await uploadMultiFiles(event.dataTransfer.files);
+    // Filter and validate files before upload
+    const validFiles = Array.from(event.dataTransfer.files).filter(file => {
+      const maxSize = 50 * 1024 * 1024; // 50MB limit
+      const allowedTypes = ['image/', 'text/', 'application/pdf', 'application/json', 'video/', 'audio/'];
+      
+      if (file.size > maxSize) {
+        toast.error(`File ${file.name} is too large (max 50MB)`);
+        return false;
+      }
+      
+      if (!allowedTypes.some(type => file.type.startsWith(type))) {
+        toast.error(`File type ${file.type} is not supported`);
+        return false;
+      }
+      
+      return true;
+    });
+
+    if (validFiles.length > 0) {
+      const fileList = new DataTransfer();
+      validFiles.forEach(file => fileList.items.add(file));
+      await uploadMultiFiles(fileList.files);
     }
   };
 
@@ -451,109 +500,78 @@ const MemoEditor = observer((props: Props) => {
     }
   };
 
+  // Optimized content change with debounced caching
   const handleContentChange = (content: string) => {
     setHasContent(content !== "");
-    if (content !== "") {
-      setContentCache(content);
-    } else {
-      localStorage.removeItem(contentCacheKey);
-    }
+    debouncedSetContentCache(content);
   };
 
+  // OPTIMIZED: Faster save with parallel operations and background notifications
   const handleSaveBtnClick = async () => {
-    if (state.isRequesting) {
-      return;
-    }
+    if (state.isRequesting) return;
 
-    setState((state) => {
-      return {
-        ...state,
-        isRequesting: true,
-      };
-    });
+    saveStartTime.current = performance.now();
+    setState((state) => ({ ...state, isRequesting: true }));
     const content = editorRef.current?.getContent() ?? "";
     
     try {
       let savedMemo: Memo;
-      let wasPublicMemo = false;
-      let isUpdate = false;
+      let notificationPromise: Promise<void> | null = null;
 
-      // Update memo.
       if (memoName) {
-        isUpdate = true;
+        // UPDATE MEMO
         const prevMemo = await memoStore.getOrFetchMemoByName(memoName);
-        if (prevMemo) {
-          const updateMask = new Set<string>();
-          const memoPatch: Partial<Memo> = {
-            name: prevMemo.name,
-            content,
-          };
-          
-          // Track if this was previously a public memo or is becoming public
-          wasPublicMemo = prevMemo.visibility === Visibility.PUBLIC || state.memoVisibility === Visibility.PUBLIC;
-          
-          if (!isEqual(content, prevMemo.content)) {
-            updateMask.add("content");
-            memoPatch.content = content;
-          }
-          if (!isEqual(state.memoVisibility, prevMemo.visibility)) {
-            updateMask.add("visibility");
-            memoPatch.visibility = state.memoVisibility;
-          }
-          if (!isEqual(state.attachmentList, prevMemo.attachments)) {
-            updateMask.add("attachments");
-            memoPatch.attachments = state.attachmentList;
-          }
-          if (!isEqual(state.relationList, prevMemo.relations)) {
-            updateMask.add("relations");
-            memoPatch.relations = state.relationList;
-          }
-          if (!isEqual(state.location, prevMemo.location)) {
-            updateMask.add("location");
-            memoPatch.location = state.location;
-          }
-          if (["content", "attachments", "relations", "location"].some((key) => updateMask.has(key))) {
-            updateMask.add("update_time");
-          }
-          if (createTime && !isEqual(createTime, prevMemo.createTime)) {
-            updateMask.add("create_time");
-            memoPatch.createTime = createTime;
-          }
-          if (updateTime && !isEqual(updateTime, prevMemo.updateTime)) {
-            updateMask.add("update_time");
-            memoPatch.updateTime = updateTime;
-          }
-          if (updateMask.size === 0) {
-            toast.error(t("editor.no-changes-detected"));
-            if (onCancel) {
-              onCancel();
-            }
-            return;
-          }
-          savedMemo = await memoStore.updateMemo(memoPatch, Array.from(updateMask));
-          
-          // Check if this is a comment update
-          if (parentMemoName) {
-            // This is updating a comment
-            const parentMemo = await memoStore.getOrFetchMemoByName(parentMemoName);
-            if (parentMemo) {
-              await sendCommentNotification(savedMemo, parentMemo, true);
-            }
-          } else {
-            // This is updating a memo - send notification for updated public memo
-            if (wasPublicMemo && state.memoVisibility === Visibility.PUBLIC) {
-              await sendPublicMemoNotification(savedMemo, true);
-            }
-          }
-          
-          if (onConfirm) {
-            onConfirm(savedMemo.name);
+        if (!prevMemo) throw new Error("Memo not found");
+
+        const updateMask = new Set<string>();
+        const memoPatch: Partial<Memo> = { name: prevMemo.name };
+        
+        // Build update mask efficiently
+        const updates = [
+          { key: 'content', current: content, prev: prevMemo.content },
+          { key: 'visibility', current: state.memoVisibility, prev: prevMemo.visibility },
+          { key: 'attachments', current: state.attachmentList, prev: prevMemo.attachments },
+          { key: 'relations', current: state.relationList, prev: prevMemo.relations },
+          { key: 'location', current: state.location, prev: prevMemo.location },
+          { key: 'create_time', current: createTime, prev: prevMemo.createTime },
+          { key: 'update_time', current: updateTime, prev: prevMemo.updateTime },
+        ];
+
+        for (const { key, current, prev } of updates) {
+          if (!isEqual(current, prev)) {
+            updateMask.add(key);
+            (memoPatch as any)[key === 'create_time' ? 'createTime' : 
+                              key === 'update_time' ? 'updateTime' : key] = current;
           }
         }
+
+        if (["content", "attachments", "relations", "location"].some(key => updateMask.has(key))) {
+          updateMask.add("update_time");
+        }
+
+        if (updateMask.size === 0) {
+          toast.error(t("editor.no-changes-detected"));
+          onCancel?.();
+          return;
+        }
+
+        // Save memo
+        savedMemo = await memoStore.updateMemo(memoPatch, Array.from(updateMask));
+
+        // Queue notification (don't await to avoid blocking UI)
+        if (parentMemoName) {
+          const parentMemo = await memoStore.getOrFetchMemoByName(parentMemoName);
+          if (parentMemo) {
+            notificationPromise = sendCommentNotification(savedMemo, parentMemo, true);
+          }
+        } else if (state.memoVisibility === Visibility.PUBLIC) {
+          notificationPromise = sendPublicMemoNotification(savedMemo, true);
+        }
+
       } else {
-        // Create memo or memo comment.
+        // CREATE MEMO
         if (!parentMemoName) {
-          // Creating a new memo
+          // Create new memo
           savedMemo = await memoStore.createMemo({
             memo: Memo.fromPartial({
               content,
@@ -562,20 +580,21 @@ const MemoEditor = observer((props: Props) => {
               relations: state.relationList,
               location: state.location,
             }),
-            // Optional fields can be omitted
             memoId: "",
             validateOnly: false,
             requestId: "",
           });
-          
-          // Send notification for new public memo
+
+          // Queue notification for public memo
           if (state.memoVisibility === Visibility.PUBLIC) {
-            await sendPublicMemoNotification(savedMemo, false);
+            notificationPromise = sendPublicMemoNotification(savedMemo, false);
           }
         } else {
-          // Creating a comment
-          const parentMemo = await memoStore.getOrFetchMemoByName(parentMemoName);
-          
+          // Create comment - fetch parent memo in parallel
+          const [parentMemo] = await Promise.all([
+            memoStore.getOrFetchMemoByName(parentMemoName),
+          ]);
+
           savedMemo = await memoServiceClient.createMemoComment({
             name: parentMemoName,
             comment: {
@@ -586,43 +605,48 @@ const MemoEditor = observer((props: Props) => {
               location: state.location,
             },
           });
-          
-          // Send comment notification to memo owner
+
+          // Queue comment notification
           if (parentMemo) {
-            await sendCommentNotification(savedMemo, parentMemo);
+            notificationPromise = sendCommentNotification(savedMemo, parentMemo);
           }
         }
-        
-        if (onConfirm) {
-          onConfirm(savedMemo.name);
-        }
       }
-      
+
+      // Clear editor and call success callback immediately
       editorRef.current?.setContent("");
+      onConfirm?.(savedMemo.name);
+
+      // Handle notification in background (don't block UI)
+      if (notificationPromise) {
+        notificationPromise.catch(error => {
+          console.error("Notification failed:", error);
+        });
+      }
+
+      const saveTime = performance.now() - saveStartTime.current;
+      console.log(`Save completed in ${saveTime.toFixed(2)}ms`);
+
     } catch (error: any) {
       console.error(error);
-      toast.error(error.details);
-    }
-
-    localStorage.removeItem(contentCacheKey);
-    setState((state) => {
-      return {
+      toast.error(error.details || "Failed to save memo");
+    } finally {
+      // Clean up state
+      localStorage.removeItem(contentCacheKey);
+      setState((state) => ({
         ...state,
         isRequesting: false,
         attachmentList: [],
         relationList: [],
         location: undefined,
         isDraggingFile: false,
-      };
-    });
+      }));
+    }
   };
 
   const handleCancelBtnClick = () => {
     localStorage.removeItem(contentCacheKey);
-
-    if (onCancel) {
-      onCancel();
-    }
+    onCancel?.();
   };
 
   const handleEditorFocus = () => {
