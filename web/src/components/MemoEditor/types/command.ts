@@ -3,4 +3,6 @@ export type Command = {
   description?: string;
   run: () => string;
   cursorOffset?: number;
+  shortcut?: string;
+  category: string;
 };
