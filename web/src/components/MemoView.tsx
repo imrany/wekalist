@@ -226,9 +226,9 @@ const MemoView: React.FC<Props> = observer((props: Props) => {
                 </Tooltip>
               </TooltipProvider>
             )}
-            {!readonly && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
+            {currentUser && !isArchived && <ReactionSelector className="border-none w-auto h-auto" memo={memo} />}
             
-            {!readonly && <MemoSummary memo={memo} />}
+            {currentUser&& <MemoSummary memo={memo} />}
           </div>
           {!isInMemoDetailPage && (workspaceMemoRelatedSetting?.enableComment || commentAmount > 0) && (
             <Link
