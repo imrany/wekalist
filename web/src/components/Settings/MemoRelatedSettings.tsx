@@ -96,13 +96,6 @@ const MemoRelatedSettings = observer(() => {
         />
       </div>
       <div className="w-full flex flex-row justify-between items-center">
-        <span>{t("setting.system-section.disable-markdown-shortcuts-in-editor")}</span>
-        <Switch
-          checked={memoRelatedSetting.disableMarkdownShortcuts}
-          onCheckedChange={(checked) => updatePartialSetting({ disableMarkdownShortcuts: checked })}
-        />
-      </div>
-      <div className="w-full flex flex-row justify-between items-center">
         <span>{t("setting.memo-related-settings.content-lenght-limit")}</span>
         <Input
           className="w-24"

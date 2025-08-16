@@ -214,8 +214,6 @@ export interface WorkspaceMemoRelatedSetting {
   enableLinkPreview: boolean;
   /** reactions is the list of reactions. */
   reactions: string[];
-  /** disable markdown shortcuts */
-  disableMarkdownShortcuts: boolean;
   /** enable_blur_nsfw_content enables blurring of content marked as not safe for work (NSFW). */
   enableBlurNsfwContent: boolean;
   /** nsfw_tags is the list of tags that mark content as NSFW for blurring. */
@@ -917,7 +915,6 @@ function createBaseWorkspaceMemoRelatedSetting(): WorkspaceMemoRelatedSetting {
     enableDoubleClickEdit: false,
     enableLinkPreview: false,
     reactions: [],
-    disableMarkdownShortcuts: false,
     enableBlurNsfwContent: false,
     nsfwTags: [],
   };
@@ -943,14 +940,11 @@ export const WorkspaceMemoRelatedSetting: MessageFns<WorkspaceMemoRelatedSetting
     for (const v of message.reactions) {
       writer.uint32(58).string(v!);
     }
-    if (message.disableMarkdownShortcuts !== false) {
-      writer.uint32(64).bool(message.disableMarkdownShortcuts);
-    }
     if (message.enableBlurNsfwContent !== false) {
-      writer.uint32(72).bool(message.enableBlurNsfwContent);
+      writer.uint32(64).bool(message.enableBlurNsfwContent);
     }
     for (const v of message.nsfwTags) {
-      writer.uint32(82).string(v!);
+      writer.uint32(74).string(v!);
     }
     return writer;
   },
@@ -1015,19 +1009,11 @@ export const WorkspaceMemoRelatedSetting: MessageFns<WorkspaceMemoRelatedSetting
             break;
           }
 
-          message.disableMarkdownShortcuts = reader.bool();
-          continue;
-        }
-        case 9: {
-          if (tag !== 72) {
-            break;
-          }
-
           message.enableBlurNsfwContent = reader.bool();
           continue;
         }
-        case 10: {
-          if (tag !== 82) {
+        case 9: {
+          if (tag !== 74) {
             break;
           }
 
@@ -1054,7 +1040,6 @@ export const WorkspaceMemoRelatedSetting: MessageFns<WorkspaceMemoRelatedSetting
     message.enableDoubleClickEdit = object.enableDoubleClickEdit ?? false;
     message.enableLinkPreview = object.enableLinkPreview ?? false;
     message.reactions = object.reactions?.map((e) => e) || [];
-    message.disableMarkdownShortcuts = object.disableMarkdownShortcuts ?? false;
     message.enableBlurNsfwContent = object.enableBlurNsfwContent ?? false;
     message.nsfwTags = object.nsfwTags?.map((e) => e) || [];
     return message;

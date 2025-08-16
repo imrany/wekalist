@@ -695,12 +695,10 @@ type WorkspaceMemoRelatedSetting struct {
 	EnableLinkPreview bool `protobuf:"varint,5,opt,name=enable_link_preview,json=enableLinkPreview,proto3" json:"enable_link_preview,omitempty"`
 	// reactions is the list of reactions.
 	Reactions []string `protobuf:"bytes,7,rep,name=reactions,proto3" json:"reactions,omitempty"`
-	// disable_markdown_shortcuts disallow the registration of markdown shortcuts.
-	DisableMarkdownShortcuts bool `protobuf:"varint,8,opt,name=disable_markdown_shortcuts,json=disableMarkdownShortcuts,proto3" json:"disable_markdown_shortcuts,omitempty"`
 	// enable_blur_nsfw_content enables blurring of content marked as not safe for work (NSFW).
-	EnableBlurNsfwContent bool `protobuf:"varint,9,opt,name=enable_blur_nsfw_content,json=enableBlurNsfwContent,proto3" json:"enable_blur_nsfw_content,omitempty"`
+	EnableBlurNsfwContent bool `protobuf:"varint,8,opt,name=enable_blur_nsfw_content,json=enableBlurNsfwContent,proto3" json:"enable_blur_nsfw_content,omitempty"`
 	// nsfw_tags is the list of tags that mark content as NSFW for blurring.
-	NsfwTags      []string `protobuf:"bytes,10,rep,name=nsfw_tags,json=nsfwTags,proto3" json:"nsfw_tags,omitempty"`
+	NsfwTags      []string `protobuf:"bytes,9,rep,name=nsfw_tags,json=nsfwTags,proto3" json:"nsfw_tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -775,13 +773,6 @@ func (x *WorkspaceMemoRelatedSetting) GetReactions() []string {
 		return x.Reactions
 	}
 	return nil
-}
-
-func (x *WorkspaceMemoRelatedSetting) GetDisableMarkdownShortcuts() bool {
-	if x != nil {
-		return x.DisableMarkdownShortcuts
-	}
-	return false
 }
 
 func (x *WorkspaceMemoRelatedSetting) GetEnableBlurNsfwContent() bool {
@@ -1050,18 +1041,16 @@ const file_api_v1_workspace_service_proto_rawDesc = "" +
 	"\x18STORAGE_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bDATABASE\x10\x01\x12\t\n" +
 	"\x05LOCAL\x10\x02\x12\x06\n" +
-	"\x02S3\x10\x03\"\xe1\x03\n" +
+	"\x02S3\x10\x03\"\xa3\x03\n" +
 	"\x1bWorkspaceMemoRelatedSetting\x12<\n" +
 	"\x1adisallow_public_visibility\x18\x01 \x01(\bR\x18disallowPublicVisibility\x127\n" +
 	"\x18display_with_update_time\x18\x02 \x01(\bR\x15displayWithUpdateTime\x120\n" +
 	"\x14content_length_limit\x18\x03 \x01(\x05R\x12contentLengthLimit\x127\n" +
 	"\x18enable_double_click_edit\x18\x04 \x01(\bR\x15enableDoubleClickEdit\x12.\n" +
 	"\x13enable_link_preview\x18\x05 \x01(\bR\x11enableLinkPreview\x12\x1c\n" +
-	"\treactions\x18\a \x03(\tR\treactions\x12<\n" +
-	"\x1adisable_markdown_shortcuts\x18\b \x01(\bR\x18disableMarkdownShortcuts\x127\n" +
-	"\x18enable_blur_nsfw_content\x18\t \x01(\bR\x15enableBlurNsfwContent\x12\x1b\n" +
-	"\tnsfw_tags\x18\n" +
-	" \x03(\tR\bnsfwTags\"[\n" +
+	"\treactions\x18\a \x03(\tR\treactions\x127\n" +
+	"\x18enable_blur_nsfw_content\x18\b \x01(\bR\x15enableBlurNsfwContent\x12\x1b\n" +
+	"\tnsfw_tags\x18\t \x03(\tR\bnsfwTags\"[\n" +
 	"\x1aGetWorkspaceSettingRequest\x12=\n" +
 	"\x04name\x18\x01 \x01(\tB)\xe0A\x02\xfaA#\n" +
 	"!api.wekalist.dev/WorkspaceSettingR\x04name\"\xa3\x01\n" +

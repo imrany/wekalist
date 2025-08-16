@@ -270,7 +270,6 @@ func convertWorkspaceMemoRelatedSettingFromStore(setting *storepb.WorkspaceMemoR
 		EnableDoubleClickEdit:    setting.EnableDoubleClickEdit,
 		EnableLinkPreview:        setting.EnableLinkPreview,
 		Reactions:                setting.Reactions,
-		DisableMarkdownShortcuts: setting.DisableMarkdownShortcuts,
 		EnableBlurNsfwContent:    setting.EnableBlurNsfwContent,
 		NsfwTags:                 setting.NsfwTags,
 	}
@@ -287,7 +286,6 @@ func convertWorkspaceMemoRelatedSettingToStore(setting *v1pb.WorkspaceMemoRelate
 		EnableDoubleClickEdit:    setting.EnableDoubleClickEdit,
 		EnableLinkPreview:        setting.EnableLinkPreview,
 		Reactions:                setting.Reactions,
-		DisableMarkdownShortcuts: setting.DisableMarkdownShortcuts,
 		EnableBlurNsfwContent:    setting.EnableBlurNsfwContent,
 		NsfwTags:                 setting.NsfwTags,
 	}
