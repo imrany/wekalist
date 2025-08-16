@@ -30,7 +30,10 @@ const Home = observer(() => {
   });
 
   const memoFilter = useMemo(() => {
-    const conditions = [`creator_id == "${extractUserIdFromName(user.name)}"`];
+    // Extract user ID as integer, not string
+    const userId = extractUserIdFromName(user.name);
+    const conditions = [`creator_id == ${userId}`]; // Remove quotes to make it an integer comparison
+    
     if (selectedShortcut?.filter) {
       conditions.push(selectedShortcut.filter);
     }
@@ -44,16 +47,16 @@ const Home = observer(() => {
           conditions.push(`tag in ["${filter.value}"]`);
           break;
         case "pinned":
-          conditions.push(`pinned`);
+          conditions.push(`pinned == true`);
           break;
         case "property.hasLink":
-          conditions.push(`has_link`);
+          conditions.push(`has_link == true`);
           break;
         case "property.hasTaskList":
-          conditions.push(`has_task_list`);
+          conditions.push(`has_task_list == true`);
           break;
         case "property.hasCode":
-          conditions.push(`has_code`);
+          conditions.push(`has_code == true`);
           break;
         case "displayTime": {
           const displayWithUpdateTime = workspaceStore.getWorkspaceSettingByKey(
@@ -70,7 +73,7 @@ const Home = observer(() => {
     }
     console.log("conditions", conditions);
     return conditions.length > 0 ? conditions.join(" && ") : undefined;
-  }, [filterKey]);
+  }, [filterKey, user.name]); // Add user.name to dependencies
 
   return (
     <div className="w-full min-h-full bg-background text-foreground">

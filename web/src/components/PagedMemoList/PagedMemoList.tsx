@@ -36,10 +36,14 @@ const PagedMemoList = observer((props: Props) => {
   const sortedMemoList = props.listSort ? props.listSort(memoStore.state.memos) : memoStore.state.memos;
   const showMemoEditor = Boolean(matchPath(Routes.ROOT, window.location.pathname));
   
-  // Check if any filters are applied
+  // Check if any filters are applied - improved logic
   const hasActiveFilter = Boolean(
-    props.filter && props.filter.trim() !== "" && 
-    props.filter.trim().split("&&").length !== 1
+    props.filter && 
+    props.filter.trim() !== "" && 
+    // Check if there are additional conditions beyond just creator_id
+    props.filter.split("&&").filter(condition => 
+      !condition.trim().startsWith("creator_id")
+    ).length > 0
   );
 
   const fetchMoreMemos = async (pageToken: string) => {
@@ -50,11 +54,6 @@ const PagedMemoList = observer((props: Props) => {
 
     try {
       const filters = [];
-      if (props.owner) {
-        // Extract user ID from owner name (format: users/{user_id})
-        const userId = props.owner.replace("users/", "");
-        filters.push(`creator_id == ${userId}`);
-      }
       if (props.filter) {
         filters.push(props.filter);
       }
@@ -107,12 +106,25 @@ const PagedMemoList = observer((props: Props) => {
     }
   };
 
+  // Create a stable key for dependency tracking
   const filterKey = `${props.state}-${props.orderBy}-${props.filter}-${props.pageSize}`;
+  
   useEffect(() => {
-    // Always show spinner when filter changes (including clearing filters)
+    // Reset state when filter changes
+    memoStore.state.updateStateId();
+    setNextPageToken("");
     setIsRefreshing(true);
-    refreshList();
-  }, [props.state, props.orderBy, props.filter, props.pageSize, filterKey]);
+    
+    const fetchInitial = async () => {
+      try {
+        await fetchMoreMemos("");
+      } finally {
+        setIsRefreshing(false);
+      }
+    };
+    
+    fetchInitial();
+  }, [filterKey]);
 
   useEffect(() => {
     if (!isRequesting && sortedMemoList.length > 0) {
@@ -143,10 +155,9 @@ const PagedMemoList = observer((props: Props) => {
   }, [nextPageToken, isRequesting]);
 
   // Show loading state when:
-  // 1. Currently requesting (any request)
+  // 1. Currently requesting initial data
   // 2. Currently refreshing (filter changes)
-  // 3. Has filter applied AND no memos loaded yet (initial filter application)
-  const showLoadingSpinner = isRequesting || isRefreshing || (hasActiveFilter && sortedMemoList.length === 0);
+  const showLoadingSpinner = (isRequesting && sortedMemoList.length === 0) || isRefreshing;
 
   const children = (
     <div className="flex flex-col justify-start items-start w-full max-w-full">
@@ -169,6 +180,16 @@ const PagedMemoList = observer((props: Props) => {
         </div>
       )}
 
+      {/* Show "Load More" spinner when fetching additional pages */}
+      {isRequesting && sortedMemoList.length > 0 && !isRefreshing && (
+        <div className="w-full flex flex-row justify-center items-center my-4">
+          <LoaderIcon className="animate-spin text-muted-foreground" />
+          <span className="ml-2 text-sm text-muted-foreground">
+            {t("message.loading-more")}
+          </span>
+        </div>
+      )}
+
       {!isRequesting && !showLoadingSpinner && (
         <>
           {!nextPageToken && sortedMemoList.length === 0 ? (
@@ -179,9 +200,11 @@ const PagedMemoList = observer((props: Props) => {
               </p>
             </div>
           ) : (
-            <div className="w-full opacity-70 flex flex-row justify-center items-center my-4">
-              <BackToTop />
-            </div>
+            !nextPageToken && (
+              <div className="w-full opacity-70 flex flex-row justify-center items-center my-4">
+                <BackToTop />
+              </div>
+            )
           )}
         </>
       )}

@@ -218,6 +218,7 @@ export interface WorkspaceStorageSetting_S3Config {
   usePathStyle: boolean;
 }
 
+/** Memo-related workspace settings and policies. */
 export interface WorkspaceMemoRelatedSetting {
   /** disallow_public_visibility disallows set memo as public visibility. */
   disallowPublicVisibility: boolean;

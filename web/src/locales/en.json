@@ -228,7 +228,8 @@
     "update-succeed": "Update succeeded",
     "user-not-found": "User not found",
     "no-filtered-data": "No memos match your filter",
-    "filtering-memos": "Filtering memos..."
+    "filtering-memos": "Filtering memos...",
+    "loading-more":"Loading more..."
   },
   "reference": {
     "add-references": "Add references",
