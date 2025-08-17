@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -172,9 +173,14 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 	}
 	
 	origin := getOrigin(c.Request())
+	
+	// Handle profile image - use the avatar endpoint for data URIs
 	profileImage := user.AvatarURL
 	if profileImage == "" {
-		profileImage = DefaultFavicon
+		profileImage = origin + DefaultFavicon
+	} else if strings.HasPrefix(profileImage, "data:") {
+		// Use the GetUserAvatar endpoint for social media compatibility
+		profileImage = fmt.Sprintf("%s/api/v1/users/%d/avatar", origin, user.ID)
 	}
 	
 	description := user.Description
@@ -196,7 +202,7 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		Origin        string
 		ProfileImage  string
 		Description   string
-		UserData      string
+		UserData      template.JS
 		SiteName      string
 		TwitterHandle string
 		DefaultLogo   string
@@ -205,7 +211,7 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		Origin:        origin,
 		ProfileImage:  profileImage,
 		Description:   template.HTMLEscapeString(description),
-		UserData:      string(userData),
+		UserData:      template.JS(userData),
 		SiteName:      SiteName,
 		TwitterHandle: TwitterHandle,
 		DefaultLogo:   DefaultLogo,
@@ -227,6 +233,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		UID: &ID,
 	})
 	if err != nil || memo == nil {
+		log.Printf("Memo not found - ID: %v, error: %v", ID, err)
 		return s.renderErrorPage(c, http.StatusNotFound, "Memo Not Found", "The memo you're looking for could not be found")
 	}
 	
@@ -252,7 +259,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		Origin          string
 		AttachmentImage string
 		Description     string
-		MemoData        string
+		MemoData        template.JS
 		MemoIDStr       string
 		SiteName        string
 		TwitterHandle   string
@@ -262,7 +269,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		Origin:          origin,
 		AttachmentImage: attachmentImage,
 		Description:     description,
-		MemoData:        string(memoData),
+		MemoData:        template.JS(memoData),
 		MemoIDStr:       fmt.Sprintf("%d", memo.ID),
 		SiteName:        SiteName,
 		TwitterHandle:   TwitterHandle,
@@ -275,7 +282,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 
 // Helper methods
 func (s *APIV1Service) getMemoThumbnail(ctx context.Context, memo *store.Memo, origin string) string {
-	attachmentImage := DefaultFavicon
+	attachmentImage := origin + DefaultFavicon // Always use absolute URLs for social media
 	
 	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{
 		MemoID: &memo.ID,
