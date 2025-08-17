@@ -1,9 +1,10 @@
 package v1
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"log"
+	"html/template"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,14 +14,137 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Constants for configuration
+const (
+	DefaultFavicon    = "/android-chrome-192x192.png"
+	DefaultLogo       = "/logo.svg"
+	TwitterHandle     = "@matano_imran"
+	SiteName         = "Wekalist"
+	MaxDescLength    = 100
+	MaxLinkRetries   = 10 // Prevent infinite loops in markdown parsing
+)
+
+// Template data structures
+type UserProfileData struct {
+	User        *store.User
+	Origin      string
+	UserData    string
+	Description string
+}
+
+type MemoPageData struct {
+	Memo            *store.Memo
+	Origin          string
+	AttachmentImage string
+	Description     string
+	MemoData        string
+	MemoIDStr       string
+}
+
+type ErrorPageData struct {
+	Title       string
+	Message     string
+	Description string
+}
+
+// HTML templates - could be moved to separate files
+var (
+	userProfileTemplate = template.Must(template.New("userProfile").Parse(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg" href="{{.DefaultLogo}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Page specific meta tags -->
+    <title>{{.User.Username}} - {{.SiteName}}</title>
+    <meta name="description" content="{{.Description}}">
+    <meta name="keywords" content="{{.SiteName}}, Memos, AI-driven, {{.User.Username}}, profile"/>
+    
+    <!-- Canonical and structured data -->
+    <link rel="canonical" href="{{.Origin}}/u/{{.User.Username}}" />
+    <meta name="image" content="{{.ProfileImage}}" />
+    <meta itemProp="name" content="{{.User.Username}} - {{.SiteName}}" />
+    <meta itemProp="description" content="{{.Description}}"/>
+    <meta itemProp="image" content="{{.ProfileImage}}" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{.User.Username}} - {{.SiteName}}" />
+    <meta name="twitter:description" content="{{.Description}}">
+    <meta name="twitter:site" content="{{.Origin}}" />
+    <meta name="twitter:creator" content="{{.TwitterHandle}}" />
+    <meta name="twitter:image" content="{{.ProfileImage}}" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{.User.Username}} - {{.SiteName}}" />
+    <meta property="og:url" content="{{.Origin}}/u/{{.User.Username}}" />
+    <meta property="og:description" content="{{.Description}}"/>
+    <meta property="og:image" content="{{.ProfileImage}}" />
+    <meta property="og:site_name" content="{{.SiteName}}" />
+    <meta property="og:type" content="profile" />
+    <meta name="author" content="{{.SiteName}}" />
+</head>
+<body>
+    <script>
+        window.__INITIAL_DATA__ = {{.UserData}};
+        window.__ORIGIN__ = "{{.Origin}}";
+        window.location.replace(window.__ORIGIN__ + '/u/{{.User.Username}}');
+    </script>
+</body>
+</html>`))
+
+	memoTemplate = template.Must(template.New("memo").Parse(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg" href="{{.DefaultLogo}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <title>{{.Description}} - {{.SiteName}}</title>
+    <meta name="description" content="{{.Description}}"/>
+    <meta name="keywords" content="{{.SiteName}}, Memos, AI-driven, memo, note"/>
+    
+    <!-- Canonical and structured data -->
+    <link rel="canonical" href="{{.Origin}}/memos/{{.MemoIDStr}}" />
+    <meta name="image" content="{{.AttachmentImage}}" />
+    <meta itemProp="name" content="Memo on {{.SiteName}}" />
+    <meta itemProp="description" content="{{.Description}}"/>
+    <meta itemProp="image" content="{{.AttachmentImage}}" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Memo on {{.SiteName}}" />
+    <meta name="twitter:description" content="{{.Description}}">
+    <meta name="twitter:site" content="{{.Origin}}" />
+    <meta name="twitter:creator" content="{{.TwitterHandle}}" />
+    <meta name="twitter:image" content="{{.AttachmentImage}}" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Memo on {{.SiteName}}" />
+    <meta property="og:url" content="{{.Origin}}/memos/{{.MemoIDStr}}" />
+    <meta property="og:description" content="{{.Description}}"/>
+    <meta property="og:image" content="{{.AttachmentImage}}" />
+    <meta property="og:site_name" content="{{.SiteName}}" />
+    <meta property="og:type" content="article" />
+    <meta name="author" content="{{.SiteName}}" />
+    <meta property="article:author" content="User {{.Memo.CreatorID}}">
+</head>
+<body>
+    <script>
+        window.__INITIAL_DATA__ = {{.MemoData}};
+        window.__ORIGIN__ = "{{.Origin}}";
+        window.location.replace(window.__ORIGIN__ + '/memos/{{.MemoIDStr}}');
+    </script>
+</body>
+</html>`))
+)
+
 // SEO-friendly route handlers
 func (s *APIV1Service) registerSEORoutes(echoServer *echo.Echo) {
-	// Add SEO routes BEFORE the gRPC gateway registration
-	
-	// User profile pages: /u/{id} or /u/{username}
 	echoServer.GET("/share/u/:identifier", s.handleUserProfile)
-	
-	// Memo pages: /memos/{id} 
 	echoServer.GET("/share/memos/:id", s.handleMemoPage)
 }
 
@@ -28,7 +152,6 @@ func (s *APIV1Service) registerSEORoutes(echoServer *echo.Echo) {
 func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 	identifier := c.Param("identifier")
 	
-	// Try to parse as user ID first, then as username
 	var userID *int32
 	var username *string
 	
@@ -39,32 +162,64 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		username = &identifier
 	}
 	
-	// Fetch user data via store
 	ctx := c.Request().Context()
 	user, err := s.Store.GetUser(ctx, &store.FindUser{
 		ID:       userID,
 		Username: username,
 	})
 	if err != nil || user == nil {
-		return c.HTML(http.StatusNotFound, generateNotFoundPage("User not found"))
+		return s.renderErrorPage(c, http.StatusNotFound, "User Not Found", "The user you're looking for could not be found")
 	}
 	
-	// Get origin from request
 	origin := getOrigin(c.Request())
+	profileImage := user.AvatarURL
+	if profileImage == "" {
+		profileImage = DefaultFavicon
+	}
 	
-	// Generate SEO-friendly HTML
-	html := generateUserProfileHTML(user, origin)
+	description := user.Description
+	if description == "" {
+		description = fmt.Sprintf("%s's profile on %s - View memos and thoughts", user.Username, SiteName)
+	}
 	
-	// Set SEO headers
+	userData, err := json.Marshal(map[string]interface{}{
+		"id":       user.ID,
+		"username": user.Username,
+		"email":    user.Email,
+	})
+	if err != nil {
+		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process user data")
+	}
+	
+	data := struct {
+		User          *store.User
+		Origin        string
+		ProfileImage  string
+		Description   string
+		UserData      string
+		SiteName      string
+		TwitterHandle string
+		DefaultLogo   string
+	}{
+		User:          user,
+		Origin:        origin,
+		ProfileImage:  profileImage,
+		Description:   template.HTMLEscapeString(description),
+		UserData:      string(userData),
+		SiteName:      SiteName,
+		TwitterHandle: TwitterHandle,
+		DefaultLogo:   DefaultLogo,
+	}
+	
 	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
-	return c.HTML(http.StatusOK, html)
+	return userProfileTemplate.Execute(c.Response().Writer, data)
 }
 
 // Handle individual memo pages
 func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 	ID := c.Param("id")
 	if ID == "" {
-		return c.HTML(http.StatusBadRequest, generateErrorPage("Invalid Memo Id"))
+		return s.renderErrorPage(c, http.StatusBadRequest, "Invalid Request", "Invalid Memo ID")
 	}
 
 	ctx := c.Request().Context()
@@ -72,46 +227,110 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		UID: &ID,
 	})
 	if err != nil || memo == nil {
-		return c.HTML(http.StatusNotFound, generateNotFoundPage(fmt.Sprintf("Memo not found: %s", err.Error())))
+		return s.renderErrorPage(c, http.StatusNotFound, "Memo Not Found", "The memo you're looking for could not be found")
 	}
-
-	log.Printf("id: %v, memo: %v", ID, memo)
 	
-	// Check if memo is public or user has access
 	if memo.Visibility != store.Public {
-		return c.HTML(http.StatusForbidden, generateForbiddenPage())
+		return s.renderErrorPage(c, http.StatusForbidden, "Access Denied", "You don't have permission to access this content")
 	}
 	
-	// Get origin from request
 	origin := getOrigin(c.Request())
+	attachmentImage := s.getMemoThumbnail(ctx, memo, origin)
+	description := s.generateMemoDescription(memo)
 	
-	html := generateMemoHTML(memo, origin)
+	memoData, err := json.Marshal(map[string]interface{}{
+		"id":        memo.ID,
+		"content":   memo.Content,
+		"creatorId": memo.CreatorID,
+	})
+	if err != nil {
+		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process memo data")
+	}
+	
+	data := struct {
+		Memo            *store.Memo
+		Origin          string
+		AttachmentImage string
+		Description     string
+		MemoData        string
+		MemoIDStr       string
+		SiteName        string
+		TwitterHandle   string
+		DefaultLogo     string
+	}{
+		Memo:            memo,
+		Origin:          origin,
+		AttachmentImage: attachmentImage,
+		Description:     description,
+		MemoData:        string(memoData),
+		MemoIDStr:       fmt.Sprintf("%d", memo.ID),
+		SiteName:        SiteName,
+		TwitterHandle:   TwitterHandle,
+		DefaultLogo:     DefaultLogo,
+	}
 	
 	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
-	return c.HTML(http.StatusOK, html)
+	return memoTemplate.Execute(c.Response().Writer, data)
 }
 
-// Utility function to get origin from request
-func getOrigin(r *http.Request) string {
-	scheme := "https"
-	if r.TLS == nil {
-		scheme = "http"
+// Helper methods
+func (s *APIV1Service) getMemoThumbnail(ctx context.Context, memo *store.Memo, origin string) string {
+	attachmentImage := DefaultFavicon
+	
+	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{
+		MemoID: &memo.ID,
+	})
+	if err != nil || len(attachments) == 0 {
+		return attachmentImage
 	}
 	
-	// Check for forwarded protocol
-	if proto := r.Header.Get("X-Forwarded-Proto"); proto != "" {
-		scheme = proto
+	// Find the most recent attachment
+	chosen := attachments[0]
+	for _, a := range attachments[1:] {
+		if a.UpdatedTs > chosen.UpdatedTs {
+			chosen = a
+		}
 	}
 	
-	host := r.Host
-	if host == "" {
-		host = r.Header.Get("Host")
+	if chosen.UID != "" {
+		name := fmt.Sprintf("%s%s", AttachmentNamePrefix, chosen.UID)
+		attachmentImage = fmt.Sprintf("%s/file/%s/%s?thumbnail=true", origin, name, chosen.Filename)
 	}
 	
-	return fmt.Sprintf("%s://%s", scheme, host)
+	return attachmentImage
 }
 
-// Utility functions for text processing
+func (s *APIV1Service) generateMemoDescription(memo *store.Memo) string {
+	description := truncateText(stripMarkdownImproved(memo.Content), MaxDescLength)
+	if description == "" {
+		description = fmt.Sprintf("A memo on %s", SiteName)
+	}
+	return template.HTMLEscapeString(description)
+}
+
+func (s *APIV1Service) renderErrorPage(c echo.Context, status int, title, message string) error {
+	html := fmt.Sprintf(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg" href="%s" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>%s - %s</title>
+    <meta name="description" content="%s">
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <script>
+        window.location.replace("/");
+    </script>
+</body>
+</html>`, DefaultLogo, template.HTMLEscapeString(title), SiteName, template.HTMLEscapeString(message))
+
+	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
+	return c.HTML(status, html)
+}
+
+// Improved utility functions
 func truncateText(text string, maxLength int) string {
 	if utf8.RuneCountInString(text) <= maxLength {
 		return text
@@ -122,11 +341,18 @@ func truncateText(text string, maxLength int) string {
 		return text
 	}
 	
-	return string(runes[:maxLength]) + "..."
+	// Try to break at a word boundary
+	truncated := runes[:maxLength]
+	for i := len(truncated) - 1; i >= maxLength-20 && i > 0; i-- {
+		if truncated[i] == ' ' {
+			return string(truncated[:i]) + "..."
+		}
+	}
+	
+	return string(truncated) + "..."
 }
 
-func stripMarkdown(content string) string {
-	// Basic markdown stripping - you might want to use a proper markdown parser
+func stripMarkdownImproved(content string) string {
 	text := content
 	
 	// Remove headers
@@ -138,318 +364,62 @@ func stripMarkdown(content string) string {
 	text = strings.ReplaceAll(text, "__", "")
 	text = strings.ReplaceAll(text, "_", "")
 	
-	// Remove links - keep only the text part
-	// This is a simple regex replacement - you might want something more robust
-	for strings.Contains(text, "[") && strings.Contains(text, "]") && strings.Contains(text, "(") && strings.Contains(text, ")") {
+	// Remove code blocks and inline code
+	text = strings.ReplaceAll(text, "`", "")
+	
+	// Improved link removal with retry limit
+	retries := 0
+	for retries < MaxLinkRetries && strings.Contains(text, "[") && strings.Contains(text, "]") {
 		start := strings.Index(text, "[")
 		if start == -1 {
 			break
 		}
+		
 		end := strings.Index(text[start:], "]")
 		if end == -1 {
 			break
 		}
 		end += start
 		
-		linkStart := strings.Index(text[end:], "(")
-		if linkStart == -1 || linkStart > 1 {
-			break
+		// Check if this looks like a markdown link
+		if end+1 < len(text) && text[end+1] == '(' {
+			linkEnd := strings.Index(text[end+1:], ")")
+			if linkEnd != -1 {
+				linkEnd += end + 1
+				// Replace [text](url) with just text
+				linkText := text[start+1 : end]
+				text = text[:start] + linkText + text[linkEnd+1:]
+				retries++
+				continue
+			}
 		}
-		linkStart += end
 		
-		linkEnd := strings.Index(text[linkStart:], ")")
-		if linkEnd == -1 {
-			break
-		}
-		linkEnd += linkStart
-		
-		// Replace [text](url) with just text
-		linkText := text[start+1 : end]
-		text = text[:start] + linkText + text[linkEnd+1:]
+		// If not a proper link, just remove the brackets
+		text = text[:start] + text[start+1:]
+		retries++
 	}
-	
-	// Remove code blocks
-	text = strings.ReplaceAll(text, "`", "")
 	
 	// Clean up extra whitespace
 	text = strings.TrimSpace(text)
-	lines := strings.Fields(text)
-	return strings.Join(lines, " ")
+	fields := strings.Fields(text)
+	return strings.Join(fields, " ")
 }
 
-func toJSON(v interface{}) string {
-	bytes, err := json.Marshal(v)
-	if err != nil {
-		return "{}"
-	}
-	return string(bytes)
-}
-
-func escapeHTML(s string) string {
-	s = strings.ReplaceAll(s, "&", "&amp;")
-	s = strings.ReplaceAll(s, "<", "&lt;")
-	s = strings.ReplaceAll(s, ">", "&gt;")
-	s = strings.ReplaceAll(s, "\"", "&quot;")
-	s = strings.ReplaceAll(s, "'", "&#39;")
-	return s
-}
-
-// HTML generation functions
-func generateUserProfileHTML(user *store.User, origin string) string {
-	username := escapeHTML(user.Username)
-	var favicon = "/logo.svg"
-	var profileImage = "/android-chrome-192x192.png"
-	
-	// Use user avatar if available
-	if user.AvatarURL != "" {
-		favicon = user.AvatarURL
-		profileImage = user.AvatarURL
+// Utility function to get origin from request (unchanged)
+func getOrigin(r *http.Request) string {
+	scheme := "https"
+	if r.TLS == nil {
+		scheme = "http"
 	}
 	
-	userData := toJSON(map[string]interface{}{
-		"id":       user.ID,
-		"username": user.Username,
-		"email":    user.Email,
-		// Add other safe fields
-	})
-	
-	return fmt.Sprintf(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="%s" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <!-- Page specific meta tags -->
-    <title>%s - Wekalist</title>
-    <meta name="description" content="%s's profile on Wekalist - View memos and thoughts">
-    <meta name="keywords" content="Wekalist, Memos, AI-driven, %s, profile"/>
-    
-    <!-- wekalist.metadata.head -->
-    <!-- pwa -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#FAFAFA" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Wekalist" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FAFAFA" />
-    
-    <!-- google -->
-    <link rel="canonical" href="%s/u/%s" />
-    <meta name="image" content="%s" />
-    <meta itemProp="name" content="%s - Wekalist" />
-    <meta itemProp="description" content="%s's profile on Wekalist - View memos and thoughts"/>
-    <meta itemProp="image" content="%s" />
-    
-    <!-- twitter -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="%s - Wekalist" />
-    <meta name="twitter:description" content="View %s's memos and profile on Wekalist">
-    <meta name="twitter:site" content="%s" />
-    <meta name="twitter:creator" content="@matano_imran" />
-    <meta name="twitter:image:src" content="%s" />
-    <meta name="twitter:image" content="%s" />
-    
-    <!-- facebook -->
-    <meta name="og:title" property="og:title" content="%s - Wekalist" />
-    <meta name="og:url" property="og:url" content="%s/u/%s" />
-    <meta name="og:description" property="og:description" content="View %s's memos and profile on Wekalist"/>
-    <meta name="og:image" property="og:image" content="%s" />
-    <meta name="og:site_name" property="og:site_name" content="Wekalist" />
-    <meta name="og:type" property="og:type" content="profile" />
-    <meta name="author" content="Wekalist" />
-    
-    <!-- SEO -->
-    <meta name="msnbot" content="preview" />
-</head>
-<body>
-    <script>
-        window.__INITIAL_DATA__ = %s;
-        window.__ORIGIN__ = "%s";
-        
-        // Redirect to origin once loaded
-        window.location.replace(window.__ORIGIN__ + '/u/%s');
-    </script>
-</body>
-</html>`, favicon, username, username, username, origin, user.Username, profileImage, username, username, profileImage, username, username, origin, profileImage, profileImage, username, origin, user.Username, username, profileImage, userData, origin, user.Username)
-}
-
-func generateMemoHTML(memo *store.Memo, origin string) string {
-	// Extract first 100 chars for description
-	description := truncateText(stripMarkdown(memo.Content), 100)
-	if description == "" {
-		description = "A memo on Wekalist"
+	if proto := r.Header.Get("X-Forwarded-Proto"); proto != "" {
+		scheme = proto
 	}
 	
-	description = escapeHTML(description)
-	
-	// Convert memo ID to string for URL
-	memoIDStr := fmt.Sprintf("%d", memo.ID)
-	
-	memoData := toJSON(map[string]interface{}{
-		"id":        memo.ID,
-		"content":   memo.Content,
-		"creatorId": memo.CreatorID,
-		// Add other safe fields
-	})
-	
-	return fmt.Sprintf(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <!-- Page specific meta tags -->
-    <title>%s - Wekalist</title>
-    <meta name="description" content="%s"/>
-    <meta name="keywords" content="Wekalist, Memos, AI-driven, memo, note"/>
-    
-    <!-- wekalist.metadata.head -->
-    <!-- pwa -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#FAFAFA" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Wekalist" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FAFAFA" />
-    
-    <!-- google -->
-    <link rel="canonical" href="%s/memos/%s" />
-    <meta name="image" content="/android-chrome-192x192.png" />
-    <meta itemProp="name" content="Memo on Wekalist" />
-    <meta itemProp="description" content="%s"/>
-    <meta itemProp="image" content="/android-chrome-192x192.png" />
-    
-    <!-- twitter -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Memo on Wekalist" />
-    <meta name="twitter:description" content="%s">
-    <meta name="twitter:site" content="%s" />
-    <meta name="twitter:creator" content="@matano_imran" />
-    <meta name="twitter:image:src" content="/android-chrome-192x192.png" />
-    <meta name="twitter:image" content="/android-chrome-192x192.png" />
-    
-    <!-- facebook -->
-    <meta name="og:title" property="og:title" content="Memo on Wekalist" />
-    <meta name="og:url" property="og:url" content="%s/memos/%s" />
-    <meta name="og:description" property="og:description" content="%s"/>
-    <meta name="og:image" property="og:image" content="/android-chrome-192x192.png" />
-    <meta name="og:site_name" property="og:site_name" content="Wekalist" />
-    <meta name="og:type" property="og:type" content="article" />
-    <meta name="author" content="Wekalist" />
-    <meta property="article:author" content="User %d">
-    
-    <!-- SEO -->
-    <meta name="msnbot" content="preview" />
-</head>
-<body>
-    <script>
-        window.__INITIAL_DATA__ = %s;
-        window.__ORIGIN__ = "%s";
-        
-        // Redirect to origin once loaded
-        window.location.replace(window.__ORIGIN__ + '/memos/%s');
-    </script>
-</body>
-</html>`, description, description, origin, memoIDStr, description, description, origin, origin, memoIDStr, description, memo.CreatorID, memoData, origin, memoIDStr)
-}
-
-func generateNotFoundPage(message string) string {
-	if message == "" {
-		message = "The page you're looking for could not be found"
+	host := r.Host
+	if host == "" {
+		host = r.Header.Get("Host")
 	}
-	message = escapeHTML(message)
 	
-	return fmt.Sprintf(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <title>Page Not Found - Wekalist</title>
-    <meta name="description" content="%s">
-    <meta name="robots" content="noindex">
-    
-    <!-- PWA -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#FAFAFA" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Wekalist" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FAFAFA" />
-</head>
-<body>
-    <script>
-        window.location.replace("/");
-    </script>
-</body>
-</html>`, message)
-}
-
-func generateErrorPage(message string) string {
-	if message == "" {
-		message = "An error occurred"
-	}
-	message = escapeHTML(message)
-	
-	return fmt.Sprintf(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <title>Error - Wekalist</title>
-    <meta name="description" content="%s">
-    <meta name="robots" content="noindex">
-    
-    <!-- PWA -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#FAFAFA" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Wekalist" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FAFAFA" />
-</head>
-<body>
-    <script>
-        window.location.replace("/");
-    </script>
-</body>
-</html>`, message)
-}
-
-func generateForbiddenPage() string {
-	return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <title>Forbidden - Wekalist</title>
-    <meta name="description" content="You don't have permission to access this content">
-    <meta name="robots" content="noindex">
-    
-    <!-- PWA -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#FAFAFA" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Wekalist" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FAFAFA" />
-</head>
-<body>
-    <script>
-        window.location.replace("/");
-    </script>
-</body>
-</html>`
+	return fmt.Sprintf("%s://%s", scheme, host)
 }
