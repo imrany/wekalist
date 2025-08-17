@@ -17,12 +17,14 @@ import (
 
 // Constants for configuration
 const (
-	DefaultFavicon    = "/android-chrome-192x192.png"
 	DefaultLogo       = "/logo.svg"
 	TwitterHandle     = "@matano_imran"
-	SiteName         = "Wekalist"
 	MaxDescLength    = 100
 	MaxLinkRetries   = 10 // Prevent infinite loops in markdown parsing
+	
+	// Default values - these should never be modified
+	BaseSiteName    = "Wekalist"
+	BaseFaviconURL  = "/android-chrome-192x192.png"
 )
 
 // Template data structures
@@ -48,13 +50,40 @@ type ErrorPageData struct {
 	Description string
 }
 
+// SiteConfig holds the site configuration that can be customized
+type SiteConfig struct {
+	SiteName   string
+	FaviconURL string
+	LogoURL    string
+}
+
+// getSiteConfig retrieves the site configuration from workspace settings
+func (s *APIV1Service) getSiteConfig(ctx context.Context) SiteConfig {
+	config := SiteConfig{
+		SiteName:   BaseSiteName,
+		FaviconURL: BaseFaviconURL,
+		LogoURL:    DefaultLogo,
+	}
+	
+	if generalSetting, err := s.Store.GetWorkspaceGeneralSetting(ctx); err == nil && generalSetting != nil {
+		if generalSetting.CustomProfile.Title != "" {
+			config.SiteName = generalSetting.CustomProfile.Title
+		}
+		if generalSetting.CustomProfile.LogoUrl != "" {
+			config.FaviconURL = generalSetting.CustomProfile.LogoUrl
+		}
+	}
+	
+	return config
+}
+
 // HTML templates - could be moved to separate files
 var (
 	userProfileTemplate = template.Must(template.New("userProfile").Parse(`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="{{.DefaultLogo}}" />
+    <link rel="icon" type="image/svg" href="{{.LogoURL}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="manifest" href="/site.webmanifest" />
     
@@ -100,7 +129,7 @@ var (
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="{{.DefaultLogo}}" />
+    <link rel="icon" type="image/svg" href="{{.LogoURL}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="manifest" href="/site.webmanifest" />
     
@@ -152,6 +181,10 @@ func (s *APIV1Service) registerSEORoutes(echoServer *echo.Echo) {
 // Handle user profile pages with server-side rendering
 func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 	identifier := c.Param("identifier")
+	ctx := c.Request().Context()
+	
+	// Get site configuration
+	siteConfig := s.getSiteConfig(ctx)
 	
 	var userID *int32
 	var username *string
@@ -163,13 +196,12 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		username = &identifier
 	}
 	
-	ctx := c.Request().Context()
 	user, err := s.Store.GetUser(ctx, &store.FindUser{
 		ID:       userID,
 		Username: username,
 	})
 	if err != nil || user == nil {
-		return s.renderErrorPage(c, http.StatusNotFound, "User Not Found", "The user you're looking for could not be found")
+		return s.renderErrorPage(c, http.StatusNotFound, "User Not Found", "The user you're looking for could not be found", siteConfig)
 	}
 	
 	origin := getOrigin(c.Request())
@@ -177,7 +209,13 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 	// Handle profile image - use the avatar endpoint for data URIs
 	profileImage := user.AvatarURL
 	if profileImage == "" {
-		profileImage = origin + DefaultFavicon
+		if strings.HasPrefix(siteConfig.FaviconURL, "http") {
+			// Use absolute URL for favicon
+			profileImage = siteConfig.FaviconURL
+		} else if strings.HasPrefix(siteConfig.FaviconURL, "/") {
+			// Use relative URL with origin
+			profileImage = origin + siteConfig.FaviconURL
+		}
 	} else if strings.HasPrefix(profileImage, "data:") {
 		// Use the GetUserAvatar endpoint for social media compatibility
 		profileImage = fmt.Sprintf("%s/api/v1/users/%d/avatar", origin, user.ID)
@@ -185,7 +223,7 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 	
 	description := user.Description
 	if description == "" {
-		description = fmt.Sprintf("%s's profile on %s - View memos and thoughts", user.Username, SiteName)
+		description = fmt.Sprintf("%s's profile on %s - View memos and thoughts", user.Username, siteConfig.SiteName)
 	}
 	
 	userData, err := json.Marshal(map[string]interface{}{
@@ -194,7 +232,7 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		"email":    user.Email,
 	})
 	if err != nil {
-		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process user data")
+		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process user data", siteConfig)
 	}
 	
 	data := struct {
@@ -205,16 +243,16 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 		UserData      template.JS
 		SiteName      string
 		TwitterHandle string
-		DefaultLogo   string
+		LogoURL       string
 	}{
 		User:          user,
 		Origin:        origin,
 		ProfileImage:  profileImage,
 		Description:   template.HTMLEscapeString(description),
 		UserData:      template.JS(userData),
-		SiteName:      SiteName,
+		SiteName:      siteConfig.SiteName,
 		TwitterHandle: TwitterHandle,
-		DefaultLogo:   DefaultLogo,
+		LogoURL:       siteConfig.LogoURL,
 	}
 	
 	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -225,25 +263,29 @@ func (s *APIV1Service) handleUserProfile(c echo.Context) error {
 func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 	ID := c.Param("id")
 	if ID == "" {
-		return s.renderErrorPage(c, http.StatusBadRequest, "Invalid Request", "Invalid Memo ID")
+		ctx := c.Request().Context()
+		siteConfig := s.getSiteConfig(ctx)
+		return s.renderErrorPage(c, http.StatusBadRequest, "Invalid Request", "Invalid Memo ID", siteConfig)
 	}
 
 	ctx := c.Request().Context()
+	siteConfig := s.getSiteConfig(ctx)
+	
 	memo, err := s.Store.GetMemo(ctx, &store.FindMemo{
 		UID: &ID,
 	})
 	if err != nil || memo == nil {
 		log.Printf("Memo not found - ID: %v, error: %v", ID, err)
-		return s.renderErrorPage(c, http.StatusNotFound, "Memo Not Found", "The memo you're looking for could not be found")
+		return s.renderErrorPage(c, http.StatusNotFound, "Memo Not Found", "The memo you're looking for could not be found", siteConfig)
 	}
 	
 	if memo.Visibility != store.Public {
-		return s.renderErrorPage(c, http.StatusForbidden, "Access Denied", "You don't have permission to access this content")
+		return s.renderErrorPage(c, http.StatusForbidden, "Access Denied", "You don't have permission to access this content", siteConfig)
 	}
 	
 	origin := getOrigin(c.Request())
-	attachmentImage := s.getMemoThumbnail(ctx, memo, origin)
-	description := s.generateMemoDescription(memo)
+	attachmentImage := s.getMemoThumbnail(ctx, memo, origin, siteConfig.FaviconURL)
+	description := s.generateMemoDescription(memo, siteConfig.SiteName)
 	
 	memoData, err := json.Marshal(map[string]interface{}{
 		"id":        memo.ID,
@@ -251,7 +293,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		"creatorId": memo.CreatorID,
 	})
 	if err != nil {
-		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process memo data")
+		return s.renderErrorPage(c, http.StatusInternalServerError, "Error", "Failed to process memo data", siteConfig)
 	}
 	
 	data := struct {
@@ -263,7 +305,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		MemoIDStr       string
 		SiteName        string
 		TwitterHandle   string
-		DefaultLogo     string
+		LogoURL         string
 	}{
 		Memo:            memo,
 		Origin:          origin,
@@ -271,9 +313,9 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		Description:     description,
 		MemoData:        template.JS(memoData),
 		MemoIDStr:       fmt.Sprintf("%d", memo.ID),
-		SiteName:        SiteName,
+		SiteName:        siteConfig.SiteName,
 		TwitterHandle:   TwitterHandle,
-		DefaultLogo:     DefaultLogo,
+		LogoURL:         siteConfig.LogoURL,
 	}
 	
 	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -281,8 +323,15 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 }
 
 // Helper methods
-func (s *APIV1Service) getMemoThumbnail(ctx context.Context, memo *store.Memo, origin string) string {
-	attachmentImage := origin + DefaultFavicon // Always use absolute URLs for social media
+func (s *APIV1Service) getMemoThumbnail(ctx context.Context, memo *store.Memo, origin, defaultFavicon string) string {
+	var attachmentImage string
+	if strings.HasPrefix(defaultFavicon, "http") {
+		// Use absolute URL for favicon
+		attachmentImage = defaultFavicon
+	} else if strings.HasPrefix(defaultFavicon, "/") {
+		// Use relative URL with origin
+		attachmentImage = origin + defaultFavicon
+	}
 	
 	attachments, err := s.Store.ListAttachments(ctx, &store.FindAttachment{
 		MemoID: &memo.ID,
@@ -307,15 +356,15 @@ func (s *APIV1Service) getMemoThumbnail(ctx context.Context, memo *store.Memo, o
 	return attachmentImage
 }
 
-func (s *APIV1Service) generateMemoDescription(memo *store.Memo) string {
+func (s *APIV1Service) generateMemoDescription(memo *store.Memo, siteName string) string {
 	description := truncateText(stripMarkdownImproved(memo.Content), MaxDescLength)
 	if description == "" {
-		description = fmt.Sprintf("A memo on %s", SiteName)
+		description = fmt.Sprintf("A memo on %s", siteName)
 	}
 	return template.HTMLEscapeString(description)
 }
 
-func (s *APIV1Service) renderErrorPage(c echo.Context, status int, title, message string) error {
+func (s *APIV1Service) renderErrorPage(c echo.Context, status int, title, message string, siteConfig SiteConfig) error {
 	html := fmt.Sprintf(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -331,7 +380,7 @@ func (s *APIV1Service) renderErrorPage(c echo.Context, status int, title, messag
         window.location.replace("/");
     </script>
 </body>
-</html>`, DefaultLogo, template.HTMLEscapeString(title), SiteName, template.HTMLEscapeString(message))
+</html>`, siteConfig.LogoURL, template.HTMLEscapeString(title), siteConfig.SiteName, template.HTMLEscapeString(message))
 
 	c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
 	return c.HTML(status, html)
