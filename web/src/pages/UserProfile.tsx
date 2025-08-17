@@ -91,7 +91,7 @@ const UserProfile = observer(() => {
       return;
     }
 
-    const url = `${window.location.origin}/u/${encodeURIComponent(user.username)}`
+    const url = `${window.location.origin}/share/u/${encodeURIComponent(user.username)}`
     const share = useShare(`Checkout ${user.displayName?user.displayName:user.username}`, `Checkout ${user.displayName?user.displayName:user.username},\n${user.description}`, url)
     if (share.type === 'error') {
       copy(url);

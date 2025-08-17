@@ -130,7 +130,7 @@ const MemoActionMenu = observer((props: Props) => {
     if (host === "") {
       host = window.location.origin;
     }
-    copy(`${host}/${memo.name}`);
+    copy(`${host}/share/${memo.name}`);
     toast.success(t("message.succeed-copy-link"));
   };
 
