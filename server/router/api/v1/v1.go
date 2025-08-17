@@ -71,6 +71,9 @@ func NewAPIV1Service(secret string, profile *profile.Profile, store *store.Store
 
 // RegisterGateway registers the gRPC-Gateway with the given Echo instance.
 func (s *APIV1Service) RegisterGateway(ctx context.Context, echoServer *echo.Echo) error {
+	// Register SEO routes FIRST (before gRPC gateway)
+	s.registerSEORoutes(echoServer)
+	
 	var target string
 	if len(s.Profile.UNIXSock) == 0 {
 		addr := s.Profile.Addr
