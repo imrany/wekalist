@@ -312,7 +312,7 @@ func (s *APIV1Service) handleMemoPage(c echo.Context) error {
 		AttachmentImage: attachmentImage,
 		Description:     description,
 		MemoData:        template.JS(memoData),
-		MemoIDStr:       fmt.Sprintf("%d", memo.ID),
+		MemoIDStr:       memo.UID,
 		SiteName:        siteConfig.SiteName,
 		TwitterHandle:   TwitterHandle,
 		LogoURL:         siteConfig.LogoURL,
