@@ -1,9 +1,8 @@
-const CACHE_VERSION = 'v0.28.12';
+const CACHE_VERSION = 'v0.28.13';
 const staticCacheName = `site-static-${CACHE_VERSION}`;
 const dynamicCache = `site-dynamic-${CACHE_VERSION}`;
 
 const assets = [
-    '/',
     '/index.html',
     '/site.webmanifest.json',
     '/full-logo.png',
@@ -70,6 +69,37 @@ const limitCacheSize = async (name, size) => {
     }
 };
 
+// Helper function to check if request should be cached
+const shouldCacheRequest = (url) => {
+    // Skip external requests
+    if (url.origin !== location.origin) {
+        return false;
+    }
+    
+    // Skip API endpoints
+    if (url.pathname.startsWith('/api')) {
+        return false;
+    }
+    
+    // Skip share endpoints (these are SEO routes, don't cache them)
+    if (url.pathname.startsWith('/share')) {
+        return false;
+    }
+    
+    // Skip gRPC requests (usually have specific content-type or path patterns)
+    // You might need to adjust this pattern based on your gRPC setup
+    if (url.pathname.includes('grpc') || url.pathname.startsWith('/grpc')) {
+        return false;
+    }
+    
+    // Skip WebSocket connections
+    if (url.protocol === 'ws:' || url.protocol === 'wss:') {
+        return false;
+    }
+    
+    return true;
+};
+
 // Enhanced fetch event with better caching strategies
 self.addEventListener('fetch', (evt) => {
     // Skip non-HTTP requests and extension requests
@@ -77,9 +107,14 @@ self.addEventListener('fetch', (evt) => {
         return;
     }
 
-    // Skip requests to external APIs or different origins for dynamic caching
     const url = new URL(evt.request.url);
-    const isLocalRequest = url.origin === location.origin;
+    const shouldCache = shouldCacheRequest(url);
+
+    // For requests that shouldn't be cached, just pass through
+    if (!shouldCache) {
+        evt.respondWith(fetch(evt.request));
+        return;
+    }
 
     evt.respondWith(
         caches.match(evt.request).then((cacheRes) => {
@@ -90,8 +125,8 @@ self.addEventListener('fetch', (evt) => {
 
             // Fetch from network
             return fetch(evt.request).then((fetchRes) => {
-                // Only cache successful responses for local requests
-                if (fetchRes.status === 200 && isLocalRequest) {
+                // Only cache successful responses
+                if (fetchRes.status === 200) {
                     const responseClone = fetchRes.clone();
                     
                     caches.open(dynamicCache).then((cache) => {
